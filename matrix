@@ -10,12 +10,28 @@ STEP {
     wtf {
       b = 1
       c = 3
+
+      yawtf1 {
+        abc = 123
+        456 {
+          wtf =
+          asdf = a211
+        }
+      }
     }
 }
 
 d = 2
 
 STEP {
+    wtf222 {
+      bc = 1a
+      cb = 32
+      yawtf {
+        www = yyy
+        kkk = zz1
+      }
+    }
     COL=2
     NAME=SUB
 }

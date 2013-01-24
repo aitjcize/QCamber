@@ -10,6 +10,8 @@ using std::endl;
 
 extern struct yycontext yyctx;
 
+int StructuredDataStore::dumpIndent = 0;
+
 StructuredDataStore::StructuredDataStore()
 {
   m_mode = KEY_VALUE;
@@ -58,19 +60,22 @@ bool StructuredDataStore::commitElement(void)
 
 void StructuredDataStore::dump(void)
 {
-  cout << "=== KeyValue ===" << endl;
   for (KeyValueType::const_iterator iter = m_keyValueData.begin();
       iter != m_keyValueData.end(); ++iter) {
+    cout << string(dumpIndent * 2, ' ');
     cout << iter->first << " = " << iter->second << endl;
   }
 
-  cout << "=== Block ===" << endl;
+  dumpIndent += 1;
   for (KeyBlockType::const_iterator iter = m_blockData.begin();
       iter != m_blockData.end(); ++iter) {
+    cout << string(dumpIndent * 2 - 2, ' ');
     cout << iter->first << " {" << endl;
     iter->second->dump();
+    cout << string(dumpIndent * 2 - 2, ' ');
     cout << "}" << endl;
   }
+  dumpIndent -= 1;
 }
 
 void LineRecordDataStore::putTerm(string term)

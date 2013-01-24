@@ -31,6 +31,8 @@ public:
   void put(string key, string value);
   virtual void dump(void);
 
+  static int dumpIndent;
+
 private:
   PutMode m_mode;
   KeyValueType m_keyValueData;
