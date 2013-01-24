@@ -1,7 +1,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
-#include "kvt.tab.h"
+#include "db.tab.h"
 
 #include <map>
 #include <string>

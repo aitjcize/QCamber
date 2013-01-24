@@ -4,16 +4,16 @@ CXXFLAGS = -g
 LIBS 	 = -lfl -ly
 
 OBJS 	 = parser.o main.o
-PARSER_FILES  = lex.yy.c kvt.tab.c
+PARSER_FILES  = lex.yy.c db.tab.c
 
-main: kvt.tab.c lex.yy.c $(OBJS)
+main: db.tab.c lex.yy.c $(OBJS)
 	$(CXX) $(CXXFLAGS) $(PARSER_FILES) $(OBJS) $(LIBS) -o test
 
-lex.yy.c: kvt.l kvt.tab.c
-	$(LEX) kvt.l
+lex.yy.c: db.l db.tab.c
+	$(LEX) db.l
 
-kvt.tab.c: kvt.y
-	$(YACC) kvt.y
+db.tab.c: db.y
+	$(YACC) db.y
 
 clean:
-	rm -f $(OBJS) kvt.tab.* lex.yy.c
+	rm -f $(OBJS) db.tab.* lex.yy.c

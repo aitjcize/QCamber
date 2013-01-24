@@ -1,12 +1,15 @@
 #include "parser.h"
-#include <cstdio>
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 extern int yydebug;
 
 int main(int argc, const char *argv[])
 {
   yydebug = 0;
-  Parser parser("matrix", Parser::ARRAY);
+  Parser parser("kv", Parser::KEY_VALUE);
   parser.parse();
   return 0;
 }
