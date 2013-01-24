@@ -8,6 +8,7 @@
 #include <vector>
 
 using std::map;
+using std::multimap;
 using std::string;
 using std::vector;
 
@@ -16,32 +17,26 @@ public:
   virtual void dump(void) = 0;
 };
 
-class KeyValueDataStore: public DataStore {
+class StructuredDataStore: public DataStore {
 public:
-  typedef map<string, string> DataType;
+  typedef enum { KEY_VALUE = 0, BLOCK } PutMode;
 
-  string get(const char* key);
-  string get(const string& key);
+  typedef map<string, string> KeyValueType;
+  typedef multimap<string, StructuredDataStore*> KeyBlockType;
+
+  StructuredDataStore();
+  void newElement(string name);
+  bool commitElement(void);
 
   void put(string key, string value);
   virtual void dump(void);
 
 private:
-  DataType data;
-};
-
-class ArrayDataStore: public DataStore {
-public:
-  typedef map<string, string> ElementType;
-  typedef map<string, vector<ElementType> > DataType;
-
-  void putKeyValue(string key, string value);
-  void putElement(string array);
-  virtual void dump(void);
-
-private:
-  DataType data;
-  ElementType currentElement;
+  PutMode m_mode;
+  KeyValueType m_keyValueData;
+  KeyBlockType m_blockData;
+  StructuredDataStore* m_currentBlock;
+  string m_currentElementName;
 };
 
 class LineRecordDataStore: public DataStore {
@@ -54,15 +49,14 @@ public:
   virtual void dump(void);
 
 private:
-  DataType data;
-  ElementType currentElement;
+  DataType m_data;
+  ElementType m_currentElement;
 };
 
 class Parser {
 public:
   typedef enum {
-    KEY_VALUE = 0,
-    ARRAY,
+    STRUCTURED = 0,
     LINE_RECORD,
   } Type;
 

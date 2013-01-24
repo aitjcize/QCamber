@@ -9,7 +9,7 @@ extern int yydebug;
 int main(int argc, const char *argv[])
 {
   yydebug = 0;
-  Parser parser("kv", Parser::KEY_VALUE);
+  Parser parser("matrix", Parser::STRUCTURED);
   parser.parse();
   return 0;
 }

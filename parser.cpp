@@ -3,81 +3,92 @@
 
 #include <cstdio>
 #include <iostream>
+#include <utility>
 
 using std::cout;
 using std::endl;
 
 extern struct yycontext yyctx;
 
-string KeyValueDataStore::get(const char* key)
+StructuredDataStore::StructuredDataStore()
 {
-  return data[key];
+  m_mode = KEY_VALUE;
+  m_currentBlock = NULL;
 }
 
-string KeyValueDataStore::get(const string& key)
+void StructuredDataStore::put(string key, string value)
 {
-  return get(key.c_str());
-}
-
-void KeyValueDataStore::put(string key, string value)
-{
-  data[key] = value;
-}
-
-void KeyValueDataStore::dump(void)
-{
-  cout << "=== KeyValueDataStore ===" << endl;
-  for (DataType::const_iterator iter = data.begin();
-      iter != data.end(); ++iter) {
-    cout << iter->first << " = " << iter->second << endl;
+  switch (m_mode) {
+  case KEY_VALUE:
+    m_keyValueData[key] = value;
+    break;
+  case BLOCK:
+    m_currentBlock->put(key, value);
+    break;
   }
 }
 
-void ArrayDataStore::putKeyValue(string key, string value)
+void StructuredDataStore::newElement(string name)
 {
-  currentElement[key] = value;
+  if (m_currentBlock != NULL) { // nested block
+    m_currentBlock->newElement(name);
+  } else {
+    m_mode = BLOCK;
+    m_currentElementName = name;
+    m_currentBlock = new StructuredDataStore;
+  }
 }
 
-void ArrayDataStore::putElement(string array)
+bool StructuredDataStore::commitElement(void)
 {
-  data[array].push_back(currentElement);
-  currentElement = ElementType();
-}
+  if (!m_currentBlock) {
+    return false;
+  }
 
-void ArrayDataStore::dump(void)
-{
-  cout << "=== ArrayDataStore ===" << endl;
-  for (DataType::const_iterator iter = data.begin();
-      iter != data.end(); ++iter) {
-    cout << iter->first << " {" << endl;
-    for (vector<ElementType>::const_iterator iter2 = iter->second.begin();
-        iter2 != iter->second.end(); ++iter2) {
-      cout << "--" << endl;
-      for (ElementType::const_iterator iter3 = iter2->begin();
-          iter3 != iter2->end(); ++iter3) {
-        cout << "\t" << iter3->first << " = " << iter3->second << endl;
-      }
+  if (m_currentBlock != NULL) {
+    if (!m_currentBlock->commitElement()) {
+      m_mode = KEY_VALUE;
+      m_blockData.insert(std::make_pair(m_currentElementName, m_currentBlock));
+      m_currentBlock = NULL;
+      return true;
     }
+  }
+  return true;
+}
+
+void StructuredDataStore::dump(void)
+{
+  cout << "=== KeyValue ===" << endl;
+  for (KeyValueType::const_iterator iter = m_keyValueData.begin();
+      iter != m_keyValueData.end(); ++iter) {
+    cout << iter->first << " = " << iter->second << endl;
+  }
+
+  cout << "=== Block ===" << endl;
+  for (KeyBlockType::const_iterator iter = m_blockData.begin();
+      iter != m_blockData.end(); ++iter) {
+    cout << iter->first << " {" << endl;
+    iter->second->dump();
     cout << "}" << endl;
   }
 }
 
 void LineRecordDataStore::putTerm(string term)
 {
-  currentElement.push_back(term);
+  m_currentElement.push_back(term);
 }
 
 void LineRecordDataStore::putLineRecord(void)
 {
-  data.push_back(currentElement);
-  currentElement = ElementType();
+  m_data.push_back(m_currentElement);
+  m_currentElement = ElementType();
 }
 
 void LineRecordDataStore::dump(void)
 {
   cout << "=== LineRecordDataStore ===" << endl;
-  for (DataType::const_iterator iter = data.begin();
-      iter != data.end(); ++iter) {
+  for (DataType::const_iterator iter = m_data.begin();
+      iter != m_data.end(); ++iter) {
     for (ElementType::const_iterator iter2 = iter->begin();
         iter2 != iter->end(); ++iter2) {
       cout << *iter2 << " ";
@@ -108,11 +119,8 @@ DataStore* Parser::parse(void)
   DataStore* data;
 
   switch (m_type) {
-  case KEY_VALUE:
-    data = yyctx.kvdata = new KeyValueDataStore;
-    break;
-  case ARRAY:
-    data = yyctx.ardata = new ArrayDataStore;
+  case STRUCTURED:
+    data = yyctx.stdata = new StructuredDataStore;
     break;
   case LINE_RECORD:
     data = yyctx.lrdata = new LineRecordDataStore;

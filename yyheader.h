@@ -7,8 +7,7 @@
 
 struct yycontext {
   Parser::Type type;
-  KeyValueDataStore* kvdata;
-  ArrayDataStore* ardata;
+  StructuredDataStore* stdata;
   LineRecordDataStore* lrdata;
 };
 
