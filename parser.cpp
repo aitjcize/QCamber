@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "yyheader.h"
+#include "db.tab.h"
 
 #include <cstdio>
 #include <iostream>

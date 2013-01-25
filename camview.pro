@@ -31,3 +31,11 @@ bison.clean = db.tab.cpp db.tab.h db.output
 bison.variable_out = SOURCES
 bison.name = bison
 QMAKE_EXTRA_COMPILERS += bison
+
+bisonheader.commands = @true
+bisonheader.input = BISONSOURCES
+bisonheader.output = db.tab.h
+bisonheader.variable_out = HEADERS
+bisonheader.name = bison header
+bisonheader.depends = db.tab.cpp
+QMAKE_EXTRA_COMPILERS += bisonheader
