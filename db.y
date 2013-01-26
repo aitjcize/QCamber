@@ -59,6 +59,7 @@ op_newlines  : op_newlines NL
 int yyerror(const char* s)
 {
   fprintf(stderr, "yacc: %s\n", s);
+  return 0;
 }
 
 void putKeyValue(const char* key, const char* value)

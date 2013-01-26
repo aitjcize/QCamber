@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
-LIBS += -lfl -ly
 
 # Input
 HEADERS += archiveloader.h parser.h yyheader.h

@@ -4,6 +4,8 @@ ws          {delim}+
 letter      [A-Za-z0-9_.\-+]
 var         {letter}+
 
+%option noyywrap
+
 %{
 #include "yyheader.h"
 
