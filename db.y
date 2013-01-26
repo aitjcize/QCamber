@@ -21,14 +21,14 @@ syntax       : op_newlines structures
              ;
 
 structures   : structures structure
-	     | structure
-	     ;
+             | structure
+             ;
 
 structure    : VAR { yyctx.stdata->newElement($1); }
-	       '{' op_newlines structures '}' newlines   {
+               '{' op_newlines structures '}' newlines   {
                  yyctx.stdata->commitElement();
               }
-	     | assignment
+             | assignment
              ;
 
 assignment   : VAR '=' VAR newlines { putKeyValue($1, $3); }
