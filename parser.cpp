@@ -117,7 +117,7 @@ void LineRecordDataStore::dump(void)
   }
 }
 
-Parser::Parser(const char* filename, Type type)
+Parser::Parser(string filename, Type type)
 {
   m_fileName = filename;
   m_type = type;
@@ -136,7 +136,7 @@ DataStore* Parser::parse(void)
   }
 
   yyctx.type = m_type;
-  DataStore* data;
+  DataStore* data = NULL;
 
   switch (m_type) {
   case STRUCTURED:

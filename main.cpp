@@ -18,8 +18,9 @@ int main(int argc, const char *argv[])
   yydebug = 0;
   ArchiveLoader a("demo.tgz");
   a.load();
+  qDebug() << a.listDir("symbols");
 
-  Parser parser("matrix", Parser::STRUCTURED);
+  Parser parser(a.absPath("matrix/matrix").toStdString(), Parser::STRUCTURED);
   StructuredDataStore* ds = (StructuredDataStore*)parser.parse();
   StructuredDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
 

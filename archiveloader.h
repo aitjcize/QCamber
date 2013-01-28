@@ -8,14 +8,13 @@
 
 class ArchiveLoader {
 public:
-  ArchiveLoader(const char* filename = NULL);
+  ArchiveLoader(QString filename);
   ~ArchiveLoader();
 
-  bool load(const char* filename = NULL);
+  bool load(void);
 
-  QStringList getSteps(void);
-  QStringList getLayers(void);
-  QStringList getSymbols(void);
+  QString absPath(QString path);
+  QStringList listDir(QString filename);
 
 private:
   QDir m_dir;

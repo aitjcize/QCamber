@@ -71,7 +71,7 @@ public:
     LINE_RECORD,
   } Type;
 
-  Parser(const char* filename, Type type);
+  Parser(string filename, Type type);
   ~Parser();
   virtual DataStore* parse(void);
 

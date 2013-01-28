@@ -9,10 +9,8 @@
 
 #include "parser.h"
 
-ArchiveLoader::ArchiveLoader(const char* filename): m_fileName(filename)
+ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
 {
-  if (filename) {
-  }
 }
 
 ArchiveLoader::~ArchiveLoader()
@@ -20,14 +18,10 @@ ArchiveLoader::~ArchiveLoader()
   
 }
 
-bool ArchiveLoader::load(const char* filename)
+bool ArchiveLoader::load(void)
 {
   // Use `tar' command for the time being, may switched to libarchive in the
   // future.
-
-  if (filename) {
-    m_fileName = filename;
-  }
 
   unsigned timestamp = QDateTime::currentDateTime().toTime_t();
   QString extract_dir = QString::number(timestamp) + "_" + m_fileName;
@@ -50,9 +44,13 @@ bool ArchiveLoader::load(const char* filename)
   return false;
 }
 
-QStringList ArchiveLoader::getSymbols(void)
+QString ArchiveLoader::absPath(QString path) {
+  return m_dir.absoluteFilePath(path);
+}
+
+QStringList ArchiveLoader::listDir(QString filename)
 {
-  QDir dir(m_dir.absoluteFilePath("symbols"));
+  QDir dir(m_dir.absoluteFilePath(filename));
   QStringList symbols = dir.entryList();
   symbols.removeAll(".");
   symbols.removeAll("..");
