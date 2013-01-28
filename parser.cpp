@@ -23,7 +23,7 @@ void StructuredDataStore::put(string key, string value)
 {
   switch (m_mode) {
   case KEY_VALUE:
-    m_keyValueData[key] = value;
+    m_valueData[key] = value;
     break;
   case BLOCK:
     m_currentBlock->put(key, value);
@@ -59,16 +59,30 @@ bool StructuredDataStore::commitElement(void)
   return true;
 }
 
+string StructuredDataStore::get(string key)
+{
+  if (m_valueData.find(key) != m_valueData.end()) {
+    return m_valueData[key];
+  }
+  throw InvalidKeyException();
+}
+
+StructuredDataStore::BlockIterPair
+StructuredDataStore::getBlocksByKey(string key)
+{
+  return m_blockData.equal_range(key);
+}
+
 void StructuredDataStore::dump(void)
 {
-  for (KeyValueType::const_iterator iter = m_keyValueData.begin();
-      iter != m_keyValueData.end(); ++iter) {
+  for (ValueType::const_iterator iter = m_valueData.begin();
+      iter != m_valueData.end(); ++iter) {
     cout << string(dumpIndent * 2, ' ');
     cout << iter->first << " = " << iter->second << endl;
   }
 
   dumpIndent += 1;
-  for (KeyBlockType::const_iterator iter = m_blockData.begin();
+  for (BlockType::const_iterator iter = m_blockData.begin();
       iter != m_blockData.end(); ++iter) {
     cout << string(dumpIndent * 2 - 2, ' ');
     cout << iter->first << " {" << endl;
@@ -134,7 +148,7 @@ DataStore* Parser::parse(void)
   }
 
   yyparse();
-  data->dump();
+  //data->dump();
 
   return data;
 }

@@ -3,8 +3,8 @@
 
 #define TAR_COMMAND "tar"
 
-#include <string>
-using std::string;
+#include <QDir>
+#include <QString>
 
 class ArchiveLoader {
 public:
@@ -13,8 +13,13 @@ public:
 
   bool load(const char* filename = NULL);
 
+  QStringList getSteps(void);
+  QStringList getLayers(void);
+  QStringList getSymbols(void);
+
 private:
-  string m_fileName;
+  QDir m_dir;
+  QString m_fileName;
 };
 
 #endif /* __ARCHIVE_LOADER_H__ */

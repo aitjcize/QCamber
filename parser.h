@@ -2,11 +2,14 @@
 #define __PARSER_H__
 
 #include <map>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
+using std::exception;
 using std::map;
 using std::multimap;
+using std::pair;
 using std::string;
 using std::vector;
 
@@ -17,14 +20,22 @@ public:
 
 class StructuredDataStore: public DataStore {
 public:
+  class InvalidKeyException: public exception {
+  };
+
   typedef enum { KEY_VALUE = 0, BLOCK } PutMode;
 
-  typedef map<string, string> KeyValueType;
-  typedef multimap<string, StructuredDataStore*> KeyBlockType;
+  typedef map<string, string> ValueType;
+  typedef multimap<string, StructuredDataStore*> BlockType;
+  typedef BlockType::iterator BlockIter;
+  typedef pair<BlockIter, BlockIter> BlockIterPair;
 
   StructuredDataStore();
   void newElement(string name);
   bool commitElement(void);
+
+  string get(string key);
+  BlockIterPair getBlocksByKey(string key);
 
   void put(string key, string value);
   virtual void dump(void);
@@ -33,8 +44,8 @@ public:
 
 private:
   PutMode m_mode;
-  KeyValueType m_keyValueData;
-  KeyBlockType m_blockData;
+  ValueType m_valueData;
+  BlockType m_blockData;
   StructuredDataStore* m_currentBlock;
   string m_currentElementName;
 };
