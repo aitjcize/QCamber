@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include <QString>
+
 using std::exception;
 using std::map;
 using std::multimap;
@@ -72,6 +74,7 @@ public:
   } Type;
 
   Parser(string filename, Type type);
+  Parser(QString filename, Type type);
   ~Parser();
   virtual DataStore* parse(void);
 

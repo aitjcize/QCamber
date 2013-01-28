@@ -15,9 +15,10 @@ FLEXSOURCES += db.l
 BISONSOURCES += db.y
 
 # Flex settings
-flex.commands = flex ${QMAKE_FILE_IN}
+flex.commands = flex ${QMAKE_FILE_IN} && mv lex.yy.c lex.yy.cpp
 flex.input = FLEXSOURCES
-flex.output = lex.yy.c
+flex.output = lex.yy.cpp
+flex.variable_out = SOURCES
 flex.depends = db.tab.h
 flex.name = flex
 QMAKE_EXTRA_COMPILERS += flex

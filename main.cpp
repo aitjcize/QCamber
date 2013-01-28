@@ -20,7 +20,7 @@ int main(int argc, const char *argv[])
   a.load();
   qDebug() << a.listDir("symbols");
 
-  Parser parser(a.absPath("matrix/matrix").toStdString(), Parser::STRUCTURED);
+  Parser parser(a.absPath("matrix/matrix"), Parser::STRUCTURED);
   StructuredDataStore* ds = (StructuredDataStore*)parser.parse();
   StructuredDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
 

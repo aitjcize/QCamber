@@ -117,10 +117,12 @@ void LineRecordDataStore::dump(void)
   }
 }
 
-Parser::Parser(string filename, Type type)
+Parser::Parser(string filename, Type type): m_fileName(filename), m_type(type)
 {
-  m_fileName = filename;
-  m_type = type;
+}
+
+Parser::Parser(QString filename, Type type): Parser(filename.toStdString(), type)
+{
 }
  
 Parser::~Parser()
