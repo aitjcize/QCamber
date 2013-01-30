@@ -17,6 +17,9 @@ public:
   QStringList listDir(QString filename);
 
 private:
+  bool recurRemove(const QString& dirname);
+
+private:
   QDir m_dir;
   QString m_fileName;
 };
