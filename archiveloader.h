@@ -5,6 +5,7 @@
 
 #include <QDir>
 #include <QString>
+#include <QStringList>
 
 class ArchiveLoader {
 public:

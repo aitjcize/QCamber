@@ -3,9 +3,10 @@
 #include <iostream>
 #include <utility>
 
-#include <QDebug>
+#include <QtGui>
 
 #include "archiveloader.h"
+#include "odbppviewwidget.h"
 
 using std::cout;
 using std::endl;
@@ -13,7 +14,7 @@ using std::pair;
 
 extern int yydebug;
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
   yydebug = 0;
   ArchiveLoader a("demo.tgz");
@@ -28,5 +29,10 @@ int main(int argc, const char *argv[])
     cout << it->second->get("NAME") << endl;;
   }
 
-  return 0;
+  QApplication app(argc, argv);
+  qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+
+  ODBPPViewWidget widget;
+  widget.show();
+  return app.exec();
 }

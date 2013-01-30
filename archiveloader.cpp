@@ -1,11 +1,6 @@
 #include "archiveloader.h"
 
-#include <QDir>
-#include <QString>
-#include <QStringList>
-#include <QProcess>
-#include <QDateTime>
-#include <QDebug>
+#include <QtCore>
 
 #include "parser.h"
 
@@ -15,7 +10,6 @@ ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
 
 ArchiveLoader::~ArchiveLoader()
 {
-  qDebug() << m_dir.path();
   recurRemove(m_dir.path());
 }
 
@@ -45,7 +39,8 @@ bool ArchiveLoader::load(void)
   return false;
 }
 
-QString ArchiveLoader::absPath(QString path) {
+QString ArchiveLoader::absPath(QString path)
+{
   return m_dir.absoluteFilePath(path);
 }
 

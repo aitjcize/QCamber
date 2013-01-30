@@ -8,8 +8,22 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += archiveloader.h parser.h yyheader.h
-SOURCES += archiveloader.cpp main.cpp parser.cpp
+HEADERS += \
+  archiveloader.h \
+  db.tab.h \
+  odbppviewwidget.h \
+  parser.h \
+  roundsymbol.h \
+  symbol.h \
+  yyheader.h
+
+SOURCES += \
+  archiveloader.cpp \
+  main.cpp \
+  odbppviewwidget.cpp \
+  parser.cpp \
+  roundsymbol.cpp \
+  symbol.cpp
 
 FLEXSOURCES += db.l
 BISONSOURCES += db.y
