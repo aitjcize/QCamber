@@ -39,3 +39,8 @@ bisonheader.variable_out = HEADERS
 bisonheader.name = bison header
 bisonheader.depends = db.tab.cpp
 QMAKE_EXTRA_COMPILERS += bisonheader
+
+MOC_DIR = build
+UI_DIR = build
+RCC_DIR = build
+OBJECTS_DIR = build
