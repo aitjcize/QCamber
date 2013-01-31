@@ -17,7 +17,7 @@ void RectangleSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
   double rad;
-  Type type;
+  Type type = NORMAL;
   int corners = 0;
 
   if (m_params.find("xr") != m_params.end()) {
@@ -42,7 +42,7 @@ void RectangleSymbol::paint(QPainter* painter,
   painter->setBrush(Qt::red);
 
   QPainterPath path;
-  addRect(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), ROUNDED, rad, corners);
+  addRect(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), type, rad, corners);
   painter->drawPath(path);
 }
 
