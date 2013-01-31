@@ -1,5 +1,5 @@
-#ifndef __ROUND_SYMBOL_H__
-#define __ROUND_SYMBOL_H__
+#ifndef __ROUNDSYMBOL_H__
+#define __ROUNDSYMBOL_H__
 
 #include "symbol.h"
 
@@ -15,4 +15,4 @@ private:
   int m_d;
 };
 
-#endif /* __ROUND_SYMBOL_H__ */
+#endif /* __ROUNDSYMBOL_H__ */

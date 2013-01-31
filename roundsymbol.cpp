@@ -19,4 +19,3 @@ void RoundSymbol::paint(QPainter* painter,
   painter->setBrush(Qt::red);
   painter->drawEllipse(-m_d / 2, -m_d / 2, m_d, m_d);
 }
-

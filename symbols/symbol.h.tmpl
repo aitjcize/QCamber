@@ -1,0 +1,18 @@
+#ifndef __{{.#name|upper}}_H__
+#define __{{.#name|upper}}_H__
+
+#include "symbol.h"
+
+class {{.#name}}: public Symbol {
+public:
+  {{.#name}}(Params params);
+
+  QRectF boundingRect() const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+      QWidget* widget);
+
+private:
+  {{private}}
+};
+
+#endif /* __{{.#name|upper}}_H__ */

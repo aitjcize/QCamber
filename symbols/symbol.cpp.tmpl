@@ -1,0 +1,19 @@
+#include "{{.#name|lower}}.h"
+
+#include <QtGui>
+
+{{.#name}}::{{.#name}}(Params params): Symbol("{{.#id}}", params)
+{
+  {{constructor}}
+}
+
+QRectF {{.#name}}::boundingRect() const
+{
+  {{boundingRect}}
+}
+
+void {{.#name}}::paint(QPainter* painter,
+    const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+  {{paint}}
+}
