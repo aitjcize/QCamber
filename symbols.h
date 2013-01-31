@@ -5,3 +5,4 @@
 #include "diamondsymbol.h"
 #include "octagonsymbol.h"
 #include "donutsymbol.h"
+#include "squaresymbol.h"

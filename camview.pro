@@ -19,6 +19,7 @@ HEADERS += \
   diamondsymbol.h \
   octagonsymbol.h \
   donutsymbol.h \
+  squaresymbol.h \
   symbol.h \
   yyheader.h
 
@@ -33,6 +34,7 @@ SOURCES += \
   diamondsymbol.cpp \
   octagonsymbol.cpp \
   donutsymbol.cpp \
+  squaresymbol.cpp \
   symbol.cpp
 
 FLEXSOURCES += db.l
