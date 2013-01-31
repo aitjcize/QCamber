@@ -1,0 +1,22 @@
+<symbol name="DonutSymbol" id="donut_r">
+  <private_block><![CDATA[
+  qreal m_od;
+  qreal m_id;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_od = params["od"].toDouble();
+  m_id = params["id"].toDouble();
+  ]]></constructor>
+
+  <boundingRect><![CDATA[
+  return QRectF(-m_od / 2, -m_od / 2, m_od, m_od);
+  ]]></boundingRect>
+
+  <paint><![CDATA[
+  qreal rad = (m_od + m_id) / 4;
+  qreal pen_width = (m_od - m_id) / 2;
+  painter->setPen(QPen(Qt::red, pen_width));
+  painter->drawEllipse(-rad, -rad, rad * 2, rad * 2);
+  ]]></paint>
+</symbol>
