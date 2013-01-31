@@ -48,12 +48,18 @@ class TemplateEngine(object):
             target, attrib = target.split('#')
 
         target_node = self.root.find(target)
+        if target_node is None:
+            return ''
+
         result = target_node.text if not attrib else target_node.attrib[attrib]
 
         for op in ops[1:]:
             result = eval('result.%s()' % op)
 
         result = result.strip('\n ').rstrip(' ')
+
+        if matchobj.group(0).endswith('\n'):
+            result += '\n'
         
         return result
 
@@ -68,8 +74,11 @@ class TemplateEngine(object):
 
         print 'GEN %s'  % filename
 
-        result = re.sub(r'{{([^{}]+?)}}', self.interpolate, self.template,
-                        flags=re.S)
+        result = re.sub(r'{{([^{}]+?)}}\n?', self.interpolate, self.template,
+                        flags=re.S).strip() + '\n'
+
+        # remove whitespace only line
+        result = re.sub(r'\n +\n', r'\n\n', result, flags=re.S)
 
         with open(filename, 'w') as f:
             f.write(result)

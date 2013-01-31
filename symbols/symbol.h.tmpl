@@ -5,14 +5,20 @@
 
 class {{.#name}}: public Symbol {
 public:
+  {{typedefs}}
+
   {{.#name}}(Params params);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
+  {{public_block}}
+
+protected:
+  {{protected_block}}
 
 private:
-  {{private}}
+  {{private_block}}
 };
 
 #endif /* __{{.#name|upper}}_H__ */

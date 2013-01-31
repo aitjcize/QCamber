@@ -1,13 +1,16 @@
 <symbol name="RoundSymbol" id="r">
-  <private><![CDATA[
+  <private_block><![CDATA[
   int m_d;
-  ]]></private>
+  ]]></private_block>
+
   <constructor><![CDATA[
   m_d = params["d"].toInt();
   ]]></constructor>
+
   <boundingRect><![CDATA[
   return QRectF(-m_d / 2, -m_d / 2, m_d, m_d);
   ]]></boundingRect>
+
   <paint><![CDATA[
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);

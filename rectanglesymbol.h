@@ -17,7 +17,7 @@ public:
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
 
-private:
+protected:
   void addRect(QPainterPath& path, const QRectF& rect, Type type = NORMAL,
       qreal rad = 0, int corners = 0);
 

@@ -5,11 +5,14 @@
 
 class RoundSymbol: public Symbol {
 public:
+
   RoundSymbol(Params params);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
+
+protected:
 
 private:
   int m_d;
