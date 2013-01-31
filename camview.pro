@@ -15,6 +15,7 @@ HEADERS += \
   parser.h \
   roundsymbol.h \
   rectanglesymbol.h \
+  ovalsymbol.h \
   symbol.h \
   yyheader.h
 
@@ -25,6 +26,7 @@ SOURCES += \
   parser.cpp \
   roundsymbol.cpp \
   rectanglesymbol.cpp \
+  ovalsymbol.cpp \
   symbol.cpp
 
 FLEXSOURCES += db.l

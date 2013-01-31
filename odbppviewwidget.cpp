@@ -23,9 +23,16 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   params.clear();
   params["w"] = "100";
   params["h"] = "50";
-  params["xc"] = "20";
+  params["xr"] = "20";
   params["corners"] = "13";
   Symbol* symbol2 = new RectangleSymbol(params);
   scene->addItem(symbol2);
-  symbol->setPos(100, 0);
+  symbol2->setPos(100, 0);
+
+  params.clear();
+  params["w"] = "100";
+  params["h"] = "50";
+  Symbol* symbol3 = new OvalSymbol(params);
+  scene->addItem(symbol3);
+  symbol3->setPos(0, 100);
 }

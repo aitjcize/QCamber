@@ -6,6 +6,7 @@
     CHAMFERED
   } Type;
   ]]></typedefs>
+
   <private_block><![CDATA[
   int m_w;
   int m_h;
