@@ -2,3 +2,4 @@
 #include "ovalsymbol.h"
 #include "rectanglesymbol.h"
 #include "roundsymbol.h"
+#include "diamondsymbol.h"

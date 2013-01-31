@@ -16,6 +16,7 @@ HEADERS += \
   roundsymbol.h \
   rectanglesymbol.h \
   ovalsymbol.h \
+  diamondsymbol.h \
   symbol.h \
   yyheader.h
 
@@ -27,6 +28,7 @@ SOURCES += \
   roundsymbol.cpp \
   rectanglesymbol.cpp \
   ovalsymbol.cpp \
+  diamondsymbol.cpp \
   symbol.cpp
 
 FLEXSOURCES += db.l

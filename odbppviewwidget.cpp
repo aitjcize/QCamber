@@ -5,13 +5,13 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 {
   QGraphicsScene *scene = new QGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-  scene->setSceneRect(-200, -200, 400, 400);
+  scene->setSceneRect(-400, -400, 800, 800);
   setScene(scene);
   setCacheMode(CacheBackground);
   setViewportUpdateMode(BoundingRectViewportUpdate);
   //setRenderHint(QPainter::Antialiasing);
   setTransformationAnchor(AnchorUnderMouse);
-  setMinimumSize(400, 400);
+  setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
 
   Symbol::Params params;
@@ -35,4 +35,11 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   Symbol* symbol3 = new OvalSymbol(params);
   scene->addItem(symbol3);
   symbol3->setPos(0, 100);
+
+  params.clear();
+  params["w"] = "100";
+  params["h"] = "50";
+  Symbol* symbol4 = new DiamondSymbol(params);
+  scene->addItem(symbol4);
+  symbol4->setPos(0, -100);
 }

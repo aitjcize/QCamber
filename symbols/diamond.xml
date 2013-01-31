@@ -1,0 +1,49 @@
+<symbol name="DiamondSymbol" id="di">
+  <private_block><![CDATA[
+  int m_w;
+  int m_h;
+  ]]></private_block>
+
+  <protected_block><![CDATA[
+  void addDiamond(QPainterPath& path, const QRectF& rect);
+  ]]></protected_block>
+
+  <constructor><![CDATA[
+  m_w = params["w"].toInt();
+  m_h = params["h"].toInt();
+  ]]></constructor>
+
+  <boundingRect><![CDATA[
+  return QRectF(-m_w / 2, -m_h / 2, m_w, m_h);
+  ]]></boundingRect>
+
+  <paint><![CDATA[
+  painter->setPen(QPen(Qt::red, 0));
+  painter->setBrush(Qt::red);
+  QPainterPath path;
+  addDiamond(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h));
+  painter->drawPath(path);
+  ]]></paint>
+  <function_body><![CDATA[
+void DiamondSymbol::addDiamond(QPainterPath& path, const QRectF& rect)
+{
+  QRectF r = rect.normalized();
+
+  if (r.isNull())
+    return;
+
+  qreal x = r.x();
+  qreal y = r.y();
+  qreal w = r.width();
+  qreal h = r.height();
+  qreal wh = w / 2;
+  qreal hh = h / 2;
+
+  path.moveTo(x, y+hh);
+  path.lineTo(x+wh, y);
+  path.lineTo(x+w, y+hh);
+  path.lineTo(x+wh, y+h);
+  path.closeSubpath();
+}
+  ]]></function_body>
+</symbol>
