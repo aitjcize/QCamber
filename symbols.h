@@ -4,3 +4,4 @@
 #include "roundsymbol.h"
 #include "diamondsymbol.h"
 #include "octagonsymbol.h"
+#include "donutsymbol.h"

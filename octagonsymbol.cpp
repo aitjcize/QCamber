@@ -2,11 +2,11 @@
 
 #include <QtGui>
 
-OctagonSymbol::OctagonSymbol(Params params): Symbol("di", params)
+OctagonSymbol::OctagonSymbol(Params params): Symbol("oct", params)
 {
-  m_w = params["w"].toInt();
-  m_h = params["h"].toInt();
-  m_r = params["r"].toInt();
+  m_w = params["w"].toDouble();
+  m_h = params["h"].toDouble();
+  m_r = params["r"].toDouble();
 }
 
 QRectF OctagonSymbol::boundingRect() const

@@ -15,7 +15,7 @@ public:
 protected:
 
 private:
-  int m_d;
+  qreal m_d;
 };
 
 #endif /* __ROUNDSYMBOL_H__ */

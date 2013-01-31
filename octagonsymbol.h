@@ -16,9 +16,9 @@ protected:
   void addOctagon(QPainterPath& path, const QRectF& rect, qreal corner);
 
 private:
-  int m_w;
-  int m_h;
-  int m_r;
+  qreal m_w;
+  qreal m_h;
+  qreal m_r;
 };
 
 #endif /* __OCTAGONSYMBOL_H__ */

@@ -22,8 +22,8 @@ protected:
       qreal rad = 0, int corners = 0);
 
 private:
-  int m_w;
-  int m_h;
+  qreal m_w;
+  qreal m_h;
 };
 
 #endif /* __RECTANGLESYMBOL_H__ */

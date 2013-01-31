@@ -1,10 +1,10 @@
 <symbol name="RoundSymbol" id="r">
   <private_block><![CDATA[
-  int m_d;
+  qreal m_d;
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_d = params["d"].toInt();
+  m_d = params["d"].toDouble();
   ]]></constructor>
 
   <boundingRect><![CDATA[

@@ -4,8 +4,8 @@
 
 OvalSymbol::OvalSymbol(Params params): Symbol("oval", params)
 {
-  m_w = params["w"].toInt();
-  m_h = params["h"].toInt();
+  m_w = params["w"].toDouble();
+  m_h = params["h"].toDouble();
 }
 
 QRectF OvalSymbol::boundingRect() const

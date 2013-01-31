@@ -8,8 +8,8 @@
   ]]></typedefs>
 
   <private_block><![CDATA[
-  int m_w;
-  int m_h;
+  qreal m_w;
+  qreal m_h;
   ]]></private_block>
 
   <protected_block><![CDATA[
@@ -27,7 +27,7 @@
   ]]></boundingRect>
 
   <paint><![CDATA[
-  double rad;
+  qreal rad;
   Type type;
   int corners = 0;
 

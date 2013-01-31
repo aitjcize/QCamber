@@ -4,8 +4,8 @@
 
 DiamondSymbol::DiamondSymbol(Params params): Symbol("di", params)
 {
-  m_w = params["w"].toInt();
-  m_h = params["h"].toInt();
+  m_w = params["w"].toDouble();
+  m_h = params["h"].toDouble();
 }
 
 QRectF DiamondSymbol::boundingRect() const

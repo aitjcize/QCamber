@@ -50,4 +50,11 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   Symbol* symbol5 = new OctagonSymbol(params);
   scene->addItem(symbol5);
   symbol5->setPos(-100, 0);
+
+  params.clear();
+  params["od"] = "60";
+  params["id"] = "30";
+  Symbol* symbol6 = new DonutSymbol(params);
+  scene->addItem(symbol6);
+  symbol6->setPos(-100, -100);
 }

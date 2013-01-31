@@ -16,8 +16,8 @@ protected:
   void addOval(QPainterPath& path, const QRectF& rect);
 
 private:
-  int m_w;
-  int m_h;
+  qreal m_w;
+  qreal m_h;
 };
 
 #endif /* __OVALSYMBOL_H__ */

@@ -4,7 +4,7 @@
 
 RoundSymbol::RoundSymbol(Params params): Symbol("r", params)
 {
-  m_d = params["d"].toInt();
+  m_d = params["d"].toDouble();
 }
 
 QRectF RoundSymbol::boundingRect() const
