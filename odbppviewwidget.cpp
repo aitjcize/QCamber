@@ -15,7 +15,7 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   setWindowTitle(tr("test"));
 
   Symbol::Params params;
-  params["d"] = "10";
+  params["d"] = "50";
   Symbol* symbol = new RoundSymbol(params);
   scene->addItem(symbol);
   symbol->setPos(0, 0);
@@ -42,4 +42,12 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   Symbol* symbol4 = new DiamondSymbol(params);
   scene->addItem(symbol4);
   symbol4->setPos(0, -100);
+
+  params.clear();
+  params["w"] = "60";
+  params["h"] = "60";
+  params["r"] = "20";
+  Symbol* symbol5 = new OctagonSymbol(params);
+  scene->addItem(symbol5);
+  symbol5->setPos(-100, 0);
 }

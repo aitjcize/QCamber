@@ -3,3 +3,4 @@
 #include "rectanglesymbol.h"
 #include "roundsymbol.h"
 #include "diamondsymbol.h"
+#include "octagonsymbol.h"
