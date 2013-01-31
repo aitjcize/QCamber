@@ -14,6 +14,7 @@ HEADERS += \
   odbppviewwidget.h \
   parser.h \
   roundsymbol.h \
+  rectanglesymbol.h \
   symbol.h \
   yyheader.h
 
@@ -23,6 +24,7 @@ SOURCES += \
   odbppviewwidget.cpp \
   parser.cpp \
   roundsymbol.cpp \
+  rectanglesymbol.cpp \
   symbol.cpp
 
 FLEXSOURCES += db.l

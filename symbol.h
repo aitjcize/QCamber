@@ -16,7 +16,7 @@ public:
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget) = 0;
 
-private:
+protected:
   QString m_name;
   Params m_params;
 };

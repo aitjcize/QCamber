@@ -9,7 +9,7 @@ RoundSymbol::RoundSymbol(Params params): Symbol("r", params)
 
 QRectF RoundSymbol::boundingRect() const
 {
-  return QRectF(m_d / 2, -m_d / 2, m_d, m_d);
+  return QRectF(-m_d / 2, -m_d / 2, m_d, m_d);
 }
 
 void RoundSymbol::paint(QPainter* painter,
