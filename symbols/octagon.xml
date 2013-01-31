@@ -26,6 +26,7 @@
   addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r);
   painter->drawPath(path);
   ]]></paint>
+
   <function_body><![CDATA[
 void OctagonSymbol::addOctagon(QPainterPath& path, const QRectF& rect,
     qreal c)

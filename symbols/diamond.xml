@@ -24,6 +24,7 @@
   addDiamond(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h));
   painter->drawPath(path);
   ]]></paint>
+
   <function_body><![CDATA[
 void DiamondSymbol::addDiamond(QPainterPath& path, const QRectF& rect)
 {
