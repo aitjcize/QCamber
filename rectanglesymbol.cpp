@@ -7,7 +7,8 @@ RectangleSymbol::RectangleSymbol(QString def):
     Symbol("rect", "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?"), m_def(def)
 {
   QRegExp rx(m_pattern);
-  rx.exactMatch(def);
+  if (!rx.exactMatch(def))
+    throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
   m_w = caps[1].toDouble();
   m_h = caps[2].toDouble();

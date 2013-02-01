@@ -7,7 +7,8 @@ RoundSymbol::RoundSymbol(QString def):
     Symbol("r", "r([0-9.]+)"), m_def(def)
 {
   QRegExp rx(m_pattern);
-  rx.exactMatch(def);
+  if (!rx.exactMatch(def))
+    throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
   m_d = caps[1].toDouble();
 }

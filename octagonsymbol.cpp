@@ -7,7 +7,8 @@ OctagonSymbol::OctagonSymbol(QString def):
     Symbol("oct", "oct([0-9.]+)x([0-9.]+)x([0-9.]+)"), m_def(def)
 {
   QRegExp rx(m_pattern);
-  rx.exactMatch(def);
+  if (!rx.exactMatch(def))
+    throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
   m_w = caps[1].toDouble();
   m_h = caps[2].toDouble();

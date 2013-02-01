@@ -8,7 +8,6 @@
 
 #include <QString>
 
-using std::exception;
 using std::map;
 using std::multimap;
 using std::pair;
@@ -22,7 +21,7 @@ public:
 
 class StructuredDataStore: public DataStore {
 public:
-  class InvalidKeyException: public exception {
+  class InvalidKeyException: public std::exception {
   };
 
   typedef enum { KEY_VALUE = 0, BLOCK } PutMode;

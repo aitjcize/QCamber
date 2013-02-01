@@ -7,7 +7,8 @@
     Symbol("{{.#id}}", "{{pattern}}"), m_def(def)
 {
   QRegExp rx(m_pattern);
-  rx.exactMatch(def);
+  if (!rx.exactMatch(def))
+    throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
   {{constructor}}
 }
