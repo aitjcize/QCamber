@@ -4,6 +4,7 @@
 #include <utility>
 
 #include <QtGui>
+#include <QRegExp>
 
 #include "archiveloader.h"
 #include "odbppviewwidget.h"

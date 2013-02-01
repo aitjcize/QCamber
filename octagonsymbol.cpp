@@ -1,12 +1,17 @@
 #include "octagonsymbol.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-OctagonSymbol::OctagonSymbol(Params params): Symbol("oct", params)
+OctagonSymbol::OctagonSymbol(QString def):
+    Symbol("oct", "oct([0-9.]+)x([0-9.]+)x([0-9.]+)"), m_def(def)
 {
-  m_w = params["w"].toDouble();
-  m_h = params["h"].toDouble();
-  m_r = params["r"].toDouble();
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
+  m_w = caps[1].toDouble();
+  m_h = caps[2].toDouble();
+  m_r = caps[3].toDouble();
 }
 
 QRectF OctagonSymbol::boundingRect() const
@@ -15,7 +20,7 @@ QRectF OctagonSymbol::boundingRect() const
 }
 
 void OctagonSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);

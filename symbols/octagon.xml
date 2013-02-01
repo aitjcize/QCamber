@@ -1,4 +1,8 @@
 <symbol name="OctagonSymbol" id="oct">
+  <pattern><![CDATA[
+    oct([0-9.]+)x([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
   <private_block><![CDATA[
   qreal m_w;
   qreal m_h;
@@ -10,9 +14,9 @@
   ]]></protected_block>
 
   <constructor><![CDATA[
-  m_w = params["w"].toDouble();
-  m_h = params["h"].toDouble();
-  m_r = params["r"].toDouble();
+  m_w = caps[1].toDouble();
+  m_h = caps[2].toDouble();
+  m_r = caps[3].toDouble();
   ]]></constructor>
 
   <boundingRect><![CDATA[

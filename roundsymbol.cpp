@@ -1,10 +1,15 @@
 #include "roundsymbol.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-RoundSymbol::RoundSymbol(Params params): Symbol("r", params)
+RoundSymbol::RoundSymbol(QString def):
+    Symbol("r", "r([0-9.]+)"), m_def(def)
 {
-  m_d = params["d"].toDouble();
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
+  m_d = caps[1].toDouble();
 }
 
 QRectF RoundSymbol::boundingRect() const
@@ -13,7 +18,7 @@ QRectF RoundSymbol::boundingRect() const
 }
 
 void RoundSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);

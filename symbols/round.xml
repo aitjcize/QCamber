@@ -1,10 +1,14 @@
 <symbol name="RoundSymbol" id="r">
+  <pattern><![CDATA[
+    r([0-9.]+)
+  ]]></pattern>
+
   <private_block><![CDATA[
   qreal m_d;
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_d = params["d"].toDouble();
+  m_d = caps[1].toDouble();
   ]]></constructor>
 
   <boundingRect><![CDATA[

@@ -1,11 +1,16 @@
 #include "diamondsymbol.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-DiamondSymbol::DiamondSymbol(Params params): Symbol("di", params)
+DiamondSymbol::DiamondSymbol(QString def):
+    Symbol("di", "di([0-9.]+)x([0-9.]+)"), m_def(def)
 {
-  m_w = params["w"].toDouble();
-  m_h = params["h"].toDouble();
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
+  m_w = caps[1].toDouble();
+  m_h = caps[2].toDouble();
 }
 
 QRectF DiamondSymbol::boundingRect() const
@@ -14,7 +19,7 @@ QRectF DiamondSymbol::boundingRect() const
 }
 
 void DiamondSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);

@@ -6,7 +6,7 @@
 class RoundSymbol: public Symbol {
 public:
 
-  RoundSymbol(Params params);
+  RoundSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -15,6 +15,7 @@ public:
 protected:
 
 private:
+  QString m_def;
   qreal m_d;
 };
 

@@ -6,7 +6,7 @@
 class DiamondSymbol: public Symbol {
 public:
 
-  DiamondSymbol(Params params);
+  DiamondSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -16,6 +16,7 @@ protected:
   void addDiamond(QPainterPath& path, const QRectF& rect);
 
 private:
+  QString m_def;
   qreal m_w;
   qreal m_h;
 };

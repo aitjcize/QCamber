@@ -6,7 +6,7 @@
 class OctagonSymbol: public Symbol {
 public:
 
-  OctagonSymbol(Params params);
+  OctagonSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -16,6 +16,7 @@ protected:
   void addOctagon(QPainterPath& path, const QRectF& rect, qreal corner);
 
 private:
+  QString m_def;
   qreal m_w;
   qreal m_h;
   qreal m_r;

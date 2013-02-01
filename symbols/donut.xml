@@ -1,12 +1,16 @@
 <symbol name="DonutSymbol" id="donut_r">
+  <pattern><![CDATA[
+    donut_r([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
   <private_block><![CDATA[
   qreal m_od;
   qreal m_id;
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_od = params["od"].toDouble();
-  m_id = params["id"].toDouble();
+  m_od = caps[1].toDouble();
+  m_id = caps[2].toDouble();
   ]]></constructor>
 
   <boundingRect><![CDATA[

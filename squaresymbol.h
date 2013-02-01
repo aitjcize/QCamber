@@ -6,7 +6,7 @@
 class SquareSymbol: public Symbol {
 public:
 
-  SquareSymbol(Params params);
+  SquareSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -15,6 +15,7 @@ public:
 protected:
 
 private:
+  QString m_def;
   qreal m_s;
 };
 

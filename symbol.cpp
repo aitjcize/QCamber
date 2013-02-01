@@ -1,6 +1,6 @@
 #include "symbol.h"
 
-Symbol::Symbol(QString name, Params params): m_name(name), m_params(params)
+Symbol::Symbol(QString name, QString pattern): m_name(name), m_pattern(pattern)
 {
   
 }

@@ -7,7 +7,7 @@ class {{.#name}}: public Symbol {
 public:
   {{typedefs}}
 
-  {{.#name}}(Params params);
+  {{.#name}}(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -18,6 +18,7 @@ protected:
   {{protected_block}}
 
 private:
+  QString m_def;
   {{private_block}}
 };
 

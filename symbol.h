@@ -7,9 +7,8 @@
 
 class Symbol: public QGraphicsItem {
 public:
-  typedef QMap<QString, QString> Params;
+  Symbol(QString name, QString pattern);
 
-  Symbol(QString name, Params params);
   QString name(void);
 
   QRectF boundingRect() const = 0;
@@ -18,7 +17,7 @@ public:
 
 protected:
   QString m_name;
-  Params m_params;
+  QString m_pattern;
 };
 
 #endif /* __SYMBOL_H__ */

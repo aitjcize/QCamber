@@ -1,9 +1,14 @@
 #include "{{.#name|lower}}.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-{{.#name}}::{{.#name}}(Params params): Symbol("{{.#id}}", params)
+{{.#name}}::{{.#name}}(QString def):
+    Symbol("{{.#id}}", "{{pattern}}"), m_def(def)
 {
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
   {{constructor}}
 }
 
@@ -13,7 +18,7 @@ QRectF {{.#name}}::boundingRect() const
 }
 
 void {{.#name}}::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
   {{paint}}
 }

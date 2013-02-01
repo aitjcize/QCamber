@@ -1,11 +1,32 @@
 #include "rectanglesymbol.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-RectangleSymbol::RectangleSymbol(Params params): Symbol("rect", params)
+RectangleSymbol::RectangleSymbol(QString def):
+    Symbol("rect", "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?"), m_def(def)
 {
-  m_w = params["w"].toInt();
-  m_h = params["h"].toInt();
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
+  m_w = caps[1].toDouble();
+  m_h = caps[2].toDouble();
+  if (caps[3] == "xr") {
+    m_rad = caps[4].toDouble();
+    m_type = ROUNDED;
+  } else if (caps[3] == "xc") {
+    m_rad = caps[4].toDouble();
+    m_type = CHAMFERED;
+  } else {  
+    m_type = NORMAL;
+  }
+  if (caps[5].length()) {
+    m_corners = 0;
+    QByteArray cors = caps[5].toAscii();
+    for (int i = 0; i < cors.count(); ++i) {
+      m_corners |= (1 << (cors[i] - '1'));
+    }
+  }
 }
 
 QRectF RectangleSymbol::boundingRect() const
@@ -14,52 +35,30 @@ QRectF RectangleSymbol::boundingRect() const
 }
 
 void RectangleSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
-  qreal rad;
-  Type type;
-  int corners = 0;
-
-  if (m_params.find("xr") != m_params.end()) {
-    rad = m_params["xr"].toDouble();
-    type = ROUNDED;
-  }
-  if (m_params.find("xc") != m_params.end()) {
-    rad = m_params["xc"].toDouble();
-    type = CHAMFERED;
-  }
-
-  if (m_params.find("corners") == m_params.end()) {
-    corners = 15;
-  } else {
-    QByteArray cors = m_params["corners"].toAscii();
-    for (int i = 0; i < cors.count(); ++i) {
-      corners |= (1 << (cors[i] - '1'));
-    }
-  }
-
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
 
   QPainterPath path;
-  addRect(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), ROUNDED, rad, corners);
+  addRect(path);
   painter->drawPath(path);
 }
 
-void RectangleSymbol::addRect(QPainterPath& path, const QRectF& rect,
-  Type type, qreal rad, int corners)
+void RectangleSymbol::addRect(QPainterPath& path)
 {
+  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
   if (r.isNull())
     return;
 
-  if (type == NORMAL) {
+  if (m_type == NORMAL) {
     path.addRect(r);
     return;
   }
 
-  if (rad <= 0) {
+  if (m_rad <= 0) {
     path.addRect(r);
     return;
   }
@@ -69,51 +68,51 @@ void RectangleSymbol::addRect(QPainterPath& path, const QRectF& rect,
   qreal w = r.width();
   qreal h = r.height();
 
-  rad = qMin(qMin(w / 2, h / 2), rad);
+  m_rad = qMin(qMin(w / 2, h / 2), m_rad);
 
-  if (corners & 2) {
-    if (type == ROUNDED) {
-      path.arcMoveTo(x, y, rad, rad, 180);
-      path.arcTo(x, y, rad, rad, 180, -90);
+  if (m_corners & 2) {
+    if (m_type == ROUNDED) {
+      path.arcMoveTo(x, y, m_rad, m_rad, 180);
+      path.arcTo(x, y, m_rad, m_rad, 180, -90);
     } else {
-      path.moveTo(x, y+rad);
-      path.lineTo(x+rad, y);
-      path.lineTo(x+w-rad, y);
+      path.moveTo(x, y+m_rad);
+      path.lineTo(x+m_rad, y);
+      path.lineTo(x+w-m_rad, y);
     }
   } else {
     path.moveTo(x, y);
-    path.lineTo(x+w-rad, y);
+    path.lineTo(x+w-m_rad, y);
   }
 
-  if (corners & 1) {
-    if (type == ROUNDED) {
-      path.arcTo(x+w-rad, y, rad, rad, 90, -90);
+  if (m_corners & 1) {
+    if (m_type == ROUNDED) {
+      path.arcTo(x+w-m_rad, y, m_rad, m_rad, 90, -90);
     } else {
-      path.lineTo(x+w, y+rad);
-      path.lineTo(x+w, y+h-rad);
+      path.lineTo(x+w, y+m_rad);
+      path.lineTo(x+w, y+h-m_rad);
     }
   } else {
     path.lineTo(x+w, y);
-    path.lineTo(x+w, y+h-rad);
+    path.lineTo(x+w, y+h-m_rad);
   }
 
-  if (corners & 8) {
-    if (type == ROUNDED) {
-      path.arcTo(x+w-rad, y+h-rad, rad, rad, 0, -90);
+  if (m_corners & 8) {
+    if (m_type == ROUNDED) {
+      path.arcTo(x+w-m_rad, y+h-m_rad, m_rad, m_rad, 0, -90);
     } else {
-      path.lineTo(x+w-rad, y+h);
-      path.lineTo(x+rad, y+h);
+      path.lineTo(x+w-m_rad, y+h);
+      path.lineTo(x+m_rad, y+h);
     }
   } else {
     path.lineTo(x+w, y+h);
-    path.lineTo(x+rad, y+h);
+    path.lineTo(x+m_rad, y+h);
   }
 
-  if (corners & 4) {
-    if (type == ROUNDED) {
-      path.arcTo(x, y+h-rad, rad, rad, 270, -90);
+  if (m_corners & 4) {
+    if (m_type == ROUNDED) {
+      path.arcTo(x, y+h-m_rad, m_rad, m_rad, 270, -90);
     } else {
-      path.lineTo(x, y+h-rad);
+      path.lineTo(x, y+h-m_rad);
     }
   } else {
     path.lineTo(x, y+h);

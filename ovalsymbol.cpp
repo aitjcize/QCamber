@@ -1,11 +1,16 @@
 #include "ovalsymbol.h"
 
 #include <QtGui>
+#include <QRegExp>
 
-OvalSymbol::OvalSymbol(Params params): Symbol("oval", params)
+OvalSymbol::OvalSymbol(QString def):
+    Symbol("oval", "oval([0-9.]+)x([0-9.]+)"), m_def(def)
 {
-  m_w = params["w"].toDouble();
-  m_h = params["h"].toDouble();
+  QRegExp rx(m_pattern);
+  rx.exactMatch(def);
+  QStringList caps = rx.capturedTexts();
+  m_w = caps[1].toDouble();
+  m_h = caps[2].toDouble();
 }
 
 QRectF OvalSymbol::boundingRect() const
@@ -14,7 +19,7 @@ QRectF OvalSymbol::boundingRect() const
 }
 
 void OvalSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem* option, QWidget* widget)
+    const QStyleOptionGraphicsItem*, QWidget*)
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);

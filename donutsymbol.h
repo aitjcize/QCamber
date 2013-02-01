@@ -6,7 +6,7 @@
 class DonutSymbol: public Symbol {
 public:
 
-  DonutSymbol(Params params);
+  DonutSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -15,6 +15,7 @@ public:
 protected:
 
 private:
+  QString m_def;
   qreal m_od;
   qreal m_id;
 };
