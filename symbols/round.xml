@@ -1,6 +1,6 @@
 <symbol name="RoundSymbol" id="r">
   <pattern><![CDATA[
-    r([0-9.]+)
+  r([0-9.]+)
   ]]></pattern>
 
   <private_block><![CDATA[

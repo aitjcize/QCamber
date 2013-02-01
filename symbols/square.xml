@@ -1,6 +1,6 @@
 <symbol name="SquareSymbol" id="s">
   <pattern><![CDATA[
-    s([0-9.]+)
+  s([0-9.]+)
   ]]></pattern>
 
   <private_block><![CDATA[

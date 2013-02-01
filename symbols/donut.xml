@@ -1,6 +1,6 @@
 <symbol name="DonutSymbol" id="donut_r">
   <pattern><![CDATA[
-    donut_r([0-9.]+)x([0-9.]+)
+  donut_r([0-9.]+)x([0-9.]+)
   ]]></pattern>
 
   <private_block><![CDATA[
