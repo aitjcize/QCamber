@@ -6,3 +6,4 @@
 #include "octagonsymbol.h"
 #include "donutsymbol.h"
 #include "squaresymbol.h"
+#include "usersymbol.h"
