@@ -93,6 +93,11 @@ void StructuredDataStore::dump(void)
   dumpIndent -= 1;
 }
 
+LineRecordDataStore::DataType& LineRecordDataStore::data(void)
+{
+  return m_data;
+}
+
 void LineRecordDataStore::putTerm(string term)
 {
   m_currentElement.push_back(term);
@@ -121,7 +126,13 @@ Parser::Parser(string filename, Type type): m_fileName(filename), m_type(type)
 {
 }
 
-Parser::Parser(QString filename, Type type): Parser(filename.toStdString(), type)
+Parser::Parser(const char* filename, Type type):
+  m_fileName(filename), m_type(type)
+{
+}
+
+Parser::Parser(QString filename, Type type):
+  m_fileName(filename.toStdString()), m_type(type)
 {
 }
  
