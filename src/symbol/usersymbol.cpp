@@ -32,6 +32,7 @@ void UserSymbol::paint(QPainter* painter,
 
 void UserSymbol::addShape(QPainterPath& path)
 {
+  /*
   Parser parser("features", Parser::LINE_RECORD);
   LineRecordDataStore* ds = (LineRecordDataStore*)parser.parse();
   LineRecordDataStore::DataType& data = ds->data();
@@ -104,10 +105,12 @@ void UserSymbol::addShape(QPainterPath& path)
   path.closeSubpath();
   
   bounding = path.boundingRect();
+  */
 }
 
 void UserSymbol::testDraw(QPainter& painter)
 {
+  /*
   Parser parser("features", Parser::LINE_RECORD);
   LineRecordDataStore* ds = (LineRecordDataStore*)parser.parse();
   LineRecordDataStore::DataType& data = ds->data();
@@ -178,6 +181,7 @@ void UserSymbol::testDraw(QPainter& painter)
       lx = ex; ly = ey;
     }
   }
+  */
 
   /*
     qreal lx, ly;

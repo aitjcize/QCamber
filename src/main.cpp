@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "structuredtextparser.h"
 
 #include <iostream>
 #include <utility>
@@ -22,11 +22,12 @@ int main(int argc, char *argv[])
   a.load();
   qDebug() << a.listDir("symbols");
 
-  Parser parser(a.absPath("matrix/matrix"), Parser::STRUCTURED);
-  StructuredDataStore* ds = (StructuredDataStore*)parser.parse();
-  StructuredDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
+  StructuredTextParser parser(a.absPath("matrix/matrix"));
+  StructuredTextDataStore* ds = parser.parse();
+  StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
 
-  for (StructuredDataStore::BlockIter it = ip.first; it != ip.second; ++it) {
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
     cout << it->second->get("NAME") << endl;;
   }
 

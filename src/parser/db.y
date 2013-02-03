@@ -17,33 +17,21 @@ int yylex(void);
 %%
 
 syntax       : op_newlines structures
-             | op_newlines linerecords
              ;
 
 structures   : structures structure
              | structure
              ;
 
-structure    : VAR { yyctx.stdata->newElement($1); }
+structure    : VAR { yyctx.stds->newElement($1); }
                '{' op_newlines structures '}' newlines   {
-                 yyctx.stdata->commitElement();
+                 yyctx.stds->commitElement();
               }
              | assignment
              ;
 
 assignment   : VAR '=' VAR newlines { putKeyValue($1, $3); }
              | VAR '=' newlines     { putKeyValue($1, ""); }
-             ;
-
-linerecords  : linerecords linerecord { yyctx.lrdata->putLineRecord(); }
-             | linerecord { yyctx.lrdata->putLineRecord(); }
-             ;
-
-linerecord   : terms newlines
-             ;
-
-terms        : terms VAR { yyctx.lrdata->putTerm($2); }
-             | VAR { yyctx.lrdata->putTerm($1); }
              ;
 
 newlines     : newlines NL
@@ -64,6 +52,6 @@ int yyerror(const char* s)
 
 void putKeyValue(const char* key, const char* value)
 { 
-  yyctx.stdata->put(key, value);
+  yyctx.stds->put(key, value);
   //printf("%s = %s\n", key, value);
 }
