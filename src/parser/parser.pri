@@ -1,5 +1,6 @@
 include (flex.pri)
 include (bison.pri)
+include (record/record.pri)
 
 HEADERS += \
   parser/yyheader.h \
