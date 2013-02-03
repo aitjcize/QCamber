@@ -9,7 +9,7 @@
 using std::cout;
 using std::endl;
 
-extern "C" int yyparse (void);
+extern int yyparse (void);
 extern struct yycontext yyctx;
 
 int StructuredDataStore::dumpIndent = 0;
