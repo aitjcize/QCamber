@@ -94,12 +94,7 @@ void StructuredTextDataStore::dump(void)
   dumpIndent -= 1;
 }
 
-StructuredTextParser::StructuredTextParser(const char* filename):
-  Parser(filename)
-{
-}
-
-StructuredTextParser::StructuredTextParser(QString filename):
+StructuredTextParser::StructuredTextParser(const QString& filename):
   Parser(filename)
 {
 }
@@ -110,9 +105,9 @@ StructuredTextParser::~StructuredTextParser()
 
 StructuredTextDataStore* StructuredTextParser::parse(void)
 {
-  FILE* fin = freopen(m_fileName.c_str(), "r", stdin);
+  FILE* fin = freopen(m_fileName.toAscii(), "r", stdin);
   if (fin == NULL) {
-    fprintf(stderr, "can't open file `%s'\n", m_fileName.c_str());
+    fprintf(stderr, "can't open file `%s'\n", (const char*)m_fileName.toAscii());
   }
 
   yyctx.stds = new StructuredTextDataStore;

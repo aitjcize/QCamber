@@ -1,5 +1,3 @@
-#include "structuredtextparser.h"
-
 #include <iostream>
 #include <utility>
 
@@ -8,6 +6,9 @@
 
 #include "archiveloader.h"
 #include "odbppviewwidget.h"
+#include "structuredtextparser.h"
+#include "featuresparser.h"
+
 
 using std::cout;
 using std::endl;
@@ -30,6 +31,10 @@ int main(int argc, char *argv[])
   {
     cout << it->second->get("NAME") << endl;;
   }
+
+  FeaturesParser parser2("features");
+  FeaturesDataStore* ds2 = parser2.parse();
+  ds2->dump();
 
   QApplication app(argc, argv);
 

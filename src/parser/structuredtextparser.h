@@ -3,6 +3,10 @@
 
 #include "parser.h"
 
+#include <string>
+
+using std::string;
+
 class StructuredTextDataStore: public DataStore {
 public:
   class InvalidKeyException: public std::exception {
@@ -37,9 +41,8 @@ private:
 
 class StructuredTextParser : public Parser{
 public:
-  StructuredTextParser(QString filename);
-  StructuredTextParser(const char* filename);
-  ~StructuredTextParser();
+  StructuredTextParser(const QString& filename);
+  virtual ~StructuredTextParser();
 
   virtual StructuredTextDataStore* parse(void);
 };

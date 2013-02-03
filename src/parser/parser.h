@@ -3,7 +3,6 @@
 
 #include <map>
 #include <stdexcept>
-#include <string>
 #include <vector>
 
 #include <QString>
@@ -11,7 +10,6 @@
 using std::map;
 using std::multimap;
 using std::pair;
-using std::string;
 using std::vector;
 
 class DataStore {
@@ -21,13 +19,13 @@ public:
 
 class Parser {
 public:
-  Parser(QString filename);
-  Parser(const char* filename);
-  ~Parser();
+  Parser(const QString& filename);
+  virtual ~Parser();
+
   virtual DataStore* parse(void) = 0;
 
 protected:
-  string m_fileName;
+  QString m_fileName;
 };
 
 #endif /* __PARSER_H__ */

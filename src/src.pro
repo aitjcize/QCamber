@@ -11,16 +11,12 @@ include (symbol/symbol.pri)
 
 HEADERS += \
   archiveloader.h \
-  odbppviewwidget.h \
-  structuredtextparser.h \
-  parser.h
+  odbppviewwidget.h
 
 SOURCES += \
   main.cpp \
   archiveloader.cpp \
-  odbppviewwidget.cpp \
-  structuredtextparser.cpp \
-  parser.cpp 
+  odbppviewwidget.cpp
 
 INCLUDEPATH += . .build parser symbol
 
