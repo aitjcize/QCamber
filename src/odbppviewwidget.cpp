@@ -41,4 +41,10 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   Symbol* symbol7 = new SquareSymbol("s40");
   scene->addItem(symbol7);
   symbol7->setPos(100, -100);
+
+  /*
+  Symbol* user = new UserSymbol("construct");
+  scene->addItem(user);
+  user->setPos(0, 0);
+  */
 }

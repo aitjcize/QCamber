@@ -3,12 +3,10 @@
 
 #define YYSTYPE char*
 
-#include "parser.h"
+#include "structuredtextparser.h"
 
 struct yycontext {
-  Parser::Type type;
-  StructuredDataStore* stdata;
-  LineRecordDataStore* lrdata;
+  StructuredTextDataStore* stds;
 };
 
 #endif /* __YY_HEADER_H__ */
