@@ -1,5 +1,4 @@
 HEADERS += \
-  parser/db.tab.h \
   parser/yyheader.h
 
 FLEXSOURCES += parser/db.l
@@ -16,7 +15,7 @@ flex.name = flex
 QMAKE_EXTRA_COMPILERS += flex
  
 # Bison settings
-bison.commands = bison -d -t -v ${QMAKE_FILE_IN} -o $${BUILD_DIR}/${QMAKE_FILE_IN_BASE}.tab.cpp
+bison.commands = bison -t -v ${QMAKE_FILE_IN} -o $${BUILD_DIR}/${QMAKE_FILE_IN_BASE}.tab.cpp --defines=$${BUILD_DIR}/${QMAKE_FILE_IN_BASE}.tab.h
 bison.CONFIG += target_predeps
 bison.input = BISONSOURCES
 bison.output = $${BUILD_DIR}/db.tab.cpp
