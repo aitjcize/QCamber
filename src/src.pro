@@ -11,7 +11,8 @@ include (symbol/symbol.pri)
 
 HEADERS += \
   archiveloader.h \
-  odbppviewwidget.h
+  odbppviewwidget.h \
+  symbolfactory.h
 
 SOURCES += \
   main.cpp \

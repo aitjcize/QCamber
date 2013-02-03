@@ -1,12 +1,12 @@
-#ifndef __DONUTSYMBOL_H__
-#define __DONUTSYMBOL_H__
+#ifndef __DONUTRSYMBOL_H__
+#define __DONUTRSYMBOL_H__
 
 #include "symbol.h"
 
-class DonutSymbol: public Symbol {
+class DonutRSymbol: public Symbol {
 public:
 
-  DonutSymbol(QString def);
+  DonutRSymbol(QString def);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -20,4 +20,4 @@ private:
   qreal m_id;
 };
 
-#endif /* __DONUTSYMBOL_H__ */
+#endif /* __DONUTRSYMBOL_H__ */

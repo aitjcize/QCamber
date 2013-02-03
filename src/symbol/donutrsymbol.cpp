@@ -1,9 +1,9 @@
-#include "donutsymbol.h"
+#include "donutrsymbol.h"
 
 #include <QtGui>
 #include <QRegExp>
 
-DonutSymbol::DonutSymbol(QString def):
+DonutRSymbol::DonutRSymbol(QString def):
     Symbol("donut_r", "donut_r([0-9.]+)x([0-9.]+)"), m_def(def)
 {
   QRegExp rx(m_pattern);
@@ -14,12 +14,12 @@ DonutSymbol::DonutSymbol(QString def):
   m_id = caps[2].toDouble();
 }
 
-QRectF DonutSymbol::boundingRect() const
+QRectF DonutRSymbol::boundingRect() const
 {
   return QRectF(-m_od / 2, -m_od / 2, m_od, m_od);
 }
 
-void DonutSymbol::paint(QPainter* painter,
+void DonutRSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
   qreal rad = (m_od + m_id) / 4;
