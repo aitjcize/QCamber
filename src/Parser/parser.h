@@ -56,6 +56,8 @@ public:
   typedef vector<string> ElementType;
   typedef vector<ElementType> DataType;
 
+  DataType& data(void);
+
   void putTerm(string term);
   void putLineRecord(void);
   virtual void dump(void);
@@ -74,6 +76,7 @@ public:
 
   Parser(string filename, Type type);
   Parser(QString filename, Type type);
+  Parser(const char* filename, Type type);
   ~Parser();
   virtual DataStore* parse(void);
 
