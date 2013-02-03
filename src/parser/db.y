@@ -6,6 +6,8 @@
 
 struct yycontext yyctx;
 
+extern "C" int yyparse (void);
+
 void putKeyValue(const char* key, const char* value);
 int yyerror(const char* s);
 int yylex(void);

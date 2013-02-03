@@ -5,7 +5,7 @@ FLEXSOURCES += parser/db.l
 BISONSOURCES += parser/db.y
 
 # Flex settings
-flex.commands = flex -o $${BUILD_DIR}/${QMAKE_FILE_IN_BASE}.lex.cpp ${QMAKE_FILE_IN}
+flex.commands = flex -o$${BUILD_DIR}/${QMAKE_FILE_IN_BASE}.lex.cpp ${QMAKE_FILE_IN}
 flex.CONFIG += target_predeps
 flex.input = FLEXSOURCES
 flex.output = $${BUILD_DIR}/db.lex.cpp
