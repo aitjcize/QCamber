@@ -14,6 +14,7 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
 
+  /*
   Symbol* symbol = SymbolFactory::create("r50");
   scene->addItem(symbol);
   symbol->setPos(0, 0);
@@ -41,10 +42,10 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   Symbol* symbol7 = SymbolFactory::create("s40");
   scene->addItem(symbol7);
   symbol7->setPos(100, -100);
+  */
 
-  /*
   Symbol* user = new UserSymbol("construct");
   scene->addItem(user);
   user->setPos(0, 0);
-  */
+  scale(1000, 1000);
 }

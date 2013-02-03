@@ -3,15 +3,20 @@
 #include <QtGui>
 #include <QRegExp>
 
-#include "parser.h"
+#include "featuresparser.h"
 
 #include <iostream>
+#include <typeinfo>
 using std::cout;
 using std::endl;
 
 UserSymbol::UserSymbol(QString def):
     Symbol(def, def), m_def(def)
 {
+  FeaturesParser parser("features");
+  FeaturesDataStore* ds = parser.parse();
+
+  m_records = ds->records();
 }
 
 QRectF UserSymbol::boundingRect() const
@@ -32,80 +37,15 @@ void UserSymbol::paint(QPainter* painter,
 
 void UserSymbol::addShape(QPainterPath& path)
 {
-  /*
-  Parser parser("features", Parser::LINE_RECORD);
-  LineRecordDataStore* ds = (LineRecordDataStore*)parser.parse();
-  LineRecordDataStore::DataType& data = ds->data();
-
-  //path.setFillRule(Qt::WindingFill);
-
-  for(LineRecordDataStore::DataType::iterator it = data.begin();
-      it != data.end(); ++it) {
-    LineRecordDataStore::ElementType& line = (*it);
-    QString op = QString::fromStdString(line[0]);
-    if (op.startsWith("#")) {
-      continue;
-    }
-#define P(x) (QString::fromStdString(line[(x)]).toDouble() * 10000)
-
-    qreal lx, ly;
-    if (op == "OB") {
-      lx = P(1); ly = P(2);
-      path.moveTo(lx, -ly);
-    } else if (op == "OS") {
-      lx = P(1); ly = P(2);
-      path.lineTo(lx, -ly);
-    } else if (op == "OC") {
-      qreal sx = lx, sy = ly;
-      qreal ex = P(1), ey = P(2);
-      qreal cx = P(3), cy = P(4);
-
-      qreal sax = sx - cx, say = sy - cy;
-      qreal eax = ex - cx, eay = ey - cy;
-
-      qreal rs = sqrt(sax * sax + say * say);
-      qreal re = sqrt(eax * eax + eay * eay);
-
-      qreal sa = atan(say / sax);
-      qreal ea = atan(eay / eax);
-
-      if (ea <= 0 && (eax < 0)) {
-        ea += M_PI;
-      } else if (ea > 0 && (eax < 0 || eay < 0)) {
-        ea += M_PI;
-      }
-
-      if (sa <= 0 && (sax < 0)) {
-        sa += M_PI;
-      } else if (sa > 0 && (sax < 0 || say < 0)) {
-        sa += M_PI;
-      }
-
-      if (line[5] == "Y") {
-        if (sa < ea) {
-          sa += 2 * M_PI;
-        }
-        for (qreal a = sa; a >= ea; a -= 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          path.lineTo(cx + rad * cos(a), -(cy + rad * sin(a)));
-        }
-      } else {
-        if (ea < sa) {
-          ea += 2 * M_PI;
-        }
-        for (qreal a = sa; a <= ea; a += 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          path.lineTo(cx + rad * cos(a), -(cy + rad * sin(a)));
-        }
-      }
-      path.lineTo(ex, -ey);
-      lx = ex; ly = ey;
+  for (QList<Record*>::const_iterator it = m_records.begin();
+      it != m_records.end(); ++it) {
+    Record* rec = *it;
+    if (QString(typeid(*rec).name()).endsWith("SurfaceRecord")) {
+      rec->addShape(path);
     }
   }
-  path.closeSubpath();
-  
+
   bounding = path.boundingRect();
-  */
 }
 
 void UserSymbol::testDraw(QPainter& painter)

@@ -2,7 +2,10 @@
 #define __USERSYMBOL_H__
 
 #include "symbol.h"
+
 #include <QtGui>
+
+#include "record.h"
 
 class UserSymbol: public Symbol {
 public:
@@ -21,6 +24,7 @@ private:
   QString m_def;
   qreal m_d;
   QRectF bounding;
+  QList<Record*> m_records;
 };
 
 #endif /* __USERSYMBOL_H__ */
