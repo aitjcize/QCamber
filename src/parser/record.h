@@ -14,7 +14,7 @@ struct Record {
 struct SurfaceOperation {
   typedef enum { SEGMENT = 0, CURVE } OpType;
 
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
   
   OpType type;
   qreal x, y;
@@ -24,7 +24,7 @@ struct SurfaceOperation {
 };
 
 struct LineRecord: public Record {
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
 
   qreal xs, ys;
   qreal xe, ye;
@@ -34,7 +34,7 @@ struct LineRecord: public Record {
 };
 
 struct PadRecord: public Record {
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
 
   qreal x, y;
   int sym_num;
@@ -44,7 +44,7 @@ struct PadRecord: public Record {
 };
 
 struct ArcRecord: public Record {
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
 
   qreal xs, ys;
   qreal xe, ye;
@@ -56,7 +56,7 @@ struct ArcRecord: public Record {
 };
 
 struct TextRecord: public Record {
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
 
   qreal x, y;
   QString font;
@@ -71,7 +71,7 @@ struct TextRecord: public Record {
 struct BarcodeRecord: public Record {
   typedef enum { T = 0, B } AstrPos;
 
-  virtual void addShape(QPainterPath& path) {};
+  virtual void addShape(QPainterPath& path);
 
   qreal x, y;
   QString barcode;
