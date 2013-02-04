@@ -6,8 +6,7 @@ HEADERS += \
   parser/yyheader.h \
   parser/parser.h \
   parser/structuredtextparser.h \
-  parser/featuresparser.h \
-  parser/record.h
+  parser/featuresparser.h
 
 SOURCES += \
   parser/parser.cpp \

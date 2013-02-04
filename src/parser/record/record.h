@@ -3,18 +3,22 @@
 
 #include <QPainterPath>
 
+class FeaturesDataStore;
+
 typedef enum { P = 0, N } Polarity;
 typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
+  Record(FeaturesDataStore& p_ds):ds(p_ds){}
   virtual void addShape(QPainterPath& path) = 0;
+  FeaturesDataStore &ds;
 };
 
 
 struct SurfaceOperation {
   typedef enum { SEGMENT = 0, CURVE } OpType;
 
-  virtual void addShape(QPainterPath& path);
+//  virtual void addShape(QPainterPath& path){}
   
   OpType type;
   qreal x, y;
@@ -24,6 +28,7 @@ struct SurfaceOperation {
 };
 
 struct LineRecord: public Record {
+  LineRecord(FeaturesDataStore &ds):Record(ds){}
   virtual void addShape(QPainterPath& path);
 
   qreal xs, ys;
@@ -34,6 +39,7 @@ struct LineRecord: public Record {
 };
 
 struct PadRecord: public Record {
+  PadRecord(FeaturesDataStore &ds):Record(ds){}
   virtual void addShape(QPainterPath& path);
 
   qreal x, y;
@@ -44,6 +50,7 @@ struct PadRecord: public Record {
 };
 
 struct ArcRecord: public Record {
+  ArcRecord(FeaturesDataStore &ds):Record(ds){}
   virtual void addShape(QPainterPath& path);
 
   qreal xs, ys;
@@ -56,6 +63,7 @@ struct ArcRecord: public Record {
 };
 
 struct TextRecord: public Record {
+  TextRecord(FeaturesDataStore &ds):Record(ds){}
   virtual void addShape(QPainterPath& path);
   virtual QString dynamicText(QString);
 
@@ -70,6 +78,7 @@ struct TextRecord: public Record {
 };
 
 struct BarcodeRecord: public TextRecord {
+  BarcodeRecord(FeaturesDataStore &ds):TextRecord(ds){}
   typedef enum { T = 0, B } AstrPos;
 
   virtual void addShape(QPainterPath& path);
@@ -87,7 +96,8 @@ struct BarcodeRecord: public TextRecord {
   AstrPos astr_pos;
 };
 
-struct PolygonRecord {
+struct PolygonRecord: public Record {
+  PolygonRecord(FeaturesDataStore &ds):Record(ds){}
   typedef enum { I = 0, H } PolyType;
   virtual void addShape(QPainterPath& path);
 
@@ -97,6 +107,7 @@ struct PolygonRecord {
 };
 
 struct SurfaceRecord: public Record {
+  SurfaceRecord(FeaturesDataStore &ds):Record(ds){}
   virtual void addShape(QPainterPath& path);
 
   Polarity polarity;

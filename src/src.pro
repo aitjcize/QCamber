@@ -19,7 +19,7 @@ SOURCES += \
   archiveloader.cpp \
   odbppviewwidget.cpp
 
-INCLUDEPATH += . .build parser symbol
+INCLUDEPATH += . .build parser parser/record symbol
 
 DESTDIR = ../bin
 TARGET = camview
