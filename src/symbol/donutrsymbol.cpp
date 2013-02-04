@@ -10,8 +10,8 @@ DonutRSymbol::DonutRSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_od = caps[1].toDouble();
-  m_id = caps[2].toDouble();
+  m_od = caps[1].toDouble() / 1000.0;
+  m_id = caps[2].toDouble() / 1000.0;
 }
 
 QRectF DonutRSymbol::boundingRect() const
@@ -26,4 +26,9 @@ void DonutRSymbol::paint(QPainter* painter,
   qreal pen_width = (m_od - m_id) / 2;
   painter->setPen(QPen(Qt::red, pen_width));
   painter->drawEllipse(-rad, -rad, rad * 2, rad * 2);
+}
+
+void DonutRSymbol::addShape(QPainterPath& path)
+{
+
 }

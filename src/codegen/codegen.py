@@ -3,7 +3,7 @@
 # 
 # codegen.py
 #
-# Copyright (C) 2010 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
+# Copyright (C) 2013 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
 # All Rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify

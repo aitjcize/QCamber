@@ -8,7 +8,7 @@
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_s = caps[1].toDouble();
+  m_s = caps[1].toDouble() / 1000.0;
   ]]></constructor>
 
   <boundingRect><![CDATA[
@@ -20,4 +20,8 @@
   painter->setBrush(Qt::red);
   painter->drawRect(-m_s / 2, -m_s / 2, m_s, m_s);
   ]]></paint>
+
+  <addShape><![CDATA[
+  path.addRect(pos().x() -m_s / 2, pos().y() -m_s / 2, m_s, m_s);
+  ]]></addShape>
 </symbol>

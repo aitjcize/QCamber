@@ -10,13 +10,13 @@ RectangleSymbol::RectangleSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_w = caps[1].toDouble();
-  m_h = caps[2].toDouble();
+  m_w = caps[1].toDouble() / 1000.0;
+  m_h = caps[2].toDouble() / 1000.0;
   if (caps[3] == "xr") {
-    m_rad = caps[4].toDouble();
+    m_rad = caps[4].toDouble() / 1000.0;
     m_type = ROUNDED;
   } else if (caps[3] == "xc") {
-    m_rad = caps[4].toDouble();
+    m_rad = caps[4].toDouble() / 1000.0;
     m_type = CHAMFERED;
   } else {  
     m_type = NORMAL;
@@ -42,17 +42,28 @@ void RectangleSymbol::paint(QPainter* painter,
   painter->setBrush(Qt::red);
 
   QPainterPath path;
-  addRect(path);
+  addRect(path, false);
   painter->drawPath(path);
 }
 
-void RectangleSymbol::addRect(QPainterPath& path)
+void RectangleSymbol::addShape(QPainterPath& path)
+{
+  addRect(path, true);
+}
+
+void RectangleSymbol::addRect(QPainterPath& path, bool offset)
 {
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
+  qreal ox = 0, oy = 0;
 
   if (r.isNull())
     return;
+
+  if (offset) {
+    ox = pos().x();
+    oy = pos().y();
+  }
 
   if (m_type == NORMAL) {
     path.addRect(r);
@@ -64,8 +75,8 @@ void RectangleSymbol::addRect(QPainterPath& path)
     return;
   }
 
-  qreal x = r.x();
-  qreal y = r.y();
+  qreal x = ox + r.x();
+  qreal y = oy + r.y();
   qreal w = r.width();
   qreal h = r.height();
 

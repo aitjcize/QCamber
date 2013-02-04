@@ -1,24 +1,47 @@
 #include "record.h"
 
 #include <QDebug>
+#include <QPainter>
 #include <cmath>
 
-void PolygonRecord::addShape(QPainterPath& path)
+#include "context.h"
+#include "symbolfactory.h"
+
+extern Context ctx;
+
+void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+{
+  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  Symbol* symbol = SymbolFactory::create(sym_name);
+  symbol->setPos(ox + x, oy -y);
+  symbol->addShape(path);
+}
+
+void PadRecord::paint(QPainter* painter)
+{
+  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  Symbol* symbol = SymbolFactory::create(sym_name);
+  symbol->setPos(x, y);
+  ctx.cscene->addItem(symbol);
+  // XXX: orient, polarity
+}
+
+void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
   qreal lx, ly;
-  lx = xbs; ly = ybs;
+  lx = ox + xbs; ly = oy + ybs;
   path.moveTo(lx, -ly);
 
   for (QList<SurfaceOperation*>::iterator it = operations.begin();
       it != operations.end(); ++it) {
     SurfaceOperation* op = *it;
     if (op->type == SurfaceOperation::SEGMENT) {
-      lx = op->x; ly = op->y;
+      lx = ox + op->x; ly = oy + op->y;
       path.lineTo(lx, -ly);
     } else if (op->type == SurfaceOperation::CURVE) {
       qreal sx = lx, sy = ly;
-      qreal ex = op->xe, ey = op->ye;
-      qreal cx = op->xc, cy = op->yc;
+      qreal ex = ox + op->xe, ey = oy + op->ye;
+      qreal cx = ox + op->xc, cy = oy + op->yc;
 
       qreal sax = sx - cx, say = sy - cy;
       qreal eax = ex - cx, eay = ey - cy;
@@ -65,11 +88,18 @@ void PolygonRecord::addShape(QPainterPath& path)
   path.closeSubpath();
 }
 
-void SurfaceRecord::addShape(QPainterPath& path)
+void SurfaceRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
   for (QList<PolygonRecord*>::iterator it = polygons.begin();
       it != polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
-    rec->addShape(path);
+    rec->addShape(path, ox, oy);
+    /*
+    if (rec->poly_type == PolygonRecord::I) {
+      rec->addShape(ipath);
+    } else {
+      rec->addShape(hpath);
+    }
+    */
   }
 }

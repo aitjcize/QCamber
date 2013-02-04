@@ -1,22 +1,33 @@
 #include "usersymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
-
-#include "featuresparser.h"
-
 #include <iostream>
 #include <typeinfo>
 using std::cout;
 using std::endl;
 
+#include <QtGui>
+#include <QRegExp>
+
+#include "context.h"
+
+extern Context ctx;
+
 UserSymbol::UserSymbol(QString def):
     Symbol(def, def), m_def(def)
 {
-  FeaturesParser parser("features");
-  FeaturesDataStore* ds = parser.parse();
+  static bool first = true;
+  QString path = ctx.loader->absPath("symbols/" + def + "/features");
+  if (first) {
+    path = "features";
+  }
+  FeaturesParser parser(path);
+  m_ds = parser.parse();
 
-  m_records = ds->records();
+  if (first) {
+    first = false;
+    ctx.cfds = m_ds;
+  }
+  m_records = m_ds->records();
 }
 
 QRectF UserSymbol::boundingRect() const
@@ -27,12 +38,14 @@ QRectF UserSymbol::boundingRect() const
 void UserSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
   QPainterPath path;
   addShape(path);
+
+  painter->setPen(QPen(Qt::red, 0));
+  painter->setBrush(Qt::red);
   painter->drawPath(path);
-  //testDraw(*painter);
+
+  bounding = path.boundingRect();
 }
 
 void UserSymbol::addShape(QPainterPath& path)
@@ -40,139 +53,6 @@ void UserSymbol::addShape(QPainterPath& path)
   for (QList<Record*>::const_iterator it = m_records.begin();
       it != m_records.end(); ++it) {
     Record* rec = *it;
-    if (QString(typeid(*rec).name()).endsWith("SurfaceRecord")) {
-      rec->addShape(path);
-    }
+    rec->addShape(path, pos().x(), -pos().y());
   }
-
-  bounding = path.boundingRect();
-}
-
-void UserSymbol::testDraw(QPainter& painter)
-{
-  /*
-  Parser parser("features", Parser::LINE_RECORD);
-  LineRecordDataStore* ds = (LineRecordDataStore*)parser.parse();
-  LineRecordDataStore::DataType& data = ds->data();
-
-
-  for(LineRecordDataStore::DataType::iterator it = data.begin();
-      it != data.end(); ++it) {
-    LineRecordDataStore::ElementType& line = (*it);
-    QString op = QString::fromStdString(line[0]);
-    if (op.startsWith("#")) {
-      continue;
-    }
-#define P(x) (QString::fromStdString(line[(x)]).toDouble() * 10000)
-
-    qreal lx, ly;
-    if (op == "OB") {
-      lx = P(1); ly = P(2);
-    } else if (op == "OS") {
-      painter.drawLine(lx, -ly, P(1), -P(2));
-      lx = P(1); ly = P(2);
-    } else if (op == "OC") {
-      qreal sx = lx, sy = ly;
-      qreal ex = P(1), ey = P(2);
-      qreal cx = P(3), cy = P(4);
-
-      qreal sax = sx - cx, say = sy - cy;
-      qreal eax = ex - cx, eay = ey - cy;
-
-      qreal rs = sqrt(sax * sax + say * say);
-      qreal re = sqrt(eax * eax + eay * eay);
-
-      qreal sa = atan(say / sax);
-      qreal ea = atan(eay / eax);
-
-      if (ea <= 0 && (eax < 0)) {
-        ea += M_PI;
-      } else if (ea > 0 && (eax < 0 || eay < 0)) {
-        ea += M_PI;
-      }
-
-      if (sa <= 0 && (sax < 0)) {
-        sa += M_PI;
-      } else if (sa > 0 && (sax < 0 || say < 0)) {
-        sa += M_PI;
-      }
-
-      lx = sx; ly = sy;
-      if (line[5] == "Y") {
-        if (sa < ea) {
-          sa += 2 * M_PI;
-        }
-        for (qreal a = sa; a >= ea; a -= 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          painter.drawLine(lx, -ly, cx + rad * cos(a), -(cy + rad * sin(a)));
-          lx = cx + rad * cos(a); ly = cy + rad * sin(a);
-        }
-      } else {
-        if (ea < sa) {
-          ea += 2 * M_PI;
-        }
-        for (qreal a = sa; a <= ea; a += 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          painter.drawLine(lx, -ly, cx + rad * cos(a), -(cy + rad * sin(a)));
-          lx = cx + rad * cos(a); ly = cy + rad * sin(a);
-        }
-      }
-      painter.drawLine(lx, -ly, ex, -ey);
-      lx = ex; ly = ey;
-    }
-  }
-  */
-
-  /*
-    qreal lx, ly;
-    qreal cx = 0, cy = 0;
-    qreal sx = -100, sy = 0;
-    qreal ex = -70.7106, ey = -70.7106;
-
-    qreal sax = sx - cx, say = sy - cy;
-    qreal eax = ex - cx, eay = ey - cy;
-
-    qreal rs = sqrt(sax * sax + say * say);
-    qreal re = sqrt(eax * eax + eay * eay);
-
-    qreal sa = atan(say / sax);
-    qreal ea = atan(eay / eax);
-
-    if (ea <= 0 && (eax < 0)) {
-      ea += M_PI;
-    } else if (ea > 0 && (eax < 0 || eay < 0)) {
-      ea += M_PI;
-    }
-
-    if (sa <= 0 && (sax < 0)) {
-      sa += M_PI;
-    } else if (sa > 0 && (sax < 0 || say < 0)) {
-      sa += M_PI;
-    }
-
-    lx = sx; ly = sy;
-    if (true) {
-      qDebug() << sa << ea;
-      if (sa < ea) {
-        sa += 2 * M_PI;
-      }
-      qDebug() << sa << ea;
-      for (qreal a = sa; a >= ea; a -= 0.01) {
-        qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-        painter.drawLine(lx, -ly, cx + rad * cos(a), -(cy + rad * sin(a)));
-        lx = cx + rad * cos(a); ly = cy + rad * sin(a);
-      }
-    } else {
-      if (ea < sa) {
-        ea += 2 * M_PI;
-      }
-      for (qreal a = sa; a >= ea; a -= 0.01) {
-        qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-        painter.drawLine(lx, ly, cx + rad * cos(a), cy + rad * sin(a));
-        lx = cx + rad * cos(a); ly = cy + rad * sin(a);
-      }
-    }
-    painter.drawLine(lx, ly, ex, ey);
-    lx = ex; ly = ey;
-  */
 }

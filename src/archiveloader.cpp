@@ -6,6 +6,7 @@
 
 ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
 {
+  load();
 }
 
 ArchiveLoader::~ArchiveLoader()

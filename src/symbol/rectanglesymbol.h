@@ -16,9 +16,10 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
+  void addShape(QPainterPath& path);
 
 protected:
-  void addRect(QPainterPath& path);
+  void addRect(QPainterPath& path, bool offset);
 
 private:
   QString m_def;

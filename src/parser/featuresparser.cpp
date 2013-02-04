@@ -171,6 +171,21 @@ QList<Record*>& FeaturesDataStore::records(void)
   return m_records;
 }
 
+const FeaturesDataStore::IDMapType& FeaturesDataStore::symbolNameMap(void)
+{
+  return m_symbolNameMap;
+}
+
+const FeaturesDataStore::IDMapType& FeaturesDataStore::attribNameMap(void)
+{
+  return m_attribNameMap;
+}
+
+const FeaturesDataStore::IDMapType& FeaturesDataStore::attribTextMap(void)
+{
+  return m_attribTextMap;
+}
+
 QString FeaturesDataStore::stripAttr(const QString& line)
 {
   int loc = line.indexOf(";");

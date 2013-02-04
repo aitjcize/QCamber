@@ -8,7 +8,7 @@
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_d = caps[1].toDouble();
+  m_d = caps[1].toDouble() / 1000.0;
   ]]></constructor>
 
   <boundingRect><![CDATA[
@@ -20,4 +20,8 @@
   painter->setBrush(Qt::red);
   painter->drawEllipse(-m_d / 2, -m_d / 2, m_d, m_d);
   ]]></paint>
+
+  <addShape><![CDATA[
+  path.addEllipse(pos().x() -m_d / 2, pos().y() -m_d / 2, m_d, m_d);
+  ]]></addShape>
 </symbol>
