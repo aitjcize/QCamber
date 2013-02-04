@@ -22,13 +22,21 @@ QRectF DonutRSymbol::boundingRect() const
 void DonutRSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  qreal rad = (m_od + m_id) / 4;
-  qreal pen_width = (m_od - m_id) / 2;
-  painter->setPen(QPen(Qt::red, pen_width));
-  painter->drawEllipse(-rad, -rad, rad * 2, rad * 2);
+  painter->setPen(QPen(Qt::red, 0));
+  painter->setBrush(Qt::red);
+
+  QPainterPath path;
+  addDonut(path, false);
+  painter->drawPath(path);
 }
 
 void DonutRSymbol::addShape(QPainterPath& path)
 {
+  addDonut(path, true);
+}
 
+void DonutRSymbol::addDonut(QPainterPath& path, bool offset)
+{
+  path.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
 }

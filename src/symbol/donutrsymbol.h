@@ -14,6 +14,7 @@ public:
   void addShape(QPainterPath& path);
 
 protected:
+  void addDonut(QPainterPath& path, bool offset);
 
 private:
   QString m_def;
