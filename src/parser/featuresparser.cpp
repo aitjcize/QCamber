@@ -94,7 +94,7 @@ void FeaturesDataStore::putText(const QString& line)
   while(ends!=1){
     QString str(param[++i]);
     if(!ends)
-      text += " ";
+      rec->text += " ";
     else
       str.replace(QRegExp("^'"), "");
     str.replace("\\\\", _DOUBLE_SLASHES_);
@@ -139,7 +139,7 @@ void FeaturesDataStore::putBarcode(const QString& line)
   while(ends!=1){
     QString str(param[++i]);
     if(!ends)
-      text += " ";
+      rec->text += " ";
     else
       str.replace(QRegExp("^'"), "");
     str.replace("\\\\", _DOUBLE_SLASHES_);
