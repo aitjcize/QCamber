@@ -51,7 +51,7 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   */
 
   /*
-  Symbol* user = new UserSymbol("construct");
+  Symbol* user = new UserSymbol("");
   scene->addItem(user);
   user->setPos(0, 0);
   */

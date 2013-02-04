@@ -16,6 +16,7 @@ public:
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
   void addShape(QPainterPath& path);
+  void addPath(QPainterPath& path, bool offset);
 
 private:
   qreal m_xs, m_ys;

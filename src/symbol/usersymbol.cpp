@@ -44,6 +44,7 @@ void UserSymbol::paint(QPainter* painter,
 {
   QPainterPath path;
   addPath(path, false);
+  path.setFillRule(Qt::WindingFill);
 
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
