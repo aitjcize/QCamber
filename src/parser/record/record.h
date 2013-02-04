@@ -10,6 +10,7 @@ typedef enum { P = 0, N } Polarity;
 typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
+  Record(FeaturesDataStore* _ds): ds(_ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy) = 0;
   virtual void add(QGraphicsScene* scene) = 0;
 
@@ -28,6 +29,7 @@ struct SurfaceOperation {
 };
 
 struct LineRecord: public Record {
+  LineRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene) ;
 
@@ -39,6 +41,7 @@ struct LineRecord: public Record {
 };
 
 struct PadRecord: public Record {
+  PadRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene);
 
@@ -50,6 +53,7 @@ struct PadRecord: public Record {
 };
 
 struct ArcRecord: public Record {
+  ArcRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy) ;
   virtual void add(QGraphicsScene* scene) ;
 
@@ -63,10 +67,10 @@ struct ArcRecord: public Record {
 };
 
 struct TextRecord: public Record {
+  TextRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual QString dynamicText(QString);
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene) ;
-
 
   qreal x, y;
   QString font;
@@ -80,6 +84,8 @@ struct TextRecord: public Record {
 
 struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
+
+  BarcodeRecord(FeaturesDataStore* ds): TextRecord(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene) ;
 
@@ -98,6 +104,8 @@ struct BarcodeRecord: public TextRecord {
 
 struct PolygonRecord: public Record {
   typedef enum { I = 0, H } PolyType;
+
+  PolygonRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene);
 
@@ -107,6 +115,7 @@ struct PolygonRecord: public Record {
 };
 
 struct SurfaceRecord: public Record {
+  SurfaceRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
   virtual void add(QGraphicsScene* scene);
 
