@@ -12,6 +12,7 @@
 #include "surfacesymbol.h"
 #include "arcsymbol.h"
 #include "usersymbol.h"
+#include "linesymbol.h"
 
 #include <QRegExp>
 

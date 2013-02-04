@@ -10,7 +10,6 @@ extern Context ctx;
 
 void LineRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
-
   QString sym_name = ds->symbolNameMap()[sym_num];
   qreal radius = (qreal)sym_name.right(sym_name.length()-1).toDouble()/2/1000;
   QPointF p1s(xs, -ys), p1e(xe, -ye), po (ox, oy), p2s, p2e, ps, pe;
@@ -36,14 +35,13 @@ void LineRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 
   path.moveTo(p1s);
   path.lineTo(p1e);
-  if(sym_name[0]=='s')
-    path.lineTo(p2e);
-  else
-    path.moveTo(p2e);
+  path.lineTo(p2e);
   path.lineTo(p2s);
-  if(sym_name[0]=='s')
-    path.lineTo(p1s);
-  else{
+  path.lineTo(p1s);
+  if(sym_name[0]=='r'){
+    //QPointF pbr, ptl;
+    //if(m>0){
+    //}
     path.addEllipse(ps, radius, radius);
     path.addEllipse(pe, radius, radius);
   }
@@ -51,7 +49,6 @@ void LineRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 
 void LineRecord::add(QGraphicsScene* scene)
 {
-  QPainterPath path;
-  addShape(path, 0, 0);
-  scene->addPath(path);
+  Symbol* symbol = new LineSymbol(this);
+  scene->addItem(symbol);
 }
