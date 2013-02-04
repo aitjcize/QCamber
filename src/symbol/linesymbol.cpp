@@ -53,15 +53,10 @@ void LineSymbol::addShape(QPainterPath& path)
   pe = p2e = p1e;
 
   QPointF delta;
-  if(m_xs == m_xe){//vertical line
-    delta.setX(-1);
-    delta.setY(0);
-  }else{
-    qreal m = (m_ye-m_ys)/(m_xe-m_xs);
-    qreal angle = qAtan(m);
-    delta.setX(-qSin(angle));
-    delta.setY(-qCos(angle));
-  }
+  qreal angle = qAtan2(m_ye - m_ys, m_xe - m_xs);
+  delta.setX(-qSin(angle));
+  delta.setY(-qCos(angle));
+
   delta*= radius;
   p1s += delta;
   p1e += delta;
