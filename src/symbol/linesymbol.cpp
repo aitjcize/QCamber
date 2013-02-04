@@ -33,7 +33,6 @@ void LineSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
   QPainterPath path;
-  path.setFillRule(Qt::WindingFill);
   addShape(path);
   path.setFillRule(Qt::WindingFill);
 
@@ -55,7 +54,7 @@ void LineSymbol::addShape(QPainterPath& path)
 
   QPointF delta;
   if(m_xs == m_xe){//vertical line
-    delta.setX(1);
+    delta.setX(-1);
     delta.setY(0);
   }else{
     qreal m = (m_ye-m_ys)/(m_xe-m_xs);
