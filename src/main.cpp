@@ -8,7 +8,9 @@
 #include "odbppviewwidget.h"
 #include "structuredtextparser.h"
 #include "featuresparser.h"
+#include "context.h"
 
+Context ctx;
 
 using std::cout;
 using std::endl;
@@ -19,11 +21,9 @@ extern int yydebug;
 int main(int argc, char *argv[])
 {
   yydebug = 0;
-  ArchiveLoader a("demo.tgz");
-  a.load();
-  qDebug() << a.listDir("symbols");
+  ctx.loader = new ArchiveLoader("demo.tgz");
 
-  StructuredTextParser parser(a.absPath("matrix/matrix"));
+  StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
   StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
 
@@ -31,10 +31,6 @@ int main(int argc, char *argv[])
   {
     cout << it->second->get("NAME") << endl;;
   }
-
-  FeaturesParser parser2("features");
-  FeaturesDataStore* ds2 = parser2.parse();
-  ds2->dump();
 
   QApplication app(argc, argv);
 

@@ -1,9 +1,13 @@
-#include "record.h"
-
 #include <QDebug>
+#include <QPainter>
 #include <cmath>
+#include "record.h"
+#include "context.h"
+#include "symbolfactory.h"
 
-void ArcRecord::addShape(QPainterPath& path)
+extern Context ctx;
+
+void ArcRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
   qreal sx = xs, sy = ys;
   qreal ex = xe, ey = ye;
@@ -48,5 +52,9 @@ void ArcRecord::addShape(QPainterPath& path)
     }
   }
   path.lineTo(ex, -ey);
+}
+
+void ArcRecord::paint(QPainter *painter)
+{
 }
 

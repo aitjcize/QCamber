@@ -10,7 +10,7 @@ SquareSymbol::SquareSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_s = caps[1].toDouble();
+  m_s = caps[1].toDouble() / 1000.0;
 }
 
 QRectF SquareSymbol::boundingRect() const
@@ -24,4 +24,9 @@ void SquareSymbol::paint(QPainter* painter,
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
   painter->drawRect(-m_s / 2, -m_s / 2, m_s, m_s);
+}
+
+void SquareSymbol::addShape(QPainterPath& path)
+{
+  path.addRect(pos().x() -m_s / 2, pos().y() -m_s / 2, m_s, m_s);
 }

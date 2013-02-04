@@ -11,9 +11,10 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
+  void addShape(QPainterPath& path);
 
 protected:
-  void addDiamond(QPainterPath& path, const QRectF& rect);
+  void addDiamond(QPainterPath& path, const QRectF& rect, bool offset);
 
 private:
   QString m_def;

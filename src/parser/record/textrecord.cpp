@@ -1,10 +1,15 @@
-#include "record.h"
-
 #include <QDebug>
+#include <QPainter>
 #include <QDateTime>
-#include <cmath>
 #include <QString>
-void TextRecord::addShape(QPainterPath& path)
+#include <cmath>
+#include "record.h"
+#include "context.h"
+#include "symbolfactory.h"
+
+extern Context ctx;
+
+void TextRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
 }
 
@@ -29,4 +34,8 @@ QString TextRecord::dynamicText(QString text)
   dynText.replace("$$y", QString("%1").arg(y));
   //TODO attr_name
   return dynText;
+}
+
+void TextRecord::paint(QPainter* painter)
+{
 }

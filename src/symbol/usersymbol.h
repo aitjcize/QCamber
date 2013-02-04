@@ -5,6 +5,7 @@
 
 #include <QtGui>
 
+#include "featuresparser.h"
 #include "record.h"
 
 class UserSymbol: public Symbol {
@@ -15,15 +16,13 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
-
-protected:
   void addShape(QPainterPath& path);
-  void testDraw(QPainter& painter);
 
 private:
   QString m_def;
   qreal m_d;
   QRectF bounding;
+  FeaturesDataStore* m_ds;
   QList<Record*> m_records;
 };
 

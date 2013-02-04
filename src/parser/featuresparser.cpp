@@ -32,7 +32,7 @@ void FeaturesDataStore::putAttribText(const QString& line)
 void FeaturesDataStore::putLine(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  LineRecord* rec = new LineRecord(*this);
+  LineRecord* rec = new LineRecord;
   int i = 0;
   rec->xs = param[++i].toDouble();
   rec->ys = param[++i].toDouble();
@@ -47,7 +47,7 @@ void FeaturesDataStore::putLine(const QString& line)
 void FeaturesDataStore::putPad(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  PadRecord* rec = new PadRecord(*this);
+  PadRecord* rec = new PadRecord;
   int i = 0;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
@@ -61,7 +61,7 @@ void FeaturesDataStore::putPad(const QString& line)
 void FeaturesDataStore::putArc(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  ArcRecord* rec = new ArcRecord(*this);
+  ArcRecord* rec = new ArcRecord;
   int i = 0;
   rec->xs = param[++i].toDouble();
   rec->ys = param[++i].toDouble();
@@ -79,7 +79,7 @@ void FeaturesDataStore::putArc(const QString& line)
 void FeaturesDataStore::putText(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  TextRecord* rec = new TextRecord(*this);
+  TextRecord* rec = new TextRecord;
   int i = 0;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
@@ -118,7 +118,7 @@ void FeaturesDataStore::putText(const QString& line)
 void FeaturesDataStore::putBarcode(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  BarcodeRecord* rec = new BarcodeRecord(*this);
+  BarcodeRecord* rec = new BarcodeRecord;
   int i = 0;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
@@ -162,7 +162,7 @@ void FeaturesDataStore::putBarcode(const QString& line)
 void FeaturesDataStore::surfaceStart(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  SurfaceRecord* rec = new SurfaceRecord(*this);
+  SurfaceRecord* rec = new SurfaceRecord;
   int i = 0;
   rec->polarity = (param[++i] == "P")? P: N;
   rec->dcode = param[++i].toInt();
@@ -175,7 +175,7 @@ void FeaturesDataStore::surfaceLineData(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   int i = 0;
   if (line.startsWith("OB")) {
-    PolygonRecord* rec = new PolygonRecord(*this);
+    PolygonRecord* rec = new PolygonRecord;
     rec->xbs = param[++i].toDouble();
     rec->ybs = param[++i].toDouble();
     rec->poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
@@ -211,6 +211,21 @@ void FeaturesDataStore::surfaceEnd(void)
 QList<Record*>& FeaturesDataStore::records(void)
 {
   return m_records;
+}
+
+const FeaturesDataStore::IDMapType& FeaturesDataStore::symbolNameMap(void)
+{
+  return m_symbolNameMap;
+}
+
+const FeaturesDataStore::IDMapType& FeaturesDataStore::attribNameMap(void)
+{
+  return m_attribNameMap;
+}
+
+const FeaturesDataStore::IDMapType& FeaturesDataStore::attribTextMap(void)
+{
+  return m_attribTextMap;
 }
 
 QString FeaturesDataStore::stripAttr(const QString& line)

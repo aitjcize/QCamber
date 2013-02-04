@@ -10,8 +10,8 @@ OvalSymbol::OvalSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_w = caps[1].toDouble();
-  m_h = caps[2].toDouble();
+  m_w = caps[1].toDouble() / 1000.0;
+  m_h = caps[2].toDouble() / 1000.0;
 }
 
 QRectF OvalSymbol::boundingRect() const
@@ -25,19 +25,30 @@ void OvalSymbol::paint(QPainter* painter,
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
   QPainterPath path;
-  addOval(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h));
+  addOval(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), false);
   painter->drawPath(path);
 }
 
-void OvalSymbol::addOval(QPainterPath& path, const QRectF& rect)
+void OvalSymbol::addShape(QPainterPath& path)
+{
+  addOval(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), true);
+}
+
+void OvalSymbol::addOval(QPainterPath& path, const QRectF& rect, bool offset)
 {
   QRectF r = rect.normalized();
+  qreal ox = 0, oy = 0;
 
   if (r.isNull())
     return;
 
-  qreal x = r.x();
-  qreal y = r.y();
+  if (offset) {
+    ox = pos().x();
+    oy = pos().y();
+  }
+
+  qreal x = ox + r.x();
+  qreal y = oy + r.y();
   qreal w = r.width();
   qreal h = r.height();
 

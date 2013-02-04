@@ -9,8 +9,8 @@
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_od = caps[1].toDouble();
-  m_id = caps[2].toDouble();
+  m_od = caps[1].toDouble() / 1000.0;
+  m_id = caps[2].toDouble() / 1000.0;
   ]]></constructor>
 
   <boundingRect><![CDATA[
@@ -23,4 +23,7 @@
   painter->setPen(QPen(Qt::red, pen_width));
   painter->drawEllipse(-rad, -rad, rad * 2, rad * 2);
   ]]></paint>
+
+  <addShape><![CDATA[
+  ]]></addShape>
 </symbol>

@@ -26,6 +26,9 @@ public:
   void surfaceEnd(void);
 
   QList<Record*>& records(void);
+  const IDMapType& symbolNameMap(void);
+  const IDMapType& attribNameMap(void);
+  const IDMapType& attribTextMap(void);
 
   virtual void dump(void);
 

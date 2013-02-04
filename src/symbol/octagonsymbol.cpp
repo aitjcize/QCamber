@@ -10,9 +10,9 @@ OctagonSymbol::OctagonSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_w = caps[1].toDouble();
-  m_h = caps[2].toDouble();
-  m_r = caps[3].toDouble();
+  m_w = caps[1].toDouble() / 1000.0;
+  m_h = caps[2].toDouble() / 1000.0;
+  m_r = caps[3].toDouble() / 1000.0;
 }
 
 QRectF OctagonSymbol::boundingRect() const
@@ -26,20 +26,31 @@ void OctagonSymbol::paint(QPainter* painter,
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
   QPainterPath path;
-  addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r);
+  addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r, true);
   painter->drawPath(path);
 }
 
+void OctagonSymbol::addShape(QPainterPath& path)
+{
+  addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r, false);
+}
+
 void OctagonSymbol::addOctagon(QPainterPath& path, const QRectF& rect,
-    qreal c)
+    qreal c, bool offset)
 {
   QRectF r = rect.normalized();
+  qreal ox = 0, oy = 0;
 
   if (r.isNull())
     return;
 
-  qreal x = r.x();
-  qreal y = r.y();
+  if (offset) {
+    ox = pos().x();
+    oy = pos().y();
+  }
+
+  qreal x = ox + r.x();
+  qreal y = oy + r.y();
   qreal w = r.width();
   qreal h = r.height();
 

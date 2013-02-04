@@ -11,9 +11,11 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
+  void addShape(QPainterPath& path);
 
 protected:
-  void addOctagon(QPainterPath& path, const QRectF& rect, qreal corner);
+  void addOctagon(QPainterPath& path, const QRectF& rect, qreal corner,
+    bool offset);
 
 private:
   QString m_def;

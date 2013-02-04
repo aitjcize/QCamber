@@ -17,23 +17,31 @@ class SymbolFactory {
 public:
   static Symbol* create(QString def) {
     QRegExp rx("([a-z_+]+).*");
-    if (!rx.exactMatch(def))
-      throw InvalidSymbolException(def.toAscii());
+    if (!rx.exactMatch(def)) {
+      return new UserSymbol(def);
+    }
+
     QString prefix = rx.capturedTexts()[1];
-    if (prefix == "r") {
-      return new RoundSymbol(def);
-    } else if (prefix == "s") {
-      return new SquareSymbol(def);
-    } else if (prefix == "rect") {
-      return new RectangleSymbol(def);
-    } else if (prefix == "oval") {
-      return new OvalSymbol(def);
-    } else if (prefix == "di") {
-      return new DiamondSymbol(def);
-    } else if (prefix == "oct") {
-      return new OctagonSymbol(def);
-    } else if (prefix == "donut_r") {
-      return new DonutRSymbol(def);
+    try {
+      if (prefix == "r") {
+        return new RoundSymbol(def);
+      } else if (prefix == "s") {
+        return new SquareSymbol(def);
+      } else if (prefix == "rect") {
+        return new RectangleSymbol(def);
+      } else if (prefix == "oval") {
+        return new OvalSymbol(def);
+      } else if (prefix == "di") {
+        return new DiamondSymbol(def);
+      } else if (prefix == "oct") {
+        return new OctagonSymbol(def);
+      } else if (prefix == "donut_r") {
+        return new DonutRSymbol(def);
+      } else {
+        return new UserSymbol(def);
+      }
+    } catch (InvalidSymbolException) {
+      return new UserSymbol(def);
     }
   }
 };
