@@ -1,27 +1,30 @@
-#ifndef __SURFACESYMBOL_H__
-#define __SURFACESYMBOL_H__
+#ifndef __ARCSYMBOL_H__
+#define __ARCSYMBOL_H__
 
 #include "symbol.h"
-
-#include <QtGui>
-
-#include "featuresparser.h"
 #include "record.h"
 
-class SurfaceSymbol: public Symbol {
+class ArcSymbol: public Symbol {
 public:
-  SurfaceSymbol(SurfaceRecord* rec);
+
+  ArcSymbol(ArcRecord* rec);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
   void addShape(QPainterPath& path);
 
+protected:
+
 private:
+  qreal m_xs, m_ys;
+  qreal m_xe, m_ye;
+  qreal m_xc, m_yc;
+  int m_sym_num;
   Polarity m_polarity;
   int m_dcode;
-  QList<PolygonRecord*> m_polygons;
+  bool m_cw;
   QRectF m_bounding;
 };
 
-#endif /* __SURFACESYMBOL_H__ */
+#endif /* __ARCSYMBOL_H__ */

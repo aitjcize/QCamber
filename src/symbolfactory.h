@@ -10,6 +10,7 @@
 #include "donutrsymbol.h"
 #include "squaresymbol.h"
 #include "surfacesymbol.h"
+#include "arcsymbol.h"
 #include "usersymbol.h"
 
 #include <QRegExp>

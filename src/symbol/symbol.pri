@@ -8,6 +8,7 @@ HEADERS += \
   symbol/donutrsymbol.h \
   symbol/squaresymbol.h \
   symbol/surfacesymbol.h \
+  symbol/arcsymbol.h \
   symbol/usersymbol.h
 
 SOURCES += \
@@ -20,4 +21,5 @@ SOURCES += \
   symbol/donutrsymbol.cpp \
   symbol/squaresymbol.cpp \
   symbol/surfacesymbol.cpp \
+  symbol/arcsymbol.cpp \
   symbol/usersymbol.cpp

@@ -14,14 +14,14 @@ extern Context ctx;
 
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec): Symbol("user", "user")
 {
-  polarity = rec->polarity;
-  dcode = rec->dcode;
-  polygons = rec->polygons;
+  m_polarity = rec->polarity;
+  m_dcode = rec->dcode;
+  m_polygons = rec->polygons;
 }
 
 QRectF SurfaceSymbol::boundingRect() const
 {
-  return bounding;
+  return m_bounding;
 }
 
 void SurfaceSymbol::paint(QPainter* painter,
@@ -34,13 +34,13 @@ void SurfaceSymbol::paint(QPainter* painter,
   painter->setBrush(Qt::red);
   painter->drawPath(path);
 
-  bounding = path.boundingRect();
+  m_bounding = path.boundingRect();
 }
 
 void SurfaceSymbol::addShape(QPainterPath& path)
 {
-  for (QList<PolygonRecord*>::iterator it = polygons.begin();
-      it != polygons.end(); ++it) {
+  for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
+      it != m_polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
     rec->addShape(path, pos().x(), -pos().y());
     /*
