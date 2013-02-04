@@ -9,6 +9,7 @@
 #include "octagonsymbol.h"
 #include "donutrsymbol.h"
 #include "squaresymbol.h"
+#include "surfacesymbol.h"
 #include "usersymbol.h"
 
 #include <QRegExp>

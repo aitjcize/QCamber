@@ -1,5 +1,5 @@
-#ifndef __USERSYMBOL_H__
-#define __USERSYMBOL_H__
+#ifndef __SURFACESYMBOL_H__
+#define __SURFACESYMBOL_H__
 
 #include "symbol.h"
 
@@ -8,23 +8,20 @@
 #include "featuresparser.h"
 #include "record.h"
 
-class UserSymbol: public Symbol {
+class SurfaceSymbol: public Symbol {
 public:
-
-  UserSymbol(QString def);
+  SurfaceSymbol(SurfaceRecord* rec);
 
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
   void addShape(QPainterPath& path);
-  void addPath(QPainterPath& path, bool offset);
 
 private:
-  QString m_def;
-  qreal m_d;
+  Polarity polarity;
+  int dcode;
+  QList<PolygonRecord*> polygons;
   QRectF bounding;
-  FeaturesDataStore* m_ds;
-  QList<Record*> m_records;
 };
 
-#endif /* __USERSYMBOL_H__ */
+#endif /* __SURFACESYMBOL_H__ */

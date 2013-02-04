@@ -17,16 +17,20 @@ UserSymbol::UserSymbol(QString def):
 {
   static bool first = true;
   QString path = ctx.loader->absPath("symbols/" + def + "/features");
+  /*
   if (first) {
     path = "features";
   }
+  */
   FeaturesParser parser(path);
   m_ds = parser.parse();
 
+  /*
   if (first) {
     first = false;
     ctx.cfds = m_ds;
   }
+  */
   m_records = m_ds->records();
 }
 
@@ -39,7 +43,7 @@ void UserSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
   QPainterPath path;
-  addShape(path);
+  addPath(path, false);
 
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
@@ -50,9 +54,18 @@ void UserSymbol::paint(QPainter* painter,
 
 void UserSymbol::addShape(QPainterPath& path)
 {
+  addPath(path, true);
+}
+
+void UserSymbol::addPath(QPainterPath& path, bool offset)
+{
   for (QList<Record*>::const_iterator it = m_records.begin();
       it != m_records.end(); ++it) {
     Record* rec = *it;
-    rec->addShape(path, pos().x(), -pos().y());
+    if (offset) {
+      rec->addShape(path, pos().x(), -pos().y());
+    } else {
+      rec->addShape(path, 0, 0);
+    }
   }
 }

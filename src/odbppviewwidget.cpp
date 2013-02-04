@@ -1,6 +1,7 @@
 #include "odbppviewwidget.h"
 #include "symbolfactory.h"
 #include "context.h"
+#include "feature.h"
 
 extern Context ctx;
 
@@ -49,9 +50,15 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   symbol7->setPos(100, -100);
   */
 
+  /*
   Symbol* user = new UserSymbol("construct");
   scene->addItem(user);
   user->setPos(0, 0);
+  */
+
+  Features features("features");
+  features.add(scene);
+
   scale(100, 100);
 }
 

@@ -6,7 +6,24 @@
 #include "symbolfactory.h"
 
 extern Context ctx;
+/*
+void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+{
+  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  Symbol* symbol = SymbolFactory::create(sym_name);
+  symbol->setPos(ox + x, oy -y);
+  symbol->addShape(path);
+}
 
+void PadRecord::add(QGraphicsScene* scene)
+{
+  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  Symbol* symbol = SymbolFactory::create(sym_name);
+  symbol->setPos(x, -y);
+  scene->addItem(symbol);
+  // XXX: orient, polarity
+}
+*/
 void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
   qreal lx, ly;
@@ -71,4 +88,10 @@ void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 
 void PolygonRecord::paint(QPainter *painter)
 {
+}
+
+void SurfaceRecord::add(QGraphicsScene* scene)
+{
+  Symbol* symbol = new SurfaceSymbol(this);
+  scene->addItem(symbol);
 }
