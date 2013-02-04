@@ -17,16 +17,20 @@ UserSymbol::UserSymbol(QString def):
 {
   static bool first = true;
   QString path = ctx.loader->absPath("symbols/" + def + "/features");
+  /*
   if (first) {
     path = "features";
   }
+  */
   FeaturesParser parser(path);
   m_ds = parser.parse();
 
+  /*
   if (first) {
     first = false;
     ctx.cfds = m_ds;
   }
+  */
   m_records = m_ds->records();
 }
 
