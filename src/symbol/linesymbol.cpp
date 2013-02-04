@@ -12,8 +12,16 @@ using std::endl;
 
 extern Context ctx;
 
-LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user"), m_rec(rec)
+LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
 {
+  m_xs = rec->xs;
+  m_ys = rec->ys;
+  m_xe = rec->xe;
+  m_ye = rec->ye;
+  m_sym_num = rec->sym_num;
+  m_sym_name = rec->ds->symbolNameMap()[rec->sym_num];
+  m_polarity = rec->polarity;
+  m_dcode = rec->dcode;
 }
 
 QRectF LineSymbol::boundingRect() const
@@ -38,5 +46,39 @@ void LineSymbol::paint(QPainter* painter,
 
 void LineSymbol::addShape(QPainterPath& path)
 {
-  m_rec->addShape(path, pos().x(), -pos().y());
+
+  QString sym_name = m_sym_name;
+  qreal radius = (qreal)sym_name.right(sym_name.length()-1).toDouble()/2/1000;
+  QPointF p1s(m_xs, -m_ys), p1e(m_xe, -m_ye), p2s, p2e, ps, pe;
+  ps = p2s = p1s;
+  pe = p2e = p1e;
+
+  QPointF delta;
+  if(m_xs == m_xe){//vertical line
+    delta.setX(1);
+    delta.setY(0);
+  }else{
+    qreal m = (m_ye-m_ys)/(m_xe-m_xs);
+    qreal angle = qAtan(m);
+    delta.setX(-qSin(angle));
+    delta.setY(-qCos(angle));
+  }
+  delta*= radius;
+  p1s += delta;
+  p1e += delta;
+  p2s -= delta;
+  p2e -= delta;
+
+  path.moveTo(p1s);
+  path.lineTo(p1e);
+  path.lineTo(p2e);
+  path.lineTo(p2s);
+  path.lineTo(p1s);
+  if(sym_name[0]=='r'){
+    //QPointF pbr, ptl;
+    //if(m>0){
+    //}
+    path.addEllipse(ps, radius, radius);
+    path.addEllipse(pe, radius, radius);
+  }
 }
