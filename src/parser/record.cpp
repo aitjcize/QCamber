@@ -23,7 +23,11 @@ void PadRecord::add(QGraphicsScene* scene)
   Symbol* symbol = SymbolFactory::create(sym_name);
   symbol->setPos(x, -y);
   scene->addItem(symbol);
-  // XXX: orient, polarity
+
+  symbol->rotate((orient % 4) * -90);
+  if (orient >= M_0) {
+    symbol->scale(1, -1);
+  }
 }
 
 void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
