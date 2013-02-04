@@ -19,6 +19,7 @@ RectangleSymbol::RectangleSymbol(QString def):
     m_rad = caps[4].toDouble() / 1000.0;
     m_type = CHAMFERED;
   } else {  
+    m_rad = 0;
     m_type = NORMAL;
   }
   if (caps[5].length()) {
@@ -65,20 +66,15 @@ void RectangleSymbol::addRect(QPainterPath& path, bool offset)
     oy = pos().y();
   }
 
-  if (m_type == NORMAL) {
-    path.addRect(r);
-    return;
-  }
-
-  if (m_rad <= 0) {
-    path.addRect(r);
-    return;
-  }
-
   qreal x = ox + r.x();
   qreal y = oy + r.y();
   qreal w = r.width();
   qreal h = r.height();
+
+  if (m_type == NORMAL || m_rad <= 0) {
+    path.addRect(x, y, w, h);
+    return;
+  }
 
   m_rad = qMin(qMin(w / 2, h / 2), m_rad);
 
