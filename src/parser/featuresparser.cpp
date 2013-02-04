@@ -1,7 +1,7 @@
 #include "featuresparser.h"
 
 #include <QtCore>
-
+#define _DOUBLE_SLASHES_ "__DOUBLE_SLASHES_DARK_FLAME_MASTER__"
 void FeaturesDataStore::putSymbolName(const QString& line)
 {
   QStringList param = line.split(" ");
@@ -89,7 +89,28 @@ void FeaturesDataStore::putText(const QString& line)
   rec->xsize = param[++i].toDouble();
   rec->ysize = param[++i].toDouble();
   rec->width_factor = param[++i].toDouble();
-  rec->text = param[++i];
+  rec->text = "";
+  int ends = -1;
+  while(ends!=1){
+    QString str(param[++i]);
+    if(!ends)
+      rec->text += " ";
+    else
+      str.replace(QRegExp("^'"), "");
+    str.replace("\\\\", _DOUBLE_SLASHES_);
+    if(str.endsWith("\\'"))
+        ends = 0;
+    else if (str.endsWith("'"))
+        ends = 1;
+    else
+        ends = 0;
+    if(ends)
+        str.replace(QRegExp("'$"), "");
+    str.replace("\\'", "'");
+    str.replace(_DOUBLE_SLASHES_, "\\");
+    rec->text += str;
+  };
+
   rec->version = param[++i].toInt();
   m_records.append(rec);
 }
@@ -113,7 +134,28 @@ void FeaturesDataStore::putBarcode(const QString& line)
   rec->bg = (param[++i] == "Y");
   rec->astr = (param[++i] == "Y");
   rec->astr_pos = (param[++i] == "T")? BarcodeRecord::T : BarcodeRecord::B;
-  rec->text = param[++i];
+  rec->text = "";
+  int ends = -1;
+  while(ends!=1){
+    QString str(param[++i]);
+    if(!ends)
+      rec->text += " ";
+    else
+      str.replace(QRegExp("^'"), "");
+    str.replace("\\\\", _DOUBLE_SLASHES_);
+    if(str.endsWith("\\'"))
+        ends = 0;
+    else if (str.endsWith("'"))
+        ends = 1;
+    else
+        ends = 0;
+    if(ends)
+        str.replace(QRegExp("'$"), "");
+    str.replace("\\'", "'");
+    str.replace(_DOUBLE_SLASHES_, "\\");
+    rec->text += str;
+  };
+
   m_records.append(rec);
 }
 

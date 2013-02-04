@@ -21,7 +21,7 @@ SOURCES += \
   odbppviewwidget.cpp \
   feature.cpp
 
-INCLUDEPATH += . .build parser symbol
+INCLUDEPATH += . .build parser parser/record symbol
 
 DESTDIR = ../bin
 TARGET = camview
