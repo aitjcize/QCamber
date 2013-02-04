@@ -19,16 +19,16 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
   qreal sa = atan(say / sax);
   qreal ea = atan(eay / eax);
 
-  if (sa <= 0 && (sax < 0)) {
-    sa += M_PI;
-  } else if (sa > 0 && (sax < 0 || say < 0)) {
-    sa += M_PI;
-  }
-
   if (ea <= 0 && (eax < 0)) {
     ea += M_PI;
   } else if (ea > 0 && (eax < 0 || eay < 0)) {
     ea += M_PI;
+  }
+
+  if (sa <= 0 && (sax < 0)) {
+    sa += M_PI;
+  } else if (sa > 0 && (sax < 0 || say < 0)) {
+    sa += M_PI;
   }
 
   if (cw) {
@@ -56,68 +56,38 @@ void ArcRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
   qreal sx = ox + xs, sy = oy + ys;
   qreal ex = ox + xe, ey = oy + ye;
   qreal cx = ox + xc, cy = oy + yc;
+
   qreal rad = 0.2;
-
-  qreal sax = sx - cx, say = sy - cy;
-  qreal eax = ex - cx, eay = ey - cy;
-
-  qreal rs = sqrt(sax * sax + say * say);
-  qreal re = sqrt(eax * eax + eay * eay);
-
   qreal hr = rad / 2;
-  qreal dx, dy, ds;
-  qreal rx, ry;
+  qreal dx = sx - cx, dy = sy - cy;
+  qreal ds = sqrt(dx * dx + dy * dy);
 
-  qreal sa = atan(say / sax);
-  if (sa <= 0 && (sax < 0)) {
-    sa += M_PI;
-  } else if (sa > 0 && (sax < 0 || say < 0)) {
-    sa += M_PI;
-  }
-
-  qreal ea = atan(eay / eax);
-  if (ea <= 0 && (eax < 0)) {
-    ea += M_PI;
-  } else if (ea > 0 && (eax < 0 || eay < 0)) {
-    ea += M_PI;
-  }
-
-#define RAD(a) ((rs * (ea - a) + re * (a - sa)) / (ea - sa))
-  qreal sp1x =  (cx + RAD(sa) * cos(sa));
-  qreal sp1y = -(cy + RAD(sa) * sin(sa));
-  qreal sp2x =  (cx + RAD(sa-0.01) * cos(sa-0.01));
-  qreal sp2y = -(cy + RAD(sa-0.01) * sin(sa-0.01));
-
-  dx = sp2x - sp1x; dy = sp2y - sp1y;
-  ds = sqrt(dx * dx + dy * dy);
-  rx = dy / ds; ry = -dx / ds;
+  // normalize
+  dx /= ds; dy /= ds;
 
   qreal sex, sey; // start point expended
   qreal ssx, ssy; // start point shrinked
 
-  sex = sx + rx * hr;
-  sey = sy + ry * hr;
+  sex = sx + dx * hr;
+  sey = sy + dy * hr;
 
-  ssx = sx - rx * hr;
-  ssy = sy - ry * hr;
+  ssx = sx - dx * hr;
+  ssy = sy - dy * hr;
 
-  qreal ep1x =  (cx + RAD(ea) * cos(ea));
-  qreal ep1y = -(cy + RAD(ea) * sin(ea));
-  qreal ep2x =  (cx + RAD(ea+0.01) * cos(ea+0.01));
-  qreal ep2y = -(cy + RAD(ea+0.01) * sin(ea+0.01));
-
-  dx = ep2x - ep1x; dy = ep2y - ep1y;
+  dx = ex - cx, dy = ey - cy;
   ds = sqrt(dx * dx + dy * dy);
-  rx = dy / ds; ry = -dx / ds;
+
+  // normalize
+  dx /= ds; dy /= ds;
 
   qreal eex, eey; // end point expended
   qreal esx, esy; // end point shrinked
 
-  eex = ex + rx * hr;
-  eey = ey + ry * hr;
+  eex = ex + dx * hr;
+  eey = ey + dy * hr;
 
-  esx = ex - rx * hr;
-  esy = ey - ry * hr;
+  esx = ex - dx * hr;
+  esy = ey - dy * hr;
 
   path.moveTo(eex, -eey);
   addArc(path, eex, eey, sex, sey, cx, cy, true);
