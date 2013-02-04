@@ -33,16 +33,16 @@ void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
       qreal sa = atan(say / sax);
       qreal ea = atan(eay / eax);
 
-      if (ea <= 0 && (eax < 0)) {
-        ea += M_PI;
-      } else if (ea > 0 && (eax < 0 || eay < 0)) {
-        ea += M_PI;
-      }
-
       if (sa <= 0 && (sax < 0)) {
         sa += M_PI;
       } else if (sa > 0 && (sax < 0 || say < 0)) {
         sa += M_PI;
+      }
+
+      if (ea <= 0 && (eax < 0)) {
+        ea += M_PI;
+      } else if (ea > 0 && (eax < 0 || eay < 0)) {
+        ea += M_PI;
       }
 
       if (op->cw) {
