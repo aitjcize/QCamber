@@ -57,6 +57,7 @@ struct ArcRecord: public Record {
 
 struct TextRecord: public Record {
   virtual void addShape(QPainterPath& path);
+  virtual QString dynamicText(QString);
 
   qreal x, y;
   QString font;
@@ -68,12 +69,11 @@ struct TextRecord: public Record {
   int version;
 };
 
-struct BarcodeRecord: public Record {
+struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   virtual void addShape(QPainterPath& path);
 
-  qreal x, y;
   QString barcode;
   QString font;
   Polarity polarity;
@@ -85,7 +85,6 @@ struct BarcodeRecord: public Record {
   bool bg;
   bool astr;
   AstrPos astr_pos;
-  QString text;
 };
 
 struct PolygonRecord {

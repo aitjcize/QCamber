@@ -12,8 +12,7 @@ HEADERS += \
 SOURCES += \
   parser/parser.cpp \
   parser/structuredtextparser.cpp \
-  parser/featuresparser.cpp \
-  parser/record.cpp
+  parser/featuresparser.cpp
 
 FLEXSOURCES += parser/db.l
 BISONSOURCES += parser/db.y
