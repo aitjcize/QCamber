@@ -1,6 +1,7 @@
 #include "feature.h"
 
 #include "context.h"
+#include <typeinfo>
 
 extern Context ctx;
 
