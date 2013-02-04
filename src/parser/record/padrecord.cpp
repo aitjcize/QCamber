@@ -9,7 +9,7 @@ extern Context ctx;
 
 void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
-  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  QString sym_name = ds->symbolNameMap()[sym_num];
   Symbol* symbol = SymbolFactory::create(sym_name);
   symbol->setPos(ox + x, oy -y);
   symbol->addShape(path);
@@ -17,7 +17,7 @@ void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 
 void PadRecord::add(QGraphicsScene* scene)
 {
-  QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
+  QString sym_name = ds->symbolNameMap()[sym_num];
   Symbol* symbol = SymbolFactory::create(sym_name);
   symbol->setPos(x, -y);
   scene->addItem(symbol);

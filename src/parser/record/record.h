@@ -12,13 +12,13 @@ typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 struct Record {
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy) = 0;
   virtual void add(QGraphicsScene* scene) = 0;
+
+  FeaturesDataStore* ds;
 };
 
 
 struct SurfaceOperation {
   typedef enum { SEGMENT = 0, CURVE } OpType;
-//  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) ;
-//  virtual void add(QGraphicsScene* scene) ;
   
   OpType type;
   qreal x, y;

@@ -34,6 +34,7 @@ void FeaturesDataStore::putLine(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   LineRecord* rec = new LineRecord;
   int i = 0;
+  rec->ds = this;
   rec->xs = param[++i].toDouble();
   rec->ys = param[++i].toDouble();
   rec->xe = param[++i].toDouble();
@@ -49,6 +50,7 @@ void FeaturesDataStore::putPad(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   PadRecord* rec = new PadRecord;
   int i = 0;
+  rec->ds = this;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
   rec->sym_num = param[++i].toInt();
@@ -63,6 +65,7 @@ void FeaturesDataStore::putArc(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   ArcRecord* rec = new ArcRecord;
   int i = 0;
+  rec->ds = this;
   rec->xs = param[++i].toDouble();
   rec->ys = param[++i].toDouble();
   rec->xe = param[++i].toDouble();
@@ -81,6 +84,7 @@ void FeaturesDataStore::putText(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   TextRecord* rec = new TextRecord;
   int i = 0;
+  rec->ds = this;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
   rec->font = param[++i];
@@ -120,6 +124,7 @@ void FeaturesDataStore::putBarcode(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   BarcodeRecord* rec = new BarcodeRecord;
   int i = 0;
+  rec->ds = this;
   rec->x = param[++i].toDouble();
   rec->y = param[++i].toDouble();
   rec->barcode = param[++i];
@@ -164,6 +169,7 @@ void FeaturesDataStore::surfaceStart(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   SurfaceRecord* rec = new SurfaceRecord;
   int i = 0;
+  rec->ds = this;
   rec->polarity = (param[++i] == "P")? P: N;
   rec->dcode = param[++i].toInt();
   m_records.append(rec);
@@ -176,6 +182,7 @@ void FeaturesDataStore::surfaceLineData(const QString& line)
   int i = 0;
   if (line.startsWith("OB")) {
     PolygonRecord* rec = new PolygonRecord;
+    rec->ds = this;
     rec->xbs = param[++i].toDouble();
     rec->ybs = param[++i].toDouble();
     rec->poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
