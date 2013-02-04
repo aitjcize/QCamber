@@ -15,11 +15,11 @@ void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
   symbol->addShape(path);
 }
 
-void PadRecord::paint(QPainter* painter)
+void PadRecord::add(QGraphicsScene* scene)
 {
   QString sym_name = ctx.cfds->symbolNameMap()[sym_num];
   Symbol* symbol = SymbolFactory::create(sym_name);
-  symbol->setPos(x, y);
-  ctx.cscene->addItem(symbol);
+  symbol->setPos(x, -y);
+  scene->addItem(symbol);
   // XXX: orient, polarity
 }

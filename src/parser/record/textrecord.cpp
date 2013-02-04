@@ -36,6 +36,6 @@ QString TextRecord::dynamicText(QString text)
   return dynText;
 }
 
-void TextRecord::paint(QPainter* painter)
+void TextRecord::add(QGraphicsScene* scene)
 {
 }

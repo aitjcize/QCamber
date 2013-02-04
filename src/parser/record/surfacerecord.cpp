@@ -23,6 +23,8 @@ void SurfaceRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
   }
 }
 
-void SurfaceRecord::paint(QPainter* painter)
+void SurfaceRecord::add(QGraphicsScene* scene)
 {
+  Symbol* symbol = new SurfaceSymbol(this);
+  scene->addItem(symbol);
 }

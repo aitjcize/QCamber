@@ -54,7 +54,10 @@ void ArcRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
   path.lineTo(ex, -ey);
 }
 
-void ArcRecord::paint(QPainter *painter)
+void ArcRecord::add(QGraphicsScene* scene)
 {
+  QPainterPath path;
+  addShape(path, 0, 0);
+  scene->addPath(path);
 }
 

@@ -11,6 +11,6 @@ void BarcodeRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
 }
 
-void BarcodeRecord::paint(QPainter *painter)
+void BarcodeRecord::add(QGraphicsScene* scene)
 {
 }

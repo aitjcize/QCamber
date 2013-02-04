@@ -17,8 +17,8 @@ struct Record {
 
 struct SurfaceOperation {
   typedef enum { SEGMENT = 0, CURVE } OpType;
-//  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) {};
-//  virtual void add(QGraphicsScene* scene) {};
+//  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) ;
+//  virtual void add(QGraphicsScene* scene) ;
   
   OpType type;
   qreal x, y;
@@ -29,7 +29,7 @@ struct SurfaceOperation {
 
 struct LineRecord: public Record {
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
-  virtual void add(QGraphicsScene* scene) {};
+  virtual void add(QGraphicsScene* scene) ;
 
   qreal xs, ys;
   qreal xe, ye;
@@ -50,10 +50,8 @@ struct PadRecord: public Record {
 };
 
 struct ArcRecord: public Record {
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
-
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) {};
-  virtual void add(QGraphicsScene* scene) {};
+  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) ;
+  virtual void add(QGraphicsScene* scene) ;
 
   qreal xs, ys;
   qreal xe, ye;
@@ -67,7 +65,7 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   virtual QString dynamicText(QString);
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
-  virtual void add(QGraphicsScene* scene) {};
+  virtual void add(QGraphicsScene* scene) ;
 
 
   qreal x, y;
@@ -83,7 +81,7 @@ struct TextRecord: public Record {
 struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
-  virtual void add(QGraphicsScene* scene) {};
+  virtual void add(QGraphicsScene* scene) ;
 
   QString barcode;
   QString font;
@@ -101,7 +99,7 @@ struct BarcodeRecord: public TextRecord {
 struct PolygonRecord: public Record {
   typedef enum { I = 0, H } PolyType;
   virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
-  virtual void paint(QPainter *painter);
+  virtual void add(QGraphicsScene* scene);
 
   qreal xbs, ybs;
   PolyType poly_type;

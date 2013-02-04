@@ -9,10 +9,13 @@ extern Context ctx;
 
 void LineRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
 {
-  path.moveTo(xs, ys);
-  path.lineTo(xe, ye);
+  path.moveTo(ox + xs, oy - ys);
+  path.lineTo(ox + xe, oy - ye);
 }
 
-void LineRecord::paint(QPainter *painter)
+void LineRecord::add(QGraphicsScene* scene)
 {
+  QPainterPath path;
+  addShape(path, 0, 0);
+  scene->addPath(path);
 }
