@@ -9,23 +9,11 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
   qreal sax = sx - cx, say = sy - cy;
   qreal eax = ex - cx, eay = ey - cy;
 
-  qreal rs = sqrt(sax * sax + say * say);
-  qreal re = sqrt(eax * eax + eay * eay);
+  qreal rs = qSqrt(sax * sax + say * say);
+  qreal re = qSqrt(eax * eax + eay * eay);
 
-  qreal sa = atan(say / sax);
-  qreal ea = atan(eay / eax);
-
-  if (ea <= 0 && (eax < 0)) {
-    ea += M_PI;
-  } else if (ea > 0 && (eax < 0 || eay < 0)) {
-    ea += M_PI;
-  }
-
-  if (sa <= 0 && (sax < 0)) {
-    sa += M_PI;
-  } else if (sa > 0 && (sax < 0 || say < 0)) {
-    sa += M_PI;
-  }
+  qreal sa = qAtan2(say, sax);
+  qreal ea = qAtan2(eay, eax);
 
   if (cw) {
     if (sa < ea) {
@@ -33,7 +21,7 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
     }
     for (qreal a = sa; a >= ea; a -= 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      path.lineTo(cx + rad * cos(a), -(cy + rad * sin(a)));
+      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   } else {
     if (ea < sa) {
@@ -41,7 +29,7 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
     }
     for (qreal a = sa; a <= ea; a += 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      path.lineTo(cx + rad * cos(a), -(cy + rad * sin(a)));
+      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   }
   path.lineTo(ex, -ey);
@@ -89,7 +77,7 @@ void ArcSymbol::addShape(QPainterPath& path)
   qreal rad = 0.2;
   qreal hr = rad / 2;
   qreal dx = sx - cx, dy = sy - cy;
-  qreal ds = sqrt(dx * dx + dy * dy);
+  qreal ds = qSqrt(dx * dx + dy * dy);
 
   // normalize
   dx /= ds; dy /= ds;
@@ -104,7 +92,7 @@ void ArcSymbol::addShape(QPainterPath& path)
   ssy = sy - dy * hr;
 
   dx = ex - cx, dy = ey - cy;
-  ds = sqrt(dx * dx + dy * dy);
+  ds = qSqrt(dx * dx + dy * dy);
 
   // normalize
   dx /= ds; dy /= ds;
