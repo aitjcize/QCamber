@@ -28,6 +28,8 @@ RectangleSymbol::RectangleSymbol(QString def):
     for (int i = 0; i < cors.count(); ++i) {
       m_corners |= (1 << (cors[i] - '1'));
     }
+  } else {
+    m_corners = 15;
   }
 }
 
