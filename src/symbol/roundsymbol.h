@@ -17,7 +17,7 @@ protected:
 
 private:
   QString m_def;
-  qreal m_d;
+  qreal m_r;
 };
 
 #endif /* __ROUNDSYMBOL_H__ */

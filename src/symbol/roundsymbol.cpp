@@ -10,12 +10,12 @@ RoundSymbol::RoundSymbol(QString def):
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
-  m_d = caps[1].toDouble() / 1000.0;
+  m_r = caps[1].toDouble() / 1000.0 / 2.0;
 }
 
 QRectF RoundSymbol::boundingRect() const
 {
-  return QRectF(-m_d / 2, -m_d / 2, m_d, m_d);
+  return QRectF(-m_r, -m_r, m_r * 2, m_r * 2);
 }
 
 void RoundSymbol::paint(QPainter* painter,
@@ -23,10 +23,10 @@ void RoundSymbol::paint(QPainter* painter,
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
-  painter->drawEllipse(-m_d / 2, -m_d / 2, m_d, m_d);
+  painter->drawEllipse(QPointF(0, 0), m_r, m_r);
 }
 
 void RoundSymbol::addShape(QPainterPath& path)
 {
-  path.addEllipse(pos().x() -m_d / 2, pos().y() -m_d / 2, m_d, m_d);
+  path.addEllipse(pos(), m_r, m_r);
 }
