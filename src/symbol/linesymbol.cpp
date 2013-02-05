@@ -1,5 +1,5 @@
 #include "linesymbol.h"
-
+#include "symbolfactory.h"
 #include <iostream>
 #include <typeinfo>
 using std::cout;
@@ -22,6 +22,15 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
   m_sym_name = rec->ds->symbolNameMap()[rec->sym_num];
   m_polarity = rec->polarity;
   m_dcode = rec->dcode;
+  //make sure start is at left hand side of end
+  if(m_xs > m_xe){
+    qreal tmp = m_xs;
+    m_xs = m_xe;
+    m_xe = tmp;
+    tmp = m_ys;
+    m_ys = m_ye;
+    m_ye = tmp;
+  }
 }
 
 QRectF LineSymbol::boundingRect() const
@@ -44,9 +53,15 @@ void LineSymbol::paint(QPainter* painter,
 
 QPainterPath LineSymbol::painterPath()
 {
+  Symbol *symbol = SymbolFactory::create(m_sym_name);
+  QPainterPath symbolPath = symbol->painterPath();
+  if(symbolPath.boundingRect().height() != symbolPath.boundingRect().width()){
+    qDebug()<<m_sym_name<<"is not a symmetrics symbol, but we'll still try to draw lines with it";
+  }
+  delete symbol;
   QPainterPath path;
   QString sym_name = m_sym_name;
-  qreal radius = (qreal)sym_name.right(sym_name.length()-1).toDouble()/2/1000;
+  qreal radius = (qreal)symbolPath.boundingRect().height()/2;
 
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
@@ -54,23 +69,14 @@ QPainterPath LineSymbol::painterPath()
   qreal a = qAtan2(dy, dx);
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
 
-  // Extend to make square cap
-  if (sym_name[0] == 's') {
-    sx -= rcosa;
-    sy -= rsina;
-    ex += rcosa;
-    ey += rsina;
-  }
 
   path.moveTo(sx + rsina, -(sy - rcosa));
   path.lineTo(sx - rsina, -(sy + rcosa));
   path.lineTo(ex - rsina, -(ey + rcosa));
   path.lineTo(ex + rsina, -(ey - rcosa));
   path.closeSubpath();
+  path.addPath(symbolPath.translated(sx, -sy));
+  path.addPath(symbolPath.translated(ex, -ey));
 
-  if (sym_name[0] == 'r') {
-    path.addEllipse(QPointF(sx, -sy), radius, radius);
-    path.addEllipse(QPointF(ex, -ey), radius, radius);
-  }
   return path;
 }
