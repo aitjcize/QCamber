@@ -23,7 +23,7 @@ void SquareSymbol::paint(QPainter* painter,
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
-  painter->drawRect(-m_s / 2, -m_s / 2, m_s, m_s);
+  painter->drawRect(QRectF(-m_s / 2, -m_s / 2, m_s, m_s));
 }
 
 QPainterPath SquareSymbol::painterPath(void)
