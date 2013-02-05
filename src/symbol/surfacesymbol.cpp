@@ -45,9 +45,9 @@ QPainterPath SurfaceSymbol::painterPath(void)
     path.addPath(rec->painterPath());
     /*
     if (rec->poly_type == PolygonRecord::I) {
-      rec->addShape(ipath);
+      ipath.addPath(rec->painterPath());
     } else {
-      rec->addShape(hpath);
+      ipath.addPath(rec->painterPath());
     }
     */
   }

@@ -9,19 +9,9 @@ extern Context ctx;
 
 QPainterPath SurfaceRecord::painterPath(void)
 {
-  QPainterPath path;
-  for (QList<PolygonRecord*>::iterator it = polygons.begin();
-      it != polygons.end(); ++it) {
-    PolygonRecord* rec = (*it);
-    path.addPath(rec->painterPath());
-    /*
-    if (rec->poly_type == PolygonRecord::I) {
-      rec->addShape(ipath);
-    } else {
-      rec->addShape(hpath);
-    }
-    */
-  }
+  Symbol* symbol = new SurfaceSymbol(this);
+  QPainterPath path = symbol->painterPath();
+  delete symbol;
   return path;
 }
 
