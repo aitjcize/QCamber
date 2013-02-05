@@ -54,7 +54,6 @@ QPainterPath LineSymbol::painterPath()
   }
   delete symbol;
 
-  QString sym_name = m_sym_name;
   qreal radius = (qreal)symbolPath.boundingRect().height()/2;
 
   qreal sx = m_xs, sy = m_ys;
