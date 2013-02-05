@@ -24,31 +24,21 @@ void OvalSymbol::paint(QPainter* painter,
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
-  QPainterPath path;
-  addOval(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), false);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
 }
 
-void OvalSymbol::addShape(QPainterPath& path)
+QPainterPath OvalSymbol::painterPath(void)
 {
-  addOval(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), true);
-}
-
-void OvalSymbol::addOval(QPainterPath& path, const QRectF& rect, bool offset)
-{
+  QPainterPath path;
+  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
-  qreal ox = 0, oy = 0;
 
   if (r.isNull())
-    return;
+    return path;
 
-  if (offset) {
-    ox = pos().x();
-    oy = pos().y();
-  }
-
-  qreal x = ox + r.x();
-  qreal y = oy + r.y();
+  qreal x = r.x();
+  qreal y = r.y();
   qreal w = r.width();
   qreal h = r.height();
 
@@ -59,4 +49,5 @@ void OvalSymbol::addOval(QPainterPath& path, const QRectF& rect, bool offset)
   path.arcTo(x+w-h, y, h, h, 90, -180);
   path.lineTo(x+rad, y+h);
   path.closeSubpath();
+  return path;
 }

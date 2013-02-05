@@ -7,12 +7,16 @@
 
 extern Context ctx;
 
-void PadRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath PadRecord::painterPath(void)
 {
   QString sym_name = ds->symbolNameMap()[sym_num];
   Symbol* symbol = SymbolFactory::create(sym_name);
-  symbol->setPos(ox + x, oy -y);
-  symbol->addShape(path);
+  QPainterPath path = symbol->painterPath();
+  path.translate(x, -y);
+
+  delete symbol;
+  return path;
+  // XXX: rotation
 }
 
 void PadRecord::add(QGraphicsScene* scene)

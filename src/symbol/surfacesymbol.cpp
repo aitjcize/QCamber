@@ -27,8 +27,7 @@ QRectF SurfaceSymbol::boundingRect() const
 void SurfaceSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  QPainterPath path;
-  addShape(path);
+  QPainterPath path = painterPath();
 
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
@@ -37,12 +36,13 @@ void SurfaceSymbol::paint(QPainter* painter,
   m_bounding = path.boundingRect();
 }
 
-void SurfaceSymbol::addShape(QPainterPath& path)
+QPainterPath SurfaceSymbol::painterPath(void)
 {
+  QPainterPath path;
   for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
       it != m_polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
-    rec->addShape(path, pos().x(), -pos().y());
+    path.addPath(rec->painterPath());
     /*
     if (rec->poly_type == PolygonRecord::I) {
       rec->addShape(ipath);
@@ -51,4 +51,5 @@ void SurfaceSymbol::addShape(QPainterPath& path)
     }
     */
   }
+  return path;
 }

@@ -42,8 +42,7 @@ QRectF UserSymbol::boundingRect() const
 void UserSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  QPainterPath path;
-  addPath(path, false);
+  QPainterPath path = painterPath();
   path.setFillRule(Qt::WindingFill);
 
   painter->setPen(QPen(Qt::red, 0));
@@ -53,20 +52,13 @@ void UserSymbol::paint(QPainter* painter,
   bounding = path.boundingRect();
 }
 
-void UserSymbol::addShape(QPainterPath& path)
+QPainterPath UserSymbol::painterPath(void)
 {
-  addPath(path, true);
-}
-
-void UserSymbol::addPath(QPainterPath& path, bool offset)
-{
+  QPainterPath path;
   for (QList<Record*>::const_iterator it = m_records.begin();
       it != m_records.end(); ++it) {
     Record* rec = *it;
-    if (offset) {
-      rec->addShape(path, pos().x(), -pos().y());
-    } else {
-      rec->addShape(path, 0, 0);
-    }
+    path.addPath(rec->painterPath());
   }
+  return path;
 }

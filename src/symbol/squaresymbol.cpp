@@ -26,7 +26,9 @@ void SquareSymbol::paint(QPainter* painter,
   painter->drawRect(-m_s / 2, -m_s / 2, m_s, m_s);
 }
 
-void SquareSymbol::addShape(QPainterPath& path)
+QPainterPath SquareSymbol::painterPath(void)
 {
-  path.addRect(pos().x() -m_s / 2, pos().y() -m_s / 2, m_s, m_s);
+  QPainterPath path;
+  path.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
+  return path;
 }

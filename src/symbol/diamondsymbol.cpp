@@ -24,32 +24,21 @@ void DiamondSymbol::paint(QPainter* painter,
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
-  QPainterPath path;
-  addDiamond(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), false);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
 }
 
-void DiamondSymbol::addShape(QPainterPath& path)
+QPainterPath DiamondSymbol::painterPath(void)
 {
-  addDiamond(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), true);
-}
-
-void DiamondSymbol::addDiamond(QPainterPath& path, const QRectF& rect,
-    bool offset)
-{
+  QPainterPath path;
+  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
-  qreal ox = 0, oy = 0;
 
   if (r.isNull())
-    return;
+    return path;
 
-  if (offset) {
-    ox = pos().x();
-    oy = pos().y();
-  }
-
-  qreal x = ox + r.x();
-  qreal y = oy + r.y();
+  qreal x = r.x();
+  qreal y = r.y();
   qreal w = r.width();
   qreal h = r.height();
   qreal wh = w / 2;
@@ -60,4 +49,5 @@ void DiamondSymbol::addDiamond(QPainterPath& path, const QRectF& rect,
   path.lineTo(x+w, y+hh);
   path.lineTo(x+wh, y+h);
   path.closeSubpath();
+  return path;
 }

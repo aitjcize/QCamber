@@ -7,12 +7,13 @@
 
 extern Context ctx;
 
-void SurfaceRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath SurfaceRecord::painterPath(void)
 {
+  QPainterPath path;
   for (QList<PolygonRecord*>::iterator it = polygons.begin();
       it != polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
-    rec->addShape(path, ox, oy);
+    path.addPath(rec->painterPath());
     /*
     if (rec->poly_type == PolygonRecord::I) {
       rec->addShape(ipath);
@@ -21,6 +22,7 @@ void SurfaceRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
     }
     */
   }
+  return path;
 }
 
 void SurfaceRecord::add(QGraphicsScene* scene)

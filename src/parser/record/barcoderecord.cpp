@@ -7,7 +7,7 @@
 
 extern Context ctx;
 
-void BarcodeRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath BarcodeRecord::painterPath(void)
 {
 }
 

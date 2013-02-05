@@ -11,7 +11,7 @@ typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
   Record(FeaturesDataStore* _ds): ds(_ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) = 0;
+  virtual QPainterPath painterPath(void) = 0;
   virtual void add(QGraphicsScene* scene) = 0;
 
   FeaturesDataStore* ds;
@@ -30,7 +30,7 @@ struct SurfaceOperation {
 
 struct LineRecord: public Record {
   LineRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene) ;
 
   qreal xs, ys;
@@ -42,7 +42,7 @@ struct LineRecord: public Record {
 
 struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   qreal x, y;
@@ -54,7 +54,7 @@ struct PadRecord: public Record {
 
 struct ArcRecord: public Record {
   ArcRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy) ;
+  virtual QPainterPath painterPath(void) ;
   virtual void add(QGraphicsScene* scene) ;
 
   qreal xs, ys;
@@ -69,7 +69,7 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual QString dynamicText(QString);
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene) ;
 
   qreal x, y;
@@ -86,7 +86,7 @@ struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   BarcodeRecord(FeaturesDataStore* ds): TextRecord(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene) ;
 
   QString barcode;
@@ -106,7 +106,7 @@ struct PolygonRecord: public Record {
   typedef enum { I = 0, H } PolyType;
 
   PolygonRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   qreal xbs, ybs;
@@ -116,7 +116,7 @@ struct PolygonRecord: public Record {
 
 struct SurfaceRecord: public Record {
   SurfaceRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual void addShape(QPainterPath& path, qreal ox, qreal oy);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   Polarity polarity;

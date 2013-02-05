@@ -25,42 +25,32 @@ void OctagonSymbol::paint(QPainter* painter,
 {
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
-  QPainterPath path;
-  addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r, true);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
 }
 
-void OctagonSymbol::addShape(QPainterPath& path)
+QPainterPath OctagonSymbol::painterPath(void)
 {
-  addOctagon(path, QRectF(-m_w / 2, -m_h / 2, m_w, m_h), m_r, false);
-}
-
-void OctagonSymbol::addOctagon(QPainterPath& path, const QRectF& rect,
-    qreal c, bool offset)
-{
+  QPainterPath path;
+  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
-  qreal ox = 0, oy = 0;
 
   if (r.isNull())
-    return;
+    return path;
 
-  if (offset) {
-    ox = pos().x();
-    oy = pos().y();
-  }
-
-  qreal x = ox + r.x();
-  qreal y = oy + r.y();
+  qreal x = r.x();
+  qreal y = r.y();
   qreal w = r.width();
   qreal h = r.height();
 
-  path.moveTo(x, y+h-c);
-  path.lineTo(x, y+c);
-  path.lineTo(x+c, y);
-  path.lineTo(x+w-c, y);
-  path.lineTo(x+w, y+c);
-  path.lineTo(x+w, y+h-c);
-  path.lineTo(x+w-c, y+h);
-  path.lineTo(x+c, y+h);
+  path.moveTo(x, y+h-m_r);
+  path.lineTo(x, y+m_r);
+  path.lineTo(x+m_r, y);
+  path.lineTo(x+w-m_r, y);
+  path.lineTo(x+w, y+m_r);
+  path.lineTo(x+w, y+h-m_r);
+  path.lineTo(x+w-m_r, y+h);
+  path.lineTo(x+m_r, y+h);
   path.closeSubpath();
+  return path;
 }

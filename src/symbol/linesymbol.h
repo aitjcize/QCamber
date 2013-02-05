@@ -15,8 +15,7 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
-  void addShape(QPainterPath& path);
-  void addPath(QPainterPath& path, bool offset);
+  QPainterPath painterPath(void);
 
 private:
   qreal m_xs, m_ys;

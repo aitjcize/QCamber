@@ -7,22 +7,23 @@
 
 extern Context ctx;
 
-void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath PolygonRecord::painterPath(void)
 {
+  QPainterPath path;
   qreal lx, ly;
-  lx = ox + xbs; ly = oy + ybs;
+  lx = xbs; ly = ybs;
   path.moveTo(lx, -ly);
 
   for (QList<SurfaceOperation*>::iterator it = operations.begin();
       it != operations.end(); ++it) {
     SurfaceOperation* op = *it;
     if (op->type == SurfaceOperation::SEGMENT) {
-      lx = ox + op->x; ly = oy + op->y;
+      lx = op->x; ly = op->y;
       path.lineTo(lx, -ly);
     } else if (op->type == SurfaceOperation::CURVE) {
       qreal sx = lx, sy = ly;
-      qreal ex = ox + op->xe, ey = oy + op->ye;
-      qreal cx = ox + op->xc, cy = oy + op->yc;
+      qreal ex = op->xe, ey = op->ye;
+      qreal cx = op->xc, cy = op->yc;
 
       qreal sax = sx - cx, say = sy - cy;
       qreal eax = ex - cx, eay = ey - cy;
@@ -55,6 +56,7 @@ void PolygonRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
     }
   }
   path.closeSubpath();
+  return path;
 }
 
 void PolygonRecord::add(QGraphicsScene *scene)

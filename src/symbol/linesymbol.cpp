@@ -32,8 +32,7 @@ QRectF LineSymbol::boundingRect() const
 void LineSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  QPainterPath path;
-  addPath(path, false);
+  QPainterPath path = painterPath();
   path.setFillRule(Qt::WindingFill);
 
   painter->setPen(QPen(Qt::blue, 0));
@@ -43,13 +42,9 @@ void LineSymbol::paint(QPainter* painter,
   bounding = path.boundingRect();
 }
 
-void LineSymbol::addShape(QPainterPath& path)
+QPainterPath LineSymbol::painterPath()
 {
-  addPath(path, true);
-}
-
-void LineSymbol::addPath(QPainterPath& path, bool offset)
-{
+  QPainterPath path;
   QString sym_name = m_sym_name;
   qreal radius = (qreal)sym_name.right(sym_name.length()-1).toDouble()/2/1000;
 
@@ -58,13 +53,6 @@ void LineSymbol::addPath(QPainterPath& path, bool offset)
   qreal dx = ex - sx, dy = ey - sy;
   qreal a = qAtan2(dy, dx);
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
-
-  if (offset) {
-    sx += pos().x();
-    sy += pos().y();
-    ex += pos().x();
-    ey += pos().y();
-  }
 
   // Extend to make square cap
   if (sym_name[0] == 's') {
@@ -84,4 +72,5 @@ void LineSymbol::addPath(QPainterPath& path, bool offset)
     path.addEllipse(QPointF(sx, -sy), radius, radius);
     path.addEllipse(QPointF(ex, -ey), radius, radius);
   }
+  return path;
 }

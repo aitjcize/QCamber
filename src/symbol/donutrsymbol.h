@@ -8,13 +8,12 @@ public:
 
   DonutRSymbol(QString def);
 
-  QRectF boundingRect() const;
-  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
-  void addShape(QPainterPath& path);
+  virtual QPainterPath painterPath(void);
 
 protected:
-  void addDonut(QPainterPath& path, bool offset);
 
 private:
   QString m_def;

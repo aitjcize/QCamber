@@ -26,7 +26,9 @@ void RoundSymbol::paint(QPainter* painter,
   painter->drawEllipse(QPointF(0, 0), m_r, m_r);
 }
 
-void RoundSymbol::addShape(QPainterPath& path)
+QPainterPath RoundSymbol::painterPath(void)
 {
-  path.addEllipse(pos(), m_r, m_r);
+  QPainterPath path;
+  path.addEllipse(QPointF(0, 0), m_r, m_r);
+  return path;
 }

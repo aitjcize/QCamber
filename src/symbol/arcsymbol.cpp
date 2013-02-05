@@ -58,8 +58,7 @@ QRectF ArcSymbol::boundingRect() const
 void ArcSymbol::paint(QPainter* painter,
     const QStyleOptionGraphicsItem*, QWidget*)
 {
-  QPainterPath path;
-  addShape(path);
+  QPainterPath path = painterPath();
 
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
@@ -68,8 +67,9 @@ void ArcSymbol::paint(QPainter* painter,
   m_bounding = path.boundingRect();
 }
 
-void ArcSymbol::addShape(QPainterPath& path)
+QPainterPath ArcSymbol::painterPath(void)
 {
+  QPainterPath path;
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
   qreal cx = m_xc, cy = m_yc;
@@ -113,4 +113,5 @@ void ArcSymbol::addShape(QPainterPath& path)
   addArc(path, esx, esy, eex, eey, ex, ey, true);
 
   path.closeSubpath();
+  return path;
 }

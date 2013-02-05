@@ -8,10 +8,6 @@
   qreal m_id;
   ]]></private_block>
 
-  <protected_block><![CDATA[
-  void addDonut(QPainterPath& path, bool offset);
-  ]]></protected_block>
-
   <constructor><![CDATA[
   m_od = caps[1].toDouble() / 1000.0;
   m_id = caps[2].toDouble() / 1000.0;
@@ -25,20 +21,12 @@
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
 
-  QPainterPath path;
-  addDonut(path, false);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
   ]]></paint>
 
-  <addShape><![CDATA[
-  addDonut(path, true);
-  ]]></addShape>
-
-  <function_body><![CDATA[
-void DonutRSymbol::addDonut(QPainterPath& path, bool offset)
-{
+  <painterPath><![CDATA[
   path.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
   path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
-}
-  ]]></function_body>
+  ]]></painterPath>
 </symbol>

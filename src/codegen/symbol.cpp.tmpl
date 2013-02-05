@@ -24,9 +24,11 @@ void {{.#name}}::paint(QPainter* painter,
   {{paint}}
 }
 
-void {{.#name}}::addShape(QPainterPath& path)
+QPainterPath {{.#name}}::painterPath(void)
 {
-  {{addShape}}
+  QPainterPath path;
+  {{painterPath}}
+  return path;
 }
 
 {{function_body}}

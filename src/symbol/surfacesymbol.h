@@ -15,7 +15,7 @@ public:
   QRectF boundingRect() const;
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
       QWidget* widget);
-  void addShape(QPainterPath& path);
+  QPainterPath painterPath(void);
 
 private:
   Polarity m_polarity;

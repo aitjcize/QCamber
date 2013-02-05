@@ -21,7 +21,7 @@
   painter->drawEllipse(QPointF(0, 0), m_r, m_r);
   ]]></paint>
 
-  <addShape><![CDATA[
-  path.addEllipse(pos(), m_r, m_r);
-  ]]></addShape>
+  <painterPath><![CDATA[
+  path.addEllipse(QPointF(0, 0), m_r, m_r);
+  ]]></painterPath>
 </symbol>

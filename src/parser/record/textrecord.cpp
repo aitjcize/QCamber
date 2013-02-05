@@ -9,7 +9,7 @@
 
 extern Context ctx;
 
-void TextRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath TextRecord::painterPath(void)
 {
 }
 

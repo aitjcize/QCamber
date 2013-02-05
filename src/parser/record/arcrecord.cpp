@@ -7,11 +7,12 @@
 
 extern Context ctx;
 
-void ArcRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath ArcRecord::painterPath(void)
 {
   Symbol* symbol = new ArcSymbol(this);
-  symbol->setPos(ox, oy);
-  symbol->addShape(path);
+  QPainterPath path = symbol->painterPath();
+  delete symbol;
+  return path;
 }
 
 void ArcRecord::add(QGraphicsScene* scene)

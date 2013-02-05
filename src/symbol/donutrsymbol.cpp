@@ -25,18 +25,14 @@ void DonutRSymbol::paint(QPainter* painter,
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
 
-  QPainterPath path;
-  addDonut(path, false);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
 }
 
-void DonutRSymbol::addShape(QPainterPath& path)
+QPainterPath DonutRSymbol::painterPath(void)
 {
-  addDonut(path, true);
-}
-
-void DonutRSymbol::addDonut(QPainterPath& path, bool offset)
-{
+  QPainterPath path;
   path.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
   path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
+  return path;
 }

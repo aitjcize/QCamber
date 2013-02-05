@@ -8,11 +8,12 @@
 
 extern Context ctx;
 
-void LineRecord::addShape(QPainterPath& path, qreal ox, qreal oy)
+QPainterPath LineRecord::painterPath(void)
 {
   Symbol* symbol = new LineSymbol(this);
-  symbol->setPos(ox, oy);
-  symbol->addShape(path);
+  QPainterPath path = symbol->painterPath();
+  delete symbol;
+  return path;
 }
 
 void LineRecord::add(QGraphicsScene* scene)

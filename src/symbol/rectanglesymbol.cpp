@@ -42,38 +42,27 @@ void RectangleSymbol::paint(QPainter* painter,
   painter->setPen(QPen(Qt::red, 0));
   painter->setBrush(Qt::red);
 
-  QPainterPath path;
-  addRect(path, false);
+  QPainterPath path = painterPath();
   painter->drawPath(path);
 }
 
-void RectangleSymbol::addShape(QPainterPath& path)
+QPainterPath RectangleSymbol::painterPath(void)
 {
-  addRect(path, true);
-}
-
-void RectangleSymbol::addRect(QPainterPath& path, bool offset)
-{
+  QPainterPath path;
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
-  qreal ox = 0, oy = 0;
 
   if (r.isNull())
-    return;
+    return path;
 
-  if (offset) {
-    ox = pos().x();
-    oy = pos().y();
-  }
-
-  qreal x = ox + r.x();
-  qreal y = oy + r.y();
+  qreal x = r.x();
+  qreal y = r.y();
   qreal w = r.width();
   qreal h = r.height();
 
   if (m_type == NORMAL || m_rad <= 0) {
     path.addRect(x, y, w, h);
-    return;
+    return path;
   }
 
   m_rad = qMin(qMin(w / 2, h / 2), m_rad);
@@ -126,4 +115,5 @@ void RectangleSymbol::addRect(QPainterPath& path, bool offset)
     path.lineTo(x, y+h);
   }
   path.closeSubpath();
+  return path;
 }
