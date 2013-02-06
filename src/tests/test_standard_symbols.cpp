@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol7);
   symbol7->setPos(0.1, 0.1);
   
+  Symbol* symbol8 = SymbolFactory::create("tri30x60");
+  scene->addItem(symbol8);
+  symbol8->setPos(0.1, 0.2);
+
   widget.show();
   return app.exec();
 }
