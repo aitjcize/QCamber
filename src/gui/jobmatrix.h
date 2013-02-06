@@ -2,6 +2,8 @@
 #define JOBMATRIX_H
 
 #include <QDialog>
+#include "structuredtextparser.h"
+
 
 namespace Ui {
 class JobMatrix;
@@ -13,6 +15,7 @@ class JobMatrix : public QDialog
     
 public:
     explicit JobMatrix(QWidget *parent = 0);
+    void ShowMatrix(StructuredTextDataStore* );
     ~JobMatrix();
     
 private slots:
