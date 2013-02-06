@@ -6,17 +6,7 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-
-QPainterPath LineRecord::painterPath(void)
+void LineRecord::initSymbol(void)
 {
-  Symbol* symbol = new LineSymbol(this);
-  QPainterPath path = symbol->painterPath();
-  delete symbol;
-  return path;
-}
-
-void LineRecord::add(QGraphicsScene* scene)
-{
-  Symbol* symbol = new LineSymbol(this);
-  scene->addItem(symbol);
+  symbol = new LineSymbol(this);
 }

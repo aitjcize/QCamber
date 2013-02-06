@@ -9,7 +9,6 @@ Features::Features(QString path)
 {
   FeaturesParser parser(path);
   m_ds = parser.parse();
-  ctx.cfds = m_ds;
   m_records = m_ds->records();
 }
 

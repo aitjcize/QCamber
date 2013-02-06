@@ -5,22 +5,23 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-QPainterPath PadRecord::painterPath(void)
+void PadRecord::initSymbol(void)
 {
   QString sym_name = ds->symbolNameMap()[sym_num];
-  Symbol* symbol = SymbolFactory::create(sym_name);
+  symbol = SymbolFactory::create(sym_name);
+}
+
+QPainterPath PadRecord::painterPath(void)
+{
   QPainterPath path = symbol->painterPath();
   path.translate(x, -y);
 
-  delete symbol;
   return path;
   // XXX: rotation
 }
 
 void PadRecord::add(QGraphicsScene* scene)
 {
-  QString sym_name = ds->symbolNameMap()[sym_num];
-  Symbol* symbol = SymbolFactory::create(sym_name);
   symbol->setPos(x, -y);
   scene->addItem(symbol);
 

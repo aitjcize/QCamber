@@ -57,7 +57,3 @@ QPainterPath PolygonRecord::painterPath(void)
   path.closeSubpath();
   return path;
 }
-
-void PolygonRecord::add(QGraphicsScene *scene)
-{
-}

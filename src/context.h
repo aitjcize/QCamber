@@ -8,8 +8,6 @@
 
 struct Context {
   ArchiveLoader* loader;    // loader
-  FeaturesDataStore* cfds;  // current feature datastore
-  QGraphicsScene* cscene;
 };
 
 #endif /* __CONTEXT_H__ */

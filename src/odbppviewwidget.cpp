@@ -8,7 +8,6 @@ extern Context ctx;
 ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 {
   QGraphicsScene *scene = new QGraphicsScene(this);
-  ctx.cscene = scene;
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-400, -400, 800, 800);
   setScene(scene);

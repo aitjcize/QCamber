@@ -41,6 +41,7 @@ void FeaturesDataStore::putLine(const QString& line)
   rec->sym_num = param[++i].toInt();
   rec->polarity = (param[++i] == "P")? P: N;
   rec->dcode = param[++i].toInt();
+  rec->initSymbol();
   m_records.append(rec);
 }
 
@@ -55,6 +56,7 @@ void FeaturesDataStore::putPad(const QString& line)
   rec->polarity = (param[++i] == "P")? P: N;
   rec->dcode = param[++i].toInt();
   rec->orient = (Orient)param[++i].toInt();
+  rec->initSymbol();
   m_records.append(rec);
 }
 
@@ -73,6 +75,7 @@ void FeaturesDataStore::putArc(const QString& line)
   rec->polarity = (param[++i] == "P")? P: N;
   rec->dcode = param[++i].toInt();
   rec->cw = (param[++i] == "Y");
+  rec->initSymbol();
   m_records.append(rec);
 }
 
@@ -112,6 +115,7 @@ void FeaturesDataStore::putText(const QString& line)
   };
 
   rec->version = param[++i].toInt();
+  rec->initSymbol();
   m_records.append(rec);
 }
 
@@ -156,6 +160,7 @@ void FeaturesDataStore::putBarcode(const QString& line)
     rec->text += str;
   };
 
+  rec->initSymbol();
   m_records.append(rec);
 }
 
@@ -175,7 +180,7 @@ void FeaturesDataStore::surfaceLineData(const QString& line)
   QStringList param = stripAttr(line).split(" ");
   int i = 0;
   if (line.startsWith("OB")) {
-    PolygonRecord* rec = new PolygonRecord(this);
+    PolygonRecord* rec = new PolygonRecord;
     rec->xbs = param[++i].toDouble();
     rec->ybs = param[++i].toDouble();
     rec->poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
@@ -205,6 +210,7 @@ void FeaturesDataStore::surfaceLineData(const QString& line)
 
 void FeaturesDataStore::surfaceEnd(void)
 {
+  m_currentSurface->initSymbol();
   m_currentSurface = NULL;
 }
 

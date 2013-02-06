@@ -5,17 +5,7 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-
-QPainterPath ArcRecord::painterPath(void)
+void ArcRecord::initSymbol(void)
 {
-  Symbol* symbol = new ArcSymbol(this);
-  QPainterPath path = symbol->painterPath();
-  delete symbol;
-  return path;
-}
-
-void ArcRecord::add(QGraphicsScene* scene)
-{
-  Symbol* symbol = new ArcSymbol(this);
-  scene->addItem(symbol);
+  symbol = new ArcSymbol(this);
 }

@@ -4,6 +4,8 @@
 #include <QPainterPath>
 #include <QGraphicsScene>
 
+#include "symbol.h"
+
 class FeaturesDataStore;
 
 typedef enum { P = 0, N } Polarity;
@@ -11,27 +13,24 @@ typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
   Record(FeaturesDataStore* _ds): ds(_ds) {}
-  virtual QPainterPath painterPath(void) = 0;
-  virtual void add(QGraphicsScene* scene) = 0;
+  ~Record() { delete symbol; }
 
+  virtual QPainterPath painterPath(void) {
+    return symbol->painterPath();
+  }
+  virtual void add(QGraphicsScene* scene) {
+    scene->addItem(symbol);
+  }
+  virtual void initSymbol() = 0;
+
+  Symbol* symbol;
   FeaturesDataStore* ds;
 };
 
 
-struct SurfaceOperation {
-  typedef enum { SEGMENT = 0, CURVE } OpType;
-  
-  OpType type;
-  qreal x, y;
-  qreal xe, ye;
-  qreal xc, yc;
-  bool cw;
-};
-
 struct LineRecord: public Record {
   LineRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual QPainterPath painterPath(void);
-  virtual void add(QGraphicsScene* scene) ;
+  virtual void initSymbol();
 
   qreal xs, ys;
   qreal xe, ye;
@@ -44,6 +43,7 @@ struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
+  virtual void initSymbol();
 
   qreal x, y;
   int sym_num;
@@ -54,8 +54,7 @@ struct PadRecord: public Record {
 
 struct ArcRecord: public Record {
   ArcRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual QPainterPath painterPath(void) ;
-  virtual void add(QGraphicsScene* scene) ;
+  virtual void initSymbol();
 
   qreal xs, ys;
   qreal xe, ye;
@@ -70,7 +69,8 @@ struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual QString dynamicText(QString);
   virtual QPainterPath painterPath(void);
-  virtual void add(QGraphicsScene* scene) ;
+  virtual void add(QGraphicsScene* scene);
+  virtual void initSymbol() {}
 
   qreal x, y;
   QString font;
@@ -102,12 +102,20 @@ struct BarcodeRecord: public TextRecord {
   AstrPos astr_pos;
 };
 
-struct PolygonRecord: public Record {
+struct SurfaceOperation {
+  typedef enum { SEGMENT = 0, CURVE } OpType;
+
+  OpType type;
+  qreal x, y;
+  qreal xe, ye;
+  qreal xc, yc;
+  bool cw;
+};
+
+struct PolygonRecord {
   typedef enum { I = 0, H } PolyType;
 
-  PolygonRecord(FeaturesDataStore* ds): Record(ds) {}
   virtual QPainterPath painterPath(void);
-  virtual void add(QGraphicsScene* scene);
 
   qreal xbs, ybs;
   PolyType poly_type;
@@ -116,8 +124,7 @@ struct PolygonRecord: public Record {
 
 struct SurfaceRecord: public Record {
   SurfaceRecord(FeaturesDataStore* ds): Record(ds) {}
-  virtual QPainterPath painterPath(void);
-  virtual void add(QGraphicsScene* scene);
+  virtual void initSymbol();
 
   Polarity polarity;
   int dcode;

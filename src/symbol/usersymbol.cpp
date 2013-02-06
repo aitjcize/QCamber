@@ -10,6 +10,8 @@ using std::endl;
 
 #include "context.h"
 
+//#define TEST_USER_SYMBOL
+
 extern Context ctx;
 
 UserSymbol::UserSymbol(QString def):
@@ -17,20 +19,16 @@ UserSymbol::UserSymbol(QString def):
 {
   static bool first = true;
   QString path = ctx.loader->absPath("symbols/" + def + "/features");
-  /*
+
+#ifdef TEST_USER_SYMBOL
   if (first) {
     path = "features";
+    first = false;
   }
-  */
+#endif
+
   FeaturesParser parser(path);
   m_ds = parser.parse();
-
-  /*
-  if (first) {
-    first = false;
-    ctx.cfds = m_ds;
-  }
-  */
   m_records = m_ds->records();
 
   painterPath();

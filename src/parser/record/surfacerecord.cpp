@@ -6,16 +6,7 @@
 #include "symbolfactory.h"
 
 
-QPainterPath SurfaceRecord::painterPath(void)
+void SurfaceRecord::initSymbol(void)
 {
-  Symbol* symbol = new SurfaceSymbol(this);
-  QPainterPath path = symbol->painterPath();
-  delete symbol;
-  return path;
-}
-
-void SurfaceRecord::add(QGraphicsScene* scene)
-{
-  Symbol* symbol = new SurfaceSymbol(this);
-  scene->addItem(symbol);
+  symbol = new SurfaceSymbol(this);
 }
