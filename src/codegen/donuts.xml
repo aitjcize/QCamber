@@ -1,0 +1,20 @@
+<symbol name="DonutSSymbol" id="donut_s">
+  <pattern><![CDATA[
+  donut_s([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_od;
+  qreal m_id;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_od = caps[1].toDouble() / 1000.0;
+  m_id = caps[2].toDouble() / 1000.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  ]]></painterPath>
+</symbol>

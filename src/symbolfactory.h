@@ -8,6 +8,7 @@
 #include "diamondsymbol.h"
 #include "octagonsymbol.h"
 #include "donutrsymbol.h"
+#include "donutssymbol.h"
 #include "squaresymbol.h"
 #include "surfacesymbol.h"
 #include "arcsymbol.h"
@@ -41,6 +42,8 @@ public:
         return new OctagonSymbol(def);
       } else if (prefix == "donut_r") {
         return new DonutRSymbol(def);
+      } else if (prefix == "donut_s") {
+        return new DonutSSymbol(def);
       } else if (prefix == "tri") {
         return new TriangleSymbol(def);
       } else {

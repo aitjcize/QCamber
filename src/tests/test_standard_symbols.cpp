@@ -49,6 +49,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol8);
   symbol8->setPos(0.1, 0.2);
 
+  Symbol* symbol9 = SymbolFactory::create("donut_s60x30");
+  scene->addItem(symbol9);
+  symbol9->setPos(0.2, 0.2);
+
   widget.show();
   return app.exec();
 }

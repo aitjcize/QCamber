@@ -6,6 +6,7 @@ HEADERS += \
   symbol/diamondsymbol.h \
   symbol/octagonsymbol.h \
   symbol/donutrsymbol.h \
+  symbol/donutssymbol.h \
   symbol/squaresymbol.h \
   symbol/surfacesymbol.h \
   symbol/arcsymbol.h \
@@ -21,6 +22,7 @@ SOURCES += \
   symbol/diamondsymbol.cpp \
   symbol/octagonsymbol.cpp \
   symbol/donutrsymbol.cpp \
+  symbol/donutssymbol.cpp \
   symbol/squaresymbol.cpp \
   symbol/surfacesymbol.cpp \
   symbol/linesymbol.cpp \
