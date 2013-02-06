@@ -12,7 +12,8 @@ HEADERS += \
   symbol/arcsymbol.h \
   symbol/linesymbol.h \
   symbol/usersymbol.h \
-  symbol/trianglesymbol.h
+  symbol/trianglesymbol.h \
+  symbol/horizontalhexagonsymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -28,4 +29,5 @@ SOURCES += \
   symbol/linesymbol.cpp \
   symbol/arcsymbol.cpp \
   symbol/usersymbol.cpp \
-  symbol/trianglesymbol.cpp
+  symbol/trianglesymbol.cpp \
+  symbol/horizontalhexagonsymbol.cpp

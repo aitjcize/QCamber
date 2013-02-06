@@ -15,6 +15,7 @@
 #include "usersymbol.h"
 #include "linesymbol.h"
 #include "trianglesymbol.h"
+#include "horizontalhexagonsymbol.h"
 
 #include <QRegExp>
 
@@ -46,6 +47,8 @@ public:
         return new DonutSSymbol(def);
       } else if (prefix == "tri") {
         return new TriangleSymbol(def);
+      } else if (prefix == "hex_l") {
+        return new HorizontalHexagonSymbol(def);
       } else {
         return new UserSymbol(def);
       }
