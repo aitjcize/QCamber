@@ -8,12 +8,14 @@
 #include "diamondsymbol.h"
 #include "octagonsymbol.h"
 #include "donutrsymbol.h"
+#include "donutssymbol.h"
 #include "squaresymbol.h"
 #include "surfacesymbol.h"
 #include "arcsymbol.h"
 #include "usersymbol.h"
 #include "linesymbol.h"
 #include "trianglesymbol.h"
+#include "horizontalhexagonsymbol.h"
 
 #include <QRegExp>
 
@@ -41,8 +43,12 @@ public:
         return new OctagonSymbol(def);
       } else if (prefix == "donut_r") {
         return new DonutRSymbol(def);
+      } else if (prefix == "donut_s") {
+        return new DonutSSymbol(def);
       } else if (prefix == "tri") {
         return new TriangleSymbol(def);
+      } else if (prefix == "hex_l") {
+        return new HorizontalHexagonSymbol(def);
       } else {
         return new UserSymbol(def);
       }
