@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QString>
 #include <QStringList>
+#define GZIP_COMMAND "gzip"
 
 class FeaturesDataStore: public DataStore {
 public:
