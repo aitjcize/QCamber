@@ -31,35 +31,29 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
     m_ys = m_ye;
     m_ye = tmp;
   }
-}
 
-QRectF LineSymbol::boundingRect() const
-{
-  return bounding;
-}
-
-void LineSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  QPainterPath path = painterPath();
-  path.setFillRule(Qt::WindingFill);
-
-  painter->setPen(QPen(Qt::blue, 0));
-  painter->setBrush(Qt::blue);
-  painter->drawPath(path);
-
-  bounding = path.boundingRect();
+  painterPath();
 }
 
 QPainterPath LineSymbol::painterPath()
 {
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
+  // Set winding fill
+  m_cachedPath.setFillRule(Qt::WindingFill);
+
   Symbol *symbol = SymbolFactory::create(m_sym_name);
   QPainterPath symbolPath = symbol->painterPath();
-  if(symbolPath.boundingRect().height() != symbolPath.boundingRect().width()){
-    qDebug()<<m_sym_name<<"is not a symmetrics symbol, but we'll still try to draw lines with it";
+  if (symbolPath.boundingRect().height() != symbolPath.boundingRect().width()) {
+    qDebug() << m_sym_name << "is not a symmetrics symbol, but we'll still "
+      "try to draw lines with it";
   }
   delete symbol;
-  QPainterPath path;
+
   QString sym_name = m_sym_name;
   qreal radius = (qreal)symbolPath.boundingRect().height()/2;
 
@@ -70,13 +64,14 @@ QPainterPath LineSymbol::painterPath()
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
 
 
-  path.moveTo(sx + rsina, -(sy - rcosa));
-  path.lineTo(sx - rsina, -(sy + rcosa));
-  path.lineTo(ex - rsina, -(ey + rcosa));
-  path.lineTo(ex + rsina, -(ey - rcosa));
-  path.closeSubpath();
-  path.addPath(symbolPath.translated(sx, -sy));
-  path.addPath(symbolPath.translated(ex, -ey));
+  m_cachedPath.moveTo(sx + rsina, -(sy - rcosa));
+  m_cachedPath.lineTo(sx - rsina, -(sy + rcosa));
+  m_cachedPath.lineTo(ex - rsina, -(ey + rcosa));
+  m_cachedPath.lineTo(ex + rsina, -(ey - rcosa));
+  m_cachedPath.closeSubpath();
+  m_cachedPath.addPath(symbolPath.translated(sx, -sy));
+  m_cachedPath.addPath(symbolPath.translated(ex, -ey));
 
-  return path;
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }

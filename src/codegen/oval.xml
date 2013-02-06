@@ -13,23 +13,12 @@
   m_h = caps[2].toDouble() / 1000.0;
   ]]></constructor>
 
-  <boundingRect><![CDATA[
-  return QRectF(-m_w / 2, -m_h / 2, m_w, m_h);
-  ]]></boundingRect>
-
-  <paint><![CDATA[
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  QPainterPath path = painterPath();
-  painter->drawPath(path);
-  ]]></paint>
-
   <painterPath><![CDATA[
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
   if (r.isNull())
-    return path;
+    return m_cachedPath;
 
   qreal x = r.x();
   qreal y = r.y();
@@ -38,10 +27,10 @@
 
   qreal rad = h / 2;
 
-  path.arcMoveTo(x, y, h, h, 90);
-  path.arcTo(x, y, h, h, 270, -180);
-  path.arcTo(x+w-h, y, h, h, 90, -180);
-  path.lineTo(x+rad, y+h);
-  path.closeSubpath();
+  m_cachedPath.arcMoveTo(x, y, h, h, 90);
+  m_cachedPath.arcTo(x, y, h, h, 270, -180);
+  m_cachedPath.arcTo(x+w-h, y, h, h, 90, -180);
+  m_cachedPath.lineTo(x+rad, y+h);
+  m_cachedPath.closeSubpath();
   ]]></painterPath>
 </symbol>

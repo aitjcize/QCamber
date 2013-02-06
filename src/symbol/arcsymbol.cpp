@@ -3,7 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
-static void addArc(QPainterPath& path, qreal sx, qreal sy,
+static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
     qreal ex, qreal ey, qreal cx, qreal cy, bool cw)
 {
   qreal sax = sx - cx, say = sy - cy;
@@ -21,7 +21,7 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
     }
     for (qreal a = sa; a >= ea; a -= 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
+      m_cachedPath.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   } else {
     if (ea < sa) {
@@ -29,10 +29,10 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
     }
     for (qreal a = sa; a <= ea; a += 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
+      m_cachedPath.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   }
-  path.lineTo(ex, -ey);
+  m_cachedPath.lineTo(ex, -ey);
 }
 
 ArcSymbol::ArcSymbol(ArcRecord* rec):
@@ -48,28 +48,18 @@ ArcSymbol::ArcSymbol(ArcRecord* rec):
   m_polarity = rec->polarity;
   m_dcode = rec->dcode;
   m_cw = rec->cw;
-}
 
-QRectF ArcSymbol::boundingRect() const
-{
-  return m_bounding;
-}
-
-void ArcSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  QPainterPath path = painterPath();
-
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  painter->drawPath(path);
-
-  m_bounding = path.boundingRect();
+  painterPath();
 }
 
 QPainterPath ArcSymbol::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
   qreal cx = m_xc, cy = m_yc;
@@ -106,12 +96,14 @@ QPainterPath ArcSymbol::painterPath(void)
   esx = ex - dx * hr;
   esy = ey - dy * hr;
 
-  path.moveTo(eex, -eey);
-  addArc(path, eex, eey, sex, sey, cx, cy, true);
-  addArc(path, sex, sey, ssx, ssy, sx, sy, true);
-  addArc(path, ssx, ssy, esx, esy, cx, cy, false);
-  addArc(path, esx, esy, eex, eey, ex, ey, true);
+  m_cachedPath.moveTo(eex, -eey);
+  addArc(m_cachedPath, eex, eey, sex, sey, cx, cy, true);
+  addArc(m_cachedPath, sex, sey, ssx, ssy, sx, sy, true);
+  addArc(m_cachedPath, ssx, ssy, esx, esy, cx, cy, false);
+  addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, true);
 
-  path.closeSubpath();
-  return path;
+  m_cachedPath.closeSubpath();
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }

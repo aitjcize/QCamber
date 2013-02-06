@@ -8,9 +8,6 @@ public:
 
   OctagonSymbol(QString def);
 
-  virtual QRectF boundingRect() const;
-  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-      QWidget* widget);
   virtual QPainterPath painterPath(void);
 
 protected:

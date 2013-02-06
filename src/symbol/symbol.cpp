@@ -1,6 +1,7 @@
 #include "symbol.h"
 
-Symbol::Symbol(QString name, QString pattern): m_name(name), m_pattern(pattern)
+Symbol::Symbol(QString name, QString pattern):
+  m_name(name), m_pattern(pattern), m_valid(false)
 {
   
 }
@@ -8,4 +9,19 @@ Symbol::Symbol(QString name, QString pattern): m_name(name), m_pattern(pattern)
 QString Symbol::name(void)
 {
   return m_name;
+}
+
+QRectF Symbol::boundingRect() const
+{
+  return m_bounding;
+}
+
+void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+      QWidget *widget)
+{
+  painter->setPen(QPen(Qt::red, 0));
+  painter->setBrush(Qt::red);
+
+  painterPath();
+  painter->drawPath(m_cachedPath);
 }

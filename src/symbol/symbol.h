@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QString>
 #include <QGraphicsItem>
+#include <QPainter>
 #include <QPainterPath>
 
 class InvalidSymbolException: public std::exception {
@@ -23,14 +24,17 @@ public:
 
   QString name(void);
 
-  virtual QRectF boundingRect() const = 0;
+  virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-      QWidget *widget) = 0;
+      QWidget *widget);
   virtual QPainterPath painterPath(void) = 0;
 
 protected:
   QString m_name;
   QString m_pattern;
+  bool m_valid;
+  QRectF m_bounding;
+  QPainterPath m_cachedPath;
 };
 
 #endif /* __SYMBOL_H__ */

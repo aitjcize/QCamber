@@ -12,9 +12,6 @@ class LineSymbol: public Symbol {
 public:
   LineSymbol(LineRecord* rec);
 
-  QRectF boundingRect() const;
-  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-      QWidget* widget);
   QPainterPath painterPath(void);
 
 private:
@@ -24,7 +21,6 @@ private:
   QString m_sym_name;
   Polarity m_polarity;
   int m_dcode;
-  QRectF bounding;
 };
 
 #endif /* __LineSymbol_H__ */

@@ -12,30 +12,23 @@ DiamondSymbol::DiamondSymbol(QString def):
   QStringList caps = rx.capturedTexts();
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
-}
 
-QRectF DiamondSymbol::boundingRect() const
-{
-  return QRectF(-m_w / 2, -m_h / 2, m_w, m_h);
-}
-
-void DiamondSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  QPainterPath path = painterPath();
-  painter->drawPath(path);
+  painterPath();
 }
 
 QPainterPath DiamondSymbol::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
   if (r.isNull())
-    return path;
+    return m_cachedPath;
 
   qreal x = r.x();
   qreal y = r.y();
@@ -44,10 +37,12 @@ QPainterPath DiamondSymbol::painterPath(void)
   qreal wh = w / 2;
   qreal hh = h / 2;
 
-  path.moveTo(x, y+hh);
-  path.lineTo(x+wh, y);
-  path.lineTo(x+w, y+hh);
-  path.lineTo(x+wh, y+h);
-  path.closeSubpath();
-  return path;
+  m_cachedPath.moveTo(x, y+hh);
+  m_cachedPath.lineTo(x+wh, y);
+  m_cachedPath.lineTo(x+w, y+hh);
+  m_cachedPath.lineTo(x+wh, y+h);
+  m_cachedPath.closeSubpath();
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }

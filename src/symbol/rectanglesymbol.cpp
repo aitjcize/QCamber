@@ -31,31 +31,23 @@ RectangleSymbol::RectangleSymbol(QString def):
   } else {
     m_corners = 15;
   }
-}
 
-QRectF RectangleSymbol::boundingRect() const
-{
-  return QRectF(-m_w / 2, -m_h / 2, m_w, m_h);
-}
-
-void RectangleSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-
-  QPainterPath path = painterPath();
-  painter->drawPath(path);
+  painterPath();
 }
 
 QPainterPath RectangleSymbol::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
   if (r.isNull())
-    return path;
+    return m_cachedPath;
 
   qreal x = r.x();
   qreal y = r.y();
@@ -63,59 +55,61 @@ QPainterPath RectangleSymbol::painterPath(void)
   qreal h = r.height();
 
   if (m_type == NORMAL || m_rad <= 0) {
-    path.addRect(x, y, w, h);
-    return path;
+    m_cachedPath.addRect(x, y, w, h);
+    return m_cachedPath;
   }
 
   m_rad = qMin(qMin(w / 2, h / 2), m_rad);
 
   if (m_corners & 2) {
     if (m_type == ROUNDED) {
-      path.arcMoveTo(x, y, m_rad, m_rad, 180);
-      path.arcTo(x, y, m_rad, m_rad, 180, -90);
+      m_cachedPath.arcMoveTo(x, y, m_rad, m_rad, 180);
+      m_cachedPath.arcTo(x, y, m_rad, m_rad, 180, -90);
     } else {
-      path.moveTo(x, y+m_rad);
-      path.lineTo(x+m_rad, y);
-      path.lineTo(x+w-m_rad, y);
+      m_cachedPath.moveTo(x, y+m_rad);
+      m_cachedPath.lineTo(x+m_rad, y);
+      m_cachedPath.lineTo(x+w-m_rad, y);
     }
   } else {
-    path.moveTo(x, y);
-    path.lineTo(x+w-m_rad, y);
+    m_cachedPath.moveTo(x, y);
+    m_cachedPath.lineTo(x+w-m_rad, y);
   }
 
   if (m_corners & 1) {
     if (m_type == ROUNDED) {
-      path.arcTo(x+w-m_rad, y, m_rad, m_rad, 90, -90);
+      m_cachedPath.arcTo(x+w-m_rad, y, m_rad, m_rad, 90, -90);
     } else {
-      path.lineTo(x+w, y+m_rad);
-      path.lineTo(x+w, y+h-m_rad);
+      m_cachedPath.lineTo(x+w, y+m_rad);
+      m_cachedPath.lineTo(x+w, y+h-m_rad);
     }
   } else {
-    path.lineTo(x+w, y);
-    path.lineTo(x+w, y+h-m_rad);
+    m_cachedPath.lineTo(x+w, y);
+    m_cachedPath.lineTo(x+w, y+h-m_rad);
   }
 
   if (m_corners & 8) {
     if (m_type == ROUNDED) {
-      path.arcTo(x+w-m_rad, y+h-m_rad, m_rad, m_rad, 0, -90);
+      m_cachedPath.arcTo(x+w-m_rad, y+h-m_rad, m_rad, m_rad, 0, -90);
     } else {
-      path.lineTo(x+w-m_rad, y+h);
-      path.lineTo(x+m_rad, y+h);
+      m_cachedPath.lineTo(x+w-m_rad, y+h);
+      m_cachedPath.lineTo(x+m_rad, y+h);
     }
   } else {
-    path.lineTo(x+w, y+h);
-    path.lineTo(x+m_rad, y+h);
+    m_cachedPath.lineTo(x+w, y+h);
+    m_cachedPath.lineTo(x+m_rad, y+h);
   }
 
   if (m_corners & 4) {
     if (m_type == ROUNDED) {
-      path.arcTo(x, y+h-m_rad, m_rad, m_rad, 270, -90);
+      m_cachedPath.arcTo(x, y+h-m_rad, m_rad, m_rad, 270, -90);
     } else {
-      path.lineTo(x, y+h-m_rad);
+      m_cachedPath.lineTo(x, y+h-m_rad);
     }
   } else {
-    path.lineTo(x, y+h);
+    m_cachedPath.lineTo(x, y+h);
   }
-  path.closeSubpath();
-  return path;
+  m_cachedPath.closeSubpath();
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }

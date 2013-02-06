@@ -11,17 +11,7 @@
   m_s = caps[1].toDouble() / 1000.0;
   ]]></constructor>
 
-  <boundingRect><![CDATA[
-  return QRectF(-m_s / 2, -m_s / 2, m_s, m_s);
-  ]]></boundingRect>
-
-  <paint><![CDATA[
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  painter->drawRect(QRectF(-m_s / 2, -m_s / 2, m_s, m_s));
-  ]]></paint>
-
   <painterPath><![CDATA[
-  path.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
+  m_cachedPath.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
   ]]></painterPath>
 </symbol>

@@ -11,24 +11,22 @@
     throw InvalidSymbolException(def.toAscii());
   QStringList caps = rx.capturedTexts();
   {{constructor}}
-}
 
-QRectF {{.#name}}::boundingRect() const
-{
-  {{boundingRect}}
-}
-
-void {{.#name}}::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  {{paint}}
+  painterPath();
 }
 
 QPainterPath {{.#name}}::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
   {{painterPath}}
-  return path;
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }
 
 {{function_body}}

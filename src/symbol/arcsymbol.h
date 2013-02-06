@@ -6,12 +6,8 @@
 
 class ArcSymbol: public Symbol {
 public:
-
   ArcSymbol(ArcRecord* rec);
 
-  QRectF boundingRect() const;
-  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-      QWidget* widget);
   QPainterPath painterPath(void);
 
 protected:

@@ -32,33 +32,25 @@ UserSymbol::UserSymbol(QString def):
   }
   */
   m_records = m_ds->records();
-}
 
-QRectF UserSymbol::boundingRect() const
-{
-  return bounding;
-}
-
-void UserSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  QPainterPath path = painterPath();
-  path.setFillRule(Qt::WindingFill);
-
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  painter->drawPath(path);
-
-  bounding = path.boundingRect();
+  painterPath();
 }
 
 QPainterPath UserSymbol::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
+  m_cachedPath.setFillRule(Qt::WindingFill);
+
   for (QList<Record*>::const_iterator it = m_records.begin();
       it != m_records.end(); ++it) {
     Record* rec = *it;
-    path.addPath(rec->painterPath());
+    m_cachedPath.addPath(rec->painterPath());
   }
-  return path;
+
+  return m_cachedPath;
 }

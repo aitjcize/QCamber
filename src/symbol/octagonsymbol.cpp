@@ -13,44 +13,39 @@ OctagonSymbol::OctagonSymbol(QString def):
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
   m_r = caps[3].toDouble() / 1000.0;
-}
 
-QRectF OctagonSymbol::boundingRect() const
-{
-  return QRectF(-m_w / 2, -m_h / 2, m_w, m_h);
-}
-
-void OctagonSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-  QPainterPath path = painterPath();
-  painter->drawPath(path);
+  painterPath();
 }
 
 QPainterPath OctagonSymbol::painterPath(void)
 {
-  QPainterPath path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
   if (r.isNull())
-    return path;
+    return m_cachedPath;
 
   qreal x = r.x();
   qreal y = r.y();
   qreal w = r.width();
   qreal h = r.height();
 
-  path.moveTo(x, y+h-m_r);
-  path.lineTo(x, y+m_r);
-  path.lineTo(x+m_r, y);
-  path.lineTo(x+w-m_r, y);
-  path.lineTo(x+w, y+m_r);
-  path.lineTo(x+w, y+h-m_r);
-  path.lineTo(x+w-m_r, y+h);
-  path.lineTo(x+m_r, y+h);
-  path.closeSubpath();
-  return path;
+  m_cachedPath.moveTo(x, y+h-m_r);
+  m_cachedPath.lineTo(x, y+m_r);
+  m_cachedPath.lineTo(x+m_r, y);
+  m_cachedPath.lineTo(x+w-m_r, y);
+  m_cachedPath.lineTo(x+w, y+m_r);
+  m_cachedPath.lineTo(x+w, y+h-m_r);
+  m_cachedPath.lineTo(x+w-m_r, y+h);
+  m_cachedPath.lineTo(x+m_r, y+h);
+  m_cachedPath.closeSubpath();
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }

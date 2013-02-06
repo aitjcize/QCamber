@@ -12,27 +12,21 @@ DonutRSymbol::DonutRSymbol(QString def):
   QStringList caps = rx.capturedTexts();
   m_od = caps[1].toDouble() / 1000.0;
   m_id = caps[2].toDouble() / 1000.0;
-}
 
-QRectF DonutRSymbol::boundingRect() const
-{
-  return QRectF(-m_od / 2, -m_od / 2, m_od, m_od);
-}
-
-void DonutRSymbol::paint(QPainter* painter,
-    const QStyleOptionGraphicsItem*, QWidget*)
-{
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
-
-  QPainterPath path = painterPath();
-  painter->drawPath(path);
+  painterPath();
 }
 
 QPainterPath DonutRSymbol::painterPath(void)
 {
-  QPainterPath path;
-  path.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
-  path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
-  return path;
+  if (m_valid)
+    return m_cachedPath;
+
+  m_cachedPath = QPainterPath();
+  m_valid = true;
+
+  m_cachedPath.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
+  m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
+
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
 }
