@@ -24,20 +24,11 @@ QPainterPath TriangleSymbol::painterPath(void)
   m_cachedPath = QPainterPath();
   m_valid = true;
 
-  QRectF rect(-m_base / 2, -m_h / 2, m_base, m_h);
-  QRectF r = rect.normalized();
-
-  if (r.isNull())
-    return m_cachedPath;
-
-  qreal x = r.x();
-  qreal y = r.y();
-  qreal w = r.width();
-  qreal h = r.height();
-
-  m_cachedPath.moveTo(x, y - m_h / 2);
-  m_cachedPath.lineTo(x + m_base / 2, y + m_h / 2);
-  m_cachedPath.lineTo(x - m_base / 2, y + m_h / 2);
+  //The co-ordinates of y needs to be flipped
+  //due to it is screen co-ordination ( increase from top to down )
+  m_cachedPath.moveTo(0, - m_h / 2);
+  m_cachedPath.lineTo(- m_base / 2, m_h / 2);
+  m_cachedPath.lineTo(m_base / 2, m_h / 2);
   m_cachedPath.closeSubpath();
 
 ret:
