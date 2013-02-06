@@ -7,6 +7,46 @@
 #include "context.h"
 #include "symbolfactory.h"
 
+TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
+  Record(ds)
+{
+  if (param.empty()) {
+    return;
+  }
+
+  int i = 0;
+  x = param[++i].toDouble();
+  y = param[++i].toDouble();
+  font = param[++i];
+  polarity = (param[++i] == "P")? P: N;
+  orient = (Orient)param[++i].toInt();
+  xsize = param[++i].toDouble();
+  ysize = param[++i].toDouble();
+  width_factor = param[++i].toDouble();
+  text = "";
+  int ends = -1;
+  while(ends!=1){
+    QString str(param[++i]);
+    if(!ends)
+      text += " ";
+    else
+      str.replace(QRegExp("^'"), "");
+    str.replace("\\\\", _DOUBLE_SLASHES_);
+    if(str.endsWith("\\'"))
+        ends = 0;
+    else if (str.endsWith("'"))
+        ends = 1;
+    else
+        ends = 0;
+    if(ends)
+        str.replace(QRegExp("'$"), "");
+    str.replace("\\'", "'");
+    str.replace(_DOUBLE_SLASHES_, "\\");
+    text += str;
+  };
+
+  version = param[++i].toInt();
+}
 
 QPainterPath TextRecord::painterPath(void)
 {

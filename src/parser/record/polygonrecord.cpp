@@ -5,6 +5,13 @@
 #include "context.h"
 #include "symbolfactory.h"
 
+PolygonRecord::PolygonRecord(const QStringList& param)
+{
+  int i = 0;
+  xbs = param[++i].toDouble();
+  ybs = param[++i].toDouble();
+  poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
+}
 
 QPainterPath PolygonRecord::painterPath(void)
 {

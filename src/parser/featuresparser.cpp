@@ -1,7 +1,7 @@
 #include "featuresparser.h"
 
 #include <QtCore>
-#define _DOUBLE_SLASHES_ "__DOUBLE_SLASHES_DARK_FLAME_MASTER__"
+
 void FeaturesDataStore::putSymbolName(const QString& line)
 {
   QStringList param = line.split(" ");
@@ -32,145 +32,37 @@ void FeaturesDataStore::putAttribText(const QString& line)
 void FeaturesDataStore::putLine(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  LineRecord* rec = new LineRecord(this);
-  int i = 0;
-  rec->xs = param[++i].toDouble();
-  rec->ys = param[++i].toDouble();
-  rec->xe = param[++i].toDouble();
-  rec->ye = param[++i].toDouble();
-  rec->sym_num = param[++i].toInt();
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->dcode = param[++i].toInt();
-  rec->initSymbol();
-  m_records.append(rec);
+  m_records.append(new LineRecord(this, param));
 }
 
 void FeaturesDataStore::putPad(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  PadRecord* rec = new PadRecord(this);
-  int i = 0;
-  rec->x = param[++i].toDouble();
-  rec->y = param[++i].toDouble();
-  rec->sym_num = param[++i].toInt();
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->dcode = param[++i].toInt();
-  rec->orient = (Orient)param[++i].toInt();
-  rec->initSymbol();
-  m_records.append(rec);
+  m_records.append(new PadRecord(this, param));
 }
 
 void FeaturesDataStore::putArc(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  ArcRecord* rec = new ArcRecord(this);
-  int i = 0;
-  rec->xs = param[++i].toDouble();
-  rec->ys = param[++i].toDouble();
-  rec->xe = param[++i].toDouble();
-  rec->ye = param[++i].toDouble();
-  rec->xc = param[++i].toDouble();
-  rec->yc = param[++i].toDouble();
-  rec->sym_num = param[++i].toInt();
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->dcode = param[++i].toInt();
-  rec->cw = (param[++i] == "Y");
-  rec->initSymbol();
-  m_records.append(rec);
+  m_records.append(new ArcRecord(this, param));
 }
 
 void FeaturesDataStore::putText(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  TextRecord* rec = new TextRecord(this);
-  int i = 0;
-  rec->x = param[++i].toDouble();
-  rec->y = param[++i].toDouble();
-  rec->font = param[++i];
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->orient = (Orient)param[++i].toInt();
-  rec->xsize = param[++i].toDouble();
-  rec->ysize = param[++i].toDouble();
-  rec->width_factor = param[++i].toDouble();
-  rec->text = "";
-  int ends = -1;
-  while(ends!=1){
-    QString str(param[++i]);
-    if(!ends)
-      rec->text += " ";
-    else
-      str.replace(QRegExp("^'"), "");
-    str.replace("\\\\", _DOUBLE_SLASHES_);
-    if(str.endsWith("\\'"))
-        ends = 0;
-    else if (str.endsWith("'"))
-        ends = 1;
-    else
-        ends = 0;
-    if(ends)
-        str.replace(QRegExp("'$"), "");
-    str.replace("\\'", "'");
-    str.replace(_DOUBLE_SLASHES_, "\\");
-    rec->text += str;
-  };
-
-  rec->version = param[++i].toInt();
-  rec->initSymbol();
-  m_records.append(rec);
+  m_records.append(new TextRecord(this, param));
 }
 
 void FeaturesDataStore::putBarcode(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  BarcodeRecord* rec = new BarcodeRecord(this);
-  int i = 0;
-  rec->x = param[++i].toDouble();
-  rec->y = param[++i].toDouble();
-  rec->barcode = param[++i];
-  rec->font = param[++i];
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->orient = (Orient)param[++i].toInt();
-  rec->e = param[++i];
-  rec->w = param[++i].toDouble();
-  rec->h = param[++i].toDouble();
-  rec->fasc = (param[++i] == "Y");
-  rec->cs = (param[++i] == "Y");
-  rec->bg = (param[++i] == "Y");
-  rec->astr = (param[++i] == "Y");
-  rec->astr_pos = (param[++i] == "T")? BarcodeRecord::T : BarcodeRecord::B;
-  rec->text = "";
-  int ends = -1;
-  while(ends!=1){
-    QString str(param[++i]);
-    if(!ends)
-      rec->text += " ";
-    else
-      str.replace(QRegExp("^'"), "");
-    str.replace("\\\\", _DOUBLE_SLASHES_);
-    if(str.endsWith("\\'"))
-        ends = 0;
-    else if (str.endsWith("'"))
-        ends = 1;
-    else
-        ends = 0;
-    if(ends)
-        str.replace(QRegExp("'$"), "");
-    str.replace("\\'", "'");
-    str.replace(_DOUBLE_SLASHES_, "\\");
-    rec->text += str;
-  };
-
-  rec->initSymbol();
-  m_records.append(rec);
+  m_records.append(new BarcodeRecord(this, param));
 }
 
 void FeaturesDataStore::surfaceStart(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  SurfaceRecord* rec = new SurfaceRecord(this);
-  int i = 0;
-  rec->polarity = (param[++i] == "P")? P: N;
-  rec->dcode = param[++i].toInt();
+  SurfaceRecord* rec = new SurfaceRecord(this, param);
   m_records.append(rec);
   m_currentSurface = rec;
 }
@@ -178,12 +70,8 @@ void FeaturesDataStore::surfaceStart(const QString& line)
 void FeaturesDataStore::surfaceLineData(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ");
-  int i = 0;
   if (line.startsWith("OB")) {
-    PolygonRecord* rec = new PolygonRecord;
-    rec->xbs = param[++i].toDouble();
-    rec->ybs = param[++i].toDouble();
-    rec->poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
+    PolygonRecord* rec = new PolygonRecord(param);
     m_currentSurface->polygons.append(rec);
     m_currentSurface->currentRecord = rec;
   } else if (line.startsWith("OS")) {
