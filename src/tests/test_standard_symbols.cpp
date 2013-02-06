@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   scene->addItem(symbol9);
   symbol9->setPos(0.2, 0.2);
 
-  Symbol* symbol10 = SymbolFactory::create("hexagon_l60x60x20");
+  Symbol* symbol10 = SymbolFactory::create("hex_l60x60x20");
   scene->addItem(symbol10);
   symbol10->setPos(0.2, 0.1);
 
