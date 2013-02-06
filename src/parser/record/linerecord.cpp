@@ -6,7 +6,6 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-extern Context ctx;
 
 QPainterPath LineRecord::painterPath(void)
 {

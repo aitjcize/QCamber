@@ -1,7 +1,7 @@
 #ifndef __ODBPP_VIEW_WIDGET_H__
 #define __ODBPP_VIEW_WIDGET_H__
 
-#include <QtGui/QGraphicsView>
+#include <QGraphicsView>
 
 class ODBPPViewWidget: public QGraphicsView {
   Q_OBJECT

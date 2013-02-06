@@ -14,7 +14,6 @@ Context ctx;
 
 using std::cout;
 using std::endl;
-using std::pair;
 
 extern int yydebug;
 

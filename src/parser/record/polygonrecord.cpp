@@ -5,7 +5,6 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-extern Context ctx;
 
 QPainterPath PolygonRecord::painterPath(void)
 {

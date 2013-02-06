@@ -5,8 +5,6 @@
 #include "context.h"
 #include "symbolfactory.h"
 
-extern Context ctx;
-
 QPainterPath PadRecord::painterPath(void)
 {
   QString sym_name = ds->symbolNameMap()[sym_num];
