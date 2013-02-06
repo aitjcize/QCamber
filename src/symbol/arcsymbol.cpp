@@ -104,6 +104,8 @@ QPainterPath ArcSymbol::painterPath(void)
 
   m_cachedPath.closeSubpath();
 
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

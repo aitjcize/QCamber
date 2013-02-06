@@ -25,7 +25,10 @@ QPainterPath {{.#name}}::painterPath(void)
 
   {{painterPath}}
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }
 

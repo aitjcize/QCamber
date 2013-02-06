@@ -43,6 +43,9 @@ QPainterPath DiamondSymbol::painterPath(void)
   m_cachedPath.lineTo(x+wh, y+h);
   m_cachedPath.closeSubpath();
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

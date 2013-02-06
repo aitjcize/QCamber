@@ -46,6 +46,9 @@ QPainterPath OctagonSymbol::painterPath(void)
   m_cachedPath.lineTo(x+m_r, y+h);
   m_cachedPath.closeSubpath();
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

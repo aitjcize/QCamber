@@ -72,6 +72,8 @@ QPainterPath LineSymbol::painterPath()
   m_cachedPath.addPath(symbolPath.translated(sx, -sy));
   m_cachedPath.addPath(symbolPath.translated(ex, -ey));
 
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

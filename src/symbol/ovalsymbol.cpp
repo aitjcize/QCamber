@@ -43,6 +43,9 @@ QPainterPath OvalSymbol::painterPath(void)
   m_cachedPath.lineTo(x+rad, y+h);
   m_cachedPath.closeSubpath();
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

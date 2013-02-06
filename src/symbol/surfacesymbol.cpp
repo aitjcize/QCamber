@@ -41,6 +41,9 @@ QPainterPath SurfaceSymbol::painterPath(void)
     }
     */
   }
+
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

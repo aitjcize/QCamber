@@ -25,6 +25,9 @@ QPainterPath RoundSymbol::painterPath(void)
 
   m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

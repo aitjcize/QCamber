@@ -56,7 +56,7 @@ QPainterPath RectangleSymbol::painterPath(void)
 
   if (m_type == NORMAL || m_rad <= 0) {
     m_cachedPath.addRect(x, y, w, h);
-    return m_cachedPath;
+    goto ret;
   }
 
   m_rad = qMin(qMin(w / 2, h / 2), m_rad);
@@ -110,6 +110,9 @@ QPainterPath RectangleSymbol::painterPath(void)
   }
   m_cachedPath.closeSubpath();
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

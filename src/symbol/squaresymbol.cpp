@@ -25,6 +25,9 @@ QPainterPath SquareSymbol::painterPath(void)
 
   m_cachedPath.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
 
+ret:
+  prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }

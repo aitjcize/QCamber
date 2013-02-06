@@ -52,5 +52,8 @@ QPainterPath UserSymbol::painterPath(void)
     m_cachedPath.addPath(rec->painterPath());
   }
 
+  prepareGeometryChange();
+  m_bounding = m_cachedPath.boundingRect();
+
   return m_cachedPath;
 }
