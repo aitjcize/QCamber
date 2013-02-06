@@ -11,6 +11,7 @@
 #include "fontparser.h"
 #include "code39.h"
 #include "context.h"
+#include "GUI/jobmatrix.h"
 
 Context ctx;
 
@@ -37,7 +38,10 @@ int main(int argc, char *argv[])
 
   QApplication app(argc, argv);
 
-  ODBPPViewWidget widget;
-  widget.show();
+//  ODBPPViewWidget widget;
+//  widget.show();
+  JobMatrix table;
+  table.show();
+
   return app.exec();
 }
