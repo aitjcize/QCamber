@@ -26,6 +26,29 @@
     <string>Close</string>
    </property>
   </widget>
+  <widget class="QScrollArea" name="matrix">
+   <property name="geometry">
+    <rect>
+     <x>69</x>
+     <y>50</y>
+     <width>511</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>509</width>
+      <height>359</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <resources/>
  <connections/>
