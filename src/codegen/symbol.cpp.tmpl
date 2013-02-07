@@ -9,6 +9,7 @@
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))
     throw InvalidSymbolException(def.toAscii());
+
   QStringList caps = rx.capturedTexts();
   {{constructor}}
 

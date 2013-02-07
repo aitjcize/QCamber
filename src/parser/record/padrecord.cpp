@@ -1,7 +1,11 @@
+#include "record.h"
+
+#include <cmath>
+
 #include <QDebug>
 #include <QPainter>
-#include <cmath>
-#include "record.h"
+#include <QMatrix>
+
 #include "context.h"
 #include "symbolfactory.h"
 
@@ -24,8 +28,13 @@ QPainterPath PadRecord::painterPath(void)
   QPainterPath path = symbol->painterPath();
   path.translate(x, -y);
 
-  return path;
-  // XXX: rotation
+  qreal rad = (orient % 4) * -90;
+  QMatrix mat;
+  mat.rotate(rad);
+  if (orient >= M_0) {
+    mat.scale(1, -1);
+  }
+  return mat.map(path);
 }
 
 void PadRecord::add(QGraphicsScene* scene)
