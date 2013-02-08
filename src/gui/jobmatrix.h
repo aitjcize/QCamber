@@ -23,6 +23,7 @@ private slots:
 
 private:
     Ui::JobMatrix *ui;
+    unsigned long GetFileLength (QString);
 };
 
 #endif // JOBMATRIX_H
