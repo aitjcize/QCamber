@@ -34,13 +34,12 @@ void FontDataStore::charStart(const QStringList& param)
 
 void FontDataStore::charLineData(const QStringList& param)
 {
-  CharLineRecord* rec = new CharLineRecord(param);
+  CharLineRecord* rec = new CharLineRecord(this, param);
   m_currentChar->lines.append(rec);
 }
 
 void FontDataStore::charEnd(void)
 {
-  m_currentChar->initSymbol();
   m_currentChar = NULL;
 }
 
@@ -59,7 +58,7 @@ qreal FontDataStore::ysize(void)
   return m_ysize;
 }
 
-Record* FontDataStore::charRecord(const char tchar)
+CharRecord* FontDataStore::charRecord(const char tchar)
 {
   return m_records[tchar];
 }

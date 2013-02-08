@@ -28,6 +28,7 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
   virtual QPainterPath painterPath(void) = 0;
+  virtual void invalidate(void);
 
 protected:
   QString m_name;

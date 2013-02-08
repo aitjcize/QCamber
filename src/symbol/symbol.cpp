@@ -26,3 +26,8 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   painterPath();
   painter->drawPath(m_cachedPath);
 }
+
+void Symbol::invalidate(void)
+{
+  m_valid = false;
+}

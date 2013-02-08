@@ -135,9 +135,10 @@ struct SurfaceRecord: public Record {
 struct CharLineRecord {
   typedef enum { R = 0, S } ShapeType;
 
-  CharLineRecord(const QStringList& param);
-  QPainterPath painterPath(void);
+  CharLineRecord(FontDataStore* ds, const QStringList& param);
+  QPainterPath painterPath(qreal width_factor);
 
+  FontDataStore* ds;
   qreal xs, ys;
   qreal xe, ye;
   Polarity polarity;
@@ -145,12 +146,14 @@ struct CharLineRecord {
   qreal width;
 };
 
-struct CharRecord: public Record {
+struct CharRecord {
   CharRecord(FontDataStore* ds, const QStringList& param);
-  void initSymbol(void);
+  QPainterPath painterPath(qreal width_factor);
   
   char tchar;
   QList<CharLineRecord*> lines;
+  Symbol* symbol;
+  FontDataStore* ds;
 };
 
 #endif /* __RECORD_H__ */

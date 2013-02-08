@@ -3,9 +3,9 @@
 #include <QtCore/qmath.h>
 
 #include "fontparser.h"
-#include "charsymbol.h"
 
-CharLineRecord::CharLineRecord(const QStringList& param)
+CharLineRecord::CharLineRecord(FontDataStore* ds, const QStringList& param):
+  ds(ds)
 {
   int i = 0;
   xs = param[++i].toDouble();
@@ -17,11 +17,11 @@ CharLineRecord::CharLineRecord(const QStringList& param)
   width = param[++i].toDouble();
 }
 
-QPainterPath CharLineRecord::painterPath(void)
+QPainterPath CharLineRecord::painterPath(qreal width_factor)
 {
   QPainterPath path;
 
-  qreal radius = width / 2.0;
+  qreal radius = width * width_factor / 2.0;
   qreal sx = xs, sy = ys;
   qreal ex = xe, ey = ye;
   qreal dx = ex - sx, dy = ey - sy;
@@ -56,13 +56,22 @@ QPainterPath CharLineRecord::painterPath(void)
   return path;
 }
 
-CharRecord::CharRecord(FontDataStore* ds, const QStringList& param):
-  Record(ds)
+CharRecord::CharRecord(FontDataStore* ds, const QStringList& param)
 {
   tchar = param[1].toAscii()[0];
 }
 
-void CharRecord::initSymbol()
+QPainterPath CharRecord::painterPath(qreal width_factor)
 {
-  symbol = new CharSymbol(this);
+  QPainterPath path;
+
+  path.setFillRule(Qt::WindingFill);
+
+  for (QList<CharLineRecord*>::iterator it = lines.begin();
+      it != lines.end(); ++it) {
+    CharLineRecord* rec = (*it);
+    path.addPath(rec->painterPath(width_factor));
+  }
+
+  return path;
 }

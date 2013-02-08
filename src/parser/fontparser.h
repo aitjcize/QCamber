@@ -16,14 +16,14 @@ public:
   qreal offset(void);
   qreal xsize(void);
   qreal ysize(void);
-  Record* charRecord(const char tchar);
+  CharRecord* charRecord(const char tchar);
 
   virtual void dump(void);
 
 private:
   qreal m_xsize, m_ysize;
   qreal m_offset;
-  QMap<char, Record*> m_records;
+  QMap<char, CharRecord*> m_records;
 
   CharRecord* m_currentChar;
 };

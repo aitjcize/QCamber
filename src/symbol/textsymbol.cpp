@@ -45,9 +45,9 @@ QPainterPath TextSymbol::painterPath(void)
   }
 
   for (int i = 0; i < m_text.length(); ++i) {
-    Record* rec = data->charRecord(m_text[i].toAscii());
+    CharRecord* rec = data->charRecord(m_text[i].toAscii());
     if (rec) {
-      QPainterPath path = mat.map(rec->painterPath());
+      QPainterPath path = mat.map(rec->painterPath(m_width_factor));
       m_cachedPath.addPath(path);
     }
     mat.translate(data->xsize() + data->offset(), 0);
