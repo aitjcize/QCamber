@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
   StructuredTextDataStore* ds = parser.parse();
   StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("LAYER");
 
-  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
-  {
-    cout << it->second->get("NAME") << endl;;
-  }
+//  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+//  {
+//    cout << it->second->get("NAME") << endl;;
+//  }
 
   QApplication app(argc, argv);
 
