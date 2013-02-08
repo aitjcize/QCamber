@@ -1,16 +1,10 @@
 #include "linesymbol.h"
-#include "symbolfactory.h"
-#include <iostream>
-#include <typeinfo>
-using std::cout;
-using std::endl;
 
 #include <QtGui>
 #include <QRegExp>
 
-#include "context.h"
-
-extern Context ctx;
+#include "featuresparser.h"
+#include "symbolfactory.h"
 
 LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
 {
@@ -19,11 +13,13 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
   m_xe = rec->xe;
   m_ye = rec->ye;
   m_sym_num = rec->sym_num;
-  m_sym_name = rec->ds->symbolNameMap()[rec->sym_num];
+  m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
+               symbolNameMap()[rec->sym_num];
   m_polarity = rec->polarity;
   m_dcode = rec->dcode;
+
   //make sure start is at left hand side of end
-  if(m_xs > m_xe){
+  if (m_xs > m_xe) {
     qreal tmp = m_xs;
     m_xs = m_xe;
     m_xe = tmp;
@@ -54,14 +50,13 @@ QPainterPath LineSymbol::painterPath()
   }
   delete symbol;
 
-  qreal radius = (qreal)symbolPath.boundingRect().height()/2;
+  qreal radius = (qreal)symbolPath.boundingRect().height() / 2;
 
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
   qreal dx = ex - sx, dy = ey - sy;
   qreal a = qAtan2(dy, dx);
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
-
 
   m_cachedPath.moveTo(sx + rsina, -(sy - rcosa));
   m_cachedPath.lineTo(sx - rsina, -(sy + rcosa));

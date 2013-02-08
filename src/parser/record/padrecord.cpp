@@ -2,11 +2,10 @@
 
 #include <cmath>
 
-#include <QDebug>
-#include <QPainter>
+#include <QPainterPath>
 #include <QMatrix>
 
-#include "context.h"
+#include "featuresparser.h"
 #include "symbolfactory.h"
 
 PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):

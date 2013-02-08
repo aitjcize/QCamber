@@ -1,10 +1,9 @@
-#include <QDebug>
-#include <QPainter>
-#include <cmath>
-#include <QMatrix>
 #include "record.h"
-#include "context.h"
-#include "symbolfactory.h"
+
+#include <cmath>
+
+#include "featuresparser.h"
+#include "linesymbol.h"
 
 LineRecord::LineRecord(FeaturesDataStore* ds, const QStringList& param):
   Record(ds)

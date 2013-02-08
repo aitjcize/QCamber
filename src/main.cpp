@@ -8,6 +8,7 @@
 #include "odbppviewwidget.h"
 #include "structuredtextparser.h"
 #include "featuresparser.h"
+#include "fontparser.h"
 #include "context.h"
 
 Context ctx;
@@ -30,6 +31,9 @@ int main(int argc, char *argv[])
   {
     cout << it->second->get("NAME") << endl;;
   }
+
+  FontParser p2("standard");
+  FontDataStore* ds2 = p2.parse();
 
   QApplication app(argc, argv);
 

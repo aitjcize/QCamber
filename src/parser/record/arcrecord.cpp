@@ -1,9 +1,7 @@
-#include <QDebug>
-#include <QPainter>
-#include <cmath>
 #include "record.h"
-#include "context.h"
-#include "symbolfactory.h"
+
+#include "featuresparser.h"
+#include "arcsymbol.h"
 
 ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param):
   Record(ds)

@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QString>
 #include <QStringList>
+
 #define GZIP_COMMAND "gzip"
 
 class FeaturesDataStore: public DataStore {
@@ -47,8 +48,7 @@ private:
 
 class FeaturesParser: public Parser {
 public:
-  FeaturesParser(const char* filename);
-  FeaturesParser(QString filename);
+  FeaturesParser(const QString& filename);
   virtual ~FeaturesParser();
   
   virtual FeaturesDataStore* parse(void);

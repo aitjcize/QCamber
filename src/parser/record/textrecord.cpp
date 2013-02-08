@@ -1,11 +1,12 @@
-#include <QDebug>
-#include <QPainter>
+#include "record.h"
+
+#include <QPainterPath>
 #include <QDateTime>
 #include <QString>
-#include <cmath>
-#include "record.h"
-#include "context.h"
+
+#include "featuresparser.h"
 #include "symbolfactory.h"
+#include "textsymbol.h"
 
 TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   Record(ds)
@@ -23,7 +24,8 @@ TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   xsize = param[++i].toDouble();
   ysize = param[++i].toDouble();
   width_factor = param[++i].toDouble();
-  text = "";
+  text = param[++i];
+  /*
   int ends = -1;
   while(ends!=1){
     QString str(param[++i]);
@@ -44,12 +46,11 @@ TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
     str.replace(_DOUBLE_SLASHES_, "\\");
     text += str;
   };
+  */
 
   version = param[++i].toInt();
-}
 
-QPainterPath TextRecord::painterPath(void)
-{
+  symbol = new TextSymbol(this);
 }
 
 QString TextRecord::dynamicText(QString text)
@@ -77,4 +78,5 @@ QString TextRecord::dynamicText(QString text)
 
 void TextRecord::add(QGraphicsScene* scene)
 {
+  scene->addItem(symbol);
 }

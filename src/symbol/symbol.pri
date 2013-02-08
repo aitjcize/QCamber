@@ -8,11 +8,13 @@ HEADERS += \
   symbol/donutrsymbol.h \
   symbol/donutssymbol.h \
   symbol/squaresymbol.h \
+  symbol/trianglesymbol.h \
   symbol/surfacesymbol.h \
   symbol/arcsymbol.h \
   symbol/linesymbol.h \
   symbol/usersymbol.h \
-  symbol/trianglesymbol.h \
+  symbol/textsymbol.h \
+  symbol/charsymbol.h \
   symbol/horizontalhexagonsymbol.h
 
 SOURCES += \
@@ -26,8 +28,10 @@ SOURCES += \
   symbol/donutssymbol.cpp \
   symbol/squaresymbol.cpp \
   symbol/surfacesymbol.cpp \
+  symbol/trianglesymbol.cpp \
   symbol/linesymbol.cpp \
   symbol/arcsymbol.cpp \
   symbol/usersymbol.cpp \
-  symbol/trianglesymbol.cpp \
+  symbol/textsymbol.cpp \
+  symbol/charsymbol.cpp \
   symbol/horizontalhexagonsymbol.cpp

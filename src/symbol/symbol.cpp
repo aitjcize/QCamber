@@ -1,4 +1,5 @@
 #include "symbol.h"
+#include <QDebug>
 
 Symbol::Symbol(QString name, QString pattern):
   m_name(name), m_pattern(pattern), m_valid(false)

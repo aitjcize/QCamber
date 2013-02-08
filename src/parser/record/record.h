@@ -9,13 +9,15 @@
 
 #define _DOUBLE_SLASHES_ "__DOUBLE_SLASHES_DARK_FLAME_MASTER__"
 
+class DataStore;
 class FeaturesDataStore;
+class FontDataStore;
 
 typedef enum { P = 0, N } Polarity;
 typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
-  Record(FeaturesDataStore* _ds): ds(_ds) {}
+  Record(DataStore* _ds): ds(_ds) {}
   virtual ~Record() { delete symbol; }
 
   virtual QPainterPath painterPath(void) {
@@ -26,7 +28,7 @@ struct Record {
   }
 
   Symbol* symbol;
-  FeaturesDataStore* ds;
+  DataStore* ds;
 };
 
 
@@ -67,7 +69,6 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual QString dynamicText(QString);
-  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   qreal x, y;
@@ -85,7 +86,7 @@ struct BarcodeRecord: public TextRecord {
 
   BarcodeRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual QPainterPath painterPath(void);
-  virtual void add(QGraphicsScene* scene) ;
+  virtual void add(QGraphicsScene* scene);
 
   QString barcode;
   QString font;
@@ -129,6 +130,27 @@ struct SurfaceRecord: public Record {
   int dcode;
   QList<PolygonRecord*> polygons;
   PolygonRecord* currentRecord;
+};
+
+struct CharLineRecord {
+  typedef enum { R = 0, S } ShapeType;
+
+  CharLineRecord(const QStringList& param);
+  QPainterPath painterPath(void);
+
+  qreal xs, ys;
+  qreal xe, ye;
+  Polarity polarity;
+  ShapeType shape;
+  qreal width;
+};
+
+struct CharRecord: public Record {
+  CharRecord(FontDataStore* ds, const QStringList& param);
+  void initSymbol(void);
+  
+  char tchar;
+  QList<CharLineRecord*> lines;
 };
 
 #endif /* __RECORD_H__ */

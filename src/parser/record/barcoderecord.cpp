@@ -1,10 +1,9 @@
-#include <QDebug>
-#include <QPainter>
-#include <cmath>
 #include "record.h"
-#include "context.h"
-#include "symbolfactory.h"
 
+#include <QPainterPath>
+
+#include "featuresparser.h"
+#include "symbolfactory.h"
 
 BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
   TextRecord(ds, QStringList())
