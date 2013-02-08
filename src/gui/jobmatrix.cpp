@@ -6,6 +6,7 @@
 #include "QLabel"
 #include "QGroupBox"
 #include "QGridLayout"
+#include <QStandardItemModel>
 
 JobMatrix::JobMatrix(QWidget *parent) :
     QDialog(parent),
@@ -68,7 +69,17 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
             text += "n)  ";
         text += (QString)it->second->get("NAME").c_str();
         label->setText(text);
+        //label->setFrameShape(QFrame::Box);
+        label->setFrameShadow(QFrame::Plain);
         matrix_layout->addWidget(label,layers++,0);
+
+        for(int i=2;i<steps;i++)
+        {
+            QPushButton *btn = new QPushButton;
+
+            matrix_layout->addWidget(btn,layers-1,i);
+        }
+
     }
     ui->matrix->setLayout(matrix_layout);
 }
