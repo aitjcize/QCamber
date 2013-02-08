@@ -24,30 +24,7 @@ TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   xsize = param[++i].toDouble();
   ysize = param[++i].toDouble();
   width_factor = param[++i].toDouble();
-  text = param[++i];
-  /*
-  int ends = -1;
-  while(ends!=1){
-    QString str(param[++i]);
-    if(!ends)
-      text += " ";
-    else
-      str.replace(QRegExp("^'"), "");
-    str.replace("\\\\", _DOUBLE_SLASHES_);
-    if(str.endsWith("\\'"))
-        ends = 0;
-    else if (str.endsWith("'"))
-        ends = 1;
-    else
-        ends = 0;
-    if(ends)
-        str.replace(QRegExp("'$"), "");
-    str.replace("\\'", "'");
-    str.replace(_DOUBLE_SLASHES_, "\\");
-    text += str;
-  };
-  */
-
+  text = dynamicText(param[++i]);
   version = param[++i].toInt();
 
   symbol = new TextSymbol(this);
@@ -58,25 +35,29 @@ QString TextRecord::dynamicText(QString text)
   QString dynText = text;
   const QDate &Date = QDate::currentDate();
   const QTime &Time = QTime::currentTime();
-  dynText.replace("$$date-ddmmyy", QString("").sprintf("%02d/%02d/%02d", Date.day(), Date.month(), Date.year()%100));
-  dynText.replace("$$date", QString("").sprintf("%02d/%02d/%02d", Date.month(), Date.day(), Date.year()%100));
-  dynText.replace("$$time", QString("").sprintf("%02d:%02d", Time.hour(), Time.minute()));
+  dynText.replace("$$date-ddmmyy", QString("").sprintf("%02d/%02d/%02d",
+        Date.day(), Date.month(), Date.year()%100), Qt::CaseInsensitive);
+  dynText.replace("$$date", QString("").sprintf("%02d/%02d/%02d",
+        Date.month(), Date.day(), Date.year()%100), Qt::CaseInsensitive);
+  dynText.replace("$$time", QString("").sprintf("%02d:%02d",
+        Time.hour(), Time.minute()), Qt::CaseInsensitive);
   //TODO fill with correct text
-  dynText.replace("$$job", "Current_Job");
-  dynText.replace("$$step", "Step");
-  dynText.replace("$$layer", "Layer");
+  dynText.replace("$$job", "Current_Job", Qt::CaseInsensitive);
+  dynText.replace("$$step", "Step", Qt::CaseInsensitive);
+  dynText.replace("$$layer", "Layer", Qt::CaseInsensitive);
 
 
-  dynText.replace("$$x_mm", QString("%1").arg(x*25.4));
-  dynText.replace("$$y_mm", QString("%1").arg(y*25.4));
+  dynText.replace("$$x_mm", QString("%1").arg(x*25.4), Qt::CaseInsensitive);
+  dynText.replace("$$y_mm", QString("%1").arg(y*25.4), Qt::CaseInsensitive);
 
-  dynText.replace("$$x", QString("%1").arg(x));
-  dynText.replace("$$y", QString("%1").arg(y));
+  dynText.replace("$$x", QString("%1").arg(x), Qt::CaseInsensitive);
+  dynText.replace("$$y", QString("%1").arg(y), Qt::CaseInsensitive);
   //TODO attr_name
   return dynText;
 }
 
 void TextRecord::add(QGraphicsScene* scene)
 {
+  symbol->setPos(x, -y);
   scene->addItem(symbol);
 }

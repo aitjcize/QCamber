@@ -43,8 +43,14 @@ QPainterPath CharLineRecord::painterPath(void)
   path.lineTo(sx - rsina, -(sy + rcosa));
   path.lineTo(ex - rsina, -(ey + rcosa));
   path.lineTo(ex + rsina, -(ey - rcosa));
-  path.addEllipse(QPointF(sx, -sy), radius, radius);
-  path.addEllipse(QPointF(ex, -ey), radius, radius);
+  if (shape == R) {
+    path.addEllipse(QPointF(sx, -sy), radius, radius);
+    path.addEllipse(QPointF(ex, -ey), radius, radius);
+  } else {
+    qreal radius2 = radius2 * 2;
+    path.addRect(sx-radius, -sy-radius, radius2, radius2);
+    path.addRect(ex-radius, -ey-radius, radius2, radius2);
+  }
   path.closeSubpath();
 
   return path;

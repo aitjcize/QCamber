@@ -95,7 +95,7 @@ FontDataStore* FontParser::parse(void)
       continue;
     }
 
-    QStringList param = line.split(QRegExp("\\s+"));
+    QStringList param = line.split(" ", QString::SkipEmptyParts);
 
     if (block) {
       if (line.startsWith("ECHAR")) {

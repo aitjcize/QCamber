@@ -4,7 +4,7 @@
 
 void FeaturesDataStore::putSymbolName(const QString& line)
 {
-  QStringList param = line.split(" ");
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_symbolNameMap[id] = param[1];
@@ -13,7 +13,7 @@ void FeaturesDataStore::putSymbolName(const QString& line)
 
 void FeaturesDataStore::putAttribName(const QString& line)
 {
-  QStringList param = line.split(" ");
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_attribNameMap[id] = param[1];
@@ -22,7 +22,7 @@ void FeaturesDataStore::putAttribName(const QString& line)
 
 void FeaturesDataStore::putAttribText(const QString& line)
 {
-  QStringList param = line.split(" ");
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_attribTextMap[id] = param[1];
@@ -31,37 +31,55 @@ void FeaturesDataStore::putAttribText(const QString& line)
 
 void FeaturesDataStore::putLine(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new LineRecord(this, param));
 }
 
 void FeaturesDataStore::putPad(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new PadRecord(this, param));
 }
 
 void FeaturesDataStore::putArc(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new ArcRecord(this, param));
 }
 
 void FeaturesDataStore::putText(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  int loc, loc2;
+  QString l = stripAttr(line);
+  loc = l.indexOf("'");
+  loc2 = l.indexOf("'", loc + 1);
+  QString left = l.left(loc);
+  QString middle = l.mid(loc + 1, loc2 - loc - 1);
+  QString right = l.right(l.length() - loc2 - 1);
+  QStringList param = left.split(" ", QString::SkipEmptyParts);
+  param << middle;
+  param += right.split(" ", QString::SkipEmptyParts);
   m_records.append(new TextRecord(this, param));
 }
 
 void FeaturesDataStore::putBarcode(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  int loc, loc2;
+  QString l = stripAttr(line);
+  loc = l.indexOf("'");
+  loc2 = l.indexOf("'", loc + 1);
+  QString left = l.left(loc);
+  QString middle = l.mid(loc + 1, loc2 - loc - 1);
+  QString right = l.right(l.length() - loc2 - 1);
+  QStringList param = left.split(" ", QString::SkipEmptyParts);
+  param << middle;
+  param += right.split(" ", QString::SkipEmptyParts);
   m_records.append(new BarcodeRecord(this, param));
 }
 
 void FeaturesDataStore::surfaceStart(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   SurfaceRecord* rec = new SurfaceRecord(this, param);
   m_records.append(rec);
   m_currentSurface = rec;
@@ -69,7 +87,7 @@ void FeaturesDataStore::surfaceStart(const QString& line)
 
 void FeaturesDataStore::surfaceLineData(const QString& line)
 {
-  QStringList param = stripAttr(line).split(" ");
+  QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   if (line.startsWith("OB")) {
     PolygonRecord* rec = new PolygonRecord(param);
     m_currentSurface->polygons.append(rec);
