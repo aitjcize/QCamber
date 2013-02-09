@@ -61,7 +61,7 @@ QPainterPath BarcodeSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  QString bar_pattern = Code39::encode(m_text);
+  QString bar_pattern = Code39::encode(m_text, m_fasc);
   QPainterPath finalPath;
 
   qreal offset = 0;
