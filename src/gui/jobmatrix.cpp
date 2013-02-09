@@ -7,6 +7,10 @@
 #include "QGridLayout"
 #include "QFile"
 #include "iostream"
+#include "QPushButton"
+#include "odbppviewwidget.h"
+#include "QIcon"
+
 
 using namespace std;
 
@@ -30,9 +34,9 @@ void JobMatrix::on_CloseButton_clicked()
 void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
 {
     QGridLayout *matrix_layout = new QGridLayout;
-    int steps,layers;
-    QList <QString> step_name;
+    signalMapper = new QSignalMapper(this);
     QString text;
+    int steps,layers;
 
     StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
     steps = 2;
@@ -70,29 +74,36 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
             text += "p)  ";
         else
             text += "n)  ";
+        layer_name.append((QString)it->second->get("NAME").c_str());
         text += (QString)it->second->get("NAME").c_str();
         label->setText(text);
-        //label->setFrameShape(QFrame::Box);
-        //label->setFrameShadow(QFrame::Plain);
-
-
         matrix_layout->addWidget(label,layers++,0);
 
         for(int i=2;i<steps;i++)
         {
-            QPushButton *btn = new QPushButton;
+            text = step_name[i-2] + "/" + (QString)it->second->get("NAME").c_str();
+            QPushButton *btn = new QPushButton(text);
+            connect(btn, SIGNAL(clicked()),signalMapper, SLOT(map()));
+            signalMapper->setMapping(btn,text);
+
+
             text = "demo/steps/";
             text += step_name[i-2].toAscii().data() ;
             text += "/layers/";
             text += (QString)it->second->get("NAME").c_str();
             text += "/features";
-            //cout<<text.toAscii().data()<<" "<<GetFileLength(text)<<endl;
             if(GetFileLength(text) == 0)
-                btn->setFlat(true);
+            {
+                //btn->setFlat(true);
+                btn->setText("");
+            }
+
             matrix_layout->addWidget(btn,layers-1,i);
+
         }
 
     }
+     connect(signalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowLayer(const QString &)));
     ui->matrix->setLayout(matrix_layout);
 }
 
@@ -104,8 +115,21 @@ unsigned long JobMatrix::GetFileLength ( QString fileName)
     }else{
         file.setFileName(fileName+".Z");
         return file.size();
-
     }
     return -1; //error
+}
 
+
+void JobMatrix::ShowLayer(const QString feature_name)
+{
+    QStringList name = feature_name.split("/");
+    QString path;
+    QFile file;
+    path = "demo/steps/" + name[0] + "/layers/" + name[1] + "/features";
+    file.setFileName(path);
+    if(file.exists())
+        widget.load_feature(path);
+    else
+        widget.load_feature(path+".Z");
+   widget.show();
 }

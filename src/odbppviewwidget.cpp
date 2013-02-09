@@ -1,15 +1,15 @@
 #include "odbppviewwidget.h"
 #include "symbolfactory.h"
-#include "context.h"
 #include "feature.h"
+#include "iostream"
 
-extern Context ctx;
+using namespace std;
 
 ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 {
   QGraphicsScene *scene = new QGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-  scene->setSceneRect(-400, -400, 800, 800);
+  scene->setSceneRect(-800, -800, 1600, 1600);
   setScene(scene);
   setCacheMode(CacheBackground);
   setDragMode(QGraphicsView::ScrollHandDrag);
@@ -25,10 +25,6 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   user->setPos(0, 0);
   */
 
-  Features features(ctx.loader->absPath("steps/pcb/layers/bot/features.Z"));
-  //Features features("features");
-  features.add(scene);
-
   scale(100, 100);
 }
 
@@ -42,4 +38,11 @@ void ODBPPViewWidget::scaleView(qreal scaleFactor)
     qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 
     scale(scaleFactor, scaleFactor);
+}
+
+void ODBPPViewWidget::load_feature(QString file_name)
+{
+    Features features(file_name.toAscii().data());
+    features.add(scene);
+    //cout<<file_name.toAscii().data()<<endl;
 }
