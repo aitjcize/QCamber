@@ -61,9 +61,12 @@ void Code39::initPatterns(void)
 QString Code39::encode(QString text)
 {
   QString pattern = s_patterns['*'] + "w";
-  text = text.toUpper();
 
   for (int i = 0; i < text.length(); ++i) {
+    if (text[i].isLower()) {
+      pattern += s_patterns['+'] + "w";
+      text[i] = text[i].toUpper();
+    }
     if (s_patterns.find(text[i]) != s_patterns.end()) {
       pattern += s_patterns[text[i]] + "w";
     }

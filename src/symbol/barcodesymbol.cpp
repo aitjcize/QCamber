@@ -33,6 +33,27 @@ BarcodeSymbol::BarcodeSymbol(BarcodeRecord* rec): TextSymbol(NULL)
 
 #include <QDebug>
 
+void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
+    QWidget*)
+{
+  painterPath();
+
+  if (m_bg) {
+    painter->setPen(QPen(Qt::white, 0));
+    painter->setBrush(Qt::white);
+
+    QRectF b = m_cachedPath.boundingRect();
+    const qreal offset = 0.1;
+    b.setX(b.x() - offset);
+    b.setWidth(b.width() + offset * 2);
+    painter->drawRect(b);
+  }
+
+  painter->setPen(QPen(Qt::red, 0));
+  painter->setBrush(Qt::red);
+  painter->drawPath(m_cachedPath);
+}
+
 QPainterPath BarcodeSymbol::painterPath(void)
 {
   if (m_valid)
@@ -67,7 +88,12 @@ QPainterPath BarcodeSymbol::painterPath(void)
   }
 
   if (m_astr) {
+    // Save current orientation to generate normal orientation text
+    Orient orient_bak = m_orient;
+    m_orient = N_0;
     QPainterPath path = TextSymbol::painterPath();
+    // restore orientation
+    m_orient = orient_bak;
     QRectF tb = path.boundingRect();
     QRectF bb = finalPath.boundingRect();
     qreal ox = (bb.width() - tb.width()) / 2.0;
@@ -80,7 +106,14 @@ QPainterPath BarcodeSymbol::painterPath(void)
     finalPath.addPath(path);
   }
 
-  m_cachedPath = finalPath;
+  QMatrix mat;
+  qreal rad = (m_orient % 4) * -90;
+  mat.rotate(rad);
+  if (m_orient >= M_0) {
+    mat.scale(1, -1);
+  }
+
+  m_cachedPath = mat.map(finalPath);
   m_cachedPath.setFillRule(Qt::WindingFill);
 
   prepareGeometryChange();

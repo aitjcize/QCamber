@@ -12,7 +12,9 @@ class BarcodeSymbol: public TextSymbol {
 public:
   BarcodeSymbol(BarcodeRecord* rec);
 
-  QPainterPath painterPath(void);
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+        QWidget *widget);
+  virtual QPainterPath painterPath(void);
 
 private:
   QString m_barcode;
