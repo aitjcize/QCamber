@@ -5,10 +5,11 @@
 
 class ODBPPViewWidget: public QGraphicsView {
   Q_OBJECT
-
+private:
+    QGraphicsScene *scene;
 public:
     ODBPPViewWidget(QWidget* parent = 0);
-
+    void load_feature(QString);
 protected:
     void wheelEvent(QWheelEvent *event);
     void scaleView(qreal scaleFactor);

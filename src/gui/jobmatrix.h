@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "structuredtextparser.h"
+#include "odbppviewwidget.h"
+#include <QSignalMapper>
 
 
 namespace Ui {
@@ -20,10 +22,13 @@ public:
     
 private slots:
     void on_CloseButton_clicked();
-
+    void ShowLayer(const QString );
 private:
     Ui::JobMatrix *ui;
     unsigned long GetFileLength (QString);
+    QList <QString> step_name,layer_name;
+    ODBPPViewWidget widget;
+    QSignalMapper *signalMapper;
 };
 
 #endif // JOBMATRIX_H
