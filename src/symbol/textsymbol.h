@@ -14,7 +14,7 @@ public:
 
   QPainterPath painterPath(void);
 
-private:
+protected:
   qreal m_x, m_y;
   QString m_font;
   Polarity m_polarity;

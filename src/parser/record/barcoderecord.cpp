@@ -23,33 +23,13 @@ BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
   bg = (param[++i] == "Y");
   astr = (param[++i] == "Y");
   astr_pos = (param[++i] == "T")? BarcodeRecord::T : BarcodeRecord::B;
-  text = "";
-  int ends = -1;
-  while(ends!=1){
-    QString str(param[++i]);
-    if(!ends)
-      text += " ";
-    else
-      str.replace(QRegExp("^'"), "");
-    str.replace("\\\\", _DOUBLE_SLASHES_);
-    if(str.endsWith("\\'"))
-        ends = 0;
-    else if (str.endsWith("'"))
-        ends = 1;
-    else
-        ends = 0;
-    if(ends)
-        str.replace(QRegExp("'$"), "");
-    str.replace("\\'", "'");
-    str.replace(_DOUBLE_SLASHES_, "\\");
-    text += str;
-  };
-}
+  text = dynamicText(param[++i]);
 
-QPainterPath BarcodeRecord::painterPath(void)
-{
+  symbol = new BarcodeSymbol(this);
 }
 
 void BarcodeRecord::add(QGraphicsScene* scene)
 {
+  symbol->setPos(x, -y);
+  scene->addItem(symbol);
 }

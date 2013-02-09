@@ -1,0 +1,24 @@
+<symbol name="TriangleSymbol" id="tri">
+  <pattern><![CDATA[
+  tri([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_base;
+  qreal m_h;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_base = caps[1].toDouble() / 1000.0;
+  m_h = caps[2].toDouble() / 1000.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+  //The co-ordinates of y needs to be flipped
+  //due to it is screen co-ordination ( increase from top to down )
+  m_cachedPath.moveTo(0, - m_h / 2);
+  m_cachedPath.lineTo(- m_base / 2, m_h / 2);
+  m_cachedPath.lineTo(m_base / 2, m_h / 2);
+  m_cachedPath.closeSubpath();
+  ]]></painterPath>
+</symbol>

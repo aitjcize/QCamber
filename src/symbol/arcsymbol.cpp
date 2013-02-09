@@ -58,7 +58,6 @@ QPainterPath ArcSymbol::painterPath(void)
     return m_cachedPath;
 
   m_cachedPath = QPainterPath();
-  m_valid = true;
 
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
@@ -106,6 +105,7 @@ QPainterPath ArcSymbol::painterPath(void)
 
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+  m_valid = true;
 
   return m_cachedPath;
 }

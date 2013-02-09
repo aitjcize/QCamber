@@ -7,8 +7,6 @@
 
 #include "symbol.h"
 
-#define _DOUBLE_SLASHES_ "__DOUBLE_SLASHES_DARK_FLAME_MASTER__"
-
 class DataStore;
 class FeaturesDataStore;
 class FontDataStore;
@@ -85,13 +83,9 @@ struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   BarcodeRecord(FeaturesDataStore* ds, const QStringList& param);
-  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   QString barcode;
-  QString font;
-  Polarity polarity;
-  Orient orient;
   QString e;
   qreal w, h;
   bool fasc;
@@ -150,10 +144,10 @@ struct CharRecord {
   CharRecord(FontDataStore* ds, const QStringList& param);
   QPainterPath painterPath(qreal width_factor);
   
+  FontDataStore* ds;
   char tchar;
   QList<CharLineRecord*> lines;
   Symbol* symbol;
-  FontDataStore* ds;
 };
 
 #endif /* __RECORD_H__ */

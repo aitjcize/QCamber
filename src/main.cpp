@@ -9,6 +9,7 @@
 #include "structuredtextparser.h"
 #include "featuresparser.h"
 #include "fontparser.h"
+#include "code39.h"
 #include "context.h"
 
 Context ctx;
@@ -20,6 +21,8 @@ extern int yydebug;
 
 int main(int argc, char *argv[])
 {
+  Code39::initPatterns();
+
   yydebug = 0;
   ctx.loader = new ArchiveLoader("demo.tgz");
 
@@ -31,9 +34,6 @@ int main(int argc, char *argv[])
   {
     cout << it->second->get("NAME") << endl;;
   }
-
-  FontParser p2("standard");
-  FontDataStore* ds2 = p2.parse();
 
   QApplication app(argc, argv);
 

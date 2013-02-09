@@ -40,7 +40,6 @@ QPainterPath UserSymbol::painterPath(void)
     return m_cachedPath;
 
   m_cachedPath = QPainterPath();
-  m_valid = true;
 
   m_cachedPath.setFillRule(Qt::WindingFill);
 
@@ -52,6 +51,7 @@ QPainterPath UserSymbol::painterPath(void)
 
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+  m_valid = true;
 
   return m_cachedPath;
 }

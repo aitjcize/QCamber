@@ -15,6 +15,8 @@
 #include "usersymbol.h"
 #include "linesymbol.h"
 #include "trianglesymbol.h"
+#include "textsymbol.h"
+#include "barcodesymbol.h"
 #include "horizontalhexagonsymbol.h"
 
 #include <QRegExp>

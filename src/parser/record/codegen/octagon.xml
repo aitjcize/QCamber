@@ -1,30 +1,21 @@
-#include "octagonsymbol.h"
+<symbol name="OctagonSymbol" id="oct">
+  <pattern><![CDATA[
+  oct([0-9.]+)x([0-9.]+)x([0-9.]+)
+  ]]></pattern>
 
-#include <QtGui>
-#include <QRegExp>
+  <private_block><![CDATA[
+  qreal m_w;
+  qreal m_h;
+  qreal m_r;
+  ]]></private_block>
 
-OctagonSymbol::OctagonSymbol(QString def):
-    Symbol("oct", "oct([0-9.]+)x([0-9.]+)x([0-9.]+)"), m_def(def)
-{
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
-    throw InvalidSymbolException(def.toAscii());
-
-  QStringList caps = rx.capturedTexts();
+  <constructor><![CDATA[
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
   m_r = caps[3].toDouble() / 1000.0;
+  ]]></constructor>
 
-  painterPath();
-}
-
-QPainterPath OctagonSymbol::painterPath(void)
-{
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
-
+  <painterPath><![CDATA[
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
@@ -45,11 +36,5 @@ QPainterPath OctagonSymbol::painterPath(void)
   m_cachedPath.lineTo(x+w-m_r, y+h);
   m_cachedPath.lineTo(x+m_r, y+h);
   m_cachedPath.closeSubpath();
-
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
-}
+  ]]></painterPath>
+</symbol>

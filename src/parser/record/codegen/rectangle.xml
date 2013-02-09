@@ -1,16 +1,25 @@
-#include "rectanglesymbol.h"
+<symbol name="RectangleSymbol" id="rect">
+  <pattern><![CDATA[
+  rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?
+  ]]></pattern>
 
-#include <QtGui>
-#include <QRegExp>
+  <typedefs><![CDATA[
+  typedef enum {
+    NORMAL = 0,
+    ROUNDED,
+    CHAMFERED
+  } Type;
+  ]]></typedefs>
 
-RectangleSymbol::RectangleSymbol(QString def):
-    Symbol("rect", "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?"), m_def(def)
-{
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
-    throw InvalidSymbolException(def.toAscii());
+  <private_block><![CDATA[
+  Type m_type;
+  qreal m_w;
+  qreal m_h;
+  qreal m_rad;
+  int m_corners;
+  ]]></private_block>
 
-  QStringList caps = rx.capturedTexts();
+  <constructor><![CDATA[
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
   if (caps[3] == "xr") {
@@ -32,17 +41,9 @@ RectangleSymbol::RectangleSymbol(QString def):
   } else {
     m_corners = 15;
   }
+  ]]></constructor>
 
-  painterPath();
-}
-
-QPainterPath RectangleSymbol::painterPath(void)
-{
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
-
+  <painterPath><![CDATA[
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
   QRectF r = rect.normalized();
 
@@ -109,11 +110,5 @@ QPainterPath RectangleSymbol::painterPath(void)
     m_cachedPath.lineTo(x, y+h);
   }
   m_cachedPath.closeSubpath();
-
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
-}
+  ]]></painterPath>
+</symbol>

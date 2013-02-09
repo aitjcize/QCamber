@@ -6,7 +6,6 @@
 
 #include "featuresparser.h"
 #include "symbolfactory.h"
-#include "textsymbol.h"
 
 TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   Record(ds)

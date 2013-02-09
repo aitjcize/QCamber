@@ -37,7 +37,6 @@ QPainterPath LineSymbol::painterPath()
     return m_cachedPath;
 
   m_cachedPath = QPainterPath();
-  m_valid = true;
 
   // Set winding fill
   m_cachedPath.setFillRule(Qt::WindingFill);
@@ -68,6 +67,7 @@ QPainterPath LineSymbol::painterPath()
 
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+  m_valid = true;
 
   return m_cachedPath;
 }

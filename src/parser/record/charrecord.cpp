@@ -47,7 +47,7 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
     path.addEllipse(QPointF(sx, -sy), radius, radius);
     path.addEllipse(QPointF(ex, -ey), radius, radius);
   } else {
-    qreal radius2 = radius2 * 2;
+    qreal radius2 = radius * 2;
     path.addRect(sx-radius, -sy-radius, radius2, radius2);
     path.addRect(ex-radius, -ey-radius, radius2, radius2);
   }
@@ -56,7 +56,7 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
   return path;
 }
 
-CharRecord::CharRecord(FontDataStore* ds, const QStringList& param)
+CharRecord::CharRecord(FontDataStore* ds, const QStringList& param): ds(ds)
 {
   tchar = param[1].toAscii()[0];
 }

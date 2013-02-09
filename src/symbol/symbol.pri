@@ -14,6 +14,7 @@ HEADERS += \
   symbol/linesymbol.h \
   symbol/usersymbol.h \
   symbol/textsymbol.h \
+  symbol/barcodesymbol.h \
   symbol/horizontalhexagonsymbol.h
 
 SOURCES += \
@@ -32,4 +33,5 @@ SOURCES += \
   symbol/arcsymbol.cpp \
   symbol/usersymbol.cpp \
   symbol/textsymbol.cpp \
+  symbol/barcodesymbol.cpp \
   symbol/horizontalhexagonsymbol.cpp

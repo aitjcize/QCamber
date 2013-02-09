@@ -10,6 +10,10 @@ extern Context ctx;
 
 TextSymbol::TextSymbol(TextRecord* rec): Symbol("text", "text")
 {
+  if (rec == NULL) {
+    return;
+  }
+
   m_x = rec->x;
   m_y = rec->y;
   m_font = rec->font;
@@ -30,11 +34,10 @@ QPainterPath TextSymbol::painterPath(void)
     return m_cachedPath;
 
   m_cachedPath = QPainterPath();
-  m_valid = true;
 
   m_cachedPath.setFillRule(Qt::WindingFill);
 
-  FontParser parser(ctx.loader->absPath("fonts/standard"));
+  FontParser parser(ctx.loader->absPath("fonts/" + m_font));
   FontDataStore* data = parser.parse(); 
 
   QMatrix mat(m_xsize / data->xsize(), 0, 0, m_ysize / data->ysize(), 0, 0);
@@ -60,6 +63,7 @@ QPainterPath TextSymbol::painterPath(void)
 
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
+  m_valid = true;
 
   return m_cachedPath;
 }
