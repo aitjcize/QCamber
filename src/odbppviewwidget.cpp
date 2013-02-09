@@ -25,8 +25,8 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   user->setPos(0, 0);
   */
 
-  //Features features(ctx.loader->absPath("steps/pcb/layers/bot/features.Z"));
-  Features features("features");
+  Features features(ctx.loader->absPath("steps/pcb/layers/bot/features.Z"));
+  //Features features("features");
   features.add(scene);
 
   scale(100, 100);

@@ -61,7 +61,7 @@ QPainterPath BarcodeSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  QString bar_pattern = Code39::encode(m_text, m_fasc);
+  QString bar_pattern = Code39::encode(m_text, m_cs, m_fasc);
   QPainterPath finalPath;
 
   qreal offset = 0;
@@ -107,11 +107,11 @@ QPainterPath BarcodeSymbol::painterPath(void)
   }
 
   QMatrix mat;
-  qreal rad = (m_orient % 4) * -90;
-  mat.rotate(rad);
+  qreal rad = (m_orient % 4) * 90;
   if (m_orient >= M_0) {
-    mat.scale(1, -1);
+    mat.scale(-1, 1);
   }
+  mat.rotate(rad);
 
   m_cachedPath = mat.map(finalPath);
   m_cachedPath.setFillRule(Qt::WindingFill);

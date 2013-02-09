@@ -41,11 +41,11 @@ QPainterPath TextSymbol::painterPath(void)
   FontDataStore* data = parser.parse(); 
 
   QMatrix mat(m_xsize / data->xsize(), 0, 0, m_ysize / data->ysize(), 0, 0);
-  qreal rad = (m_orient % 4) * -90;
-  mat.rotate(rad);
+  qreal rad = (m_orient % 4) * 90;
   if (m_orient >= M_0) {
-    mat.scale(1, -1);
+    mat.scale(-1, 1);
   }
+  mat.rotate(rad);
 
   for (int i = 0; i < m_text.length(); ++i) {
     CharRecord* rec = data->charRecord(m_text[i].toAscii());

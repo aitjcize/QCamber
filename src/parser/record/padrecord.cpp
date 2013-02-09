@@ -27,12 +27,12 @@ QPainterPath PadRecord::painterPath(void)
   QPainterPath path = symbol->painterPath();
   path.translate(x, -y);
 
-  qreal rad = (orient % 4) * -90;
+  qreal rad = (orient % 4) * 90;
   QMatrix mat;
-  mat.rotate(rad);
   if (orient >= M_0) {
-    mat.scale(1, -1);
+    mat.scale(-1, 1);
   }
+  mat.rotate(rad);
   return mat.map(path);
 }
 
@@ -41,8 +41,8 @@ void PadRecord::add(QGraphicsScene* scene)
   symbol->setPos(x, -y);
   scene->addItem(symbol);
 
-  symbol->rotate((orient % 4) * -90);
   if (orient >= M_0) {
-    symbol->scale(1, -1);
+    symbol->scale(-1, 1);
   }
+  symbol->rotate((orient % 4) * 90);
 }

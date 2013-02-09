@@ -181,12 +181,16 @@ struct code39map c39fm[] = {
 };
 
 QMap<QChar, QString> Code39::s_patterns;
+QMap<QChar, unsigned> Code39::s_checksum;
+QMap<unsigned, QChar> Code39::s_checksum_inv;
 QMap<QChar, QString> Code39::s_fascmap;
 
 void Code39::initPatterns(void)
 {
   for (unsigned i = 0; i < sizeof(c39m) / sizeof(c39m[0]); ++i) {
     s_patterns[c39m[i].tchar] = c39m[i].pattern;
+    s_checksum[c39m[i].tchar] = i;
+    s_checksum_inv[i] = c39m[i].tchar;
   }
 
   for (unsigned i = 0; i < sizeof(c39fm) / sizeof(c39fm[0]); ++i) {
@@ -194,9 +198,10 @@ void Code39::initPatterns(void)
   }
 }
 
-QString Code39::encode(QString text, bool fasc)
+QString Code39::encode(QString text, bool checksum, bool fasc)
 {
   QString pattern = s_patterns['*'] + "w";
+  unsigned sum = 0;
 
   if (fasc) {
     QString expended;
@@ -211,8 +216,16 @@ QString Code39::encode(QString text, bool fasc)
   for (int i = 0; i < text.length(); ++i) {
     if (s_patterns.find(text[i]) != s_patterns.end()) {
       pattern += s_patterns[text[i]] + "w";
+      if (!fasc && checksum) {
+        sum += s_checksum[text[i]];
+      }
     }
   }
+  /*
+  if (checksum) {
+    pattern += "w" + s_patterns[s_checksum_inv[sum % 43]];
+  }
+  */
   pattern += s_patterns['*'];
 
   return pattern;

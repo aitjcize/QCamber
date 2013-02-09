@@ -13,10 +13,12 @@ struct code39map {
 class Code39 {
 public:
   static void initPatterns(void);
-  static QString encode(QString text, bool fasc=false);
+  static QString encode(QString text, bool checksum=false, bool fasc=false);
 
 private:
   static QMap<QChar, QString> s_patterns;
+  static QMap<QChar, unsigned> s_checksum;
+  static QMap<unsigned, QChar> s_checksum_inv;
   static QMap<QChar, QString> s_fascmap;
 };
 
