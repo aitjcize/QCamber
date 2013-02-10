@@ -66,6 +66,7 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual QString dynamicText(QString);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   qreal x, y;
@@ -82,6 +83,7 @@ struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   BarcodeRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual QPainterPath painterPath(void);
   virtual void add(QGraphicsScene* scene);
 
   QString barcode;

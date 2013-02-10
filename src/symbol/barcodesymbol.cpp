@@ -106,14 +106,7 @@ QPainterPath BarcodeSymbol::painterPath(void)
     finalPath.addPath(path);
   }
 
-  QMatrix mat;
-  qreal rad = (m_orient % 4) * 90;
-  if (m_orient >= M_0) {
-    mat.scale(-1, 1);
-  }
-  mat.rotate(rad);
-
-  m_cachedPath = mat.map(finalPath);
+  m_cachedPath = finalPath;
   m_cachedPath.setFillRule(Qt::WindingFill);
 
   prepareGeometryChange();

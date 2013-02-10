@@ -25,7 +25,6 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
 QPainterPath PadRecord::painterPath(void)
 {
   QPainterPath path = symbol->painterPath();
-  path.translate(x, -y);
 
   qreal rad = (orient % 4) * 90;
   QMatrix mat;
@@ -33,7 +32,10 @@ QPainterPath PadRecord::painterPath(void)
     mat.scale(-1, 1);
   }
   mat.rotate(rad);
-  return mat.map(path);
+  path = mat.map(path);
+
+  path.translate(x, -y);
+  return path;
 }
 
 void PadRecord::add(QGraphicsScene* scene)

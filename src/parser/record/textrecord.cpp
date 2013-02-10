@@ -55,6 +55,22 @@ QString TextRecord::dynamicText(QString text)
   return dynText;
 }
 
+QPainterPath TextRecord::painterPath(void)
+{
+  QPainterPath path = symbol->painterPath();
+
+  qreal rad = (orient % 4) * 90;
+  QMatrix mat;
+  if (orient >= M_0) {
+    mat.scale(-1, 1);
+  }
+  mat.rotate(rad);
+  path = mat.map(path);
+
+  path.translate(x, -y);
+  return path;
+}
+
 void TextRecord::add(QGraphicsScene* scene)
 {
   symbol->setPos(x, -y);
