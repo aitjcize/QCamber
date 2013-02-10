@@ -48,4 +48,9 @@ void BarcodeRecord::add(QGraphicsScene* scene)
 {
   symbol->setPos(x, -y);
   scene->addItem(symbol);
+
+  if (orient >= M_0) {
+    symbol->scale(-1, 1);
+  }
+  symbol->rotate((orient % 4) * 90);
 }

@@ -20,7 +20,7 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   setWindowTitle(tr("test"));
 
   /*
-  Symbol* user = new UserSymbol("");
+  Symbol* user = new UserSymbol("", P);
   scene->addItem(user);
   user->setPos(0, 0);
   */
