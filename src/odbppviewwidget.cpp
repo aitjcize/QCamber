@@ -2,13 +2,10 @@
 #include "symbolfactory.h"
 #include "feature.h"
 #include "iostream"
-<<<<<<< HEAD
+#include "context.h"
 
 using namespace std;
-=======
-using namespace std;
 extern Context ctx;
->>>>>>> 67c4128f6c6062c63a88998e7c24cd891744d4db
 
 ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 {
@@ -43,12 +40,6 @@ void ODBPPViewWidget::scaleView(qreal scaleFactor)
   qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 
   scale(scaleFactor, scaleFactor);
-}
-
-void ODBPPViewWidget::load_feature(QString filename)
-{
-  Features features(filename);
-  features.add(scene);
 }
 
 void ODBPPViewWidget::load_feature(QString filename)
