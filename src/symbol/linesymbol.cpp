@@ -6,7 +6,7 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
+LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;
@@ -15,7 +15,6 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user")
   m_sym_num = rec->sym_num;
   m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
                symbolNameMap()[rec->sym_num];
-  m_polarity = rec->polarity;
   m_dcode = rec->dcode;
 
   //make sure start is at left hand side of end
@@ -41,7 +40,7 @@ QPainterPath LineSymbol::painterPath()
   // Set winding fill
   m_cachedPath.setFillRule(Qt::WindingFill);
 
-  Symbol *symbol = SymbolFactory::create(m_sym_name);
+  Symbol *symbol = SymbolFactory::create(m_sym_name, m_polarity);
   QPainterPath symbolPath = symbol->painterPath();
   if (symbolPath.boundingRect().height() != symbolPath.boundingRect().width()) {
     qDebug() << m_sym_name << "is not a symmetrics symbol, but we'll still "

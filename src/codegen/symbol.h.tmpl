@@ -7,7 +7,7 @@ class {{.#name}}: public Symbol {
 public:
   {{typedefs}}
 
-  {{.#name}}(QString def);
+  {{.#name}}(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
   {{public_block}}

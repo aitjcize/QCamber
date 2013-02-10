@@ -6,7 +6,7 @@
 class TriangleSymbol: public Symbol {
 public:
 
-  TriangleSymbol(QString def);
+  TriangleSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

@@ -19,7 +19,6 @@ private:
   qreal m_xe, m_ye;
   int m_sym_num;
   QString m_sym_name;
-  Polarity m_polarity;
   int m_dcode;
 };
 

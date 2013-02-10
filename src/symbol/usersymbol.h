@@ -10,7 +10,7 @@
 
 class UserSymbol: public Symbol {
 public:
-  UserSymbol(QString def);
+  UserSymbol(QString def, Polarity polarity);
 
   QPainterPath painterPath(void);
 

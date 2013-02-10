@@ -12,9 +12,9 @@ using std::endl;
 
 extern Context ctx;
 
-SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec): Symbol("user", "user")
+SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
+  Symbol("user", "user", rec->polarity)
 {
-  m_polarity = rec->polarity;
   m_dcode = rec->dcode;
   m_polygons = rec->polygons;
 

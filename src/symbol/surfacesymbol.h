@@ -15,7 +15,6 @@ public:
   QPainterPath painterPath(void);
 
 private:
-  Polarity m_polarity;
   int m_dcode;
   QList<PolygonRecord*> m_polygons;
 };

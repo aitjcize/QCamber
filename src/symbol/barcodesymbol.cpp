@@ -8,10 +8,10 @@
 
 BarcodeSymbol::BarcodeSymbol(BarcodeRecord* rec): TextSymbol(NULL)
 {
+  m_polarity = rec->polarity;
   m_x = rec->x;
   m_y = rec->y;
   m_font = rec->font;
-  m_polarity = rec->polarity;
   m_orient = rec->orient;
   m_text = rec->text;
   m_xsize = 0.06;

@@ -9,6 +9,8 @@
 #include <QPainter>
 #include <QPainterPath>
 
+typedef enum { P = 0, N } Polarity;
+
 class InvalidSymbolException: public std::exception {
 public:
   InvalidSymbolException(const char* msg): m_msg(msg) {}
@@ -20,7 +22,7 @@ private:
 
 class Symbol: public QGraphicsItem {
 public:
-  Symbol(QString name, QString pattern);
+  Symbol(QString name, QString pattern, Polarity polarity=P);
 
   QString name(void);
 
@@ -36,6 +38,7 @@ protected:
   bool m_valid;
   QRectF m_bounding;
   QPainterPath m_cachedPath;
+  Polarity m_polarity;
 };
 
 #endif /* __SYMBOL_H__ */

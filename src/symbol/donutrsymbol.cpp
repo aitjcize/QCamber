@@ -3,8 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
-DonutRSymbol::DonutRSymbol(QString def):
-    Symbol("donut_r", "donut_r([0-9.]+)x([0-9.]+)"), m_def(def)
+DonutRSymbol::DonutRSymbol(QString def, Polarity polarity):
+    Symbol("donut_r", "donut_r([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

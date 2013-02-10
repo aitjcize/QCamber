@@ -6,7 +6,7 @@
 class DiamondSymbol: public Symbol {
 public:
 
-  DiamondSymbol(QString def);
+  DiamondSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

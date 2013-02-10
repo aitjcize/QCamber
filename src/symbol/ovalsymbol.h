@@ -6,7 +6,7 @@
 class OvalSymbol: public Symbol {
 public:
 
-  OvalSymbol(QString def);
+  OvalSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

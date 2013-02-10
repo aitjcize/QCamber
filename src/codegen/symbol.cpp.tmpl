@@ -3,8 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
-{{.#name}}::{{.#name}}(QString def):
-    Symbol("{{.#id}}", "{{pattern}}"), m_def(def)
+{{.#name}}::{{.#name}}(QString def, Polarity polarity):
+    Symbol("{{.#id}}", "{{pattern}}", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

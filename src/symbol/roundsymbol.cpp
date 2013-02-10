@@ -3,8 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
-RoundSymbol::RoundSymbol(QString def):
-    Symbol("r", "r([0-9.]+)"), m_def(def)
+RoundSymbol::RoundSymbol(QString def, Polarity polarity):
+    Symbol("r", "r([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

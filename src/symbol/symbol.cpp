@@ -1,8 +1,8 @@
 #include "symbol.h"
 #include <QDebug>
 
-Symbol::Symbol(QString name, QString pattern):
-  m_name(name), m_pattern(pattern), m_valid(false)
+Symbol::Symbol(QString name, QString pattern, Polarity polarity):
+  m_name(name), m_pattern(pattern), m_polarity(polarity), m_valid(false)
 {
   
 }
@@ -20,8 +20,13 @@ QRectF Symbol::boundingRect() const
 void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
+  if (m_polarity == P) {
+    painter->setPen(QPen(Qt::red, 0));
+    painter->setBrush(Qt::red);
+  } else {
+    painter->setPen(QPen(Qt::white, 0));
+    painter->setBrush(Qt::white);
+  }
 
   painterPath();
   painter->drawPath(m_cachedPath);

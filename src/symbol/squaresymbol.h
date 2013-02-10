@@ -6,7 +6,7 @@
 class SquareSymbol: public Symbol {
 public:
 
-  SquareSymbol(QString def);
+  SquareSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

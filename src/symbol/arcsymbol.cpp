@@ -36,7 +36,7 @@ static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
 }
 
 ArcSymbol::ArcSymbol(ArcRecord* rec):
-    Symbol("arc", "")
+    Symbol("arc", "", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;
@@ -45,7 +45,6 @@ ArcSymbol::ArcSymbol(ArcRecord* rec):
   m_xc = rec->xc;
   m_yc = rec->yc;
   m_sym_num = rec->sym_num;
-  m_polarity = rec->polarity;
   m_dcode = rec->dcode;
   m_cw = rec->cw;
 

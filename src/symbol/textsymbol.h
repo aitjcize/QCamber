@@ -17,7 +17,6 @@ public:
 protected:
   qreal m_x, m_y;
   QString m_font;
-  Polarity m_polarity;
   Orient m_orient;
   qreal m_xsize, m_ysize;
   qreal m_width_factor;

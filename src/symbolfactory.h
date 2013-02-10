@@ -23,39 +23,39 @@
 
 class SymbolFactory {
 public:
-  static Symbol* create(QString def) {
+  static Symbol* create(QString def, Polarity polarity) {
     QRegExp rx("([a-z_+]+).*");
     if (!rx.exactMatch(def)) {
-      return new UserSymbol(def);
+      return new UserSymbol(def, polarity);
     }
 
     QString prefix = rx.capturedTexts()[1];
     try {
       if (prefix == "r") {
-        return new RoundSymbol(def);
+        return new RoundSymbol(def, polarity);
       } else if (prefix == "s") {
-        return new SquareSymbol(def);
+        return new SquareSymbol(def, polarity);
       } else if (prefix == "rect") {
-        return new RectangleSymbol(def);
+        return new RectangleSymbol(def, polarity);
       } else if (prefix == "oval") {
-        return new OvalSymbol(def);
+        return new OvalSymbol(def, polarity);
       } else if (prefix == "di") {
-        return new DiamondSymbol(def);
+        return new DiamondSymbol(def, polarity);
       } else if (prefix == "oct") {
-        return new OctagonSymbol(def);
+        return new OctagonSymbol(def, polarity);
       } else if (prefix == "donut_r") {
-        return new DonutRSymbol(def);
+        return new DonutRSymbol(def, polarity);
       } else if (prefix == "donut_s") {
-        return new DonutSSymbol(def);
+        return new DonutSSymbol(def, polarity);
       } else if (prefix == "tri") {
-        return new TriangleSymbol(def);
+        return new TriangleSymbol(def, polarity);
       } else if (prefix == "hex_l") {
-        return new HorizontalHexagonSymbol(def);
+        return new HorizontalHexagonSymbol(def, polarity);
       } else {
-        return new UserSymbol(def);
+        return new UserSymbol(def, polarity);
       }
     } catch (InvalidSymbolException) {
-      return new UserSymbol(def);
+      return new UserSymbol(def, polarity);
     }
   }
 };

@@ -6,7 +6,7 @@
 class OctagonSymbol: public Symbol {
 public:
 
-  OctagonSymbol(QString def);
+  OctagonSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

@@ -14,8 +14,8 @@ using std::endl;
 
 extern Context ctx;
 
-UserSymbol::UserSymbol(QString def):
-    Symbol(def, def), m_def(def)
+UserSymbol::UserSymbol(QString def, Polarity polarity):
+    Symbol(def, def, polarity), m_def(def)
 {
   static bool first = true;
   QString path = ctx.loader->absPath("symbols/" + def + "/features");

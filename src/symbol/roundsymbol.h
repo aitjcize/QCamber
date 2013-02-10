@@ -6,7 +6,7 @@
 class RoundSymbol: public Symbol {
 public:
 
-  RoundSymbol(QString def);
+  RoundSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 

@@ -14,10 +14,10 @@ TextSymbol::TextSymbol(TextRecord* rec): Symbol("text", "text")
     return;
   }
 
+  m_polarity = rec->polarity;
   m_x = rec->x;
   m_y = rec->y;
   m_font = rec->font;
-  m_polarity = rec->polarity;
   m_orient = rec->orient;
   m_xsize = rec->xsize;
   m_ysize = rec->ysize;
