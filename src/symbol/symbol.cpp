@@ -32,6 +32,13 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   painter->drawPath(m_cachedPath);
 }
 
+QPainterPath Symbol::painterPath(void)
+{
+  m_cachedPath = QPainterPath();
+  m_bounding = m_cachedPath.boundingRect();
+  return m_cachedPath;
+}
+
 void Symbol::invalidate(void)
 {
   m_valid = false;

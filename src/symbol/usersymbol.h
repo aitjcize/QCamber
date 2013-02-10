@@ -3,8 +3,6 @@
 
 #include "symbol.h"
 
-#include <QtGui>
-
 #include "featuresparser.h"
 #include "record.h"
 
@@ -12,7 +10,8 @@ class UserSymbol: public Symbol {
 public:
   UserSymbol(QString def, Polarity polarity);
 
-  QPainterPath painterPath(void);
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+      QWidget *widget);
 
 private:
   QString m_def;

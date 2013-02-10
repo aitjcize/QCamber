@@ -28,29 +28,24 @@ BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
   symbol = new BarcodeSymbol(this);
 }
 
-QPainterPath BarcodeRecord::painterPath(void)
-{
-  QPainterPath path = symbol->painterPath();
-
-  qreal rad = (orient % 4) * 90;
-  QMatrix mat;
-  if (orient >= M_0) {
-    mat.scale(-1, 1);
-  }
-  mat.rotate(rad);
-  path = mat.map(path);
-
-  path.translate(x, -y);
-  return path;
-}
-
 void BarcodeRecord::add(QGraphicsScene* scene)
 {
   symbol->setPos(x, -y);
-  scene->addItem(symbol);
 
   if (orient >= M_0) {
     symbol->scale(-1, 1);
   }
   symbol->rotate((orient % 4) * 90);
+  scene->addItem(symbol);
+}
+
+void BarcodeRecord::addToGroup(QGraphicsItemGroup* group)
+{
+  symbol->setPos(x, -y);
+
+  if (orient >= M_0) {
+    symbol->scale(-1, 1);
+  }
+  symbol->rotate((orient % 4) * 90);
+  group->addToGroup(symbol);
 }

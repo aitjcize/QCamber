@@ -20,7 +20,7 @@ private:
   const char* m_msg;
 };
 
-class Symbol: public QGraphicsItem {
+class Symbol: public virtual QGraphicsItemGroup {
 public:
   Symbol(QString name, QString pattern, Polarity polarity=P);
 
@@ -29,16 +29,16 @@ public:
   virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
-  virtual QPainterPath painterPath(void) = 0;
+  virtual QPainterPath painterPath(void);
   virtual void invalidate(void);
 
 protected:
   QString m_name;
   QString m_pattern;
-  bool m_valid;
   QRectF m_bounding;
   QPainterPath m_cachedPath;
   Polarity m_polarity;
+  bool m_valid;
 };
 
 #endif /* __SYMBOL_H__ */
