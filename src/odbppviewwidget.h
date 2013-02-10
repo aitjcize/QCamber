@@ -9,7 +9,7 @@ private:
     QGraphicsScene *scene;
 public:
     ODBPPViewWidget(QWidget* parent = 0);
-    void load_feature(QString);
+    void load_feature(QString filename);
 protected:
     void wheelEvent(QWheelEvent *event);
     void scaleView(qreal scaleFactor);

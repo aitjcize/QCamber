@@ -7,7 +7,7 @@ using namespace std;
 
 ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 {
-  QGraphicsScene *scene = new QGraphicsScene(this);
+  scene = new QGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-800, -800, 1600, 1600);
   setScene(scene);
@@ -30,19 +30,18 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
 
 void ODBPPViewWidget::wheelEvent(QWheelEvent *event)
 {
-    scaleView(pow((double)2, -event->delta() / 240.0));
+  scaleView(pow((double)2, -event->delta() / 240.0));
 }
 
 void ODBPPViewWidget::scaleView(qreal scaleFactor)
 {
-    qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
+  qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 
-    scale(scaleFactor, scaleFactor);
+  scale(scaleFactor, scaleFactor);
 }
 
-void ODBPPViewWidget::load_feature(QString file_name)
+void ODBPPViewWidget::load_feature(QString filename)
 {
-    Features features(file_name.toAscii().data());
-    features.add(scene);
-    //cout<<file_name.toAscii().data()<<endl;
+  Features features(filename);
+  features.add(scene);
 }

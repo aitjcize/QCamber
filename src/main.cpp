@@ -11,7 +11,7 @@
 #include "fontparser.h"
 #include "code39.h"
 #include "context.h"
-#include "GUI/jobmatrix.h"
+#include "gui/jobmatrix.h"
 
 Context ctx;
 
