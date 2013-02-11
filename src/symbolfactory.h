@@ -18,6 +18,7 @@
 #include "textsymbol.h"
 #include "barcodesymbol.h"
 #include "horizontalhexagonsymbol.h"
+#include "verticalhexagonsymbol.h"
 
 #include <QRegExp>
 
@@ -51,6 +52,8 @@ public:
         return new TriangleSymbol(def, polarity);
       } else if (prefix == "hex_l") {
         return new HorizontalHexagonSymbol(def, polarity);
+      } else if (prefix == "hex_s") {
+        return new VerticalHexagonSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
