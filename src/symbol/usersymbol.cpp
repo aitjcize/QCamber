@@ -37,9 +37,3 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
     rec->addToGroup(this);
   }
 }
-
-void UserSymbol::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-  QGraphicsItemGroup::paint(painter, option, widget);
-}

@@ -10,9 +10,6 @@ class UserSymbol: public Symbol {
 public:
   UserSymbol(QString def, Polarity polarity);
 
-  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-      QWidget *widget);
-
 private:
   QString m_def;
   qreal m_d;

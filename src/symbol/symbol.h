@@ -3,7 +3,8 @@
 
 #include <stdexcept>
 
-#include <QColor>
+#include <QBrush>
+#include <QPen>
 #include <QGraphicsItem>
 #include <QMap>
 #include <QPainter>
@@ -29,7 +30,8 @@ public:
   QString name(void);
 
   virtual QRectF boundingRect() const;
-  virtual void setColor(QColor color);
+  virtual void setPen(QPen pen);
+  virtual void setBrush(QBrush brush);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
   virtual QPainterPath painterPath(void);
@@ -40,7 +42,8 @@ protected:
   QString m_name;
   QString m_pattern;
   QRectF m_bounding;
-  QColor m_color;
+  QPen m_pen;
+  QBrush m_brush;
   QPainterPath m_cachedPath;
   Polarity m_polarity;
   bool m_valid;

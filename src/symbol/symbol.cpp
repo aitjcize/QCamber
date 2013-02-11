@@ -2,8 +2,8 @@
 #include <QDebug>
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
-  m_name(name), m_pattern(pattern), m_color(Qt::red), m_polarity(polarity),
-  m_valid(false)
+  m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
+  m_polarity(polarity), m_valid(false)
 {
 }
 
@@ -25,13 +25,23 @@ QRectF Symbol::boundingRect() const
   return m_bounding;
 }
 
-void Symbol::setColor(QColor color)
+void Symbol::setPen(QPen pen)
 {
-  m_color = color;
+  m_pen = pen;
 
   for (QList<Symbol*>::iterator it = m_symbols.begin();
       it != m_symbols.end(); ++it) {
-    (*it)->setColor(color);
+    (*it)->setPen(pen);
+  }
+}
+
+void Symbol::setBrush(QBrush brush)
+{
+  m_brush = brush;
+
+  for (QList<Symbol*>::iterator it = m_symbols.begin();
+      it != m_symbols.end(); ++it) {
+    (*it)->setBrush(brush);
   }
 }
 
@@ -39,8 +49,8 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
   if (m_polarity == P) {
-    painter->setPen(QPen(m_color, 0));
-    painter->setBrush(m_color);
+    painter->setPen(m_pen);
+    painter->setBrush(m_brush);
   } else {
     painter->setPen(QPen(Qt::white, 0));
     painter->setBrush(Qt::white);

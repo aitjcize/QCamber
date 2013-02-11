@@ -26,10 +26,15 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   */
 
   //Features* features = new Features("features");
-  Features* features = new Features(ctx.loader->absPath(
+  Features* profile = new Features(ctx.loader->absPath(
+        "steps/pcb/profile"));
+  profile->setPen(QPen(Qt::black, 0));
+  profile->setBrush(Qt::white);
+  scene->addItem(profile);
+
+  Features* bot = new Features(ctx.loader->absPath(
         "steps/pcb/layers/bot/features.Z"));
-  features->setColor(Qt::black);
-  scene->addItem(features);
+  scene->addItem(bot);
 
   scale(100, 100);
 }
