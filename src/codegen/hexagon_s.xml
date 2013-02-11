@@ -1,0 +1,27 @@
+<symbol name="VerticalHexagonSymbol" id="hex_s">
+  <pattern><![CDATA[
+  hex_s([0-9.]+)x([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_w;
+  qreal m_h;
+  qreal m_r;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_w = caps[1].toDouble() / 1000.0;
+  m_h = caps[2].toDouble() / 1000.0;
+  m_r = caps[3].toDouble() / 1000.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+  m_cachedPath.moveTo( 0, -m_h/2 );
+  m_cachedPath.lineTo( -m_w/2, -m_h/2 + m_r );
+  m_cachedPath.lineTo( -m_w/2, m_h/2 - m_r );
+  m_cachedPath.lineTo( 0, m_h/2 );
+  m_cachedPath.lineTo( m_w/2, m_h/2 - m_r );
+  m_cachedPath.lineTo( m_w/2, -m_h/2 + m_r );
+  m_cachedPath.closeSubpath();
+  ]]></painterPath>
+</symbol>
