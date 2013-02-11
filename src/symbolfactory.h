@@ -20,6 +20,7 @@
 #include "horizontalhexagonsymbol.h"
 #include "verticalhexagonsymbol.h"
 #include "butterflysymbol.h"
+#include "squarebutterflysymbol.h"
 
 #include <QRegExp>
 
@@ -57,6 +58,8 @@ public:
         return new VerticalHexagonSymbol(def, polarity);
       } else if (prefix == "bfr") {
         return new ButterflySymbol(def, polarity);
+      } else if (prefix == "bfs") {
+        return new SquareButterflySymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }

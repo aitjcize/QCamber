@@ -1,0 +1,26 @@
+<symbol name="SquareButterflySymbol" id="bfs">
+  <pattern><![CDATA[
+  bfs([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_r;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_r = caps[1].toDouble() / 1000.0 / 2.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+
+  m_cachedPath.moveTo( 0, 0 );
+  m_cachedPath.lineTo( 0, -m_r );
+  m_cachedPath.lineTo( -m_r, -m_r );
+  m_cachedPath.lineTo( -m_r, 0 );
+  m_cachedPath.lineTo( 0, 0 );
+  m_cachedPath.lineTo( 0, m_r );
+  m_cachedPath.lineTo( m_r, m_r );
+  m_cachedPath.lineTo( m_r, 0 );
+  m_cachedPath.closeSubpath();
+  ]]></painterPath>
+</symbol>
