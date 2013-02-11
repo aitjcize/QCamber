@@ -19,6 +19,7 @@
 #include "barcodesymbol.h"
 #include "horizontalhexagonsymbol.h"
 #include "verticalhexagonsymbol.h"
+#include "butterflysymbol.h"
 
 #include <QRegExp>
 
@@ -54,6 +55,8 @@ public:
         return new HorizontalHexagonSymbol(def, polarity);
       } else if (prefix == "hex_s") {
         return new VerticalHexagonSymbol(def, polarity);
+      } else if (prefix == "bfr") {
+        return new ButterflySymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }

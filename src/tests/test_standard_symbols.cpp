@@ -61,6 +61,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol11);
   symbol11->setPos(0.2, -0.2);
 
+  Symbol* symbol12 = SymbolFactory::create("bfr60", P);
+  scene->addItem(symbol12);
+  symbol12->setPos(0.3, -0.2);
+
   widget.show();
   return app.exec();
 }

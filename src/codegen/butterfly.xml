@@ -1,0 +1,23 @@
+<symbol name="ButterflySymbol" id="bfr">
+  <pattern><![CDATA[
+  bfr([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_r;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_r = caps[1].toDouble() / 1000.0 / 2.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+
+  qreal m_d = 2.0 * m_r;
+  m_cachedPath.moveTo( 0, 0 );
+  m_cachedPath.arcTo( -m_r, -m_r, m_d, m_d, 90, 90 );
+  m_cachedPath.moveTo( 0, 0 );
+  m_cachedPath.arcTo( -m_r, -m_r, m_d, m_d, 0, -90 );
+  m_cachedPath.closeSubpath();
+  ]]></painterPath>
+</symbol>

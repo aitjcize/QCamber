@@ -16,7 +16,8 @@ HEADERS += \
   symbol/textsymbol.h \
   symbol/barcodesymbol.h \
   symbol/horizontalhexagonsymbol.h \
-  symbol/verticalhexagonsymbol.h
+  symbol/verticalhexagonsymbol.h \
+  symbol/butterflysymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -36,4 +37,5 @@ SOURCES += \
   symbol/textsymbol.cpp \
   symbol/barcodesymbol.cpp \
   symbol/horizontalhexagonsymbol.cpp \
-  symbol/verticalhexagonsymbol.cpp
+  symbol/verticalhexagonsymbol.cpp \ 
+  symbol/butterflysymbol.cpp
