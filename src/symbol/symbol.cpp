@@ -29,7 +29,6 @@ void Symbol::setColor(QColor color)
 {
   m_color = color;
 
-  qDebug() << "here";
   for (QList<Symbol*>::iterator it = m_symbols.begin();
       it != m_symbols.end(); ++it) {
     (*it)->setColor(color);
