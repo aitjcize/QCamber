@@ -13,15 +13,20 @@ HEADERS += \
   archiveloader.h \
   odbppviewwidget.h \
   symbolfactory.h \
-  feature.h
+  feature.h \
+    gui/jobmatrix.h
 
 SOURCES += \
   main.cpp \
   archiveloader.cpp \
   odbppviewwidget.cpp \
-  feature.cpp
+  feature.cpp \
+    gui/jobmatrix.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol
 
 DESTDIR = ../bin
 TARGET = camview
+
+FORMS += \
+    gui/jobmatrix.ui
