@@ -17,11 +17,9 @@ struct Record {
   Record(DataStore* _ds): ds(_ds) {}
   virtual ~Record() { delete symbol; }
 
-  virtual void add(QGraphicsScene* scene) {
-    scene->addItem(symbol);
-  }
-  virtual void addToGroup(QGraphicsItemGroup* group) {
+  virtual void addToGroup(Symbol* group) {
     group->addToGroup(symbol);
+    group->addToSymbols(symbol);
   }
 
   Symbol* symbol;
@@ -41,8 +39,7 @@ struct LineRecord: public Record {
 
 struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds, const QStringList& param);
-  virtual void add(QGraphicsScene* scene);
-  virtual void addToGroup(QGraphicsItemGroup* group);
+  virtual void addToGroup(Symbol* group);
 
   qreal x, y;
   int sym_num;
@@ -66,8 +63,7 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual QString dynamicText(QString);
-  virtual void add(QGraphicsScene* scene);
-  virtual void addToGroup(QGraphicsItemGroup* group);
+  virtual void addToGroup(Symbol* group);
 
   qreal x, y;
   QString font;
@@ -83,8 +79,6 @@ struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   BarcodeRecord(FeaturesDataStore* ds, const QStringList& param);
-  virtual void add(QGraphicsScene* scene);
-  virtual void addToGroup(QGraphicsItemGroup* group);
 
   QString barcode;
   QString e;

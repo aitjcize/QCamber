@@ -27,25 +27,3 @@ BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
 
   symbol = new BarcodeSymbol(this);
 }
-
-void BarcodeRecord::add(QGraphicsScene* scene)
-{
-  symbol->setPos(x, -y);
-
-  if (orient >= M_0) {
-    symbol->scale(-1, 1);
-  }
-  symbol->rotate((orient % 4) * 90);
-  scene->addItem(symbol);
-}
-
-void BarcodeRecord::addToGroup(QGraphicsItemGroup* group)
-{
-  symbol->setPos(x, -y);
-
-  if (orient >= M_0) {
-    symbol->scale(-1, 1);
-  }
-  symbol->rotate((orient % 4) * 90);
-  group->addToGroup(symbol);
-}

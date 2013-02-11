@@ -22,18 +22,7 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
   symbol = SymbolFactory::create(sym_name, polarity);
 }
 
-void PadRecord::add(QGraphicsScene* scene)
-{
-  symbol->setPos(x, -y);
-
-  if (orient >= M_0) {
-    symbol->scale(-1, 1);
-  }
-  symbol->rotate((orient % 4) * 90);
-  scene->addItem(symbol);
-}
-
-void PadRecord::addToGroup(QGraphicsItemGroup* group)
+void PadRecord::addToGroup(Symbol* group)
 {
   symbol->setPos(x, -y);
 
@@ -42,4 +31,5 @@ void PadRecord::addToGroup(QGraphicsItemGroup* group)
   }
   symbol->rotate((orient % 4) * 90);
   group->addToGroup(symbol);
+  group->addToSymbols(symbol);
 }

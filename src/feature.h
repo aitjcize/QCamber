@@ -5,18 +5,18 @@
 #include <QGraphicsScene>
 #include <QList>
 
+#include "symbol.h"
 #include "record.h"
 #include "featuresparser.h"
 
-class Features {
+class Features: public Symbol {
 public:
   Features(QString path);
-
-  void add(QGraphicsScene* scene);
 
 private:
   FeaturesDataStore* m_ds;
   QList<Record*> m_records;
+  QList<Symbol*> m_symbols;
 };
 
 #endif /* __FEATURES_H__ */

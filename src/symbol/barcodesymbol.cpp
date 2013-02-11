@@ -49,8 +49,8 @@ void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
     painter->drawRect(b);
   }
 
-  painter->setPen(QPen(Qt::red, 0));
-  painter->setBrush(Qt::red);
+  painter->setPen(QPen(m_color, 0));
+  painter->setBrush(m_color);
   painter->drawPath(m_cachedPath);
 }
 

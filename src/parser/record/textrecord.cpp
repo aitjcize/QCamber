@@ -55,18 +55,7 @@ QString TextRecord::dynamicText(QString text)
   return dynText;
 }
 
-void TextRecord::add(QGraphicsScene* scene)
-{
-  symbol->setPos(x, -y);
-
-  if (orient >= M_0) {
-    symbol->scale(-1, 1);
-  }
-  symbol->rotate((orient % 4) * 90);
-  scene->addItem(symbol);
-}
-
-void TextRecord::addToGroup(QGraphicsItemGroup* group)
+void TextRecord::addToGroup(Symbol* group)
 {
   symbol->setPos(x, -y);
 
@@ -75,4 +64,5 @@ void TextRecord::addToGroup(QGraphicsItemGroup* group)
   }
   symbol->rotate((orient % 4) * 90);
   group->addToGroup(symbol);
+  group->addToSymbols(symbol);
 }
