@@ -9,6 +9,9 @@ mainViewer::mainViewer(QWidget *parent) :
     ui(new Ui::mainViewer)
 {
     ui->setupUi(this);
+    ui->WorkTable->setScene(widget.GetScene());
+
+    ui->WorkTable->scale(100,100);
 
 }
 
@@ -61,15 +64,14 @@ void mainViewer::ShowLayer(const QString feature_name)
 
   path = ctx.loader->absPath(path);
   QFile file(path);
+  ui->WorkTable->scene()->clear();
   widget.load_profile(this->windowTitle());
   if (file.exists()) {
     widget.load_feature(path);
   } else {
     widget.load_feature(path + ".Z");
   }
-  ui->WorkTable->setScene(widget.GetScene());
 
-  widget.show();
-  ui->WorkTable->scale(100,100);
+  //widget.show();
 }
 
