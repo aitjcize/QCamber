@@ -29,7 +29,8 @@ void JobMatrix::on_CloseButton_clicked()
 void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
 {
   QGridLayout *matrix_layout = new QGridLayout;
-  signalMapper = new QSignalMapper(this);
+  layerSignalMapper = new QSignalMapper(this);
+  stepSignalMapper = new  QSignalMapper(this);
   QString text;
   int steps,layers;
 
@@ -37,10 +38,13 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
   steps = 2;
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
-    QLabel *label = new QLabel();
+    myLabel *label = new myLabel("this");
     label->setText((QString)it->second->get("NAME").c_str());
     matrix_layout->addWidget(label,0,steps++);
     step_name.append((QString)it->second->get("NAME").c_str());
+
+    connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
+    stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
   }
 
   ip = ds->getBlocksByKey("LAYER");
@@ -78,8 +82,8 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
     {
       text = step_name[i-2] + "/" + (QString)it->second->get("NAME").c_str();
       QPushButton *btn = new QPushButton(text);
-      connect(btn, SIGNAL(clicked()),signalMapper, SLOT(map()));
-      signalMapper->setMapping(btn,text);
+      connect(btn, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
+      layerSignalMapper->setMapping(btn,text);
 
 
       text = "demo/steps/";
@@ -98,7 +102,8 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
     }
 
   }
-  connect(signalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowLayer(const QString &)));
+  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowStep(const QString &)));
+  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowLayer(const QString &)));
   ui->matrix->setLayout(matrix_layout);
 }
 
@@ -128,8 +133,13 @@ void JobMatrix::ShowLayer(const QString feature_name)
   } else {
     widget.load_feature(path + ".Z");
   }
-
-
-
   widget.show();
+}
+
+void JobMatrix::ShowStep(const QString step_name)
+{
+    mainWindow.clearLayerLabel();
+    mainWindow.addLayerLabel(&layer_name);
+    mainWindow.setWindowTitle(step_name);
+    mainWindow.show();
 }

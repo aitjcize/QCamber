@@ -5,7 +5,9 @@
 #include "structuredtextparser.h"
 #include "odbppviewwidget.h"
 #include <QSignalMapper>
-
+#include "mylabel.h"
+#include "iostream"
+#include "mainviewer.h"
 
 namespace Ui {
   class JobMatrix;
@@ -23,13 +25,15 @@ public:
 private slots:
   void on_CloseButton_clicked();
   void ShowLayer(const QString);
+  void ShowStep(const QString);
 
 private:
   Ui::JobMatrix *ui;
   unsigned long GetFileLength (QString);
   QList <QString> step_name,layer_name;
   ODBPPViewWidget widget;
-  QSignalMapper *signalMapper;
+  mainViewer mainWindow;
+  QSignalMapper *layerSignalMapper,*stepSignalMapper;
 };
 
 #endif // JOBMATRIX_H

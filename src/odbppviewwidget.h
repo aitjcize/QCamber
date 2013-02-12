@@ -11,6 +11,7 @@ public:
   void load_feature(QString filename);
   void load_profile(QString step);
   void clear_scene(){scene->clear();}
+  QGraphicsScene *GetScene(){return scene;}
 
 protected:
   void wheelEvent(QWheelEvent *event);
