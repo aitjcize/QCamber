@@ -2,7 +2,7 @@
 #include "ui_jobmatrix.h"
 #include "structuredtextparser.h"
 #include "context.h"
-
+#include "QDebug"
 #include <QtGui>
 
 extern Context ctx;
@@ -86,7 +86,7 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
       layerSignalMapper->setMapping(btn,text);
 
 
-      text = "demo/steps/";
+      text = "steps/";
       text += step_name[i-2].toAscii().data() ;
       text += "/layers/";
       text += (QString)it->second->get("NAME").c_str();
@@ -109,12 +109,17 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
 
 unsigned long JobMatrix::GetFileLength ( QString fileName)
 {
-  QFile file(fileName);
+  QString path = ctx.loader->absPath(fileName).toLower();
+  QFile file(path);
+  //qDebug()<<ctx.loader->absPath(fileName).toLower();
   if ( file.exists() ) {
     return file.size();
   }else{
-    file.setFileName(fileName+".Z");
-    return file.size();
+    file.setFileName(path+".Z");
+    if(file.exists())
+        return file.size();
+    file.setFileName(path+".z");
+        return file.size();
   }
   return -1; //error
 }
@@ -124,7 +129,7 @@ void JobMatrix::ShowLayer(const QString feature_name)
 {
   QStringList name = feature_name.toLower().split("/");
   QString path = "steps/" + name[0] + "/layers/" + name[1] + "/features";
-  path = ctx.loader->absPath(path);
+  path = ctx.loader->absPath(path.toLower());
   QFile file(path);
   widget.clear_scene();
   widget.load_profile(name[0]);
@@ -138,7 +143,6 @@ void JobMatrix::ShowLayer(const QString feature_name)
 
 void JobMatrix::ShowStep(const QString step_name)
 {
-    Window.clearLayerLabel();
     Window.addLayerLabel(&layer_name);
     Window.setWindowTitle(step_name);
     Window.show();

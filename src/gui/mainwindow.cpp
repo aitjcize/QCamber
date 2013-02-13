@@ -23,23 +23,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::addLayerLabel(QList<QString> *layer_name)
 {
+    clearLayout(ui->layerlayout,true);
     layerSignalMapper = new QSignalMapper(this);
     for(int i=0;i<layer_name->length();i++)
     {
-        myLabel *layer = new myLabel("this");
+        LayerSelector *layer = new LayerSelector("this");
         layer->setText((*layer_name)[i]);
-        connect(layer, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
+        layer->setStyle("LayerSelector { background-color : red; color : blue; }");
+        connect(layer, SIGNAL(DoubleClicked()),layerSignalMapper, SLOT(map()));
         layerSignalMapper->setMapping(layer,(*layer_name)[i]);
 
         ui->layerlayout->addWidget(layer);
     }
     connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowLayer(const QString &)));
 
-}
-
-void MainWindow::clearLayerLabel()
-{
-    clearLayout(ui->layerlayout,true);
 }
 
 void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
@@ -63,9 +60,9 @@ void MainWindow::ShowLayer(const QString feature_name)
 
   QString path = "steps/" + this->windowTitle() + "/layers/" + feature_name + "/features";
 
-  path = ctx.loader->absPath(path);
+  path = ctx.loader->absPath(path.toLower());
   QFile file(path);
-  ui->WorkTable->scene()->clear();
+  //ui->WorkTable->scene()->clear();
   widget.load_profile(this->windowTitle());
   if (file.exists()) {
     widget.load_feature(path);

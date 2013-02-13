@@ -16,7 +16,8 @@ HEADERS += \
   feature.h \
     gui/jobmatrix.h \
     gui/mylabel.h \
-    gui/mainwindow.h
+    gui/mainwindow.h \
+    gui/layerselector.h
 
 SOURCES += \
   main.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
   feature.cpp \
     gui/jobmatrix.cpp \
     gui/mylabel.cpp \
-    gui/mainwindow.cpp
+    gui/mainwindow.cpp \
+    gui/layerselector.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol
 

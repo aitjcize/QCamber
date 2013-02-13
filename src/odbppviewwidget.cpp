@@ -54,13 +54,19 @@ void ODBPPViewWidget::scaleView(qreal scaleFactor)
   scale(scaleFactor, scaleFactor);
 }
 
-void ODBPPViewWidget::load_feature(QString filename)
+Features* ODBPPViewWidget::load_feature(QString filename,const QColor color,const QBrush brush)
 {
+
     Features* bot = new Features(ctx.loader->absPath(filename));
+    bot->setPen(QPen(color, 0));
+
+    bot->setBrush(brush);
+
     scene->addItem(bot);
+    return bot;
 }
 
-void ODBPPViewWidget::load_profile(QString step)
+Features *ODBPPViewWidget::load_profile(QString step)
 {
     QString path;
     path = "steps/" + step + "/profile";
@@ -68,5 +74,6 @@ void ODBPPViewWidget::load_profile(QString step)
     profile->setPen(QPen(Qt::black, 0));
     profile->setBrush(Qt::white);
     scene->addItem(profile);
+    return profile;
 
 }

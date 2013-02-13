@@ -2,14 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "mylabel.h"
 #include "QLayoutItem"
 #include <QSignalMapper>
 #include "odbppviewwidget.h"
 #include "QFile"
 #include "structuredtextparser.h"
 #include "context.h"
-
+#include "layerselector.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +22,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void addLayerLabel(QList<QString> *);
-    void clearLayerLabel();
     void clearLayout(QLayout* , bool deleteWidgets = true);
 
 private slots:

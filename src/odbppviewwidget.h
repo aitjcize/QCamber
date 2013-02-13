@@ -2,14 +2,17 @@
 #define __ODBPP_VIEW_WIDGET_H__
 
 #include <QGraphicsView>
+#include "feature.h"
+
+
 
 class ODBPPViewWidget: public QGraphicsView {
   Q_OBJECT
 
 public:
   ODBPPViewWidget(QWidget* parent = 0);
-  void load_feature(QString filename);
-  void load_profile(QString step);
+  Features* load_feature(QString filename,const QColor color = Qt::red,const QBrush brush = Qt::transparent);
+  Features* load_profile(QString step);
   void clear_scene(){scene->clear();}
   QGraphicsScene *GetScene(){return scene;}
 
