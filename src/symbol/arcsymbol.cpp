@@ -65,7 +65,7 @@ QPainterPath ArcSymbol::painterPath(void)
   qreal ex = m_xe, ey = m_ye;
   qreal cx = m_xc, cy = m_yc;
 
-  qreal rad = m_sym_name.right(m_sym_name.length() -1).toDouble();
+  qreal rad = m_sym_name.right(m_sym_name.length() -1).toDouble() / 1000.0;
   qreal hr = rad / 2;
   qreal dx = sx - cx, dy = sy - cy;
   qreal ds = qSqrt(dx * dx + dy * dy);
