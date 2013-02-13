@@ -81,8 +81,10 @@ FontDataStore* FontParser::parse(void)
   FontDataStore* ds = new FontDataStore;
   QFile file(m_fileName);
   
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
     return NULL;
+  }
 
   bool block = false;
 
