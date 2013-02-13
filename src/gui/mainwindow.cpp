@@ -1,12 +1,13 @@
-#include "mainviewer.h"
-#include "ui_mainviewer.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "QDebug"
 
 extern Context ctx;
 
-mainViewer::mainViewer(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::mainViewer)
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->WorkTable->setScene(widget.GetScene());
@@ -15,12 +16,12 @@ mainViewer::mainViewer(QWidget *parent) :
 
 }
 
-mainViewer::~mainViewer()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void mainViewer::addLayerLabel(QList<QString> *layer_name)
+void MainWindow::addLayerLabel(QList<QString> *layer_name)
 {
     layerSignalMapper = new QSignalMapper(this);
     for(int i=0;i<layer_name->length();i++)
@@ -36,12 +37,12 @@ void mainViewer::addLayerLabel(QList<QString> *layer_name)
 
 }
 
-void mainViewer::clearLayerLabel()
+void MainWindow::clearLayerLabel()
 {
     clearLayout(ui->layerlayout,true);
 }
 
-void mainViewer::clearLayout(QLayout* layout, bool deleteWidgets)
+void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 {
     while (QLayoutItem* item = layout->takeAt(0))
     {
@@ -57,7 +58,7 @@ void mainViewer::clearLayout(QLayout* layout, bool deleteWidgets)
 }
 
 
-void mainViewer::ShowLayer(const QString feature_name)
+void MainWindow::ShowLayer(const QString feature_name)
 {
 
   QString path = "steps/" + this->windowTitle() + "/layers/" + feature_name + "/features";

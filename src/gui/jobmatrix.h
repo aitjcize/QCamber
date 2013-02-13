@@ -7,7 +7,7 @@
 #include <QSignalMapper>
 #include "mylabel.h"
 #include "iostream"
-#include "mainviewer.h"
+#include "mainwindow.h"
 
 namespace Ui {
   class JobMatrix;
@@ -32,7 +32,8 @@ private:
   unsigned long GetFileLength (QString);
   QList <QString> step_name,layer_name;
   ODBPPViewWidget widget;
-  mainViewer mainWindow;
+  MainWindow Window;
+  //MainWindow Window;
   QSignalMapper *layerSignalMapper,*stepSignalMapper;
 };
 

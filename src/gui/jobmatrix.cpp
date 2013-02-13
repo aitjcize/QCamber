@@ -138,8 +138,8 @@ void JobMatrix::ShowLayer(const QString feature_name)
 
 void JobMatrix::ShowStep(const QString step_name)
 {
-    mainWindow.clearLayerLabel();
-    mainWindow.addLayerLabel(&layer_name);
-    mainWindow.setWindowTitle(step_name);
-    mainWindow.show();
+    Window.clearLayerLabel();
+    Window.addLayerLabel(&layer_name);
+    Window.setWindowTitle(step_name);
+    Window.show();
 }

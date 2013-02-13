@@ -1,7 +1,7 @@
-#ifndef MAINVIEWER_H
-#define MAINVIEWER_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include "mylabel.h"
 #include "QLayoutItem"
 #include <QSignalMapper>
@@ -11,30 +11,29 @@
 #include "context.h"
 
 
-
-
 namespace Ui {
-class mainViewer;
+class MainWindow;
 }
 
-class mainViewer : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    explicit mainViewer(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
     void addLayerLabel(QList<QString> *);
     void clearLayerLabel();
     void clearLayout(QLayout* , bool deleteWidgets = true);
-    ~mainViewer();
+
 private slots:
     void ShowLayer(const QString);
-    
+
 private:
-    Ui::mainViewer *ui;
+    Ui::MainWindow *ui;
     QSignalMapper *layerSignalMapper;
     ODBPPViewWidget widget;
 
 };
 
-#endif // MAINVIEWER_H
+#endif // MAINWINDOW_H
