@@ -35,13 +35,21 @@ QPainterPath OvalSymbol::painterPath(void)
   qreal w = r.width();
   qreal h = r.height();
 
-  qreal rad = h / 2;
-
-  m_cachedPath.arcMoveTo(x, y, h, h, 90);
-  m_cachedPath.arcTo(x, y, h, h, 270, -180);
-  m_cachedPath.arcTo(x+w-h, y, h, h, 90, -180);
-  m_cachedPath.lineTo(x+rad, y+h);
-  m_cachedPath.closeSubpath();
+  if (w > h) {
+    qreal rad = h / 2;
+    m_cachedPath.arcMoveTo(x, y, h, h, 90);
+    m_cachedPath.arcTo(x, y, h, h, 270, -180);
+    m_cachedPath.arcTo(x+w-h, y, h, h, 90, -180);
+    m_cachedPath.lineTo(x+rad, y+h);
+    m_cachedPath.closeSubpath();
+  } else {
+    qreal rad = w / 2;
+    m_cachedPath.arcMoveTo(x, y, w, w, 90);
+    m_cachedPath.arcTo(x, y, w, w, 180, -180);
+    m_cachedPath.arcTo(x, y+h-w, w, w, 0, -180);
+    m_cachedPath.lineTo(x, y+rad);
+    m_cachedPath.closeSubpath();
+  }
 
 ret:
   prepareGeometryChange();
