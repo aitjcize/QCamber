@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
   scene->addItem(symbol2);
   symbol2->setPos(0.1, 0);
 
-  Symbol* symbol3 = SymbolFactory::create("oval100x50", P);
+  Symbol* symbol3 = SymbolFactory::create("oval50x100", P);
   scene->addItem(symbol3);
   symbol3->setPos(0.2, 0);
 
@@ -68,6 +68,10 @@ int main(int argc, char *argv[])
   Symbol* symbol13 = SymbolFactory::create("bfs60", P);
   scene->addItem(symbol13);
   symbol13->setPos(0, -0.3);
+
+  Symbol* symbol14 = SymbolFactory::create("oval_h30x60", P);
+  scene->addItem(symbol14);
+  symbol14->setPos(0.1, -0.3);
 
   widget.show();
   return app.exec();

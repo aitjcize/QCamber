@@ -21,6 +21,7 @@
 #include "verticalhexagonsymbol.h"
 #include "butterflysymbol.h"
 #include "squarebutterflysymbol.h"
+#include "halfovalsymbol.h"
 
 #include <QRegExp>
 
@@ -60,6 +61,8 @@ public:
         return new ButterflySymbol(def, polarity);
       } else if (prefix == "bfs") {
         return new SquareButterflySymbol(def, polarity);
+      } else if (prefix == "oval_h") {
+        return new HalfOvalSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
