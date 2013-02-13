@@ -1,7 +1,8 @@
 #include "arcsymbol.h"
 
 #include <QtGui>
-#include <QRegExp>
+
+#include "featuresparser.h"
 
 static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
     qreal ex, qreal ey, qreal cx, qreal cy, bool cw)
@@ -47,6 +48,8 @@ ArcSymbol::ArcSymbol(ArcRecord* rec):
   m_sym_num = rec->sym_num;
   m_dcode = rec->dcode;
   m_cw = rec->cw;
+  m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
+               symbolNameMap()[rec->sym_num];
 
   painterPath();
 }
@@ -62,7 +65,7 @@ QPainterPath ArcSymbol::painterPath(void)
   qreal ex = m_xe, ey = m_ye;
   qreal cx = m_xc, cy = m_yc;
 
-  qreal rad = 0.2;
+  qreal rad = m_sym_name.right(m_sym_name.length() -1).toDouble();
   qreal hr = rad / 2;
   qreal dx = sx - cx, dy = sy - cy;
   qreal ds = qSqrt(dx * dx + dy * dy);
@@ -95,10 +98,10 @@ QPainterPath ArcSymbol::painterPath(void)
   esy = ey - dy * hr;
 
   m_cachedPath.moveTo(eex, -eey);
-  addArc(m_cachedPath, eex, eey, sex, sey, cx, cy, true);
-  addArc(m_cachedPath, sex, sey, ssx, ssy, sx, sy, true);
-  addArc(m_cachedPath, ssx, ssy, esx, esy, cx, cy, false);
-  addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, true);
+  addArc(m_cachedPath, eex, eey, sex, sey, cx, cy, !m_cw);
+  addArc(m_cachedPath, sex, sey, ssx, ssy, sx, sy, !m_cw);
+  addArc(m_cachedPath, ssx, ssy, esx, esy, cx, cy, m_cw);
+  addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, !m_cw);
 
   m_cachedPath.closeSubpath();
 

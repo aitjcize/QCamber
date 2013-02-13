@@ -20,6 +20,7 @@ private:
   int m_dcode;
   bool m_cw;
   QRectF m_bounding;
+  QString m_sym_name;
 };
 
 #endif /* __ARCSYMBOL_H__ */
