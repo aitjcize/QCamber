@@ -1,6 +1,7 @@
 #ifndef LAYERSELECTOR_H
 #define LAYERSELECTOR_H
 #include "QLabel"
+#include "feature.h"
 
 class LayerSelector : public QLabel
 {
@@ -9,9 +10,10 @@ public:
     LayerSelector(const QString &text,QWidget *parent = 0);
     ~LayerSelector(){}
     void setStyle(QString style){BGstyle = style;}
+    Features *bot;
 signals:
     void clicked();
-    void DoubleClicked();
+    void DoubleClicked(Features*,int);
 public slots:
     void slotClicked();
 protected:

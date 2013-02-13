@@ -23,6 +23,6 @@ void LayerSelector::mouseDoubleClickEvent(QMouseEvent *)
         setStyleSheet(BGstyle);
     else
         setStyleSheet("QLabel { background-color : transparent; color : black; }");
+    emit DoubleClicked(bot,isSelected);
     isSelected = !isSelected;
-    emit DoubleClicked();
 }

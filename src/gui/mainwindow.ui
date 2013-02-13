@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGraphicsView" name="WorkTable">
+   <widget class="ODBPPViewWidget" name="WorkTable">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -48,6 +48,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ODBPPViewWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>odbppviewwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

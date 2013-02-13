@@ -59,9 +59,7 @@ Features* ODBPPViewWidget::load_feature(QString filename,const QColor color,cons
 
     Features* bot = new Features(ctx.loader->absPath(filename));
     bot->setPen(QPen(color, 0));
-
     bot->setBrush(brush);
-
     scene->addItem(bot);
     return bot;
 }

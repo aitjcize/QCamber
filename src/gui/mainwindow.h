@@ -3,12 +3,12 @@
 
 #include <QMainWindow>
 #include "QLayoutItem"
-#include <QSignalMapper>
 #include "odbppviewwidget.h"
 #include "QFile"
 #include "structuredtextparser.h"
 #include "context.h"
 #include "layerselector.h"
+#include "feature.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,13 +25,11 @@ public:
     void clearLayout(QLayout* , bool deleteWidgets = true);
 
 private slots:
-    void ShowLayer(const QString);
+    void ShowLayer(Features*,int);
 
 private:
     Ui::MainWindow *ui;
-    QSignalMapper *layerSignalMapper;
-    ODBPPViewWidget widget;
-
+    Features *MakeFeature(QString filename,const QColor color = Qt::red,const QBrush brush = Qt::red);
 };
 
 #endif // MAINWINDOW_H

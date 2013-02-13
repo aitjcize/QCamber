@@ -11,10 +11,13 @@ class ODBPPViewWidget: public QGraphicsView {
 
 public:
   ODBPPViewWidget(QWidget* parent = 0);
-  Features* load_feature(QString filename,const QColor color = Qt::red,const QBrush brush = Qt::transparent);
+  Features* load_feature(QString filename,const QColor color = Qt::red,const QBrush brush = Qt::red);
   Features* load_profile(QString step);
   void clear_scene(){scene->clear();}
   QGraphicsScene *GetScene(){return scene;}
+  void addItem(Features *bot){scene->addItem(bot);}
+  void removeItem(Features *bot){scene->removeItem(bot);}
+  void setBackgroundBrush(const QBrush &brush){scene->setBackgroundBrush(brush);}
 
 protected:
   void wheelEvent(QWheelEvent *event);
