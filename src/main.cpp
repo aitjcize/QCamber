@@ -11,6 +11,7 @@
 #include "fontparser.h"
 #include "code39.h"
 #include "context.h"
+#include "gui/jobmatrix.h"
 
 Context ctx;
 
@@ -28,16 +29,20 @@ int main(int argc, char *argv[])
 
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
-  StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
+  StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("LAYER");
 
-  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
-  {
-    cout << it->second->get("NAME") << endl;;
-  }
+//  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+//  {
+//    cout << it->second->get("NAME") << endl;;
+//  }
 
   QApplication app(argc, argv);
 
-  ODBPPViewWidget widget;
-  widget.show();
+//  ODBPPViewWidget widget;
+//  widget.show();
+  JobMatrix table;
+  table.ShowMatrix(ds);
+  table.show();
+
   return app.exec();
 }
