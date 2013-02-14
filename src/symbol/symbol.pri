@@ -19,7 +19,8 @@ HEADERS += \
   symbol/verticalhexagonsymbol.h \
   symbol/butterflysymbol.h \
   symbol/squarebutterflysymbol.h \
-  symbol/halfovalsymbol.h
+  symbol/halfovalsymbol.h \
+  symbol/roundthermalsquaresymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -42,4 +43,5 @@ SOURCES += \
   symbol/verticalhexagonsymbol.cpp \ 
   symbol/butterflysymbol.cpp \
   symbol/squarebutterflysymbol.cpp \
-  symbol/halfovalsymbol.cpp
+  symbol/halfovalsymbol.cpp \
+  symbol/roundthermalsquaresymbol.cpp

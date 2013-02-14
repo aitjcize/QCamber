@@ -73,6 +73,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol14);
   symbol14->setPos(0.1, -0.3);
 
+  Symbol* symbol15 = SymbolFactory::create("ths60x40x45x4x10", P);
+  scene->addItem(symbol15);
+  symbol15->setPos(0.2, -0.3);
+
   widget.show();
   return app.exec();
 }
