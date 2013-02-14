@@ -23,6 +23,7 @@ public:
     ~MainWindow();
     void addLayerLabel(QList<QString> *);
     void clearLayout(QLayout* , bool deleteWidgets = true);
+    void AddProfile();
 
 private slots:
     void ShowLayer(Features*,int);

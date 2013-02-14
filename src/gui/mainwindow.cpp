@@ -25,6 +25,7 @@ void MainWindow::addLayerLabel(QList<QString> *layer_name)
     //2.把FEATURE存起來
     //3.設定connect
     ui->WorkTable->clear_scene();
+    AddProfile();
     QString color = "cyan,red,magenta,green,yellow,blue";
     QStringList labelcolor = color.split(',');
     QString tcolor = "black,black,black,white,black,white";
@@ -90,4 +91,15 @@ void MainWindow::ShowLayer(Features *bot, int isSelected)
         ui->WorkTable->addItem(bot);
     else
         ui->WorkTable->removeItem(bot);
+}
+
+void MainWindow::AddProfile()
+{
+    QString path = "steps/" + this->windowTitle() + "/profile";
+    path = ctx.loader->absPath(path.toLower());
+    qDebug()<<path;
+    Features* bot = new Features(path);
+    bot->setPen(QPen(Qt::white, 0));
+    bot->setBrush(Qt::transparent);
+    ui->WorkTable->addItem(bot);
 }
