@@ -2,4 +2,7 @@
 *.o
 Makefile
 .build
+.DS_Store
 camview.pro.user
+camview.pbproj
+camview.xcodeproj
