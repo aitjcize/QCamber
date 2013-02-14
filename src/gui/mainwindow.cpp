@@ -30,6 +30,7 @@ void MainWindow::addLayerLabel(QList<QString> *layer_name)
     QStringList labelcolor = color.split(',');
     QString tcolor = "black,black,black,white,black,white";
     QStringList textcolor = tcolor.split(',');
+    QString path;
 
     clearLayout(ui->layerlayout,true);
     for(int i=0;i<layer_name->length();i++)
@@ -38,7 +39,8 @@ void MainWindow::addLayerLabel(QList<QString> *layer_name)
         layer->setText((*layer_name)[i]);
         //要改變label，還有FEATURE的背景顏色
         layer->setStyle("LayerSelector { background-color : "+labelcolor[i%6]+"; color : "+textcolor[i%6]+"; }");
-        layer->bot = MakeFeature((*layer_name)[i],QColor(labelcolor[i%6]),QColor(labelcolor[i%6]));
+        path = "steps/" + this->windowTitle() + "/layers/" + (*layer_name)[i] + "/features";
+        layer->bot = MakeFeature(path,QColor(labelcolor[i%6]),QColor(labelcolor[i%6]));
         connect(layer,SIGNAL(DoubleClicked(Features*,int)),this,SLOT(ShowLayer(Features*,int)));
         ui->layerlayout->addWidget(layer);
     }
@@ -60,10 +62,10 @@ void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 }
 
 
-Features *MainWindow::MakeFeature(QString filename,const QColor color,const QBrush brush)
+Features *MainWindow::MakeFeature(QString path,const QColor color,const QBrush brush)
 {
 
-  QString path = "steps/" + this->windowTitle() + "/layers/" + filename + "/features";
+  //QString path = "steps/" + this->windowTitle() + "/layers/" + filename + "/features";
   path = ctx.loader->absPath(path.toLower());
   QFile file(path);
   //ui->WorkTable->scene()->clear();
@@ -97,9 +99,13 @@ void MainWindow::AddProfile()
 {
     QString path = "steps/" + this->windowTitle() + "/profile";
     path = ctx.loader->absPath(path.toLower());
-    qDebug()<<path;
     Features* bot = new Features(path);
     bot->setPen(QPen(Qt::white, 0));
     bot->setBrush(Qt::transparent);
     ui->WorkTable->addItem(bot);
+}
+
+void MainWindow::AddCustomSymbol(QString symbol_name)
+{
+    ui->WorkTable->addItem(MakeFeature("symbols/"+symbol_name+"/features"));
 }

@@ -24,6 +24,7 @@ public:
     void addLayerLabel(QList<QString> *);
     void clearLayout(QLayout* , bool deleteWidgets = true);
     void AddProfile();
+    void AddCustomSymbol(QString);
 
 private slots:
     void ShowLayer(Features*,int);

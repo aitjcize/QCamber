@@ -19,13 +19,13 @@ Q_OBJECT
 
 public:
   explicit JobMatrix(QWidget *parent = 0);
-  void ShowMatrix(StructuredTextDataStore* );
+  void SetMatrix(StructuredTextDataStore* );
   ~JobMatrix();
 
 private slots:
   void on_CloseButton_clicked();
-  void ShowLayer(const QString);
-  void ShowStep(const QString);
+  void showLayer(const QString);
+  void showStep(const QString);
 
 private:
   Ui::JobMatrix *ui;
