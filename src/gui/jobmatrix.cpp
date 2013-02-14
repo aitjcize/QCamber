@@ -26,7 +26,7 @@ void JobMatrix::on_CloseButton_clicked()
   this->close();
 }
 
-void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
+void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
 {
   QGridLayout *matrix_layout = new QGridLayout;
   layerSignalMapper = new QSignalMapper(this);
@@ -102,9 +102,10 @@ void JobMatrix::ShowMatrix(StructuredTextDataStore* ds)
     }
 
   }
-  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowStep(const QString &)));
-  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(ShowLayer(const QString &)));
+  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showStep(const QString &)));
+  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showLayer(const QString &)));
   ui->matrix->setLayout(matrix_layout);
+
 }
 
 unsigned long JobMatrix::GetFileLength ( QString fileName)
@@ -125,7 +126,7 @@ unsigned long JobMatrix::GetFileLength ( QString fileName)
 }
 
 
-void JobMatrix::ShowLayer(const QString feature_name)
+void JobMatrix::showLayer(const QString feature_name)
 {
   QStringList name = feature_name.toLower().split("/");
   QString path = "steps/" + name[0] + "/layers/" + name[1] + "/features";
@@ -141,7 +142,7 @@ void JobMatrix::ShowLayer(const QString feature_name)
   widget.show();
 }
 
-void JobMatrix::ShowStep(const QString step_name)
+void JobMatrix::showStep(const QString step_name)
 {
     Window.setWindowTitle(step_name);
     Window.addLayerLabel(&layer_name);

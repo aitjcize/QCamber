@@ -17,7 +17,8 @@ HEADERS += \
     gui/jobmatrix.h \
     gui/mylabel.h \
     gui/mainwindow.h \
-    gui/layerselector.h
+    gui/layerselector.h \
+    gui/home.h
 
 SOURCES += \
   main.cpp \
@@ -27,7 +28,8 @@ SOURCES += \
     gui/jobmatrix.cpp \
     gui/mylabel.cpp \
     gui/mainwindow.cpp \
-    gui/layerselector.cpp
+    gui/layerselector.cpp \
+    gui/home.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol
 
@@ -36,4 +38,5 @@ TARGET = camview
 
 FORMS += \
     gui/jobmatrix.ui \
-    gui/mainwindow.ui
+    gui/mainwindow.ui \
+    gui/home.ui
