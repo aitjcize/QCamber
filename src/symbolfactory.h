@@ -22,6 +22,7 @@
 #include "butterflysymbol.h"
 #include "squarebutterflysymbol.h"
 #include "halfovalsymbol.h"
+#include "roundthermalroundsymbol.h"
 #include "roundthermalsquaresymbol.h"
 
 #include <QRegExp>
@@ -66,6 +67,8 @@ public:
         return new HalfOvalSymbol(def, polarity);
       } else if (prefix == "ths") {
         return new RoundThermalSquareSymbol(def, polarity);
+      } else if (prefix == "thr") {
+        return new RoundThermalRoundSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }

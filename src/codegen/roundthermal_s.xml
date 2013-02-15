@@ -41,6 +41,5 @@
     _inner_start_angle += _pie_angle;
     _outer_start_angle += _pie_angle;
   } 
-
   ]]></painterPath>
 </symbol>
