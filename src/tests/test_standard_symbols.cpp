@@ -105,6 +105,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol22);
   symbol22->setPos(0.5, -0.1);
 
+  Symbol* symbol23 = SymbolFactory::create("moire5x10x4x4x100x0", P);
+  scene->addItem(symbol23);
+  symbol23->setPos(0.5, -0.2);
+
   widget.show();
   return app.exec();
 }

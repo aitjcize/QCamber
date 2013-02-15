@@ -30,6 +30,7 @@
 #include "rectangularthermalsymbol.h"
 #include "rectangularthermalopencornerssymbol.h"
 #include "ellipsesymbol.h"
+#include "moiresymbol.h"
 
 #include <QRegExp>
 
@@ -87,6 +88,8 @@ public:
         return new RectangularThermalOpenCornersSymbol(def, polarity);
       } else if (prefix == "el") {
         return new EllipseSymbol(def, polarity);
+      } else if (prefix == "moire") {
+        return new MoireSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
