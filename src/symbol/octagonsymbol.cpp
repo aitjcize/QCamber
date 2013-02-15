@@ -25,25 +25,17 @@ QPainterPath OctagonSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
-  QRectF r = rect.normalized();
+  qreal x = -m_w / 2;
+  qreal y = -m_h / 2;
 
-  if (r.isNull())
-    return m_cachedPath;
-
-  qreal x = r.x();
-  qreal y = r.y();
-  qreal w = r.width();
-  qreal h = r.height();
-
-  m_cachedPath.moveTo(x, y+h-m_r);
+  m_cachedPath.moveTo(x, y+m_h-m_r);
   m_cachedPath.lineTo(x, y+m_r);
   m_cachedPath.lineTo(x+m_r, y);
-  m_cachedPath.lineTo(x+w-m_r, y);
-  m_cachedPath.lineTo(x+w, y+m_r);
-  m_cachedPath.lineTo(x+w, y+h-m_r);
-  m_cachedPath.lineTo(x+w-m_r, y+h);
-  m_cachedPath.lineTo(x+m_r, y+h);
+  m_cachedPath.lineTo(x+m_w-m_r, y);
+  m_cachedPath.lineTo(x+m_w, y+m_r);
+  m_cachedPath.lineTo(x+m_w, y+m_h-m_r);
+  m_cachedPath.lineTo(x+m_w-m_r, y+m_h);
+  m_cachedPath.lineTo(x+m_r, y+m_h);
   m_cachedPath.closeSubpath();
 
 ret:

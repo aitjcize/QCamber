@@ -11,7 +11,7 @@ SquareButterflySymbol::SquareButterflySymbol(QString def, Polarity polarity):
     throw InvalidSymbolException(def.toAscii());
 
   QStringList caps = rx.capturedTexts();
-  m_r = caps[1].toDouble() / 1000.0 / 2.0;
+  m_s = caps[1].toDouble() / 1000.0;
 
   painterPath();
 }
@@ -23,15 +23,8 @@ QPainterPath SquareButterflySymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  m_cachedPath.moveTo( 0, 0 );
-  m_cachedPath.lineTo( 0, -m_r );
-  m_cachedPath.lineTo( -m_r, -m_r );
-  m_cachedPath.lineTo( -m_r, 0 );
-  m_cachedPath.lineTo( 0, 0 );
-  m_cachedPath.lineTo( 0, m_r );
-  m_cachedPath.lineTo( m_r, m_r );
-  m_cachedPath.lineTo( m_r, 0 );
-  m_cachedPath.closeSubpath();
+  m_cachedPath.addRect(-m_s/2, -m_s/2, m_s/2, m_s/2);
+  m_cachedPath.addRect(0, 0, m_s/2, m_s/2);
 
 ret:
   prepareGeometryChange();

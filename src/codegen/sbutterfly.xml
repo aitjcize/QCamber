@@ -4,23 +4,15 @@
   ]]></pattern>
 
   <private_block><![CDATA[
-  qreal m_r;
+  qreal m_s;
   ]]></private_block>
 
   <constructor><![CDATA[
-  m_r = caps[1].toDouble() / 1000.0 / 2.0;
+  m_s = caps[1].toDouble() / 1000.0;
   ]]></constructor>
 
   <painterPath><![CDATA[
-
-  m_cachedPath.moveTo( 0, 0 );
-  m_cachedPath.lineTo( 0, -m_r );
-  m_cachedPath.lineTo( -m_r, -m_r );
-  m_cachedPath.lineTo( -m_r, 0 );
-  m_cachedPath.lineTo( 0, 0 );
-  m_cachedPath.lineTo( 0, m_r );
-  m_cachedPath.lineTo( m_r, m_r );
-  m_cachedPath.lineTo( m_r, 0 );
-  m_cachedPath.closeSubpath();
+  m_cachedPath.addRect(-m_s/2, -m_s/2, m_s/2, m_s/2);
+  m_cachedPath.addRect(0, 0, m_s/2, m_s/2);
   ]]></painterPath>
 </symbol>

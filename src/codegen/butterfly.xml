@@ -12,7 +12,6 @@
   ]]></constructor>
 
   <painterPath><![CDATA[
-
   qreal m_d = 2.0 * m_r;
   m_cachedPath.moveTo( 0, 0 );
   m_cachedPath.arcTo( -m_r, -m_r, m_d, m_d, 90, 90 );

@@ -24,23 +24,15 @@ QPainterPath DiamondSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
-  QRectF r = rect.normalized();
-
-  if (r.isNull())
-    return m_cachedPath;
-
-  qreal x = r.x();
-  qreal y = r.y();
-  qreal w = r.width();
-  qreal h = r.height();
-  qreal wh = w / 2;
-  qreal hh = h / 2;
+  qreal x = -m_w / 2;
+  qreal y = -m_h / 2;
+  qreal wh = m_w / 2;
+  qreal hh = m_h / 2;
 
   m_cachedPath.moveTo(x, y+hh);
   m_cachedPath.lineTo(x+wh, y);
-  m_cachedPath.lineTo(x+w, y+hh);
-  m_cachedPath.lineTo(x+wh, y+h);
+  m_cachedPath.lineTo(x+m_w, y+hh);
+  m_cachedPath.lineTo(x+wh, y+m_h);
   m_cachedPath.closeSubpath();
 
 ret:

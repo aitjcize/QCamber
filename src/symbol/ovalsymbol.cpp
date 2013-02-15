@@ -24,29 +24,21 @@ QPainterPath OvalSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
-  QRectF r = rect.normalized();
+  qreal x = -m_w / 2;
+  qreal y = -m_h / 2;
 
-  if (r.isNull())
-    return m_cachedPath;
-
-  qreal x = r.x();
-  qreal y = r.y();
-  qreal w = r.width();
-  qreal h = r.height();
-
-  if (w > h) {
-    qreal rad = h / 2;
-    m_cachedPath.arcMoveTo(x, y, h, h, 90);
-    m_cachedPath.arcTo(x, y, h, h, 270, -180);
-    m_cachedPath.arcTo(x+w-h, y, h, h, 90, -180);
-    m_cachedPath.lineTo(x+rad, y+h);
+  if (m_w > m_h) {
+    qreal rad = m_h / 2;
+    m_cachedPath.arcMoveTo(x, y, m_h, m_h, 90);
+    m_cachedPath.arcTo(x, y, m_h, m_h, 270, -180);
+    m_cachedPath.arcTo(x+m_w-m_h, y, m_h, m_h, 90, -180);
+    m_cachedPath.lineTo(x+rad, y+m_h);
     m_cachedPath.closeSubpath();
   } else {
-    qreal rad = w / 2;
-    m_cachedPath.arcMoveTo(x, y, w, w, 90);
-    m_cachedPath.arcTo(x, y, w, w, 180, -180);
-    m_cachedPath.arcTo(x, y+h-w, w, w, 0, -180);
+    qreal rad = m_w / 2;
+    m_cachedPath.arcMoveTo(x, y, m_w, m_w, 90);
+    m_cachedPath.arcTo(x, y, m_w, m_w, 180, -180);
+    m_cachedPath.arcTo(x, y+m_h-m_w, m_w, m_w, 0, -180);
     m_cachedPath.lineTo(x, y+rad);
     m_cachedPath.closeSubpath();
   }

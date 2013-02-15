@@ -14,7 +14,7 @@ protected:
 
 private:
   QString m_def;
-  qreal m_r;
+  qreal m_s;
 };
 
 #endif /* __SQUAREBUTTERFLYSYMBOL_H__ */
