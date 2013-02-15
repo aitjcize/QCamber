@@ -19,10 +19,6 @@ private:
   qreal m_angle;
   int m_num_spokes;
   qreal m_gap;
-  const qreal _PI = 3.14159265;
-  inline qreal radToAngle( const qreal& rad ) const{
-    return ( rad * 360 / (2 * _PI) );
-  }
 };
 
 #endif /* __ROUNDTHERMALSQUARESYMBOL_H__ */

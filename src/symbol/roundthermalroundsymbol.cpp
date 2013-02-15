@@ -27,19 +27,18 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
+  qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _rad = (m_od - m_id) / 4;
   qreal _orad = (m_od + m_id) / 4;
-  qreal _half_gap_angle = radToAngle(qAtan2(m_gap / 2 + _rad, _orad));
+  qreal _half_gap_angle = r2a * (qAtan2(m_gap / 2 + _rad, _orad));
   qreal _pie_angle = 360 / m_num_spokes;
   qreal _start_angle = m_angle + _half_gap_angle;
   qreal _span_angle = _pie_angle - 2 * _half_gap_angle;
 
-  qreal _x, _y;
-  qreal a2r = M_PI / 180.0;
-
   m_cachedPath.setFillRule(Qt::WindingFill);
 
-  for( int pie_id= 0; pie_id != m_num_spokes; ++pie_id ){
+  qreal _x, _y;
+  for (int pie_id= 0; pie_id != m_num_spokes; ++pie_id) {
     m_cachedPath.arcMoveTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle);
     m_cachedPath.arcTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle,
         _span_angle);

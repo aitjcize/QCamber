@@ -27,9 +27,10 @@ QPainterPath RoundThermalSquareSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
+  qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _pie_angle = 360 / m_num_spokes;
-  qreal _half_inner_gap_angle = radToAngle( qAsin( m_gap / m_id ) );
-  qreal _half_outer_gap_angle = radToAngle( qAsin( m_gap / m_od ) );
+  qreal _half_inner_gap_angle = r2a * (qAsin( m_gap / m_id ));
+  qreal _half_outer_gap_angle = r2a * (qAsin( m_gap / m_od ));
   qreal _inner_start_angle = m_angle + _half_inner_gap_angle;
   qreal _inner_pie_angle = _pie_angle - 2 * _half_inner_gap_angle;
   qreal _outer_start_angle = m_angle + _half_outer_gap_angle;
