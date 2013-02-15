@@ -109,6 +109,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol23);
   symbol23->setPos(0.5, -0.2);
 
+  Symbol* symbol24 = SymbolFactory::create("hole50xpx4x5", P);
+  scene->addItem(symbol24);
+  symbol24->setPos(0.5, -0.3);
+
   widget.show();
   return app.exec();
 }

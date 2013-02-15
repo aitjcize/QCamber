@@ -31,6 +31,7 @@
 #include "rectangularthermalopencornerssymbol.h"
 #include "ellipsesymbol.h"
 #include "moiresymbol.h"
+#include "holesymbol.h"
 
 #include <QRegExp>
 
@@ -90,6 +91,8 @@ public:
         return new EllipseSymbol(def, polarity);
       } else if (prefix == "moire") {
         return new MoireSymbol(def, polarity);
+      } else if (prefix == "hole") {
+        return new HoleSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
