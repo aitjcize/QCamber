@@ -26,6 +26,7 @@
 #include "roundthermalsquaresymbol.h"
 #include "squarethermalsymbol.h"
 #include "squarethermalopencornerssymbol.h"
+#include "squareroundthermalsymbol.h"
 
 #include <QRegExp>
 
@@ -75,6 +76,8 @@ public:
         return new SquareThermalSymbol(def, polarity);
       } else if (prefix == "s_tho") {
         return new SquareThermalOpenCornersSymbol(def, polarity);
+      } else if (prefix == "sr_ths") {
+        return new SquareRoundThermalSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
