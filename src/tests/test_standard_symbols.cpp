@@ -101,6 +101,10 @@ int main(int argc, char *argv[])
   scene->addItem(symbol21);
   symbol21->setPos(0.5, 0.0);
 
+  Symbol* symbol22 = SymbolFactory::create("el60x30", P);
+  scene->addItem(symbol22);
+  symbol22->setPos(0.5, -0.1);
+
   widget.show();
   return app.exec();
 }
