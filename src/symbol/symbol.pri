@@ -22,7 +22,8 @@ HEADERS += \
   symbol/halfovalsymbol.h \
   symbol/roundthermalroundsymbol.h \
   symbol/roundthermalsquaresymbol.h \
-  symbol/squarethermalsymbol.h
+  symbol/squarethermalsymbol.h \
+  symbol/squarethermalopencornerssymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -48,4 +49,5 @@ SOURCES += \
   symbol/halfovalsymbol.cpp \
   symbol/roundthermalroundsymbol.cpp \
   symbol/roundthermalsquaresymbol.cpp \
-  symbol/squarethermalsymbol.cpp
+  symbol/squarethermalsymbol.cpp \
+  symbol/squarethermalopencornerssymbol.cpp
