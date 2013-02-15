@@ -1,12 +1,12 @@
-#ifndef __RECTANGULARTHERMAL_H__
-#define __RECTANGULARTHERMAL_H__
+#ifndef __RECTANGULARTHERMALSYMBOL_H__
+#define __RECTANGULARTHERMALSYMBOL_H__
 
 #include "symbol.h"
 
-class RectangularThermal: public Symbol {
+class RectangularThermalSymbol: public Symbol {
 public:
 
-  RectangularThermal(QString def, Polarity polarity);
+  RectangularThermalSymbol(QString def, Polarity polarity);
 
   virtual QPainterPath painterPath(void);
 
@@ -26,4 +26,4 @@ private:
   }
 };
 
-#endif /* __RECTANGULARTHERMAL_H__ */
+#endif /* __RECTANGULARTHERMALSYMBOL_H__ */

@@ -1,9 +1,9 @@
-#include "rectangularthermal.h"
+#include "rectangularthermalsymbol.h"
 
 #include <QtGui>
 #include <QRegExp>
 
-RectangularThermal::RectangularThermal(QString def, Polarity polarity):
+RectangularThermalSymbol::RectangularThermalSymbol(QString def, Polarity polarity):
     Symbol("rc_ths", "rc_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
@@ -21,7 +21,7 @@ RectangularThermal::RectangularThermal(QString def, Polarity polarity):
   painterPath();
 }
 
-QPainterPath RectangularThermal::painterPath(void)
+QPainterPath RectangularThermalSymbol::painterPath(void)
 {
   if (m_valid)
     return m_cachedPath;
