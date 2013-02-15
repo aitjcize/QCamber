@@ -2,6 +2,7 @@
 #define LAYERSELECTOR_H
 #include "QLabel"
 #include "feature.h"
+#include "QSignalMapper"
 
 class LayerSelector : public QLabel
 {
@@ -14,14 +15,19 @@ public:
 signals:
     void clicked();
     void DoubleClicked(Features*,int);
-public slots:
+private slots:
     void slotClicked();
+    void show_contextmenu(const QPoint&);
+    void colorSelector(const QString &);
 protected:
     void mousePressEvent(QMouseEvent *ev);
     void mouseDoubleClickEvent(QMouseEvent *);
+
 private:
     int isSelected;
     QString BGstyle;
+    QSignalMapper *colorSignalMapper;
+
 };
 
 #endif // LAYERSELECTOR_H
