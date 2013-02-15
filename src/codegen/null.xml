@@ -1,0 +1,13 @@
+<symbol name="NullSymbol" id="null">
+  <pattern><![CDATA[
+  null([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  int m_ext;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_ext = caps[1].toInt();
+  ]]></constructor>
+</symbol>

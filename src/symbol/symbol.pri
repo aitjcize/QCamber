@@ -28,7 +28,8 @@ HEADERS += \
   symbol/rectangularthermalopencornerssymbol.h \
   symbol/ellipsesymbol.h \
   symbol/moiresymbol.h \
-  symbol/holesymbol.h
+  symbol/holesymbol.h \
+  symbol/nullsymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -61,4 +62,5 @@ SOURCES += \
   symbol/rectangularthermalopencornerssymbol.cpp \
   symbol/ellipsesymbol.cpp \
   symbol/moiresymbol.cpp \
-  symbol/holesymbol.cpp
+  symbol/holesymbol.cpp \
+  symbol/nullsymbol.cpp

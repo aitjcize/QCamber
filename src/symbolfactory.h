@@ -32,6 +32,7 @@
 #include "ellipsesymbol.h"
 #include "moiresymbol.h"
 #include "holesymbol.h"
+#include "nullsymbol.h"
 
 #include <QRegExp>
 
@@ -93,6 +94,8 @@ public:
         return new MoireSymbol(def, polarity);
       } else if (prefix == "hole") {
         return new HoleSymbol(def, polarity);
+      } else if (prefix == "null") {
+        return new NullSymbol(def, polarity);
       } else {
         return new UserSymbol(def, polarity);
       }
