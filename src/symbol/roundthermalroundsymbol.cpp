@@ -29,7 +29,7 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
 
   qreal _rad = (m_od - m_id) / 4;
   qreal _orad = (m_od + m_id) / 4;
-  qreal _half_gap_angle = radToAngle(qAtan2(_orad, m_gap / 2 + _rad));
+  qreal _half_gap_angle = radToAngle(qAtan2(m_gap / 2 + _rad, _orad));
   qreal _pie_angle = 360 / m_num_spokes;
   qreal _start_angle = m_angle + _half_gap_angle;
   qreal _span_angle = _pie_angle - 2 * _half_gap_angle;
@@ -40,19 +40,19 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
   m_cachedPath.setFillRule(Qt::WindingFill);
 
   for( int pie_id= 0; pie_id != m_num_spokes; ++pie_id ){
-    m_cachedPath.arcMoveTo(-m_od / 2, -m_od / 2, m_od, m_od, _start_angle);
-    m_cachedPath.arcTo(-m_od / 2, -m_od / 2, m_od, m_od, _start_angle,
+    m_cachedPath.arcMoveTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle);
+    m_cachedPath.arcTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle,
         _span_angle);
-    m_cachedPath.arcTo(-m_id / 2, -m_id / 2, m_id, m_id,
+    m_cachedPath.arcTo(-m_od / 2, -m_od / 2, m_od, m_od,
         _start_angle + _span_angle, -_span_angle);
 
     _x = _orad * qCos(_start_angle * a2r);
     _y = _orad * qSin(_start_angle * a2r);
-    m_cachedPath.addEllipse(QPointF(_x, _y), _rad, _rad);
+    m_cachedPath.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
     _x = _orad * qCos((_start_angle + _span_angle) * a2r);
     _y = _orad * qSin((_start_angle + _span_angle) * a2r);
-    m_cachedPath.addEllipse(QPointF(_x, _y), _rad, _rad);
+    m_cachedPath.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
     _start_angle += _pie_angle;
   }
