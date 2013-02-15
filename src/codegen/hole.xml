@@ -1,0 +1,23 @@
+<symbol name="HoleSymbol" id="hole">
+  <pattern><![CDATA[
+  hole([0-9.]+)x([pnv])x([0-9.]+)x([0-9.]+)
+  ]]></pattern>
+
+  <private_block><![CDATA[
+  qreal m_r;
+  QString m_p;
+  qreal m_tp;
+  qreal m_tm;
+  ]]></private_block>
+
+  <constructor><![CDATA[
+  m_r = caps[1].toDouble() / 1000.0 / 2;
+  m_p = caps[2];
+  m_tp = caps[3].toDouble() / 1000.0;
+  m_tm = caps[4].toDouble() / 1000.0;
+  ]]></constructor>
+
+  <painterPath><![CDATA[
+  m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
+  ]]></painterPath>
+</symbol>
