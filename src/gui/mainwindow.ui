@@ -47,7 +47,7 @@
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollWidget">
+        <widget class="QGroupBox" name="scrollWidget">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -55,6 +55,9 @@
            <width>148</width>
            <height>328</height>
           </rect>
+         </property>
+         <property name="title">
+          <string>Layers</string>
          </property>
         </widget>
        </widget>
