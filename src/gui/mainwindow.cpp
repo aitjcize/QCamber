@@ -93,10 +93,11 @@ void MainWindow::showLayer(LayerSelector* selector, bool isSelected)
         QPen(selector->color(), 0), QBrush(selector->color()));
   }
 
-  if(!isSelected)
+  if(!isSelected) {
     ui->viewWidget->addItem(selector->features);
-  else
+  } else {
     ui->viewWidget->removeItem(selector->features);
+  }
 }
 
 void MainWindow::addProfile()

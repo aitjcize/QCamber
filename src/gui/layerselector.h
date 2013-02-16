@@ -13,7 +13,7 @@ class LayerSelector : public QLabel
 public:
   LayerSelector(const QString& text, const QString& color, const QString& path,
       QWidget *parent = 0);
-  ~LayerSelector(){}
+  ~LayerSelector();
 
   QColor color(void);
   QString path(void);

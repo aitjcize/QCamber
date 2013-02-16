@@ -24,6 +24,13 @@ LayerSelector::LayerSelector(const QString& text, const QString& color,
       this, SLOT(show_contextmenu(const QPoint&)));
 }
 
+LayerSelector::~LayerSelector()
+{
+  if (features) {
+    delete features;
+  }
+}
+
 QColor LayerSelector::color(void)
 {
   return m_color;
