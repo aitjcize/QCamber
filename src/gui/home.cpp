@@ -12,160 +12,160 @@ Context ctx;
 extern int yydebug;
 
 Home::Home(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Home)
+  QMainWindow(parent),
+  ui(new Ui::Home)
 {
-    ui->setupUi(this);
-    layout = new QGridLayout;
-    layout->setRowMinimumHeight(1,200);
-    ui->HomeTable->setLayout(layout);
-    ui->HomeTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    ui->HomeTable->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    showHomePage();
+  ui->setupUi(this);
+  layout = new QGridLayout;
+  layout->setRowMinimumHeight(1,200);
+  ui->HomeTable->setLayout(layout);
+  ui->HomeTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  ui->HomeTable->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  showHomePage();
 }
 
 Home::~Home()
 {
-    delete ui;
+  delete ui;
 }
 
 
 void Home::clearLayout(QLayout* layout, bool deleteWidgets)
 {
-    while (QLayoutItem* item = layout->takeAt(0))
+  while (QLayoutItem* item = layout->takeAt(0))
+  {
+    if (deleteWidgets)
     {
-        if (deleteWidgets)
-        {
-            if (QWidget* widget = item->widget())
-                delete widget;
-        }
-        else if (QLayout* childLayout = item->layout())
-            clearLayout(childLayout, deleteWidgets);
-        delete item;
+      if (QWidget* widget = item->widget())
+        delete widget;
     }
+    else if (QLayout* childLayout = item->layout())
+      clearLayout(childLayout, deleteWidgets);
+    delete item;
+  }
 }
 
 
 void Home::showHomePage()
 {
-//TODO 找資料夾體下有哪些tar
-    clearLayout(ui->HomeTable->layout());
-    QString jobName = "demo";
-    jobSignalMapper = new QSignalMapper(this);
-    myLabel *job = new myLabel(jobName);
-    layout->addWidget(job);
-    connect(job, SIGNAL(clicked()),jobSignalMapper, SLOT(map()));
-    jobSignalMapper->setMapping(job,jobName);
-    connect(jobSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showJobPage(const QString &)));
+  //TODO 找資料夾體下有哪些tar
+  clearLayout(ui->HomeTable->layout());
+  QString jobName = "demo";
+  jobSignalMapper = new QSignalMapper(this);
+  myLabel *job = new myLabel(jobName);
+  layout->addWidget(job);
+  connect(job, SIGNAL(clicked()),jobSignalMapper, SLOT(map()));
+  jobSignalMapper->setMapping(job,jobName);
+  connect(jobSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showJobPage(const QString &)));
 
 }
 
 void Home::showJobPage(const QString jobName)
 {
-    clearLayout(ui->HomeTable->layout());
-    if(jobName != "" && jobName != currJob)
-        currJob = jobName;
+  clearLayout(ui->HomeTable->layout());
+  if(jobName != "" && jobName != currJob)
+    currJob = jobName;
 
 
-    Code39::initPatterns();
-    yydebug = 0;
-    ctx.loader = new ArchiveLoader(currJob+".tgz");
-    StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
-    ds = parser.parse();
+  Code39::initPatterns();
+  yydebug = 0;
+  ctx.loader = new ArchiveLoader(currJob+".tgz");
+  StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
+  ds = parser.parse();
 
-    myLabel *matrix = new myLabel("Job Matrix");
-    connect(matrix,SIGNAL(clicked()),this,SLOT(showMatrix()));
-    layout->addWidget(matrix,0,0);
+  myLabel *matrix = new myLabel("Job Matrix");
+  connect(matrix,SIGNAL(clicked()),this,SLOT(showMatrix()));
+  layout->addWidget(matrix,0,0);
 
-    myLabel *step = new myLabel("Steps");
-    connect(step,SIGNAL(clicked()),this,SLOT(showStepPage()));
-    layout->addWidget(step,0,1);
+  myLabel *step = new myLabel("Steps");
+  connect(step,SIGNAL(clicked()),this,SLOT(showStepPage()));
+  layout->addWidget(step,0,1);
 
-    myLabel *custom = new myLabel("Custom Symbol");
-    connect(custom,SIGNAL(clicked()),this,SLOT(showCustomSymbolPage()));
-    layout->addWidget(custom,0,2);
+  myLabel *custom = new myLabel("Custom Symbol");
+  connect(custom,SIGNAL(clicked()),this,SLOT(showCustomSymbolPage()));
+  layout->addWidget(custom,0,2);
 
 }
 
 void Home::showMatrix()
 {
-    matrixptr = new JobMatrix;
-    matrixptr->SetMatrix(ds);
-    matrixptr->show();
+  matrixptr = new JobMatrix;
+  matrixptr->SetMatrix(ds);
+  matrixptr->show();
 }
 
 void Home::showStepPage()
 {
-    clearLayout(ui->HomeTable->layout());
-    int steps = 0;
-    stepSignalMapper = new QSignalMapper(this);
+  clearLayout(ui->HomeTable->layout());
+  int steps = 0;
+  stepSignalMapper = new QSignalMapper(this);
 
-    myLabel *back = new myLabel("Back");
-    layout->addWidget(back,0,steps++);
-    connect(back,SIGNAL(clicked()),this,SLOT(showJobPage()));
+  myLabel *back = new myLabel("Back");
+  layout->addWidget(back,0,steps++);
+  connect(back,SIGNAL(clicked()),this,SLOT(showJobPage()));
 
-    StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
-    for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
-    {
-      myLabel *label = new myLabel("this");
-      label->setText((QString)it->second->get("NAME").c_str());
-      layout->addWidget(label,0,steps++);
-      connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
-      stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
-    }
-    connect(stepSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showStep(const QString &)));
+  StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
+    myLabel *label = new myLabel("this");
+    label->setText((QString)it->second->get("NAME").c_str());
+    layout->addWidget(label,0,steps++);
+    connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
+    stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
+  }
+  connect(stepSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showStep(const QString &)));
 
 }
 
 void Home::showStep(const QString step_name)
 {
-    stepptr = new MainWindow;
+  stepptr = new MainWindow;
 
-    QStringList layer_name;
-    StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("LAYER");
-    for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
-      layer_name.append((QString)it->second->get("NAME").c_str());
+  QStringList layer_name;
+  StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("LAYER");
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+    layer_name.append((QString)it->second->get("NAME").c_str());
 
-    stepptr->setWindowTitle(step_name);
-    stepptr->addLayerLabel(&layer_name);
-    stepptr->show();
+  stepptr->setWindowTitle(step_name);
+  stepptr->addLayerLabel(&layer_name);
+  stepptr->show();
 }
 
 void Home::showCustomSymbolPage()
 {
-    clearLayout(ui->HomeTable->layout());
-    symbolSignalMapper = new QSignalMapper(this);
-    DIR *dp;
-    int i,j;
-    struct dirent *dirp;
-    if((dp = opendir(ctx.loader->absPath("symbols").toAscii().data())) == NULL){
-        qDebug()<<"Error cant find symbol path";
+  clearLayout(ui->HomeTable->layout());
+  symbolSignalMapper = new QSignalMapper(this);
+  DIR *dp;
+  int i,j;
+  struct dirent *dirp;
+  if((dp = opendir(ctx.loader->absPath("symbols").toAscii().data())) == NULL){
+    qDebug()<<"Error cant find symbol path";
+  }
+  i=j=0;
+  while((dirp = readdir(dp)) != NULL){
+    //dirlist.append(QString(dirp->d_name));
+    //qDebug()<<dirlist.back();
+    myLabel *label = new myLabel(QString(dirp->d_name));
+    layout->addWidget(label,i,j++);
+    label->setMinimumSize(55, 0);
+    connect(label, SIGNAL(clicked()),symbolSignalMapper, SLOT(map()));
+    symbolSignalMapper->setMapping(label,QString(dirp->d_name));
+    if(j==5)
+    {
+      j=0;
+      i++;
     }
-    i=j=0;
-    while((dirp = readdir(dp)) != NULL){
-        //dirlist.append(QString(dirp->d_name));
-        //qDebug()<<dirlist.back();
-        myLabel *label = new myLabel(QString(dirp->d_name));
-        layout->addWidget(label,i,j++);
-        label->setMinimumSize(55, 0);
-        connect(label, SIGNAL(clicked()),symbolSignalMapper, SLOT(map()));
-        symbolSignalMapper->setMapping(label,QString(dirp->d_name));
-        if(j==5)
-        {
-            j=0;
-            i++;
-        }
-    }
-    connect(symbolSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showSymbol(const QString &)));
-    closedir(dp);
+  }
+  connect(symbolSignalMapper,SIGNAL(mapped (const QString &)), this, SLOT(showSymbol(const QString &)));
+  closedir(dp);
 
 }
 
 void Home::showSymbol(const QString symbol_name)
 {
-    stepptr = new MainWindow;
-    stepptr->setWindowTitle(symbol_name);
-    stepptr->AddCustomSymbol(symbol_name);
-    stepptr->show();
+  stepptr = new MainWindow;
+  stepptr->setWindowTitle(symbol_name);
+  stepptr->AddCustomSymbol(symbol_name);
+  stepptr->show();
 
 }

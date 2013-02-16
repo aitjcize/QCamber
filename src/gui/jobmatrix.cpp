@@ -118,9 +118,9 @@ unsigned long JobMatrix::GetFileLength ( QString fileName)
   }else{
     file.setFileName(path+".Z");
     if(file.exists())
-        return file.size();
+      return file.size();
     file.setFileName(path+".z");
-        return file.size();
+    return file.size();
   }
   return -1; //error
 }
@@ -144,7 +144,7 @@ void JobMatrix::showLayer(const QString feature_name)
 
 void JobMatrix::showStep(const QString step_name)
 {
-    Window.setWindowTitle(step_name);
-    Window.addLayerLabel(&layer_name);
-    Window.show();
+  Window.setWindowTitle(step_name);
+  Window.addLayerLabel(&layer_name);
+  Window.show();
 }

@@ -8,35 +8,21 @@ BUILD_DIR = .build
 
 include (parser/parser.pri)
 include (symbol/symbol.pri)
+include (gui/gui.pri)
 
 HEADERS += \
   archiveloader.h \
   odbppviewwidget.h \
   symbolfactory.h \
-  feature.h \
-    gui/jobmatrix.h \
-    gui/mylabel.h \
-    gui/mainwindow.h \
-    gui/layerselector.h \
-    gui/home.h
+  feature.h
 
 SOURCES += \
   main.cpp \
   archiveloader.cpp \
   odbppviewwidget.cpp \
-  feature.cpp \
-    gui/jobmatrix.cpp \
-    gui/mylabel.cpp \
-    gui/mainwindow.cpp \
-    gui/layerselector.cpp \
-    gui/home.cpp
+  feature.cpp
 
-INCLUDEPATH += . .build parser parser/record symbol
+INCLUDEPATH += . .build parser parser/record symbol gui
 
 DESTDIR = ../bin
 TARGET = camview
-
-FORMS += \
-    gui/jobmatrix.ui \
-    gui/mainwindow.ui \
-    gui/home.ui

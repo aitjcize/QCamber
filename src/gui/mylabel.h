@@ -4,16 +4,20 @@
 
 class myLabel : public QLabel
 {
-    Q_OBJECT
+  Q_OBJECT
+
 public:
-    myLabel(const QString &text,QWidget *parent = 0);
-    ~myLabel(){}
+  myLabel(const QString &text,QWidget *parent = 0);
+  ~myLabel(){}
+
 signals:
-    void clicked();
+  void clicked();
+
 public slots:
-    void slotClicked();
+  void slotClicked();
+
 protected:
-    void mousePressEvent(QMouseEvent *ev);
+  void mousePressEvent(QMouseEvent *ev);
 };
 
 #endif // MYLABEL_H
