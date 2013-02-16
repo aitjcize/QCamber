@@ -1,8 +1,9 @@
 #include "home.h"
+
+#include <QtGui>
+
 #include "ui_home.h"
-#include <QGridLayout>
-#include "QDebug"
-#include "QSignalMapper"
+#include "code39.h"
 #include "jobmatrix.h"
 #include "mainwindow.h"
 
@@ -65,7 +66,6 @@ void Home::showJobPage(const QString jobName)
   clearLayout(ui->HomeTable->layout());
   if(jobName != "" && jobName != currJob)
     currJob = jobName;
-
 
   Code39::initPatterns();
   yydebug = 0;
