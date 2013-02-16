@@ -12,7 +12,10 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
   Code39::initPatterns();
 
-  ctx.loader = new ArchiveLoader("demo.tgz");
+  QFileDialog diag(NULL, "Choose a tarball", "", "ODB++ database (*.tgz)");
+  diag.exec();
+
+  ctx.loader = new ArchiveLoader(diag.selectedFiles()[0]);
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
 

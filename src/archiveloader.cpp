@@ -1,6 +1,7 @@
 #include "archiveloader.h"
 
 #include <QtCore>
+#include <QFileInfo>
 
 #include "parser.h"
 
@@ -20,7 +21,8 @@ bool ArchiveLoader::load(void)
   // future.
 
   unsigned timestamp = QDateTime::currentDateTime().toTime_t();
-  QString extract_dir = QString::number(timestamp) + "_" + m_fileName;
+  QFileInfo finfo(m_fileName);
+  QString extract_dir = QString::number(timestamp) + "_" + finfo.baseName();
 
   QDir tempDir = QDir::temp();
   tempDir.mkdir(extract_dir);
