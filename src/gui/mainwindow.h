@@ -1,14 +1,16 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef __MAINWINDOW_H__
+#define __MAINWINDOW_H__
 
+#include <QColor>
+#include <QList>
 #include <QMainWindow>
-#include "QLayoutItem"
-#include "odbppviewwidget.h"
-#include "QFile"
-#include "structuredtextparser.h"
+//#include <QMap>
+
 #include "context.h"
-#include "layerselector.h"
 #include "feature.h"
+#include "layerselector.h"
+#include "odbppviewwidget.h"
+#include "structuredtextparser.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,13 +27,17 @@ public:
   void clearLayout(QLayout* , bool deleteWidgets = true);
   void addProfile();
 
+protected:
+  Features* makeFeature(QString path, const QPen& pen, const QBrush& brush);
+  QColor nextColor(void);
+
 private slots:
-  void showLayer(LayerSelector*, bool);
+  void showLayer(LayerSelector* layer, bool selected);
 
 private:
   Ui::MainWindow *ui;
-  Features* makeFeature(QString path, const QPen& pen,
-      const QBrush& brush);
+  QList<QColor> m_colors;
+  QMap<int, bool> m_colorsMap;
 };
 
-#endif // MAINWINDOW_H
+#endif // __MAINWINDOW_H__

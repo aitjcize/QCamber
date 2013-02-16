@@ -39,8 +39,8 @@ void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
   painterPath();
 
   if (m_bg) {
-    painter->setPen(QPen(Qt::white, 0));
-    painter->setBrush(Qt::white);
+    painter->setPen(QPen(BG_COLOR, 0));
+    painter->setBrush(BG_COLOR);
 
     QRectF b = m_cachedPath.boundingRect();
     const qreal offset = 0.1;

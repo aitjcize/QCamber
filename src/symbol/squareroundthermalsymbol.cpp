@@ -66,12 +66,12 @@ void SquareRoundThermalSymbol::paint(QPainter *painter,
     painter->setBrush(m_brush);
     painter->drawPath(m_cachedPath);
 
-    painter->setPen(QPen(Qt::white, 0));
-    painter->setBrush(Qt::white);
+    painter->setPen(QPen(BG_COLOR, 0));
+    painter->setBrush(BG_COLOR);
     painter->drawPath(m_sub);
   } else {
-    painter->setPen(QPen(Qt::white, 0));
-    painter->setBrush(Qt::white);
+    painter->setPen(QPen(BG_COLOR, 0));
+    painter->setBrush(BG_COLOR);
     painter->drawPath(m_cachedPath);
 
     painter->setPen(m_pen);

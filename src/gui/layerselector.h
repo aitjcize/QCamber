@@ -11,12 +11,13 @@ class LayerSelector : public QLabel
   Q_OBJECT
 
 public:
-  LayerSelector(const QString& text, const QString& color, const QString& path,
-      QWidget *parent = 0);
+  LayerSelector(const QString& text, const QString& path, QWidget *parent = 0);
   ~LayerSelector();
 
   QColor color(void);
   QString path(void);
+
+  void setColor(const QColor& color);
 
   Features *features;
 
@@ -26,7 +27,7 @@ signals:
 private slots:
   void slotClicked();
   void show_contextmenu(const QPoint&);
-  void colorSelector(const QString &);
+  void colorSelector(const QString&);
 
 protected:
   void mouseDoubleClickEvent(QMouseEvent *);

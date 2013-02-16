@@ -2,21 +2,15 @@
 #include "QDebug"
 #include "QMenu"
 
-LayerSelector::LayerSelector(const QString& text, const QString& color,
-    const QString& path, QWidget *parent)
+LayerSelector::LayerSelector(const QString& text, const QString& path,
+    QWidget *parent)
   :QLabel(text, parent), m_selected(false)
 {
   setContextMenuPolicy(Qt::CustomContextMenu);
 
   m_bgStyleTmpl = "LayerSelector { background-color: %1; color: %2; }";
 
-  QString tcolor = "black";
-  if (color == "green" || color == "blue") {
-    tcolor = "white";
-  }
-
-  m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
-  m_color = QColor(color);
+  m_color = Qt::red;
   m_path = path;
   features = NULL;
 
@@ -41,6 +35,17 @@ QString LayerSelector::path(void)
   return m_path;
 }
 
+void LayerSelector::setColor(const QColor& color)
+{
+  QString tcolor = "black";
+
+  m_color = color;
+  m_bgStyle = m_bgStyleTmpl.arg(color.name()).arg(tcolor);
+  setStyleSheet(m_bgStyle);
+  features->setPen(QPen(m_color, 0));
+  features->setBrush(m_color);
+}
+
 void LayerSelector::slotClicked()
 {
   qDebug()<<"QQ";
@@ -48,10 +53,9 @@ void LayerSelector::slotClicked()
 
 void LayerSelector::mouseDoubleClickEvent(QMouseEvent *)
 {
-  if(!m_selected)
-    setStyleSheet(m_bgStyle);
-  else
-    setStyleSheet("QLabel { background-color : transparent; color : black; }");
+  if (m_selected) {
+    setStyleSheet("QLabel { background-color: transparent; color: black; }");
+  }
   emit doubleClicked(this, m_selected);
   m_selected = !m_selected;
 }
@@ -102,12 +106,7 @@ void LayerSelector::colorSelector(const QString &color)
 {
   QString tcolor = "black";
 
-  if (color == "green" || color == "blue") {
-    tcolor = "white";
-  }
-
   m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
-
   m_color = QColor(color);
 
   if (features) {

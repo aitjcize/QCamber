@@ -52,8 +52,8 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
   } else {
-    painter->setPen(QPen(Qt::white, 0));
-    painter->setBrush(Qt::white);
+    painter->setPen(QPen(BG_COLOR, 0));
+    painter->setBrush(BG_COLOR);
   }
 
   painterPath();
