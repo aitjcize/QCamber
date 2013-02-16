@@ -11,13 +11,13 @@ Profile::Profile(QString path): Symbol("profile")
   Features* profile = new Features(ctx.loader->absPath(path));
   addToGroup(profile);
   addToSymbols(profile);
+  qDebug() << profile->boundingRect();
 
   StructuredTextParser stephdr_parser(path.replace("profile", "stephdr"));
   StructuredTextDataStore* hds = stephdr_parser.parse();
 
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
       "STEP-REPEAT");
-
 
 #define GET(key) (QString::fromStdString(hds->get(key)))
   qreal x_datum = GET("X_DATUM").toDouble();

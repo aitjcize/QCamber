@@ -52,20 +52,20 @@ void Symbol::setBrush(QBrush brush)
 void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
-  if (m_symbols.count()) {
-    QGraphicsItemGroup::paint(painter, option, widget);
-  } else {
-    if (m_polarity == P) {
-      painter->setPen(m_pen);
-      painter->setBrush(m_brush);
-    } else {
-      painter->setPen(QPen(BG_COLOR, 0));
-      painter->setBrush(BG_COLOR);
-    }
+  // Paint item group
+  QGraphicsItemGroup::paint(painter, option, widget);
 
-    painterPath();
-    painter->drawPath(m_cachedPath);
+  // Paint painterPath
+  if (m_polarity == P) {
+    painter->setPen(m_pen);
+    painter->setBrush(m_brush);
+  } else {
+    painter->setPen(QPen(BG_COLOR, 0));
+    painter->setBrush(BG_COLOR);
   }
+
+  painterPath();
+  painter->drawPath(m_cachedPath);
 }
 
 QPainterPath Symbol::painterPath(void)
