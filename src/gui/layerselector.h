@@ -1,21 +1,27 @@
-#ifndef LAYERSELECTOR_H
-#define LAYERSELECTOR_H
-#include "QLabel"
+#ifndef __LAYERSELECTOR_H__
+#define __LAYERSELECTOR_H__
+
+#include <QLabel>
+#include <QSignalMapper>
+
 #include "feature.h"
-#include "QSignalMapper"
 
 class LayerSelector : public QLabel
 {
   Q_OBJECT
+
 public:
-  LayerSelector(const QString &text,QWidget *parent = 0);
+  LayerSelector(const QString& text, const QString& color, const QString& path,
+      QWidget *parent = 0);
   ~LayerSelector(){}
-  void setStyle(QString style){BGstyle = style;}
-  Features *bot;
+
+  QColor color(void);
+  QString path(void);
+
+  Features *features;
 
 signals:
-  void clicked();
-  void DoubleClicked(Features*,int);
+  void doubleClicked(LayerSelector*, bool);
 
 private slots:
   void slotClicked();
@@ -23,13 +29,16 @@ private slots:
   void colorSelector(const QString &);
 
 protected:
-  void mousePressEvent(QMouseEvent *ev);
   void mouseDoubleClickEvent(QMouseEvent *);
 
 private:
-  int isSelected;
-  QString BGstyle;
-  QSignalMapper *colorSignalMapper;
+  bool m_selected;
+  QString m_bgStyle;
+  QString m_bgStyleTmpl;
+
+  QString m_path;
+  QColor m_color;
+  QSignalMapper* m_colorSignalMapper;
 };
 
-#endif // LAYERSELECTOR_H
+#endif // __LAYERSELECTOR_H__

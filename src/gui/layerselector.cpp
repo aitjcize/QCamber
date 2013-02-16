@@ -2,13 +2,36 @@
 #include "QDebug"
 #include "QMenu"
 
-  LayerSelector::LayerSelector(const QString &text,QWidget *parent)
-:QLabel(parent)
+LayerSelector::LayerSelector(const QString& text, const QString& color,
+    const QString& path, QWidget *parent)
+  :QLabel(text, parent), m_selected(false)
 {
-  isSelected = 0;
   setContextMenuPolicy(Qt::CustomContextMenu);
+
+  m_bgStyleTmpl = "LayerSelector { background-color: %1; color: %2; }";
+
+  QString tcolor = "black";
+  if (color == "green" || color == "blue") {
+    tcolor = "white";
+  }
+
+  m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
+  m_color = QColor(color);
+  m_path = path;
+  features = NULL;
+
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
       this, SLOT(show_contextmenu(const QPoint&)));
+}
+
+QColor LayerSelector::color(void)
+{
+  return m_color;
+}
+
+QString LayerSelector::path(void)
+{
+  return m_path;
 }
 
 void LayerSelector::slotClicked()
@@ -16,75 +39,78 @@ void LayerSelector::slotClicked()
   qDebug()<<"QQ";
 }
 
-void LayerSelector::mousePressEvent(QMouseEvent *ev)
-{
-  emit clicked();
-}
-
 void LayerSelector::mouseDoubleClickEvent(QMouseEvent *)
 {
-  if(!isSelected)
-    setStyleSheet(BGstyle);
+  if(!m_selected)
+    setStyleSheet(m_bgStyle);
   else
     setStyleSheet("QLabel { background-color : transparent; color : black; }");
-  emit DoubleClicked(bot,isSelected);
-  isSelected = !isSelected;
+  emit doubleClicked(this, m_selected);
+  m_selected = !m_selected;
 }
 
 void LayerSelector::show_contextmenu(const QPoint &point)
 {
   QMenu *cmenu = new QMenu();
-  colorSignalMapper = new QSignalMapper(this);
+  m_colorSignalMapper = new QSignalMapper(this);
   QAction *ascendSortAction;
 
   ascendSortAction = cmenu->addAction("cyan");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"cyan");
+  m_colorSignalMapper->setMapping(ascendSortAction,"cyan");
 
   ascendSortAction = cmenu->addAction("red");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"red");
+  m_colorSignalMapper->setMapping(ascendSortAction,"red");
 
   ascendSortAction = cmenu->addAction("magenta");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"magenta");
+  m_colorSignalMapper->setMapping(ascendSortAction,"magenta");
 
   ascendSortAction = cmenu->addAction("green");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"green");
+  m_colorSignalMapper->setMapping(ascendSortAction,"green");
 
   ascendSortAction = cmenu->addAction("yellow");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"yellow");
+  m_colorSignalMapper->setMapping(ascendSortAction,"yellow");
 
   ascendSortAction = cmenu->addAction("blue");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+  connect(ascendSortAction, SIGNAL(triggered(bool)), m_colorSignalMapper,
       SLOT(map()));
-  colorSignalMapper->setMapping(ascendSortAction,"blue");
+  m_colorSignalMapper->setMapping(ascendSortAction,"blue");
 
 
-  connect(colorSignalMapper, SIGNAL(mapped (const QString &)), this,
+  connect(m_colorSignalMapper, SIGNAL(mapped (const QString &)), this,
       SLOT(colorSelector(const QString &)));
   cmenu->exec(QCursor::pos());
 }
+
 void LayerSelector::colorSelector(const QString &color)
 {
   QString tcolor = "black";
-  if(color == "green" || color == "blue")
+
+  if (color == "green" || color == "blue") {
     tcolor = "white";
-  BGstyle = "QLabel { background-color : "+color+"; color : "+tcolor+"; }";
-  bot->setPen(QPen(QColor(color), 0));
-  bot->setBrush(QColor(color));
-  if(isSelected)
-  {
-    setStyleSheet(BGstyle);
-    emit DoubleClicked(bot,isSelected);
-    emit DoubleClicked(bot,!isSelected);
   }
 
+  m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
+
+  m_color = QColor(color);
+
+  if (features) {
+    features->setPen(QPen(m_color, 0));
+    features->setBrush(m_color);
+  }
+
+  if (m_selected) {
+    setStyleSheet(m_bgStyle);
+    emit doubleClicked(this, m_selected);
+    emit doubleClicked(this, !m_selected);
+  }
 }

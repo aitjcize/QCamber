@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  ui->WorkTable->setBackgroundBrush(Qt::black);
+  ui->viewWidget->setBackgroundBrush(Qt::black);
 }
 
 MainWindow::~MainWindow()
@@ -19,29 +19,28 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
-void MainWindow::addLayerLabel(QList<QString> *layer_name)
+void MainWindow::addLayerLabel(const QStringList& layerNames)
 {
   //1.把label建立起來
   //2.把FEATURE存起來
   //3.設定connect
-  ui->WorkTable->clear_scene();
-  AddProfile();
+
+  ui->viewWidget->clear_scene();
+  addProfile();
+
   QString color = "cyan,red,magenta,green,yellow,blue";
   QStringList labelcolor = color.split(',');
-  QString tcolor = "black,black,black,white,black,white";
-  QStringList textcolor = tcolor.split(',');
-  QString path;
 
-  clearLayout(ui->layerLayout,true);
-  for(int i=0;i<layer_name->length();i++)
+  clearLayout(ui->layerLayout, true);
+  QString pathTmpl = "steps/%1/layers/%2/features";
+
+  for(int i = 0; i < layerNames.count(); ++i)
   {
-    LayerSelector *layer = new LayerSelector("this");
-    layer->setText((*layer_name)[i]);
-    //要改變label，還有FEATURE的背景顏色
-    layer->setStyle("LayerSelector { background-color : "+labelcolor[i%6]+"; color : "+textcolor[i%6]+"; }");
-    path = "steps/" + this->windowTitle() + "/layers/" + (*layer_name)[i] + "/features";
-    layer->bot = MakeFeature(path,QColor(labelcolor[i%6]),QColor(labelcolor[i%6]));
-    connect(layer,SIGNAL(DoubleClicked(Features*,int)),this,SLOT(ShowLayer(Features*,int)));
+    LayerSelector *layer = new LayerSelector(layerNames[i], labelcolor[i % 6],
+        pathTmpl.arg(this->windowTitle()).arg(layerNames[i]));
+
+    connect(layer, SIGNAL(doubleClicked(LayerSelector*, bool)), this,
+        SLOT(showLayer(LayerSelector*, bool)));
     ui->layerLayout->addWidget(layer);
   }
 }
@@ -62,50 +61,50 @@ void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 }
 
 
-Features *MainWindow::MakeFeature(QString path,const QColor color,const QBrush brush)
+Features* MainWindow::makeFeature(QString path, const QPen& pen,
+    const QBrush& brush)
 {
-
   //QString path = "steps/" + this->windowTitle() + "/layers/" + filename + "/features";
   path = ctx.loader->absPath(path.toLower());
   QFile file(path);
-  //ui->WorkTable->scene()->clear();
+  //ui->viewWidget->scene()->clear();
   //把profile變成按鈕
   //widget.load_profile(this->windowTitle());
-  if (file.exists() == false)
+  if (!file.exists())
   {
-    file.setFileName(path+".Z");
-    if (file.exists() == false)
+    file.setFileName(path + ".Z");
+    if (!file.exists())
       path += ".z";
     else
       path += ".Z";
   }
   //qDebug()<<path;
 
-  Features* bot = new Features(path);
-  bot->setPen(QPen(color, 0));
-  bot->setBrush(brush);
-  return bot;
+  Features* features = new Features(path);
+  features->setPen(pen);
+  features->setBrush(brush);
+  return features;
 }
 
-void MainWindow::ShowLayer(Features *bot, int isSelected)
+void MainWindow::showLayer(LayerSelector* selector, bool isSelected)
 {
+  if (!selector->features) {
+    selector->features = makeFeature(selector->path(),
+        QPen(selector->color(), 0), QBrush(selector->color()));
+  }
+
   if(!isSelected)
-    ui->WorkTable->addItem(bot);
+    ui->viewWidget->addItem(selector->features);
   else
-    ui->WorkTable->removeItem(bot);
+    ui->viewWidget->removeItem(selector->features);
 }
 
-void MainWindow::AddProfile()
+void MainWindow::addProfile()
 {
   QString path = "steps/" + this->windowTitle() + "/profile";
   path = ctx.loader->absPath(path.toLower());
-  Features* bot = new Features(path);
-  bot->setPen(QPen(Qt::white, 0));
-  bot->setBrush(Qt::transparent);
-  ui->WorkTable->addItem(bot);
-}
-
-void MainWindow::AddCustomSymbol(QString symbol_name)
-{
-  ui->WorkTable->addItem(MakeFeature("symbols/"+symbol_name+"/features"));
+  Features* features = new Features(path);
+  features->setPen(QPen(Qt::white, 0));
+  features->setBrush(Qt::transparent);
+  ui->viewWidget->addItem(features);
 }

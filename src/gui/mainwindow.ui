@@ -41,7 +41,7 @@
      </layout>
     </item>
     <item>
-     <widget class="ODBPPViewWidget" name="WorkTable"/>
+     <widget class="ODBPPViewWidget" name="viewWidget"/>
     </item>
    </layout>
   </widget>

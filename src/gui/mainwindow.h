@@ -21,18 +21,17 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
-  void addLayerLabel(QList<QString> *);
+  void addLayerLabel(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
-  void AddProfile();
-  void AddCustomSymbol(QString);
+  void addProfile();
 
 private slots:
-  void ShowLayer(Features*,int);
+  void showLayer(LayerSelector*, bool);
 
 private:
   Ui::MainWindow *ui;
-  Features *MakeFeature(QString filename,const QColor color = Qt::red,
-      const QBrush brush = Qt::red);
+  Features* makeFeature(QString path, const QPen& pen,
+      const QBrush& brush);
 };
 
 #endif // MAINWINDOW_H
