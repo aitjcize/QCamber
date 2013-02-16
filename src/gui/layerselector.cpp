@@ -33,37 +33,43 @@ void LayerSelector::mouseDoubleClickEvent(QMouseEvent *)
 
 void LayerSelector::show_contextmenu(const QPoint &point)
 {
-
   QMenu *cmenu = new QMenu();
   colorSignalMapper = new QSignalMapper(this);
   QAction *ascendSortAction;
 
   ascendSortAction = cmenu->addAction("cyan");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"cyan");
 
   ascendSortAction = cmenu->addAction("red");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"red");
 
   ascendSortAction = cmenu->addAction("magenta");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"magenta");
 
   ascendSortAction = cmenu->addAction("green");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"green");
 
   ascendSortAction = cmenu->addAction("yellow");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"yellow");
 
   ascendSortAction = cmenu->addAction("blue");
-  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper, SLOT(map()));
+  connect(ascendSortAction, SIGNAL(triggered(bool)),colorSignalMapper,
+      SLOT(map()));
   colorSignalMapper->setMapping(ascendSortAction,"blue");
 
 
-  connect(colorSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(colorSelector(const QString &)));
+  connect(colorSignalMapper, SIGNAL(mapped (const QString &)), this,
+      SLOT(colorSelector(const QString &)));
   cmenu->exec(QCursor::pos());
 }
 void LayerSelector::colorSelector(const QString &color)
