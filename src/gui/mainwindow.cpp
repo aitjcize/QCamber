@@ -19,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   ui->setupUi(this);
+
+  m_layout = new QVBoxLayout();
+  ui->scrollWidget->setLayout(m_layout);
   ui->viewWidget->setBackgroundBrush(BG_COLOR);
 }
 
@@ -32,7 +35,7 @@ void MainWindow::addLayerLabel(const QStringList& layerNames)
   ui->viewWidget->clear_scene();
   addProfile();
 
-  clearLayout(ui->layerLayout, true);
+  clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2/features";
 
   for(int i = 0; i < layerNames.count(); ++i)
@@ -42,7 +45,7 @@ void MainWindow::addLayerLabel(const QStringList& layerNames)
 
     connect(layer, SIGNAL(doubleClicked(LayerSelector*, bool)), this,
         SLOT(showLayer(LayerSelector*, bool)));
-    ui->layerLayout->addWidget(layer);
+    m_layout->addWidget(layer);
   }
 }
 

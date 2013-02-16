@@ -104,7 +104,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   }
   connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showStep(const QString &)));
   connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showLayer(const QString &)));
-  ui->matrix->setLayout(matrix_layout);
+  ui->scrollWidget->setLayout(matrix_layout);
 
 }
 

@@ -4,7 +4,8 @@
 #include <QColor>
 #include <QList>
 #include <QMainWindow>
-//#include <QMap>
+#include <QVBoxLayout>
+#include <QMap>
 
 #include "context.h"
 #include "feature.h"
@@ -36,6 +37,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
+  QVBoxLayout* m_layout;
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
 };

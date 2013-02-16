@@ -16,10 +16,13 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QScrollArea" name="matrix">
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
+     <widget class="QWidget" name="scrollWidget">
       <property name="geometry">
        <rect>
         <x>0</x>

@@ -19,23 +19,44 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="title">
          <string>Actions</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>150</width>
           <height>0</height>
          </size>
         </property>
-        <property name="title">
-         <string>GroupBox</string>
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-        <layout class="QVBoxLayout" name="layerLayout"/>
+        <widget class="QWidget" name="scrollWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>148</width>
+           <height>328</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </item>
      </layout>
