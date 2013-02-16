@@ -32,7 +32,7 @@ void MainWindow::addLayerLabel(QList<QString> *layer_name)
   QStringList textcolor = tcolor.split(',');
   QString path;
 
-  clearLayout(ui->layerlayout,true);
+  clearLayout(ui->layerLayout,true);
   for(int i=0;i<layer_name->length();i++)
   {
     LayerSelector *layer = new LayerSelector("this");
@@ -42,7 +42,7 @@ void MainWindow::addLayerLabel(QList<QString> *layer_name)
     path = "steps/" + this->windowTitle() + "/layers/" + (*layer_name)[i] + "/features";
     layer->bot = MakeFeature(path,QColor(labelcolor[i%6]),QColor(labelcolor[i%6]));
     connect(layer,SIGNAL(DoubleClicked(Features*,int)),this,SLOT(ShowLayer(Features*,int)));
-    ui->layerlayout->addWidget(layer);
+    ui->layerLayout->addWidget(layer);
   }
 }
 
