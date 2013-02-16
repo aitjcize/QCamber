@@ -71,7 +71,7 @@ Profile *ODBPPViewWidget::loadProfile(QString step)
   Profile* profile = new Profile(ctx.loader->absPath(path));
 
   profile->setPen(QPen(Qt::black, 0));
-  profile->setBrush(BG_COLOR);
+  profile->setBrush(Qt::transparent);
   scene->addItem(profile);
   return profile;
 }

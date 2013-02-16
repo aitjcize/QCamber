@@ -13,8 +13,13 @@ class Profile: public Symbol {
 public:
   Profile(QString path);
 
+  virtual QPainterPath painterPath(void);
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+      QWidget *widget);
+
 private:
   StructuredTextDataStore* m_ds;
+  QRectF m_edgeBounding;
 };
 
 #endif /* __PROFILE_H__ */
