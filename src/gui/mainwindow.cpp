@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
-  ui->viewWidget->setBackgroundBrush(BG_COLOR);
 }
 
 MainWindow::~MainWindow()

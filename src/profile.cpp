@@ -44,7 +44,7 @@ Profile::Profile(QString path): Symbol("profile")
         QString path = QString("steps/%1/profile").arg(name.toLower());
         Profile* step = new Profile(ctx.loader->absPath(path));
         step->setPos(x_datum + x+ dx * i, -(y_datum + y + dy * j));
-        step->rotate(-angle);
+        step->rotate(angle);
         addToGroup(step);
         addToSymbols(step);
       }

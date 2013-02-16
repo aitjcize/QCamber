@@ -19,6 +19,7 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   setTransformationAnchor(AnchorUnderMouse);
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
+  setBackgroundBrush(BG_COLOR);
 
   /*
   Symbol* user = new UserSymbol("", P);
