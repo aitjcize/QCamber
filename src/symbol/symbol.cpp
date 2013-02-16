@@ -22,7 +22,11 @@ QString Symbol::name(void)
 
 QRectF Symbol::boundingRect() const
 {
-  return m_bounding;
+  if (m_symbols.count()) {
+    return QGraphicsItemGroup::boundingRect();
+  } else {
+    return m_bounding;
+  }
 }
 
 void Symbol::setPen(QPen pen)
@@ -48,22 +52,26 @@ void Symbol::setBrush(QBrush brush)
 void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
-  if (m_polarity == P) {
-    painter->setPen(m_pen);
-    painter->setBrush(m_brush);
+  if (m_symbols.count()) {
+    QGraphicsItemGroup::paint(painter, option, widget);
   } else {
-    painter->setPen(QPen(BG_COLOR, 0));
-    painter->setBrush(BG_COLOR);
-  }
+    if (m_polarity == P) {
+      painter->setPen(m_pen);
+      painter->setBrush(m_brush);
+    } else {
+      painter->setPen(QPen(BG_COLOR, 0));
+      painter->setBrush(BG_COLOR);
+    }
 
-  painterPath();
-  painter->drawPath(m_cachedPath);
+    painterPath();
+    painter->drawPath(m_cachedPath);
+  }
 }
 
 QPainterPath Symbol::painterPath(void)
 {
   m_cachedPath = QPainterPath();
-  m_bounding = m_cachedPath.boundingRect();
+  m_bounding = QRectF();
   return m_cachedPath;
 }
 
