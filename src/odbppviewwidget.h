@@ -3,16 +3,16 @@
 
 #include <QGraphicsView>
 #include "feature.h"
-
-
+#include "profile.h"
 
 class ODBPPViewWidget: public QGraphicsView {
   Q_OBJECT
 
 public:
   ODBPPViewWidget(QWidget* parent = 0);
-  Features* load_feature(QString filename,const QColor color = Qt::red,const QBrush brush = Qt::red);
-  Features* load_profile(QString step);
+  Features* loadFeature(QString filename, const QColor color = Qt::red,
+      const QBrush brush = Qt::red);
+  Profile* loadProfile(QString step);
   void clear_scene(){scene->clear();}
   QGraphicsScene *GetScene(){return scene;}
   void addItem(Features *bot){scene->addItem(bot);}

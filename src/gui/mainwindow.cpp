@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 void MainWindow::addLayerLabel(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
-  addProfile();
+  ui->viewWidget->loadProfile(this->windowTitle());
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2/features";
@@ -105,16 +105,6 @@ void MainWindow::showLayer(LayerSelector* selector, bool selected)
     m_colorsMap[index] = false;
     ui->viewWidget->removeItem(selector->features);
   }
-}
-
-void MainWindow::addProfile()
-{
-  QString path = "steps/" + this->windowTitle() + "/profile";
-  path = ctx.loader->absPath(path.toLower());
-  Features* features = new Features(path);
-  features->setPen(QPen(Qt::black, 0));
-  features->setBrush(Qt::transparent);
-  ui->viewWidget->addItem(features);
 }
 
 QColor MainWindow::nextColor(void)

@@ -26,7 +26,6 @@ public:
   ~MainWindow();
   void addLayerLabel(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
-  void addProfile();
 
 protected:
   Features* makeFeature(QString path, const QPen& pen, const QBrush& brush);

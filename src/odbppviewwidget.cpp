@@ -1,6 +1,5 @@
 #include "odbppviewwidget.h"
 #include "symbolfactory.h"
-#include "feature.h"
 #include "iostream"
 #include "context.h"
 
@@ -54,24 +53,24 @@ void ODBPPViewWidget::scaleView(qreal scaleFactor)
   scale(scaleFactor, scaleFactor);
 }
 
-Features* ODBPPViewWidget::load_feature(QString filename,const QColor color,const QBrush brush)
+Features* ODBPPViewWidget::loadFeature(QString filename, const QColor color,
+    const QBrush brush)
 {
-
-    Features* bot = new Features(ctx.loader->absPath(filename));
-    bot->setPen(QPen(color, 0));
-    bot->setBrush(brush);
-    scene->addItem(bot);
-    return bot;
+  Features* bot = new Features(ctx.loader->absPath(filename));
+  bot->setPen(QPen(color, 0));
+  bot->setBrush(brush);
+  scene->addItem(bot);
+  return bot;
 }
 
-Features *ODBPPViewWidget::load_profile(QString step)
+Profile *ODBPPViewWidget::loadProfile(QString step)
 {
-    QString path;
-    path = "steps/" + step + "/profile";
-    Features* profile = new Features(ctx.loader->absPath(path));
-    profile->setPen(QPen(Qt::black, 0));
-    profile->setBrush(Qt::white);
-    scene->addItem(profile);
-    return profile;
+  QString path;
+  path = QString("steps/%1/profile").arg(step.toLower());
+  Profile* profile = new Profile(ctx.loader->absPath(path));
 
+  profile->setPen(QPen(Qt::black, 0));
+  profile->setBrush(BG_COLOR);
+  scene->addItem(profile);
+  return profile;
 }

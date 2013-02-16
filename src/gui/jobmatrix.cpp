@@ -133,11 +133,11 @@ void JobMatrix::showLayer(const QString feature_name)
   path = ctx.loader->absPath(path.toLower());
   QFile file(path);
   widget.clear_scene();
-  widget.load_profile(name[0]);
+  widget.loadProfile(name[0]);
   if (file.exists()) {
-    widget.load_feature(path);
+    widget.loadFeature(path);
   } else {
-    widget.load_feature(path + ".Z");
+    widget.loadFeature(path + ".Z");
   }
   widget.show();
 }

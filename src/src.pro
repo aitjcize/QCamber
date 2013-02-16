@@ -14,13 +14,15 @@ HEADERS += \
   archiveloader.h \
   odbppviewwidget.h \
   symbolfactory.h \
-  feature.h
+  feature.h \
+  profile.h
 
 SOURCES += \
   main.cpp \
   archiveloader.cpp \
   odbppviewwidget.cpp \
-  feature.cpp
+  feature.cpp \
+  profile.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui
 
