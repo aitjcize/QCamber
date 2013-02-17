@@ -91,18 +91,20 @@ Features* MainWindow::makeFeature(QString path, const QPen& pen,
 
 void MainWindow::showLayer(LayerSelector* selector, bool selected)
 {
-  if (!selector->features) {
-    selector->features = makeFeature(selector->path(),
-        QPen(selector->color(), 0), QBrush(selector->color()));
-  }
-
   if(!selected) {
-    selector->setColor(nextColor());
-    ui->viewWidget->addItem(selector->features);
+    if (!selector->features) {
+      selector->features = makeFeature(selector->path(),
+          QPen(selector->color(), 0), QBrush(selector->color()));
+      selector->setColor(nextColor());
+      ui->viewWidget->addItem(selector->features);
+    } else {
+      selector->setColor(nextColor());
+      selector->features->setOpacity(1);
+    }
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
-    ui->viewWidget->removeItem(selector->features);
+    selector->features->setOpacity(0.0);
   }
 }
 

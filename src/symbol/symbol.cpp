@@ -6,6 +6,7 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_polarity(polarity), m_valid(false)
 {
   setHandlesChildEvents(false);
+  setCacheMode(DeviceCoordinateCache);
 }
 
 Symbol::~Symbol()
