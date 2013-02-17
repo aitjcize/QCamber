@@ -1,15 +1,17 @@
-#ifndef __ODBPP_VIEW_WIDGET_H__
-#define __ODBPP_VIEW_WIDGET_H__
+#ifndef __ODBPPGRAPHICSVIEW_H__
+#define __ODBPPGRAPHICSVIEW_H__
 
 #include <QGraphicsView>
 #include "feature.h"
 #include "profile.h"
 
-class ODBPPViewWidget: public QGraphicsView {
+#include "odbppgraphicsscene.h"
+
+class ODBPPGraphicsView: public QGraphicsView {
   Q_OBJECT
 
 public:
-  ODBPPViewWidget(QWidget* parent = 0);
+  ODBPPGraphicsView(QWidget* parent = 0);
   Features* loadFeature(QString filename, const QColor color = Qt::red,
       const QBrush brush = Qt::red);
   Profile* loadProfile(QString step);
@@ -23,7 +25,7 @@ protected:
   void scaleView(qreal scaleFactor);
 
 private:
-  QGraphicsScene *scene;
+  ODBPPGraphicsScene *scene;
 };
 
-#endif /* __ODBPP_VIEW_WIDGET_H__ */
+#endif /* __ODBPPGRAPHICSVIEW_H__ */

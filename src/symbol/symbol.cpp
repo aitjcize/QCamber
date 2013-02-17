@@ -71,7 +71,9 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-  qDebug() << m_name << this;
+  setPen(QPen(Qt::blue, 0));
+  setBrush(Qt::blue);
+  update();
 }
 
 QPainterPath Symbol::painterPath(void)

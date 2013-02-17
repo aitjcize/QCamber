@@ -10,7 +10,7 @@
 #include "context.h"
 #include "feature.h"
 #include "layerselector.h"
-#include "odbppviewwidget.h"
+#include "odbppgraphicsview.h"
 #include "structuredtextparser.h"
 
 namespace Ui {

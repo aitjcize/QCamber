@@ -14,14 +14,16 @@ HEADERS += \
   archiveloader.h \
   context.h \
   feature.h \
-  odbppviewwidget.h \
+  odbppgraphicsview.h \
+  odbppgraphicsscene.h \
   profile.h \
   symbolfactory.h
 
 SOURCES += \
   main.cpp \
   archiveloader.cpp \
-  odbppviewwidget.cpp \
+  odbppgraphicsview.cpp \
+  odbppgraphicsscene.cpp \
   feature.cpp \
   profile.cpp
 

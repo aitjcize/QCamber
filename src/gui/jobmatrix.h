@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "structuredtextparser.h"
-#include "odbppviewwidget.h"
+#include "odbppgraphicsview.h"
 #include <QSignalMapper>
 #include "mylabel.h"
 #include "iostream"
@@ -31,7 +31,7 @@ private:
   Ui::JobMatrix *ui;
   unsigned long GetFileLength (QString);
   QStringList step_name, layer_name;
-  ODBPPViewWidget widget;
+  ODBPPGraphicsView widget;
   MainWindow Window;
   //MainWindow Window;
   QSignalMapper *layerSignalMapper,*stepSignalMapper;

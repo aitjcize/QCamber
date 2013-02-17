@@ -1,4 +1,4 @@
-#include "odbppviewwidget.h"
+#include "odbppgraphicsview.h"
 #include "symbolfactory.h"
 #include "iostream"
 #include "context.h"
@@ -6,9 +6,9 @@
 using namespace std;
 extern Context ctx;
 
-ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
+ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent)
 {
-  scene = new QGraphicsScene(this);
+  scene = new ODBPPGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-800, -800, 1600, 1600);
   scene->setBackgroundBrush(BG_COLOR);
@@ -44,19 +44,19 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   scale(100, 100);
 }
 
-void ODBPPViewWidget::wheelEvent(QWheelEvent *event)
+void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
   scaleView(pow((double)2, -event->delta() / 240.0));
 }
 
-void ODBPPViewWidget::scaleView(qreal scaleFactor)
+void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
   qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 
   scale(scaleFactor, scaleFactor);
 }
 
-Features* ODBPPViewWidget::loadFeature(QString filename, const QColor color,
+Features* ODBPPGraphicsView::loadFeature(QString filename, const QColor color,
     const QBrush brush)
 {
   Features* features = new Features(ctx.loader->absPath(filename));
@@ -66,7 +66,7 @@ Features* ODBPPViewWidget::loadFeature(QString filename, const QColor color,
   return features;
 }
 
-Profile *ODBPPViewWidget::loadProfile(QString step)
+Profile *ODBPPGraphicsView::loadProfile(QString step)
 {
   QString path;
   path = QString("steps/%1/profile").arg(step.toLower());

@@ -65,7 +65,7 @@
      </layout>
     </item>
     <item>
-     <widget class="ODBPPViewWidget" name="viewWidget"/>
+     <widget class="ODBPPGraphicsView" name="viewWidget"/>
     </item>
    </layout>
   </widget>
@@ -83,9 +83,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ODBPPViewWidget</class>
+   <class>ODBPPGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>odbppviewwidget.h</header>
+   <header>odbppgraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
