@@ -69,6 +69,10 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   painter->drawPath(m_cachedPath);
 }
 
+QPainterPath Symbol::shape() const {
+  return m_cachedPath;
+}
+
 void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
   setPen(QPen(Qt::blue, 0));

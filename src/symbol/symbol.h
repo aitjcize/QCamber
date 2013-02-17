@@ -40,6 +40,9 @@ public:
   virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
+  virtual QPainterPath shape() const;
+
+protected:
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
