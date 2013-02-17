@@ -22,7 +22,7 @@ public:
   Features *features;
 
 signals:
-  void doubleClicked(LayerSelector*, bool);
+  void Clicked(LayerSelector*, bool);
 
 private slots:
   void slotClicked();
@@ -30,8 +30,7 @@ private slots:
   void colorSelector(const QString&);
 
 protected:
-  void mouseDoubleClickEvent(QMouseEvent *);
-
+  void mousePressEvent(QMouseEvent *ev);
 private:
   bool m_selected;
   QString m_bgStyle;

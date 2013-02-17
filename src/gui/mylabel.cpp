@@ -1,5 +1,6 @@
 #include "mylabel.h"
 #include "QDebug"
+#include "QMouseEvent"
 
   myLabel::myLabel(const QString &text,QWidget *parent)
 :QLabel(parent)
@@ -15,5 +16,7 @@ void myLabel::slotClicked()
 
 void myLabel::mousePressEvent(QMouseEvent *ev)
 {
+  if( ev->button() != Qt::LeftButton)
+      return;
   emit clicked();
 }

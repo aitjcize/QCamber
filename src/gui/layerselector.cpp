@@ -1,6 +1,7 @@
 #include "layerselector.h"
 #include "QDebug"
 #include "QMenu"
+#include "QMouseEvent"
 
 LayerSelector::LayerSelector(const QString& text, const QString& path,
     QWidget *parent)
@@ -51,12 +52,14 @@ void LayerSelector::slotClicked()
   qDebug()<<"QQ";
 }
 
-void LayerSelector::mouseDoubleClickEvent(QMouseEvent *)
+void LayerSelector::mousePressEvent(QMouseEvent *ev)
 {
+    if( ev->button() != Qt::LeftButton)
+      return;
   if (m_selected) {
     setStyleSheet("QLabel { background-color: transparent; color: black; }");
   }
-  emit doubleClicked(this, m_selected);
+  emit Clicked(this, m_selected);
   m_selected = !m_selected;
 }
 
@@ -116,7 +119,7 @@ void LayerSelector::colorSelector(const QString &color)
 
   if (m_selected) {
     setStyleSheet(m_bgStyle);
-    emit doubleClicked(this, m_selected);
-    emit doubleClicked(this, !m_selected);
+    emit Clicked(this, m_selected);
+    emit Clicked(this, !m_selected);
   }
 }
