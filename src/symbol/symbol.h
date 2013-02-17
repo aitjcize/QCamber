@@ -26,19 +26,21 @@ private:
 
 class Symbol: public virtual QGraphicsItemGroup {
 public:
-  Symbol(QString name, QString patter = QString(), Polarity polarity=P);
+  Symbol(QString name, QString pattern = QString(), Polarity polarity=P);
   virtual ~Symbol();
 
   QString name(void);
 
-  virtual QRectF boundingRect() const;
   virtual void setPen(QPen pen);
   virtual void setBrush(QBrush brush);
-  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-      QWidget *widget);
   virtual QPainterPath painterPath(void);
   virtual void invalidate(void);
-  void addToSymbols(Symbol* symbol);
+  void addChild(Symbol* symbol);
+
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+      QWidget *widget);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
   QString m_name;

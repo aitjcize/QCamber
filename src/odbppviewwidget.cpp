@@ -59,11 +59,11 @@ void ODBPPViewWidget::scaleView(qreal scaleFactor)
 Features* ODBPPViewWidget::loadFeature(QString filename, const QColor color,
     const QBrush brush)
 {
-  Features* bot = new Features(ctx.loader->absPath(filename));
-  bot->setPen(QPen(color, 0));
-  bot->setBrush(brush);
-  scene->addItem(bot);
-  return bot;
+  Features* features = new Features(ctx.loader->absPath(filename));
+  features->setPen(QPen(color, 0));
+  features->setBrush(brush);
+  scene->addItem(features);
+  return features;
 }
 
 Profile *ODBPPViewWidget::loadProfile(QString step)

@@ -5,6 +5,7 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
   m_polarity(polarity), m_valid(false)
 {
+  setHandlesChildEvents(false);
 }
 
 Symbol::~Symbol()
@@ -68,6 +69,11 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   painter->drawPath(m_cachedPath);
 }
 
+void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+  qDebug() << m_name << this;
+}
+
 QPainterPath Symbol::painterPath(void)
 {
   m_cachedPath = QPainterPath();
@@ -80,7 +86,9 @@ void Symbol::invalidate(void)
   m_valid = false;
 }
 
-void Symbol::addToSymbols(Symbol* symbol)
+void Symbol::addChild(Symbol* symbol)
 {
+  //symbol->setParentItem(this);
+  addToGroup(symbol);
   m_symbols.append(symbol);
 }

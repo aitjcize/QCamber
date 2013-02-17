@@ -55,7 +55,7 @@ QString TextRecord::dynamicText(QString text)
   return dynText;
 }
 
-void TextRecord::addToGroup(Symbol* group)
+void TextRecord::addToChild(Symbol* group)
 {
   symbol->setPos(x, -y);
 
@@ -63,6 +63,5 @@ void TextRecord::addToGroup(Symbol* group)
     symbol->scale(-1, 1);
   }
   symbol->rotate((orient % 4) * 90);
-  group->addToGroup(symbol);
-  group->addToSymbols(symbol);
+  group->addChild(symbol);
 }

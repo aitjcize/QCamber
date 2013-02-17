@@ -22,7 +22,7 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
   symbol = SymbolFactory::create(sym_name, polarity);
 }
 
-void PadRecord::addToGroup(Symbol* group)
+void PadRecord::addToChild(Symbol* group)
 {
   symbol->setPos(x, -y);
 
@@ -30,6 +30,5 @@ void PadRecord::addToGroup(Symbol* group)
     symbol->scale(-1, 1);
   }
   symbol->rotate((orient % 4) * 90);
-  group->addToGroup(symbol);
-  group->addToSymbols(symbol);
+  group->addChild(symbol);
 }

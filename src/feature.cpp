@@ -14,6 +14,6 @@ Features::Features(QString path): Symbol("features")
   for (QList<Record*>::const_iterator it = m_records.begin();
       it != m_records.end(); ++it) {
     Record* rec = *it;
-    rec->addToGroup(this);
+    rec->addToChild(this);
   }
 }

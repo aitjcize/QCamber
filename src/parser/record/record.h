@@ -17,9 +17,8 @@ struct Record {
   Record(DataStore* _ds): ds(_ds) {}
   virtual ~Record() { delete symbol; }
 
-  virtual void addToGroup(Symbol* group) {
-    group->addToGroup(symbol);
-    group->addToSymbols(symbol);
+  virtual void addToChild(Symbol* group) {
+    group->addChild(symbol);
   }
 
   Symbol* symbol;
@@ -39,7 +38,7 @@ struct LineRecord: public Record {
 
 struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds, const QStringList& param);
-  virtual void addToGroup(Symbol* group);
+  virtual void addToChild(Symbol* group);
 
   qreal x, y;
   int sym_num;
@@ -63,7 +62,7 @@ struct ArcRecord: public Record {
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual QString dynamicText(QString);
-  virtual void addToGroup(Symbol* group);
+  virtual void addToChild(Symbol* group);
 
   qreal x, y;
   QString font;

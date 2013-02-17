@@ -13,7 +13,7 @@ using std::endl;
 extern Context ctx;
 
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
-  Symbol("user", "user", rec->polarity)
+  Symbol("surface", "surface", rec->polarity)
 {
   m_dcode = rec->dcode;
   m_polygons = rec->polygons;

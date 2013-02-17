@@ -9,8 +9,7 @@ extern Context ctx;
 Profile::Profile(QString path): Symbol("profile")
 {
   Features* profile = new Features(ctx.loader->absPath(path));
-  addToGroup(profile);
-  addToSymbols(profile);
+  addChild(profile);
   m_activeRect = profile->boundingRect();
 
   StructuredTextParser stephdr_parser(path.replace("profile", "stephdr"));
@@ -69,8 +68,7 @@ Profile::Profile(QString path): Symbol("profile")
         if (mirror) {
           step->scale(-1, 1);
         }
-        addToGroup(step);
-        addToSymbols(step);
+        addChild(step);
       }
     }
 

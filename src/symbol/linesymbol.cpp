@@ -6,7 +6,7 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-LineSymbol::LineSymbol(LineRecord* rec): Symbol("user", "user", rec->polarity)
+LineSymbol::LineSymbol(LineRecord* rec): Symbol("line", "line", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;
