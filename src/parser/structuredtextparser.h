@@ -10,6 +10,12 @@ using std::string;
 class StructuredTextDataStore: public DataStore {
 public:
   class InvalidKeyException: public std::exception {
+  public:
+    InvalidKeyException(const char* msg): m_msg(msg) {}
+    virtual const char* what() const throw() { return m_msg; }
+
+  private:
+    const char* m_msg;
   };
 
   typedef enum { KEY_VALUE = 0, BLOCK } PutMode;

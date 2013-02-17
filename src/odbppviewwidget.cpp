@@ -11,7 +11,10 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   scene = new QGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-800, -800, 1600, 1600);
+  scene->setBackgroundBrush(BG_COLOR);
+
   setScene(scene);
+
   setCacheMode(CacheBackground);
   setDragMode(QGraphicsView::ScrollHandDrag);
   setViewportUpdateMode(BoundingRectViewportUpdate);
@@ -19,7 +22,6 @@ ODBPPViewWidget::ODBPPViewWidget(QWidget* parent): QGraphicsView(parent)
   setTransformationAnchor(AnchorUnderMouse);
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
-  setBackgroundBrush(BG_COLOR);
 
   /*
   Symbol* user = new UserSymbol("", P);

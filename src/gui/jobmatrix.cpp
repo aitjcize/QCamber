@@ -137,7 +137,12 @@ void JobMatrix::showLayer(const QString feature_name)
   if (file.exists()) {
     widget.loadFeature(path);
   } else {
-    widget.loadFeature(path + ".Z");
+    file.setFileName(path+".Z");
+    if (file.exists()) {
+      widget.loadFeature(path + ".Z");
+    } else {
+      widget.loadFeature(path + ".z");
+    }
   }
   widget.show();
 }

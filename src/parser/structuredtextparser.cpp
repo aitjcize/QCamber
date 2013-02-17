@@ -66,7 +66,7 @@ string StructuredTextDataStore::get(string key)
   if (m_valueData.find(key) != m_valueData.end()) {
     return m_valueData[key];
   }
-  throw InvalidKeyException();
+  throw InvalidKeyException(key.c_str());
 }
 
 StructuredTextDataStore::BlockIterPair
