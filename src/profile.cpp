@@ -19,22 +19,28 @@ Profile::Profile(QString path): Symbol("profile")
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
       "STEP-REPEAT");
 
-#define GET(key) (QString::fromStdString(hds->get(key)))
-  qreal x_datum = GET("X_DATUM").toDouble();
-  qreal y_datum = GET("Y_DATUM").toDouble();
-  qreal x_origin = GET("X_ORIGIN").toDouble();
-  qreal y_origin = GET("Y_ORIGIN").toDouble();
+  qreal x_datum, y_datum, x_origin, y_origin, top_active, bottom_active,
+        left_active, right_active;
 
-  qreal top_active = GET("TOP_ACTIVE").toDouble();
-  qreal bottom_active = GET("BOTTOM_ACTIVE").toDouble();
-  qreal left_active = GET("LEFT_ACTIVE").toDouble();
-  qreal right_active = GET("RIGHT_ACTIVE").toDouble();
+  try {
+#define GET(key) (QString::fromStdString(hds->get(key)))
+    x_datum = GET("X_DATUM").toDouble();
+    y_datum = GET("Y_DATUM").toDouble();
+    x_origin = GET("X_ORIGIN").toDouble();
+    y_origin = GET("Y_ORIGIN").toDouble();
+
+    top_active = GET("TOP_ACTIVE").toDouble();
+    bottom_active = GET("BOTTOM_ACTIVE").toDouble();
+    left_active = GET("LEFT_ACTIVE").toDouble();
+    right_active = GET("RIGHT_ACTIVE").toDouble();
 #undef GET
 
-  m_edgeBounding.setX(m_edgeBounding.x() + left_active);
-  m_edgeBounding.setY(m_edgeBounding.y() + top_active);
-  m_edgeBounding.setWidth(m_edgeBounding.width() -left_active -right_active);
-  m_edgeBounding.setHeight(m_edgeBounding.height() -top_active -bottom_active);
+    m_edgeBounding.setX(m_edgeBounding.x() + left_active);
+    m_edgeBounding.setY(m_edgeBounding.y() + top_active);
+    m_edgeBounding.setWidth(m_edgeBounding.width()-left_active-right_active);
+    m_edgeBounding.setHeight(m_edgeBounding.height()-top_active-bottom_active);
+  } catch(StructuredTextDataStore::InvalidKeyException) {
+  }
 
   if (ip.first == ip.second) {
     m_edgeBounding = QRectF();
