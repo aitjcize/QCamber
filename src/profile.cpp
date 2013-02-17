@@ -34,13 +34,10 @@ Profile::Profile(QString path): Symbol("profile")
     right_active = GET("RIGHT_ACTIVE").toDouble();
 #undef GET
 
-    qDebug() << m_activeRect;
     m_activeRect.setX(m_activeRect.x() + left_active);
     m_activeRect.setY(m_activeRect.y() + top_active);
     m_activeRect.setWidth(m_activeRect.width() - right_active);
     m_activeRect.setHeight(m_activeRect.height() - bottom_active);
-    qDebug() << right_active;
-    qDebug() << m_activeRect;
   } catch(StructuredTextDataStore::InvalidKeyException) {
     m_x_datum = m_y_datum = m_x_origin = m_y_origin = 0;
   }
