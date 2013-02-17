@@ -17,9 +17,14 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
 
+  qreal x_datum(void);
+  qreal y_datum(void);
+
 private:
   StructuredTextDataStore* m_ds;
-  QRectF m_edgeBounding;
+  QRectF m_activeRect;
+  qreal m_x_datum, m_y_datum;
+  qreal m_x_origin, m_y_origin;
 };
 
 #endif /* __PROFILE_H__ */

@@ -17,7 +17,6 @@ public:
   QGraphicsScene *GetScene(){return scene;}
   void addItem(Features *bot){scene->addItem(bot);}
   void removeItem(Features *bot){scene->removeItem(bot);}
-  void setBackgroundBrush(const QBrush &brush){scene->setBackgroundBrush(brush);}
 
 protected:
   void wheelEvent(QWheelEvent *event);

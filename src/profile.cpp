@@ -11,7 +11,7 @@ Profile::Profile(QString path): Symbol("profile")
   Features* profile = new Features(ctx.loader->absPath(path));
   addToGroup(profile);
   addToSymbols(profile);
-  m_edgeBounding = profile->boundingRect();
+  m_activeRect = profile->boundingRect();
 
   StructuredTextParser stephdr_parser(path.replace("profile", "stephdr"));
   StructuredTextDataStore* hds = stephdr_parser.parse();
@@ -19,15 +19,14 @@ Profile::Profile(QString path): Symbol("profile")
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
       "STEP-REPEAT");
 
-  qreal x_datum, y_datum, x_origin, y_origin, top_active, bottom_active,
-        left_active, right_active;
+  qreal top_active, bottom_active, left_active, right_active;
 
   try {
 #define GET(key) (QString::fromStdString(hds->get(key)))
-    x_datum = GET("X_DATUM").toDouble();
-    y_datum = GET("Y_DATUM").toDouble();
-    x_origin = GET("X_ORIGIN").toDouble();
-    y_origin = GET("Y_ORIGIN").toDouble();
+    m_x_datum = GET("X_DATUM").toDouble();
+    m_y_datum = GET("Y_DATUM").toDouble();
+    m_x_origin = GET("X_ORIGIN").toDouble();
+    m_y_origin = GET("Y_ORIGIN").toDouble();
 
     top_active = GET("TOP_ACTIVE").toDouble();
     bottom_active = GET("BOTTOM_ACTIVE").toDouble();
@@ -35,15 +34,19 @@ Profile::Profile(QString path): Symbol("profile")
     right_active = GET("RIGHT_ACTIVE").toDouble();
 #undef GET
 
-    m_edgeBounding.setX(m_edgeBounding.x() + left_active);
-    m_edgeBounding.setY(m_edgeBounding.y() + top_active);
-    m_edgeBounding.setWidth(m_edgeBounding.width()-left_active-right_active);
-    m_edgeBounding.setHeight(m_edgeBounding.height()-top_active-bottom_active);
+    qDebug() << m_activeRect;
+    m_activeRect.setX(m_activeRect.x() + left_active);
+    m_activeRect.setY(m_activeRect.y() + top_active);
+    m_activeRect.setWidth(m_activeRect.width() - right_active);
+    m_activeRect.setHeight(m_activeRect.height() - bottom_active);
+    qDebug() << right_active;
+    qDebug() << m_activeRect;
   } catch(StructuredTextDataStore::InvalidKeyException) {
+    m_x_datum = m_y_datum = m_x_origin = m_y_origin = 0;
   }
 
   if (ip.first == ip.second) {
-    m_edgeBounding = QRectF();
+    m_activeRect = QRectF();
   }
 
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
@@ -63,8 +66,12 @@ Profile::Profile(QString path): Symbol("profile")
       for (int j = 0; j < ny; ++j) {
         QString path = QString("steps/%1/profile").arg(name.toLower());
         Profile* step = new Profile(ctx.loader->absPath(path));
-        step->setPos(x_datum + x+ dx * i, -(y_datum + y + dy * j));
+        step->setPos(-step->x_datum() + x + dx * i,
+                    -(-step->y_datum() + y + dy * j));
         step->rotate(angle);
+        if (mirror) {
+          step->scale(-1, 1);
+        }
         addToGroup(step);
         addToSymbols(step);
       }
@@ -74,6 +81,16 @@ Profile::Profile(QString path): Symbol("profile")
   }
 }
 
+qreal Profile::x_datum(void)
+{
+  return m_x_datum;
+}
+
+qreal Profile::y_datum(void)
+{
+  return m_y_datum;
+}
+
 void Profile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
@@ -81,6 +98,7 @@ void Profile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   dashes << 4 << 4;
   m_pen.setStyle(Qt::DashLine);
   m_pen.setDashPattern(dashes);
+  m_brush = QBrush(Qt::transparent);
 
   Symbol::paint(painter, option, widget);
 }
@@ -91,7 +109,7 @@ QPainterPath Profile::painterPath(void)
     return m_cachedPath;
 
   m_cachedPath = QPainterPath();
-  m_cachedPath.addRect(m_edgeBounding);
+  m_cachedPath.addRect(m_activeRect);
 
   m_valid = true;
 
