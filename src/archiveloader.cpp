@@ -2,7 +2,6 @@
 
 #include <QtCore>
 #include <QFileInfo>
-
 #include "parser.h"
 
 ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
@@ -30,6 +29,10 @@ bool ArchiveLoader::load(void)
   QString extract_name = tempDir.absoluteFilePath(extract_dir);
 
   QStringList args;
+#ifdef Q_WS_WIN
+  m_fileName.replace(":", "");
+  m_fileName.prepend('/');
+#endif
   args << "xf" << m_fileName << "--strip-components=1" << "-C" << extract_name;
 
   int ret = QProcess::execute(TAR_COMMAND, args);
