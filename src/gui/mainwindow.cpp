@@ -42,7 +42,7 @@ void MainWindow::addLayerLabel(const QStringList& layerNames)
     LayerSelector *layer = new LayerSelector(layerNames[i],
         pathTmpl.arg(this->windowTitle()).arg(layerNames[i]));
 
-    connect(layer, SIGNAL(doubleClicked(LayerSelector*, bool)), this,
+    connect(layer, SIGNAL(Clicked(LayerSelector*, bool)), this,
         SLOT(showLayer(LayerSelector*, bool)));
     m_layout->addWidget(layer);
   }

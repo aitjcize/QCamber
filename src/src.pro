@@ -12,10 +12,11 @@ include (gui/gui.pri)
 
 HEADERS += \
   archiveloader.h \
-  odbppviewwidget.h \
-  symbolfactory.h \
+  context.h \
   feature.h \
-  profile.h
+  odbppviewwidget.h \
+  profile.h \
+  symbolfactory.h
 
 SOURCES += \
   main.cpp \
