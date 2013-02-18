@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QString>
+#include <QGraphicsOpacityEffect>
 
 #define BG_COLOR QColor::fromRgb(82, 206, 175)
 
@@ -30,6 +31,7 @@ public:
   virtual ~Symbol();
 
   QString name(void);
+  void setOpacity(qreal opacity);
 
   virtual void setPen(QPen pen);
   virtual void setBrush(QBrush brush);
@@ -55,6 +57,7 @@ protected:
   Polarity m_polarity;
   bool m_valid;
   QList<Symbol*> m_symbols;
+  QGraphicsOpacityEffect* m_opacityEffect;
 };
 
 #endif /* __SYMBOL_H__ */
