@@ -179,19 +179,6 @@ FeaturesParser::~FeaturesParser()
 
 FeaturesDataStore* FeaturesParser::parse(void)
 {
-  if (m_fileName.endsWith(".Z", Qt::CaseInsensitive)) {
-    QStringList args;
-    args << "-d" << m_fileName;
-
-    int ret = QProcess::execute(GZIP_COMMAND, args);
-
-    if ((ret != -1) && (ret != -2)) {
-      m_fileName = m_fileName.replace(QRegExp("\\.[zZ]$"), "");
-     } else {
-      return NULL;
-    }
-  }
-
   FeaturesDataStore* ds = new FeaturesDataStore;
   QFile file(m_fileName);
 

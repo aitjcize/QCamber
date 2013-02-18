@@ -18,7 +18,7 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
   Symbol(def, def, polarity), m_def(def)
 {
   static bool first = true;
-  QString path = ctx.loader->absPath("symbols/" + def + "/features");
+  QString path = ctx.loader->featuresPath("symbols/" + def);
 
 #ifdef TEST_USER_SYMBOL
   if (first) {

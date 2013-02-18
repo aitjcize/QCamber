@@ -2,6 +2,7 @@
 #define __ARCHIVE_LOADER_H__
 
 #define TAR_COMMAND "tar"
+#define GZIP_COMMAND "gzip"
 
 #include <QDir>
 #include <QString>
@@ -16,6 +17,7 @@ public:
 
   QString absPath(QString path);
   QStringList listDir(QString filename);
+  QString featuresPath(QString base);
 
 private:
   bool recurRemove(const QString& dirname);

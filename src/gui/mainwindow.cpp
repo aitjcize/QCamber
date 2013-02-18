@@ -35,7 +35,7 @@ void MainWindow::addLayerLabel(const QStringList& layerNames)
   ui->viewWidget->loadProfile(this->windowTitle());
 
   clearLayout(m_layout, true);
-  QString pathTmpl = "steps/%1/layers/%2/features";
+  QString pathTmpl = "steps/%1/layers/%2";
 
   for(int i = 0; i < layerNames.count(); ++i)
   {
@@ -67,23 +67,7 @@ void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 Features* MainWindow::makeFeature(QString path, const QPen& pen,
     const QBrush& brush)
 {
-  //QString path = "steps/" + this->windowTitle() + "/layers/" + filename + "/features";
-  path = ctx.loader->absPath(path.toLower());
-  QFile file(path);
-  //ui->viewWidget->scene()->clear();
-  //把profile變成按鈕
-  //widget.load_profile(this->windowTitle());
-  if (!file.exists())
-  {
-    file.setFileName(path + ".Z");
-    if (!file.exists())
-      path += ".z";
-    else
-      path += ".Z";
-  }
-  //qDebug()<<path;
-
-  Features* features = new Features(path);
+  Features* features = new Features(ctx.loader->featuresPath(path));
   features->setPen(pen);
   features->setBrush(brush);
   return features;

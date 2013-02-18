@@ -29,7 +29,6 @@ private slots:
 
 private:
   Ui::JobMatrix *ui;
-  unsigned long GetFileLength (QString);
   QStringList step_name, layer_name;
   ODBPPGraphicsView widget;
   MainWindow Window;

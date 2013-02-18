@@ -86,64 +86,32 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
       layerSignalMapper->setMapping(btn,text);
 
 
-      text = "steps/";
-      text += step_name[i-2].toAscii().data() ;
-      text += "/layers/";
-      text += (QString)it->second->get("NAME").c_str();
-      text += "/features";
-      if(GetFileLength(text) == 0)
-      {
+      QString pathTmpl = "steps/%1/layers/%2";
+      text = pathTmpl.arg(step_name[i-2].toAscii().data()).arg(
+          QString::fromStdString(it->second->get("NAME")));
+
+      if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
         //btn->setFlat(true);
         btn->setText("");
       }
-
       matrix_layout->addWidget(btn,layers-1,i);
-
     }
-
   }
-  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showStep(const QString &)));
-  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this, SLOT(showLayer(const QString &)));
+
+  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this,
+      SLOT(showStep(const QString &)));
+  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this,
+      SLOT(showLayer(const QString &)));
   ui->scrollWidget->setLayout(matrix_layout);
-
 }
-
-unsigned long JobMatrix::GetFileLength ( QString fileName)
-{
-  QString path = ctx.loader->absPath(fileName).toLower();
-  QFile file(path);
-  //qDebug()<<ctx.loader->absPath(fileName).toLower();
-  if ( file.exists() ) {
-    return file.size();
-  }else{
-    file.setFileName(path+".Z");
-    if(file.exists())
-      return file.size();
-    file.setFileName(path+".z");
-    return file.size();
-  }
-  return -1; //error
-}
-
 
 void JobMatrix::showLayer(const QString feature_name)
 {
   QStringList name = feature_name.toLower().split("/");
-  QString path = "steps/" + name[0] + "/layers/" + name[1] + "/features";
-  path = ctx.loader->absPath(path.toLower());
-  QFile file(path);
-  widget.clear_scene();
+  QString pathTmpl = "steps/%1/layers/%2";
+  QString path = pathTmpl.arg(name[0]).arg(name[1]);
   widget.loadProfile(name[0]);
-  if (file.exists()) {
-    widget.loadFeature(path);
-  } else {
-    file.setFileName(path+".Z");
-    if (file.exists()) {
-      widget.loadFeature(path + ".Z");
-    } else {
-      widget.loadFeature(path + ".z");
-    }
-  }
+  widget.loadFeature(ctx.loader->featuresPath(path.toLower()));
   widget.show();
 }
 
