@@ -7,6 +7,8 @@
 #include <QGraphicsScene>
 
 struct Context {
+  ~Context() { delete loader; }
+
   ArchiveLoader* loader;    // loader
 };
 
