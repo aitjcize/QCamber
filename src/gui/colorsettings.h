@@ -1,0 +1,34 @@
+#ifndef COLORSETTINGS_H
+#define COLORSETTINGS_H
+
+#include <QDialog>
+#include "config.h"
+#include "mylabel.h"
+#include "QSignalMapper"
+#include "QList"
+//extern Config cfg("config.ini");
+
+#define COLOR_NUMBER 6
+
+namespace Ui {
+class ColorSettings;
+}
+
+class ColorSettings : public QDialog
+{
+    Q_OBJECT
+    
+public:
+    explicit ColorSettings(QWidget *parent = 0);
+    ~ColorSettings();
+    
+private slots:
+    QColor openSelector(const QString color_config);
+private:
+    Ui::ColorSettings *ui;
+    void writeToconfig();
+    QSignalMapper *colorSignalMapper;
+    QList<myLabel*> label_list;
+};
+
+#endif // COLORSETTINGS_H

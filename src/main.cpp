@@ -5,6 +5,7 @@
 #include "context.h"
 #include "structuredtextparser.h"
 
+Config cfg("config.ini");
 Context ctx;
 
 //#define DEPLOY

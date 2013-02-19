@@ -17,7 +17,8 @@ HEADERS += \
   odbppgraphicsview.h \
   odbppgraphicsscene.h \
   profile.h \
-  symbolfactory.h
+  symbolfactory.h \
+    config.h
 
 SOURCES += \
   main.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
   odbppgraphicsview.cpp \
   odbppgraphicsscene.cpp \
   feature.cpp \
-  profile.cpp
+  profile.cpp \
+    config.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui
 

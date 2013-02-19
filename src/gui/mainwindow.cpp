@@ -5,14 +5,13 @@
 #include <QDebug>
 
 extern Context ctx;
+extern Config cfg;
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
-  m_colors << QColor::fromRgb(253, 0, 0)  << QColor::fromRgb(74, 165, 2)
-    << QColor::fromRgb(0, 173, 199) << QColor::fromRgb(255, 255, 62)
-    << Qt::cyan << Qt::magenta << Qt::green << Qt::blue;
+  load_color_config();
 
   for (int i = 0; i < m_colors.size(); ++i) {
     m_colorsMap[i] = false;
@@ -21,7 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
 
   m_layout = new QVBoxLayout();
+  m_tool_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
+  ui->groupBox_Tool->setLayout(m_tool_layout);
+
+  load_function_btn();
+
 }
 
 MainWindow::~MainWindow()
@@ -99,4 +103,31 @@ QColor MainWindow::nextColor(void)
     }
   }
   return Qt::red;
+}
+
+void MainWindow::load_color_config()
+{
+    QString color_config;
+    if(! m_colors.empty())
+        m_colors.clear();
+    for(int i=1;i<COLOR_NUMBER+1;i++)
+    {
+        color_config.sprintf("color/%d",i);
+        m_colors<<QColor(cfg.value(color_config).toString());
+    }
+
+}
+
+void MainWindow::load_function_btn()
+{
+    myLabel *label = new myLabel("Set color");
+    connect(label,SIGNAL(clicked()),this,SLOT(showColorSelector()));
+
+    m_tool_layout->addWidget(label);
+}
+
+void MainWindow::showColorSelector()
+{
+    m_color_widget.show();
+    load_color_config();
 }
