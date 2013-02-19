@@ -8,15 +8,21 @@
 #include "symbol.h"
 #include "record.h"
 #include "featuresparser.h"
+#include "layergraphicseffect.h"
 
 class Features: public Symbol {
 public:
   Features(QString path);
 
+  void setOpacity(qreal opacity);
+  void setDoComposite(bool status);
+
 private:
   FeaturesDataStore* m_ds;
   QList<Record*> m_records;
   QList<Symbol*> m_symbols;
+
+  LayerGraphicsEffect* m_layerEffect;
 };
 
 #endif /* __FEATURES_H__ */

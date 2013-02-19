@@ -83,9 +83,11 @@ void MainWindow::showLayer(LayerSelector* selector, bool selected)
     }
     selector->setColor(nextColor());
     selector->features->setOpacity(1);
+    selector->features->setDoComposite(true);
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
+    selector->features->setDoComposite(false);
     selector->features->setOpacity(0);
   }
 }

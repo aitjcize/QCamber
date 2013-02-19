@@ -16,4 +16,18 @@ Features::Features(QString path): Symbol("features")
     Record* rec = *it;
     rec->addToChild(this);
   }
+
+  setCacheMode(DeviceCoordinateCache);
+  m_layerEffect = new LayerGraphicsEffect();
+  setGraphicsEffect(m_layerEffect);
+}
+
+void Features::setOpacity(qreal opacity)
+{
+  m_layerEffect->setOpacity(opacity);
+}
+
+void Features::setDoComposite(bool status)
+{
+  m_layerEffect->setDoComposite(status);
 }

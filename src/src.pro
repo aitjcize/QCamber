@@ -14,17 +14,19 @@ HEADERS += \
   archiveloader.h \
   context.h \
   feature.h \
-  odbppgraphicsview.h \
   odbppgraphicsscene.h \
+  odbppgraphicsview.h \
+  layergraphicseffect.h \
   profile.h \
   symbolfactory.h
 
 SOURCES += \
-  main.cpp \
   archiveloader.cpp \
-  odbppgraphicsview.cpp \
-  odbppgraphicsscene.cpp \
   feature.cpp \
+  main.cpp \
+  odbppgraphicsscene.cpp \
+  odbppgraphicsview.cpp \
+  layergraphicseffect.cpp \
   profile.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui
