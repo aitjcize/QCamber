@@ -35,6 +35,7 @@ protected:
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
   void showColorSelector();
+  void load_color_config();
 
 private:
   Ui::MainWindow *ui;
@@ -43,7 +44,6 @@ private:
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
   ColorSettings m_color_widget;
-  void load_color_config();
   void load_function_btn();
 };
 

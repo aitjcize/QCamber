@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
   load_function_btn();
-
+  connect(&m_color_widget,SIGNAL(selected()),this,SLOT(load_color_config()));
 }
 
 MainWindow::~MainWindow()
@@ -129,5 +129,5 @@ void MainWindow::load_function_btn()
 void MainWindow::showColorSelector()
 {
     m_color_widget.show();
-    load_color_config();
+    //load_color_config();
 }

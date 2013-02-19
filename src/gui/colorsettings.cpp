@@ -59,3 +59,10 @@ void ColorSettings::writeToconfig()
         //qDebug()<<QColor("#FF00FF").name();
     }
 }
+
+
+
+void ColorSettings::on_buttonBox_accepted()
+{
+    emit selected();
+}
