@@ -12,6 +12,7 @@
 #include "layerselector.h"
 #include "odbppgraphicsview.h"
 #include "structuredtextparser.h"
+#include "colorsettings.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,12 +34,17 @@ protected:
 
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
+  void showColorSelector();
+  void load_color_config();
 
 private:
   Ui::MainWindow *ui;
   QVBoxLayout* m_layout;
+  QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
+  ColorSettings m_color_widget;
+  void load_function_btn();
 };
 
 #endif // __MAINWINDOW_H__
