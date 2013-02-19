@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->scrollWidget->setLayout(m_layout);
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
-  load_function_btn();
   connect(&m_color_widget,SIGNAL(selected()),this,SLOT(loadColorConfig()));
 }
 
@@ -119,16 +118,7 @@ void MainWindow::loadColorConfig()
   }
 }
 
-void MainWindow::load_function_btn()
-{
-  myLabel *label = new myLabel("Set color");
-  connect(label,SIGNAL(clicked()),this,SLOT(showColorSelector()));
-
-  m_tool_layout->addWidget(label);
-}
-
-void MainWindow::showColorSelector()
+void MainWindow::on_actionSetColor_triggered()
 {
   m_color_widget.show();
-  //loadColorConfig();
 }

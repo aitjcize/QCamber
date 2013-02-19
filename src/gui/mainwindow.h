@@ -28,13 +28,15 @@ public:
   void addLayerLabel(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
 
+public slots:
+  void on_actionSetColor_triggered();
+
 protected:
   Features* makeFeature(QString path, const QPen& pen, const QBrush& brush);
   QColor nextColor(void);
 
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
-  void showColorSelector();
   void loadColorConfig();
 
 private:
@@ -44,7 +46,6 @@ private:
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
   ColorSettings m_color_widget;
-  void load_function_btn();
 };
 
 #endif // __MAINWINDOW_H__

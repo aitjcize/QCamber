@@ -53,7 +53,7 @@
            <x>0</x>
            <y>0</y>
            <width>148</width>
-           <height>315</height>
+           <height>328</height>
           </rect>
          </property>
          <property name="title">
@@ -78,8 +78,20 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionSetColor"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSetColor">
+   <property name="text">
+    <string>Color</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
