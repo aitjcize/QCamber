@@ -1,29 +1,17 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
 
-#include "QSettings"
-#include "QStringList"
+#include <QSettings>
+#include <QStringList>
 
-class Config :public QSettings
+class Config: public QSettings
 {
 public:
-    Config(QString filename);
-    //~Config();
-
-    void load_file(QString filename);
-    /*
-    void setValue(const QString &key,const QVariant &value)
-    {settings->setValue(key,value);}
-    QVariant value(const QString &key,const QVariant &value = QVariant())
-    {return settings->value(key,value);}
-    void beginGroup ( const QString & prefix ){settings->beginGroup(prefix);}
-    QStringList childKeys() const {return settings->childKeys();}
-    */
+  Config(QString filename);
+  void load_file(QString filename);
 
 private:
-    QString m_fileName;
-    QSettings *settings;
-
+  QString m_fileName;
 };
 
-#endif // CONFIG_H
+#endif // __CONFIG_H__

@@ -8,7 +8,5 @@ Config::Config(QString filename)
 
 void Config::load_file(QString filename)
 {
-    m_fileName = filename;
-    if(settings == NULL)
-        settings = new QSettings (m_fileName, QSettings ::IniFormat);
+  m_fileName = filename;
 }
