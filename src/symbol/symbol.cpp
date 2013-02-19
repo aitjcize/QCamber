@@ -7,10 +7,6 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
 {
   setHandlesChildEvents(false);
   //setCacheMode(DeviceCoordinateCache);
-
-  m_opacityEffect = new QGraphicsOpacityEffect();
-  m_opacityEffect->setOpacity(1);
-  setGraphicsEffect(m_opacityEffect);
 }
 
 Symbol::~Symbol()
@@ -19,17 +15,11 @@ Symbol::~Symbol()
       it != m_symbols.end(); ++it) {
     delete (*it);
   }
-  delete m_opacityEffect;
 }
 
 QString Symbol::name(void)
 {
   return m_name;
-}
-
-void Symbol::setOpacity(qreal opacity)
-{
-  m_opacityEffect->setOpacity(opacity);
 }
 
 QRectF Symbol::boundingRect() const
