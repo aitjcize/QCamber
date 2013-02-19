@@ -35,7 +35,7 @@ protected:
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
   void showColorSelector();
-  void load_color_config();
+  void loadColorConfig();
 
 private:
   Ui::MainWindow *ui;
