@@ -19,13 +19,14 @@ public:
   QGraphicsScene *GetScene(){return scene;}
   void addItem(Features *bot){scene->addItem(bot);}
   void removeItem(Features *bot){scene->removeItem(bot);}
-
+signals:
+  void mouseMove(QPoint);
 protected:
   void wheelEvent(QWheelEvent *event);
   void scaleView(qreal scaleFactor);
-
 private:
   ODBPPGraphicsScene *scene;
+  void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */

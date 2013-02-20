@@ -13,9 +13,6 @@ public:
 signals:
   void clicked();
 
-public slots:
-  void slotClicked();
-
 protected:
   void mousePressEvent(QMouseEvent *ev);
 };
