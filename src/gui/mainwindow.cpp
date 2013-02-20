@@ -19,12 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->setupUi(this);
 
+  m_statusLabel = new myLabel("status bar");
+  ui->statusbar->addWidget(m_statusLabel);
   m_layout = new QVBoxLayout();
   m_tool_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
   connect(&m_color_widget,SIGNAL(selected()),this,SLOT(loadColorConfig()));
+  connect(ui->viewWidget,SIGNAL(mouseMove(QPoint)),this,SLOT(showMouseCord(QPoint)));
 }
 
 MainWindow::~MainWindow()
@@ -122,3 +125,11 @@ void MainWindow::on_actionSetColor_triggered()
 {
   m_color_widget.show();
 }
+
+void MainWindow::showMouseCord(QPoint pos)
+{
+    QString text;
+    text.sprintf("X:%d Y:%d",pos.x(),pos.y());
+    m_statusLabel->setText(text);
+}
+

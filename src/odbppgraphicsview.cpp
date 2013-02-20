@@ -77,3 +77,13 @@ Profile *ODBPPGraphicsView::loadProfile(QString step)
   scene->addItem(profile);
   return profile;
 }
+
+void ODBPPGraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    if(event->buttons().testFlag(Qt::NoButton))
+        emit mouseMove(event->pos());
+    else
+        QGraphicsView::mouseMoveEvent(event);
+
+}
+

@@ -9,10 +9,6 @@
   //connect(this,SIGNAL(clicked()),this,SLOT(slotClicked()));
 }
 
-void myLabel::slotClicked()
-{
-  qDebug()<<"QQ";
-}
 
 void myLabel::mousePressEvent(QMouseEvent *ev)
 {

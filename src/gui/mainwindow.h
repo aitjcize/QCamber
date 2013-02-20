@@ -38,6 +38,7 @@ protected:
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
   void loadColorConfig();
+  void showMouseCord(QPoint);
 
 private:
   Ui::MainWindow *ui;
@@ -46,6 +47,7 @@ private:
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
   ColorSettings m_color_widget;
+  myLabel* m_statusLabel;
 };
 
 #endif // __MAINWINDOW_H__
