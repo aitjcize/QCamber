@@ -29,7 +29,6 @@ private slots:
 
 private:
     Ui::ColorSettings *ui;
-    void writeToconfig();
     QSignalMapper *colorSignalMapper;
     QList<myLabel*> label_list;
 

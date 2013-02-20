@@ -11,13 +11,14 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
+
+  ui->setupUi(this);
+
   loadColorConfig();
 
   for (int i = 0; i < m_colors.size(); ++i) {
     m_colorsMap[i] = false;
   }
-
-  ui->setupUi(this);
 
   m_statusLabel = new myLabel("status bar");
   ui->statusbar->addWidget(m_statusLabel);
@@ -111,6 +112,9 @@ QColor MainWindow::nextColor(void)
 
 void MainWindow::loadColorConfig()
 {
+  ui->viewWidget->GetScene()->setBackgroundBrush(
+              QColor(cfg.value("color/BG").toString()));
+
   QString color_config;
   if(! m_colors.empty())
     m_colors.clear();

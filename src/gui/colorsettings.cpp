@@ -13,13 +13,14 @@ ColorSettings::ColorSettings(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  //writeToconfig();
   colorSignalMapper = new QSignalMapper(this);
 
   QString label_name;
-  for(int i=1;i<COLOR_NUMBER+1;i++)
+  for(int i=1;i<COLOR_NUMBER+2;i++)
   {
     label_name.sprintf("%d",i);
+    if(i == COLOR_NUMBER + 1)
+    label_name = "BG";
     myLabel *label = new myLabel(label_name);
     label->setStyleSheet("QLabel { background-color: " + cfg.value("color/" +
           label_name).toString() + "; color: black; }");
@@ -30,7 +31,6 @@ ColorSettings::ColorSettings(QWidget *parent) :
   }
   connect(colorSignalMapper, SIGNAL(mapped(const QString &)), this,
       SLOT(openSelector(const QString &)));
-  //connect(colorSignalMapper,SIGNAL(mapped(QWidget*)),this,SLOT(openSelector(QWidget*)));
 }
 
 ColorSettings::~ColorSettings()
@@ -42,24 +42,16 @@ QColor ColorSettings::openSelector(const QString  color_config)
 {
   QColorDialog colorSelector;
   QColor color(cfg.value("color/"+color_config).toString());
-  //QColorDialog::setCustomColor(0, QRgb(0x0000FF));
-  //QColor color = QColorDialog::getColor(QColor(0, 255, 0));
   colorSelector.setCurrentColor(color);
   color = colorSelector.getColor(QColor(0,255,0));
   cfg.setValue("color/"+color_config,color.name());
-  label_list.at(color_config.toInt()-1)->setStyleSheet(
+  if(color_config == "BG")
+    label_list.at(COLOR_NUMBER)->setStyleSheet(
+      "QLabel { background-color: " + color.name() + "; color: black; }");
+  else
+    label_list.at(color_config.toInt()-1)->setStyleSheet(
       "QLabel { background-color: " + color.name() + "; color: black; }");
   return color;
-}
-
-void ColorSettings::writeToconfig()
-{
-  QString text;
-  for (int i = 1; i < COLOR_NUMBER+1; i++) {
-    text.sprintf("color/%d",i);
-    cfg.setValue(text,QColor("#FF00FF").name());
-    //qDebug()<<QColor("#FF00FF").name();
-  }
 }
 
 void ColorSettings::on_buttonBox_accepted()
