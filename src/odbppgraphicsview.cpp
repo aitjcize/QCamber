@@ -22,8 +22,6 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setTransformationAnchor(AnchorUnderMouse);
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
-  m_scale_factor = 150;
-  scale(100, 100);
 }
 
 void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
@@ -33,8 +31,11 @@ void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
-  qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-  m_scale_factor = factor;
+  qreal factor = transform().scale(scaleFactor,
+      scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
+  //if (factor < 0.07 || factor > 100)
+  //    return;
+
   scale(scaleFactor, scaleFactor);
 }
 
@@ -51,6 +52,7 @@ void ODBPPGraphicsView::loadProfile(QString step)
   m_profile->setBrush(Qt::transparent);
 
   scene()->addItem(m_profile);
+  fitScreen(sceneRect().width(), sceneRect().height());
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
@@ -68,13 +70,19 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
 
 void ODBPPGraphicsView::fitScreen(int h, int w)
 {
-    if(m_scale_factor == 100) return;
-    qreal sy = h/(m_scale_factor*1.5*items().at(0)->boundingRect().height());
-    qreal sx = w/(m_scale_factor*1.5*items().at(0)->boundingRect().width());
-    if(sx < sy)
-      scale(sx,sx);
-    else
-      scale(sy,sy);
-    m_scale_factor = 100;
-    centerOn(items().at(0)->boundingRect().center());
+  QRectF current = transform().mapRect(QRectF(0, 0, 1, 1));
+  qreal cx = current.width();
+  qreal cy = current.height();
+
+  QRectF b = m_profile->boundingRect();
+  qreal sx = w / (current.width() * b.width() * 1.1);
+  qreal sy = h / (current.height() * b.height() * 1.1);
+
+  if (sx < sy) {
+    scale(sx, sx);
+  } else {
+    scale(sy, sy);
+  }
+
+  centerOn(b.center());
 }

@@ -28,7 +28,6 @@ protected:
 
 private:
   Profile* m_profile;
-  qreal m_scale_factor;
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */
