@@ -71,8 +71,6 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
 void ODBPPGraphicsView::fitScreen(int h, int w)
 {
   QRectF current = transform().mapRect(QRectF(0, 0, 1, 1));
-  qreal cx = current.width();
-  qreal cy = current.height();
 
   QRectF b = m_profile->boundingRect();
   qreal sx = w / (current.width() * b.width() * 1.1);
