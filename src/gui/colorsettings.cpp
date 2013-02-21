@@ -50,6 +50,6 @@ QColor ColorSettings::openSelector(int index)
   QColor color(ctx.config->value("color/" + name).toString());
   color = selector.getColor(color);
   ctx.config->setValue("color/" + name, color.name());
-  m_labels.at(index)->setColor(color.name(), color.name());
+  m_labels.at(index -1)->setColor(color.name(), color.name());
   return color;
 }
