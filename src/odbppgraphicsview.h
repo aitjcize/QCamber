@@ -20,6 +20,7 @@ public:
   void clear_scene(){ scene()->clear(); }
   void addItem(Features *feat){ scene()->addItem(feat); }
   void removeItem(Features *feat){ scene()->removeItem(feat); }
+  void fitScreen(int h,int w);
 
 protected:
   void wheelEvent(QWheelEvent *event);
