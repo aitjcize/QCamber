@@ -64,3 +64,16 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
     m_profile->setBrush(Qt::transparent);
   }
 }
+
+
+void ODBPPGraphicsView::fitScreen(int h, int w)
+{
+    qreal sy = h/(150*items().at(0)->boundingRect().height());
+    qreal sx = w/(150*items().at(0)->boundingRect().width());
+    if(sx < sy)
+      scale(sx,sx);
+    else
+      scale(sy,sy);
+    centerOn(items().at(0)->boundingRect().center());
+    ensureVisible(items().at(0)->boundingRect());
+}

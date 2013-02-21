@@ -49,6 +49,8 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
   ui->viewWidget->loadProfile(m_step);
+  ui->viewWidget->fitScreen(ui->viewWidget->height(),
+                            ui->viewWidget->width());
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
