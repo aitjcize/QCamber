@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "viewerwindow.h"
+#include "ui_viewerwindow.h"
 
 #include <QtGui>
 #include <QDebug>
@@ -8,9 +8,8 @@
 
 extern Context ctx;
 
-MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
+ViewerWindow::ViewerWindow(QWidget *parent) :
+  QMainWindow(parent), ui(new Ui::ViewerWindow)
 {
   ui->setupUi(this);
 
@@ -40,12 +39,12 @@ MainWindow::MainWindow(QWidget *parent) :
       SLOT(updateFeatureDetail(Symbol*)));
 }
 
-MainWindow::~MainWindow()
+ViewerWindow::~ViewerWindow()
 {
   delete ui;
 }
 
-void MainWindow::addLayerLabel(const QStringList& layerNames)
+void ViewerWindow::addLayerLabel(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
   ui->viewWidget->loadProfile(this->windowTitle());
@@ -64,7 +63,7 @@ void MainWindow::addLayerLabel(const QStringList& layerNames)
   }
 }
 
-void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
+void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 {
   while (QLayoutItem* item = layout->takeAt(0))
   {
@@ -80,7 +79,7 @@ void MainWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 }
 
 
-Features* MainWindow::makeFeature(QString path, const QPen& pen,
+Features* ViewerWindow::makeFeature(QString path, const QPen& pen,
     const QBrush& brush)
 {
   Features* features = new Features(ctx.loader->featuresPath(path));
@@ -89,7 +88,7 @@ Features* MainWindow::makeFeature(QString path, const QPen& pen,
   return features;
 }
 
-void MainWindow::showLayer(LayerSelector* selector, bool selected)
+void ViewerWindow::showLayer(LayerSelector* selector, bool selected)
 {
   if (!selected) {
     if (!selector->features) {
@@ -108,7 +107,7 @@ void MainWindow::showLayer(LayerSelector* selector, bool selected)
   }
 }
 
-QColor MainWindow::nextColor(void)
+QColor ViewerWindow::nextColor(void)
 {
   for (int i = 0; i < m_colors.size(); ++i) {
     if (!m_colorsMap[i]) {
@@ -119,12 +118,12 @@ QColor MainWindow::nextColor(void)
   return Qt::red;
 }
 
-void MainWindow::loadColorConfig()
+void ViewerWindow::loadColorConfig()
 {
   ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
   ui->viewWidget->setBackgroundColor(ctx.bg_color);
 
-  QString config("color/%1");
+  QString config("color/C%1");
   m_colors.clear();
 
   for(int i = 1; i < N_COLOR + 1; i++) {
@@ -136,19 +135,19 @@ void MainWindow::loadColorConfig()
   }
 }
 
-void MainWindow::on_actionSetColor_triggered()
+void ViewerWindow::on_actionSetColor_triggered()
 {
   m_color_widget.show();
 }
 
-void MainWindow::updateCursorCoord(QPointF pos)
+void ViewerWindow::updateCursorCoord(QPointF pos)
 {
   QString text;
   text.sprintf("(%f, %f)", pos.x(), pos.y());
   m_cursorCoordLabel->setText(text);
 }
 
-void MainWindow::updateFeatureDetail(Symbol* symbol)
+void ViewerWindow::updateFeatureDetail(Symbol* symbol)
 {
   m_featureDetailLabel->setText(symbol->name());
 }

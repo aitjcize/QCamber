@@ -2,21 +2,18 @@
 HEADERS += \
   gui/jobmatrix.h \
   gui/clickablelabel.h \
-  gui/mainwindow.h \
+  gui/viewerwindow.h \
   gui/layerselector.h \
-#gui/home.h
-gui/colorsettings.h
+  gui/colorsettings.h
 
 SOURCES += \
   gui/jobmatrix.cpp \
   gui/clickablelabel.cpp \
-  gui/mainwindow.cpp \
+  gui/viewerwindow.cpp \
   gui/layerselector.cpp \
-#gui/home.cpp
-    gui/colorsettings.cpp
+  gui/colorsettings.cpp
 
 FORMS += \
   gui/jobmatrix.ui \
-  gui/mainwindow.ui \
-#gui/home.ui
+  gui/viewerwindow.ui \
   gui/colorsettings.ui

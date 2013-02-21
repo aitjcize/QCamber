@@ -19,7 +19,7 @@ ColorSettings::ColorSettings(QWidget *parent) :
   QString label_name;
   for(int i = 1; i < N_COLOR + 2; ++i)
   {
-    label_name.sprintf("%d", i);
+    label_name.sprintf("C%d", i);
     if (i == N_COLOR + 1) {
       label_name = "BG";
     }
@@ -34,8 +34,8 @@ ColorSettings::ColorSettings(QWidget *parent) :
     ui->gridLayout->addWidget(text_label, 0, i);
     ui->gridLayout->addWidget(label, 1, i);
   }
-  connect(m_colorSignalMapper, SIGNAL(mapped(const QString &)), this,
-      SLOT(openSelector(const QString &)));
+  connect(m_colorSignalMapper, SIGNAL(mapped(const QString&)), this,
+      SLOT(openSelector(const QString&)));
 }
 
 ColorSettings::~ColorSettings()

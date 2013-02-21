@@ -7,7 +7,7 @@
 #include <QSignalMapper>
 #include "clickablelabel.h"
 #include "iostream"
-#include "mainwindow.h"
+#include "viewerwindow.h"
 
 namespace Ui {
   class JobMatrix;
@@ -31,8 +31,7 @@ private:
   Ui::JobMatrix *ui;
   QStringList step_name, layer_name;
   ODBPPGraphicsView widget;
-  MainWindow Window;
-  //MainWindow Window;
+  ViewerWindow Window;
   QSignalMapper *layerSignalMapper,*stepSignalMapper;
 };
 

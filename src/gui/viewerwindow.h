@@ -15,16 +15,16 @@
 #include "colorsettings.h"
 
 namespace Ui {
-class MainWindow;
+class ViewerWindow;
 }
 
-class MainWindow : public QMainWindow
+class ViewerWindow : public QMainWindow
 {
   Q_OBJECT
   
 public:
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+  explicit ViewerWindow(QWidget *parent = 0);
+  ~ViewerWindow();
   void addLayerLabel(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
 
@@ -42,7 +42,7 @@ private slots:
   void updateFeatureDetail(Symbol* symbol);
 
 private:
-  Ui::MainWindow *ui;
+  Ui::ViewerWindow *ui;
   QVBoxLayout* m_layout;
   QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
