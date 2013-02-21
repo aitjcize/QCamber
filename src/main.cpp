@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
   ctx.loader = new ArchiveLoader("demo.tgz");
 #endif
   ctx.config = new Config("config.ini");
+  ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
 
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();

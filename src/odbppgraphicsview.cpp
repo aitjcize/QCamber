@@ -11,7 +11,7 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent)
   QGraphicsScene* scene = new ODBPPGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   scene->setSceneRect(-800, -800, 1600, 1600);
-  scene->setBackgroundBrush(BG_COLOR);
+  scene->setBackgroundBrush(ctx.bg_color);
 
   setScene(scene);
 

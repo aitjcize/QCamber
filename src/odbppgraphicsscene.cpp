@@ -2,8 +2,6 @@
 
 #include <QtGui>
 
-#include "symbol.h"
-
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   QGraphicsScene(parent)
 {
@@ -35,5 +33,6 @@ void ODBPPGraphicsScene::mouseDoubleClickEvent(
 
   if (top->parentItem() != NULL) {
     sendEvent(top, mouseEvent);
+    emit featureSelected(dynamic_cast<Symbol*>(top));
   }
 }

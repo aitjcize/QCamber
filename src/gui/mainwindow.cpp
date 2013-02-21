@@ -20,8 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_colorsMap[i] = false;
   }
 
-  m_statusLabel = new myLabel("status bar");
-  ui->statusbar->addWidget(m_statusLabel);
+  m_cursorCoordLabel = new QLabel();
+  m_featureDetailLabel = new QLabel();
+  m_cursorCoordLabel->setAlignment(Qt::AlignRight);
+  m_featureDetailLabel->setAlignment(Qt::AlignCenter);
+  statusBar()->addPermanentWidget(m_featureDetailLabel);
+  statusBar()->addPermanentWidget(m_cursorCoordLabel, 1);
+
   m_layout = new QVBoxLayout();
   m_tool_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
@@ -30,7 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(&m_color_widget, SIGNAL(selected()), this, SLOT(loadColorConfig()));
 
   connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
-      SLOT(showMouseCord(QPointF)));
+      SLOT(updateCursorCoord(QPointF)));
+  connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
+      SLOT(updateFeatureDetail(Symbol*)));
 }
 
 MainWindow::~MainWindow()
@@ -134,10 +141,14 @@ void MainWindow::on_actionSetColor_triggered()
   m_color_widget.show();
 }
 
-void MainWindow::showMouseCord(QPointF pos)
+void MainWindow::updateCursorCoord(QPointF pos)
 {
   QString text;
   text.sprintf("(%f, %f)", pos.x(), pos.y());
-  m_statusLabel->setText(text);
+  m_cursorCoordLabel->setText(text);
 }
 
+void MainWindow::updateFeatureDetail(Symbol* symbol)
+{
+  m_featureDetailLabel->setText(symbol->name());
+}

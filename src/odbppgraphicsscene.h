@@ -4,6 +4,8 @@
 #include <QGraphicsScene>
 #include <QPointF>
 
+#include "symbol.h"
+
 class ODBPPGraphicsScene: public QGraphicsScene {
   Q_OBJECT
 
@@ -11,7 +13,8 @@ public:
   ODBPPGraphicsScene(QObject* parent = 0);
 
 signals:
-  void mouseMove(QPointF pos);
+  void mouseMove(QPointF);
+  void featureSelected(Symbol*);
 
 protected:
   virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);

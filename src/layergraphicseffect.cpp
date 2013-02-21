@@ -24,22 +24,21 @@ void LayerGraphicsEffect::draw(QPainter* painter)
   QPoint offset;
   Qt::CoordinateSystem system = sourceIsPixmap() ? Qt::LogicalCoordinates:
     Qt::DeviceCoordinates;
-
   QPixmap pixmap = sourcePixmap(system, &offset, QGraphicsEffect::NoPad);
   if (pixmap.isNull())
     return;
 
   painter->save();
 
-  if (system == Qt::DeviceCoordinates) {
-      painter->setWorldTransform(QTransform());
-  }
-
   if (m_doComposite) {
     painter->setCompositionMode(QPainter::CompositionMode_HardLight);
   }
   if (!m_isFullyTransparent) {
     painter->setOpacity(m_opacity);
+  }
+
+  if (system == Qt::DeviceCoordinates) {
+      painter->setWorldTransform(QTransform());
   }
 
   painter->drawPixmap(offset, pixmap);

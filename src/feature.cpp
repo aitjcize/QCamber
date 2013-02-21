@@ -17,7 +17,6 @@ Features::Features(QString path): Symbol("features")
     rec->addToChild(this);
   }
 
-  setCacheMode(DeviceCoordinateCache);
   m_layerEffect = new LayerGraphicsEffect();
   setGraphicsEffect(m_layerEffect);
 }
