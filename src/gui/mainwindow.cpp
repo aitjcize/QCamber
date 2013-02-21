@@ -28,8 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
   connect(&m_color_widget, SIGNAL(selected()), this, SLOT(loadColorConfig()));
-  connect(ui->viewWidget, SIGNAL(mouseMove(QPoint)), this,
-      SLOT(showMouseCord(QPoint)));
+
+  connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
+      SLOT(showMouseCord(QPointF)));
 }
 
 MainWindow::~MainWindow()
@@ -113,8 +114,7 @@ QColor MainWindow::nextColor(void)
 
 void MainWindow::loadColorConfig()
 {
-  ui->viewWidget->GetScene()->setBackgroundBrush(
-              QColor(cfg.value("color/BG").toString()));
+  ui->viewWidget->setBackgroundColor(QColor(cfg.value("color/BG").toString()));
 
   QString config("color/%1");
   m_colors.clear();
@@ -133,10 +133,10 @@ void MainWindow::on_actionSetColor_triggered()
   m_color_widget.show();
 }
 
-void MainWindow::showMouseCord(QPoint pos)
+void MainWindow::showMouseCord(QPointF pos)
 {
-    QString text;
-    text.sprintf("X:%d Y:%d",pos.x(),pos.y());
-    m_statusLabel->setText(text);
+  QString text;
+  text.sprintf("(%f, %f)", pos.x(), pos.y());
+  m_statusLabel->setText(text);
 }
 

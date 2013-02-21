@@ -10,6 +10,11 @@ ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   
 }
 
+void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+  emit mouseMove(mouseEvent->scenePos());
+}
+
 void ODBPPGraphicsScene::mouseDoubleClickEvent(
     QGraphicsSceneMouseEvent* mouseEvent)
 {

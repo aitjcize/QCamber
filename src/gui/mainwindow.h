@@ -38,7 +38,7 @@ protected:
 private slots:
   void showLayer(LayerSelector* layer, bool selected);
   void loadColorConfig();
-  void showMouseCord(QPoint);
+  void showMouseCord(QPointF);
 
 private:
   Ui::MainWindow *ui;

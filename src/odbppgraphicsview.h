@@ -15,18 +15,17 @@ public:
   Features* loadFeature(QString filename, const QColor color = Qt::red,
       const QBrush brush = Qt::red);
   Profile* loadProfile(QString step);
-  void clear_scene(){scene->clear();}
-  QGraphicsScene *GetScene(){return scene;}
-  void addItem(Features *bot){scene->addItem(bot);}
-  void removeItem(Features *bot){scene->removeItem(bot);}
-signals:
-  void mouseMove(QPoint);
+  void setBackgroundColor(QColor color);
+
+  void clear_scene(){ scene()->clear(); }
+  void addItem(Features *feat){ scene()->addItem(feat); }
+  void removeItem(Features *feat){ scene()->removeItem(feat); }
+
 protected:
   void wheelEvent(QWheelEvent *event);
   void scaleView(qreal scaleFactor);
+
 private:
-  ODBPPGraphicsScene *scene;
-  void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */
