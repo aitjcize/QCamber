@@ -12,12 +12,9 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   QMainWindow(parent), ui(new Ui::ViewerWindow)
 {
   ui->setupUi(this);
+  setAttribute(Qt::WA_DeleteOnClose);
 
   loadColorConfig();
-
-  for (int i = 0; i < m_colors.size(); ++i) {
-    m_colorsMap[i] = false;
-  }
 
   m_cursorCoordLabel = new QLabel();
   m_featureDetailLabel = new QLabel();
@@ -56,14 +53,13 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
 
-  for(int i = 0; i < layerNames.count(); ++i)
-  {
-    LayerSelector *layer = new LayerSelector(layerNames[i], m_step,
-        layerNames[i]);
+  for(int i = 0; i < layerNames.count(); ++i) {
+    LayerSelector *l = new LayerSelector(layerNames[i], m_step, layerNames[i]);
 
-    connect(layer, SIGNAL(Clicked(LayerSelector*, bool)), this,
-        SLOT(showLayer(LayerSelector*, bool)));
-    m_layout->addWidget(layer);
+    m_SelectorMap[layerNames[i]] = l;
+    connect(l, SIGNAL(Clicked(LayerSelector*, bool)), this,
+        SLOT(toggleShowLayer(LayerSelector*, bool)));
+    m_layout->addWidget(l);
   }
 }
 
@@ -82,7 +78,13 @@ void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
   }
 }
 
-void ViewerWindow::showLayer(LayerSelector* selector, bool selected)
+void ViewerWindow::showLayer(QString name)
+{
+  LayerSelector* selector = m_SelectorMap[name];
+  selector->toggle();
+}
+
+void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
 {
   if (!selected) {
     if (!selector->item) {

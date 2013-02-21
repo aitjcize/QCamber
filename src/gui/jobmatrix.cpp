@@ -83,7 +83,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
       text = m_step_name[i-2] + "/" + (QString)it->second->get("NAME").c_str();
       QPushButton *btn = new QPushButton(text);
       connect(btn, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
-      layerSignalMapper->setMapping(btn,text);
+      layerSignalMapper->setMapping(btn, text);
 
 
       QString pathTmpl = "steps/%1/layers/%2";
@@ -98,23 +98,17 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
     }
   }
 
-  connect(stepSignalMapper, SIGNAL(mapped (const QString &)), this,
-      SLOT(showStep(const QString &)));
   connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this,
       SLOT(showLayer(const QString &)));
   ui->scrollWidget->setLayout(matrix_layout);
 }
 
-void JobMatrix::showLayer(const QString feature_name)
+void JobMatrix::showLayer(const QString text)
 {
-  QStringList name = feature_name.toLower().split("/");
-  QString pathTmpl = "steps/%1/layers/%2";
-  QString path = pathTmpl.arg(name[0]).arg(name[1]);
-}
-
-void JobMatrix::showStep(const QString m_step_name)
-{
-  Window.setStep(m_step_name);
-  Window.setLayers(m_layer_name);
-  Window.show();
+  QStringList params = text.split("/");
+  ViewerWindow* w = new ViewerWindow;
+  w->setStep(params[0]);
+  w->setLayers(m_layer_name);
+  w->showLayer(params[1]);
+  w->show();
 }

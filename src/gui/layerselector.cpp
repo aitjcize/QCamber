@@ -49,30 +49,17 @@ void LayerSelector::setColor(const QColor& color)
 
 void LayerSelector::mousePressEvent(QMouseEvent *ev)
 {
-    if( ev->button() != Qt::LeftButton)
-      return;
+  if (ev->button() != Qt::LeftButton)
+    return;
+
   if (m_selected) {
     setStyleSheet("QLabel { background-color: transparent; color: black; }");
   }
-  emit Clicked(this, m_selected);
-  m_selected = !m_selected;
+  toggle();
 }
 
-void LayerSelector::colorSelector(const QString &color)
+void LayerSelector::toggle(void)
 {
-  QString tcolor = "black";
-
-  m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
-  m_color = QColor(color);
-
-  if (item) {
-    item->setPen(QPen(m_color, 0));
-    item->setBrush(m_color);
-  }
-
-  if (m_selected) {
-    setStyleSheet(m_bgStyle);
-    emit Clicked(this, m_selected);
-    emit Clicked(this, !m_selected);
-  }
+  emit Clicked(this, m_selected);
+  m_selected = !m_selected;
 }

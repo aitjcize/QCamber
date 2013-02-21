@@ -28,6 +28,7 @@ public:
   void setStep(QString step);
   void setLayers(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
+  void showLayer(QString name);
 
 public slots:
   void on_actionSetColor_triggered();
@@ -36,7 +37,7 @@ protected:
   QColor nextColor(void);
 
 private slots:
-  void showLayer(LayerSelector* layer, bool selected);
+  void toggleShowLayer(LayerSelector* selector, bool selected);
   void loadColorConfig();
   void updateCursorCoord(QPointF);
   void updateFeatureDetail(Symbol* symbol);
@@ -48,6 +49,7 @@ private:
   QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
+  QMap<QString, LayerSelector*> m_SelectorMap;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
 };

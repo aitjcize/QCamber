@@ -25,7 +25,6 @@ public:
 private slots:
   void on_CloseButton_clicked();
   void showLayer(const QString);
-  void showStep(const QString);
 
 private:
   Ui::JobMatrix* ui;

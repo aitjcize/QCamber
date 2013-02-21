@@ -20,14 +20,12 @@ public:
   QString layer(void);
 
   void setColor(const QColor& color);
+  void toggle(void);
 
   Layer *item;
 
 signals:
   void Clicked(LayerSelector*, bool);
-
-private slots:
-  void colorSelector(const QString&);
 
 protected:
   void mousePressEvent(QMouseEvent *ev);
