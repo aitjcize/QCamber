@@ -3,6 +3,10 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "context.h"
+
+extern Context ctx;
+
 MoireSymbol::MoireSymbol(QString def, Polarity polarity):
     Symbol("moire", "moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
@@ -69,8 +73,8 @@ void MoireSymbol::paint(QPainter *painter,
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
   } else {
-    painter->setPen(QPen(BG_COLOR, 0));
-    painter->setBrush(BG_COLOR);
+    painter->setPen(QPen(ctx.bg_color, 0));
+    painter->setBrush(ctx.bg_color);
   }
 
   painterPath();

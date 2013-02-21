@@ -5,7 +5,6 @@
 #include "context.h"
 #include "structuredtextparser.h"
 
-Config cfg("config.ini");
 Context ctx;
 
 //#define DEPLOY
@@ -23,6 +22,8 @@ int main(int argc, char *argv[])
 #else
   ctx.loader = new ArchiveLoader("demo.tgz");
 #endif
+  ctx.config = new Config("config.ini");
+
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
 

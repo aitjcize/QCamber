@@ -4,14 +4,14 @@
 #include <QtGui>
 #include <QDebug>
 
+#include "context.h"
+
 extern Context ctx;
-extern Config cfg;
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
-
   ui->setupUi(this);
 
   loadColorConfig();
@@ -114,13 +114,14 @@ QColor MainWindow::nextColor(void)
 
 void MainWindow::loadColorConfig()
 {
-  ui->viewWidget->setBackgroundColor(QColor(cfg.value("color/BG").toString()));
+  ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
+  ui->viewWidget->setBackgroundColor(ctx.bg_color);
 
   QString config("color/%1");
   m_colors.clear();
 
   for(int i = 1; i < COLOR_NUMBER + 1; i++) {
-    m_colors << QColor(cfg.value(config.arg(i)).toString());
+    m_colors << QColor(ctx.config->value(config.arg(i)).toString());
   }
 
   for (int i = 0; i < m_colors.size(); ++i) {

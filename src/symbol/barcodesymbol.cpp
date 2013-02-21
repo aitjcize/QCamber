@@ -4,7 +4,10 @@
 #include <QMatrix>
 
 #include "code39.h"
+#include "context.h"
 #include "fontparser.h"
+
+extern Context ctx;
 
 BarcodeSymbol::BarcodeSymbol(BarcodeRecord* rec): TextSymbol(NULL)
 {
@@ -39,8 +42,8 @@ void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
   painterPath();
 
   if (m_bg) {
-    painter->setPen(QPen(BG_COLOR, 0));
-    painter->setBrush(BG_COLOR);
+    painter->setPen(QPen(ctx.bg_color, 0));
+    painter->setBrush(ctx.bg_color);
 
     QRectF b = m_cachedPath.boundingRect();
     const qreal offset = 0.1;

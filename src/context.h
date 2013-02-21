@@ -11,7 +11,8 @@ struct Context {
   ~Context() { delete loader; }
 
   ArchiveLoader* loader;    // loader
-  Config *config;
+  Config* config;
+  QColor bg_color;
 };
 
 #endif /* __CONTEXT_H__ */

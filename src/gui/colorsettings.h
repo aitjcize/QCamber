@@ -16,23 +16,21 @@ class ColorSettings;
 
 class ColorSettings : public QDialog
 {
-    Q_OBJECT
-    
+  Q_OBJECT
+  
 public:
-    explicit ColorSettings(QWidget *parent = 0);
-    ~ColorSettings();
+  explicit ColorSettings(QWidget *parent = 0);
+  ~ColorSettings();
 signals:
-    void selected();
+  void selected();
 private slots:
-    QColor openSelector(const QString color_config);
-    void on_buttonBox_accepted();
+  QColor openSelector(const QString color_config);
+  void on_buttonBox_accepted();
 
 private:
-    Ui::ColorSettings *ui;
-    QSignalMapper *colorSignalMapper;
-    QList<myLabel*> label_list;
-
-
+  Ui::ColorSettings *ui;
+  QSignalMapper *colorSignalMapper;
+  QList<myLabel*> label_list;
 };
 
 #endif // COLORSETTINGS_H

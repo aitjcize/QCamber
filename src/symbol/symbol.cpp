@@ -1,5 +1,10 @@
 #include "symbol.h"
+
 #include <QDebug>
+
+#include "context.h"
+
+extern Context ctx;
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
@@ -62,8 +67,8 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
   } else {
-    painter->setPen(QPen(BG_COLOR, 0));
-    painter->setBrush(BG_COLOR);
+    painter->setPen(QPen(ctx.bg_color, 0));
+    painter->setBrush(ctx.bg_color);
   }
 
   painterPath();

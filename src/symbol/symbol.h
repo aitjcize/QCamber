@@ -12,8 +12,6 @@
 #include <QString>
 #include <QGraphicsOpacityEffect>
 
-#define BG_COLOR QColor::fromRgb(82, 206, 175)
-
 typedef enum { P = 0, N } Polarity;
 
 class InvalidSymbolException: public std::exception {
