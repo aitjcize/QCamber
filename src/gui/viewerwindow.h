@@ -28,9 +28,11 @@ public:
   void setStep(QString step);
   void setLayers(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
+  void loadActionBtn();
 
 public slots:
   void on_actionSetColor_triggered();
+  void fitViewerScreen();
 
 protected:
   QColor nextColor(void);

@@ -22,7 +22,7 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setTransformationAnchor(AnchorUnderMouse);
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
-
+  m_scale_factor = 150;
   scale(100, 100);
 }
 
@@ -34,7 +34,7 @@ void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
   qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-
+  m_scale_factor = factor;
   scale(scaleFactor, scaleFactor);
 }
 
@@ -68,12 +68,14 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
 
 void ODBPPGraphicsView::fitScreen(int h, int w)
 {
-    qreal sy = h/(150*items().at(0)->boundingRect().height());
-    qreal sx = w/(150*items().at(0)->boundingRect().width());
+    if(m_scale_factor == 100) return;
+    qreal sy = h/(m_scale_factor*1.5*items().at(0)->boundingRect().height());
+    qreal sx = w/(m_scale_factor*1.5*items().at(0)->boundingRect().width());
     if(sx < sy)
       scale(sx,sx);
     else
       scale(sy,sy);
+    m_scale_factor = 100;
     centerOn(items().at(0)->boundingRect().center());
     ensureVisible(items().at(0)->boundingRect());
 }

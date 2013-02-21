@@ -35,6 +35,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
       SLOT(updateCursorCoord(QPointF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
+
+  loadActionBtn();
 }
 
 ViewerWindow::~ViewerWindow()
@@ -52,8 +54,7 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
   ui->viewWidget->loadProfile(m_step);
-  ui->viewWidget->fitScreen(ui->viewWidget->height(),
-                            ui->viewWidget->width());
+  ui->viewWidget->fitScreen(ui->viewWidget->height(),ui->viewWidget->width());
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
@@ -150,4 +151,19 @@ void ViewerWindow::updateCursorCoord(QPointF pos)
 void ViewerWindow::updateFeatureDetail(Symbol* symbol)
 {
   m_featureDetailLabel->setText(symbol->name());
+}
+
+void ViewerWindow::loadActionBtn()
+{
+  QPushButton *home = new QPushButton("Home");
+
+  m_tool_layout->addWidget(home);
+
+  connect(home,SIGNAL(clicked()),this,SLOT(fitViewerScreen()));
+}
+
+void ViewerWindow::fitViewerScreen()
+{
+  ui->viewWidget->fitScreen(ui->viewWidget->height(),
+                            ui->viewWidget->width());
 }
