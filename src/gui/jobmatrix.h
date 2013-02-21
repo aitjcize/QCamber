@@ -28,11 +28,12 @@ private slots:
   void showStep(const QString);
 
 private:
-  Ui::JobMatrix *ui;
+  Ui::JobMatrix* ui;
   QStringList m_step_name;
   QStringList m_layer_name;
   ViewerWindow Window;
-  QSignalMapper *layerSignalMapper,*stepSignalMapper;
+  QSignalMapper* layerSignalMapper;
+  QSignalMapper* stepSignalMapper;
 };
 
 #endif // JOBMATRIX_H
