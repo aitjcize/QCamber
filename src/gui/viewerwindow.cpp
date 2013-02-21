@@ -93,14 +93,13 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     if (!selector->item) {
       Layer* layer = new Layer(selector->step(), selector->layer());
       selector->item = layer;
+      selector->item->setDoComposite(true);
     }
     selector->setColor(nextColor());
     ui->viewWidget->addItem(selector->item);
-    selector->item->setDoComposite(true);
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
-    selector->item->setDoComposite(false);
     ui->viewWidget->removeItem(selector->item);
   }
 }
