@@ -77,5 +77,4 @@ void ODBPPGraphicsView::fitScreen(int h, int w)
       scale(sy,sy);
     m_scale_factor = 100;
     centerOn(items().at(0)->boundingRect().center());
-    ensureVisible(items().at(0)->boundingRect());
 }
