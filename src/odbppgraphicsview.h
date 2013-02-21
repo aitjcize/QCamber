@@ -14,7 +14,7 @@ public:
   ODBPPGraphicsView(QWidget* parent = 0);
   Features* loadFeature(QString filename, const QColor color = Qt::red,
       const QBrush brush = Qt::red);
-  Profile* loadProfile(QString step);
+  void loadProfile(QString step);
   void setBackgroundColor(QColor color);
 
   void clear_scene(){ scene()->clear(); }
@@ -26,6 +26,7 @@ protected:
   void scaleView(qreal scaleFactor);
 
 private:
+  Profile* m_profile;
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */

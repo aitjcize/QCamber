@@ -1,12 +1,12 @@
 #include "odbppgraphicsview.h"
+
 #include "symbolfactory.h"
-#include "iostream"
 #include "context.h"
 
-using namespace std;
 extern Context ctx;
 
-ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent)
+ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
+  m_profile(NULL)
 {
   QGraphicsScene* scene = new ODBPPGraphicsScene(this);
   scene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -48,19 +48,29 @@ Features* ODBPPGraphicsView::loadFeature(QString filename, const QColor color,
   return features;
 }
 
-Profile *ODBPPGraphicsView::loadProfile(QString step)
+void ODBPPGraphicsView::loadProfile(QString step)
 {
   QString path;
   path = QString("steps/%1/profile").arg(step.toLower());
-  Profile* profile = new Profile(ctx.loader->absPath(path));
+  m_profile = new Profile(ctx.loader->absPath(path));
 
-  profile->setPen(QPen(Qt::black, 0));
-  profile->setBrush(Qt::transparent);
-  scene()->addItem(profile);
-  return profile;
+  QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
+      255 - ctx.bg_color.blue(), 255);
+
+  m_profile->setPen(QPen(color, 0));
+  m_profile->setBrush(Qt::transparent);
+
+  scene()->addItem(m_profile);
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
 {
   scene()->setBackgroundBrush(color);
+
+  if (m_profile) {
+    QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
+        255 - ctx.bg_color.blue(), 255);
+    m_profile->setPen(QPen(color, 0));
+    m_profile->setBrush(Qt::transparent);
+  }
 }
