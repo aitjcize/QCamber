@@ -25,12 +25,11 @@ signals:
   void Clicked(LayerSelector*, bool);
 
 private slots:
-  void slotClicked();
-  void show_contextmenu(const QPoint&);
   void colorSelector(const QString&);
 
 protected:
   void mousePressEvent(QMouseEvent *ev);
+
 private:
   bool m_selected;
   QString m_bgStyle;
