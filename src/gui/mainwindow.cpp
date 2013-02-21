@@ -27,8 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->scrollWidget->setLayout(m_layout);
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
-  connect(&m_color_widget,SIGNAL(selected()),this,SLOT(loadColorConfig()));
-  connect(ui->viewWidget,SIGNAL(mouseMove(QPoint)),this,SLOT(showMouseCord(QPoint)));
+  connect(&m_color_widget, SIGNAL(selected()), this, SLOT(loadColorConfig()));
+  connect(ui->viewWidget, SIGNAL(mouseMove(QPoint)), this,
+      SLOT(showMouseCord(QPoint)));
 }
 
 MainWindow::~MainWindow()
@@ -115,13 +116,15 @@ void MainWindow::loadColorConfig()
   ui->viewWidget->GetScene()->setBackgroundBrush(
               QColor(cfg.value("color/BG").toString()));
 
-  QString color_config;
-  if(! m_colors.empty())
-    m_colors.clear();
-  for(int i=1;i<COLOR_NUMBER+1;i++)
-  {
-    color_config.sprintf("color/%d",i);
-    m_colors<<QColor(cfg.value(color_config).toString());
+  QString config("color/%1");
+  m_colors.clear();
+
+  for(int i = 1; i < COLOR_NUMBER + 1; i++) {
+    m_colors << QColor(cfg.value(config.arg(i)).toString());
+  }
+
+  for (int i = 0; i < m_colors.size(); ++i) {
+    m_colorsMap[i] = false;
   }
 }
 

@@ -36,7 +36,7 @@ void LayerGraphicsEffect::draw(QPainter* painter)
   }
 
   if (m_doComposite) {
-    painter->setCompositionMode(QPainter::CompositionMode_Overlay);
+    painter->setCompositionMode(QPainter::CompositionMode_HardLight);
   }
   if (!m_isFullyTransparent) {
     painter->setOpacity(m_opacity);

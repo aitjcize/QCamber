@@ -16,7 +16,7 @@ ColorSettings::ColorSettings(QWidget *parent) :
   colorSignalMapper = new QSignalMapper(this);
 
   QString label_name;
-  for(int i=1;i<COLOR_NUMBER+2;i++)
+  for(int i = 1; i < COLOR_NUMBER + 2; i++)
   {
     label_name.sprintf("%d",i);
     if(i == COLOR_NUMBER + 1)
