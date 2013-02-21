@@ -36,3 +36,17 @@ void ODBPPGraphicsScene::mouseDoubleClickEvent(
     emit featureSelected(dynamic_cast<Symbol*>(top));
   }
 }
+
+void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+  m_rubberPS = event->scenePos();
+  QGraphicsScene::mousePressEvent(event);
+}
+
+void ODBPPGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+  m_rubberPE = event->scenePos();
+  if (m_rubberPS != m_rubberPE) {
+    emit rectSelected(QRectF(m_rubberPS, m_rubberPE));
+  }
+}

@@ -15,10 +15,17 @@ public:
 signals:
   void mouseMove(QPointF);
   void featureSelected(Symbol*);
+  void rectSelected(QRectF);
 
 protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+private:
+  QPointF m_rubberPS;
+  QPointF m_rubberPE;
 };
 
 #endif /* __ODBPPGRAPHICSSCENE_H__ */

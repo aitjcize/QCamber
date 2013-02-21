@@ -16,17 +16,16 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setScene(scene);
 
   setCacheMode(CacheBackground);
-  setDragMode(QGraphicsView::ScrollHandDrag);
+  //setDragMode(QGraphicsView::ScrollHandDrag);
+  setDragMode(QGraphicsView::RubberBandDrag);
   setViewportUpdateMode(BoundingRectViewportUpdate);
   //setRenderHint(QPainter::Antialiasing);
   setTransformationAnchor(AnchorUnderMouse);
+  setOptimizationFlags(QGraphicsView::DontSavePainterState);
   setMinimumSize(600, 600);
   setWindowTitle(tr("test"));
-}
 
-void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
-{
-  scaleView(pow((double)2, -event->delta() / 240.0));
+  connect(scene, SIGNAL(rectSelected(QRectF)), this, SLOT(zoomToRect(QRectF)));
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
@@ -52,7 +51,7 @@ void ODBPPGraphicsView::loadProfile(QString step)
   m_profile->setBrush(Qt::transparent);
 
   scene()->addItem(m_profile);
-  fitScreen(sceneRect().width(), sceneRect().height());
+  zoomToProfile();
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
@@ -68,13 +67,18 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
 }
 
 
-void ODBPPGraphicsView::fitScreen(int h, int w)
+void ODBPPGraphicsView::zoomToProfile(void)
 {
+  zoomToRect(m_profile->boundingRect());
+}
+
+void ODBPPGraphicsView::zoomToRect(QRectF rect)
+{
+  QRectF b = rect.normalized();
   QRectF current = transform().mapRect(QRectF(0, 0, 1, 1));
 
-  QRectF b = m_profile->boundingRect();
-  qreal sx = w / (current.width() * b.width() * 1.1);
-  qreal sy = h / (current.height() * b.height() * 1.1);
+  qreal sx = width() / (current.width() * b.width() * 1.1);
+  qreal sy = height() / (current.height() * b.height() * 1.1);
 
   if (sx < sy) {
     scale(sx, sx);
@@ -83,4 +87,9 @@ void ODBPPGraphicsView::fitScreen(int h, int w)
   }
 
   centerOn(b.center());
+}
+
+void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
+{
+  scaleView(pow((double)2, -event->delta() / 240.0));
 }

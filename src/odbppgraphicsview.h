@@ -20,11 +20,14 @@ public:
   void clear_scene(){ scene()->clear(); }
   void addItem(Features *feat){ scene()->addItem(feat); }
   void removeItem(Features *feat){ scene()->removeItem(feat); }
-  void fitScreen(int h,int w);
+  void zoomToProfile(void);
+
+public slots:
+  void zoomToRect(QRectF rect);
 
 protected:
-  void wheelEvent(QWheelEvent *event);
   void scaleView(qreal scaleFactor);
+  virtual void wheelEvent(QWheelEvent *event);
 
 private:
   Profile* m_profile;

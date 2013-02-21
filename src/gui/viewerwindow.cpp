@@ -51,7 +51,7 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
   ui->viewWidget->loadProfile(m_step);
-  ui->viewWidget->fitScreen(ui->viewWidget->height(),ui->viewWidget->width());
+  ui->viewWidget->zoomToProfile();
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
@@ -162,6 +162,5 @@ void ViewerWindow::loadActionBtn()
 
 void ViewerWindow::fitViewerScreen()
 {
-  ui->viewWidget->fitScreen(ui->viewWidget->height(),
-                            ui->viewWidget->width());
+  ui->viewWidget->zoomToProfile();
 }
