@@ -22,12 +22,15 @@ ColorSettings::ColorSettings(QWidget *parent) :
     if(i == COLOR_NUMBER + 1)
     label_name = "BG";
     myLabel *label = new myLabel(label_name);
-    label->setStyleSheet("QLabel { background-color: " + cfg.value("color/" +
-          label_name).toString() + "; color: black; }");
+    QString color = cfg.value("color/" + label_name).toString();
+    label->setStyleSheet("QLabel { background-color: " +
+                         color + "; color: " + color + "; }");
     connect(label, SIGNAL(clicked()),colorSignalMapper, SLOT(map()));
     colorSignalMapper->setMapping(label,label_name);
     label_list.append(label);
-    ui->horizontalLayout->addWidget(label);
+    myLabel *tlabel = new myLabel(label_name);
+    ui->gridLayout_2->addWidget(tlabel,0,i);
+    ui->gridLayout_2->addWidget(label,1,i);
   }
   connect(colorSignalMapper, SIGNAL(mapped(const QString &)), this,
       SLOT(openSelector(const QString &)));
@@ -47,10 +50,12 @@ QColor ColorSettings::openSelector(const QString  color_config)
   cfg.setValue("color/"+color_config,color.name());
   if(color_config == "BG")
     label_list.at(COLOR_NUMBER)->setStyleSheet(
-      "QLabel { background-color: " + color.name() + "; color: black; }");
+      "QLabel { background-color: " + color.name() + "; color: "
+                + color.name() + "; }");
   else
     label_list.at(color_config.toInt()-1)->setStyleSheet(
-      "QLabel { background-color: " + color.name() + "; color: black; }");
+      "QLabel { background-color: " + color.name() + "; color: "
+                + color.name() + "; }");
   return color;
 }
 
