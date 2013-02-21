@@ -29,9 +29,11 @@ public:
   void setLayers(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
   void showLayer(QString name);
+  void loadActionBtn();
 
 public slots:
   void on_actionSetColor_triggered();
+  void fitViewerScreen();
 
 protected:
   QColor nextColor(void);
