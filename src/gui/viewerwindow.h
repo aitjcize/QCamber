@@ -47,7 +47,6 @@ private:
   QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
   QMap<int, bool> m_colorsMap;
-  ColorSettings m_color_widget;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
 };

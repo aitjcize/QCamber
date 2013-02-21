@@ -17,15 +17,13 @@ class ColorSettings;
 class ColorSettings : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit ColorSettings(QWidget *parent = 0);
   ~ColorSettings();
-signals:
-  void selected();
+
 private slots:
-  QColor openSelector(const QString color_config);
-  void on_buttonBox_accepted();
+  QColor openSelector(int index);
 
 private:
   Ui::ColorSettings *ui;

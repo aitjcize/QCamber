@@ -31,8 +31,6 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   ui->scrollWidget->setLayout(m_layout);
   ui->groupBox_Tool->setLayout(m_tool_layout);
 
-  connect(&m_color_widget, SIGNAL(selected()), this, SLOT(loadColorConfig()));
-
   connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
       SLOT(updateCursorCoord(QPointF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
@@ -137,7 +135,9 @@ void ViewerWindow::loadColorConfig()
 
 void ViewerWindow::on_actionSetColor_triggered()
 {
-  m_color_widget.show();
+  ColorSettings dialog;
+  dialog.exec();
+  loadColorConfig();
 }
 
 void ViewerWindow::updateCursorCoord(QPointF pos)
