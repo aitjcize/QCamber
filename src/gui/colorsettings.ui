@@ -56,7 +56,7 @@
      <height>91</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2"/>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
  </widget>
  <resources/>

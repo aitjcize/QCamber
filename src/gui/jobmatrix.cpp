@@ -38,7 +38,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   steps = 2;
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
-    myLabel *label = new myLabel("this");
+    ClickableLabel *label = new ClickableLabel("this");
     label->setText((QString)it->second->get("NAME").c_str());
     matrix_layout->addWidget(label,0,steps++);
     step_name.append((QString)it->second->get("NAME").c_str());

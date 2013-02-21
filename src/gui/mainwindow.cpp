@@ -127,7 +127,7 @@ void MainWindow::loadColorConfig()
   QString config("color/%1");
   m_colors.clear();
 
-  for(int i = 1; i < COLOR_NUMBER + 1; i++) {
+  for(int i = 1; i < N_COLOR + 1; i++) {
     m_colors << QColor(ctx.config->value(config.arg(i)).toString());
   }
 

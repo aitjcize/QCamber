@@ -2,7 +2,7 @@
 #define __HOME_H__
 
 #include <QMainWindow>
-#include "mylabel.h"
+#include "clickablelabel.h"
 #include <QSignalMapper>
 #include "QGridLayout"
 

@@ -53,7 +53,7 @@ void Home::showHomePage()
   clearLayout(ui->HomeTable->layout());
   QString jobName = "demo";
   jobSignalMapper = new QSignalMapper(this);
-  myLabel *job = new myLabel(jobName);
+  ClickableLabel *job = new ClickableLabel(jobName);
   layout->addWidget(job);
   connect(job, SIGNAL(clicked()),jobSignalMapper, SLOT(map()));
   jobSignalMapper->setMapping(job,jobName);
@@ -73,15 +73,15 @@ void Home::showJobPage(const QString jobName)
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   ds = parser.parse();
 
-  myLabel *matrix = new myLabel("Job Matrix");
+  ClickableLabel *matrix = new ClickableLabel("Job Matrix");
   connect(matrix,SIGNAL(clicked()),this,SLOT(showMatrix()));
   layout->addWidget(matrix,0,0);
 
-  myLabel *step = new myLabel("Steps");
+  ClickableLabel *step = new ClickableLabel("Steps");
   connect(step,SIGNAL(clicked()),this,SLOT(showStepPage()));
   layout->addWidget(step,0,1);
 
-  myLabel *custom = new myLabel("Custom Symbol");
+  ClickableLabel *custom = new ClickableLabel("Custom Symbol");
   connect(custom,SIGNAL(clicked()),this,SLOT(showCustomSymbolPage()));
   layout->addWidget(custom,0,2);
 
@@ -100,14 +100,14 @@ void Home::showStepPage()
   int steps = 0;
   stepSignalMapper = new QSignalMapper(this);
 
-  myLabel *back = new myLabel("Back");
+  ClickableLabel *back = new ClickableLabel("Back");
   layout->addWidget(back,0,steps++);
   connect(back,SIGNAL(clicked()),this,SLOT(showJobPage()));
 
   StructuredTextDataStore::BlockIterPair ip = ds->getBlocksByKey("STEP");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
-    myLabel *label = new myLabel("this");
+    ClickableLabel *label = new ClickableLabel("this");
     label->setText((QString)it->second->get("NAME").c_str());
     layout->addWidget(label,0,steps++);
     connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
@@ -145,7 +145,7 @@ void Home::showCustomSymbolPage()
   while((dirp = readdir(dp)) != NULL){
     //dirlist.append(QString(dirp->d_name));
     //qDebug()<<dirlist.back();
-    myLabel *label = new myLabel(QString(dirp->d_name));
+    ClickableLabel *label = new ClickableLabel(QString(dirp->d_name));
     layout->addWidget(label,i,j++);
     label->setMinimumSize(55, 0);
     connect(label, SIGNAL(clicked()),symbolSignalMapper, SLOT(map()));

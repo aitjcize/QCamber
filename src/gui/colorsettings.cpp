@@ -3,7 +3,7 @@
 
 #include <QtGui>
 
-#include "mylabel.h"
+#include "clickablelabel.h"
 #include "context.h"
 
 extern Context ctx;
@@ -14,26 +14,27 @@ ColorSettings::ColorSettings(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  colorSignalMapper = new QSignalMapper(this);
+  m_colorSignalMapper = new QSignalMapper(this);
 
   QString label_name;
-  for(int i = 1; i < COLOR_NUMBER + 2; i++)
+  for(int i = 1; i < N_COLOR + 2; ++i)
   {
     label_name.sprintf("%d", i);
-    if(i == COLOR_NUMBER + 1)
-    label_name = "BG";
-    myLabel *label = new myLabel(label_name);
+    if (i == N_COLOR + 1) {
+      label_name = "BG";
+    }
+    ClickableLabel *label = new ClickableLabel(label_name);
     QString color = ctx.config->value("color/" + label_name).toString();
-    label->setStyleSheet("QLabel { background-color: " +
-                         color + "; color: " + color + "; }");
-    connect(label, SIGNAL(clicked()), colorSignalMapper, SLOT(map()));
-    colorSignalMapper->setMapping(label, label_name);
-    label_list.append(label);
-    myLabel *tlabel = new myLabel(label_name);
-    ui->gridLayout_2->addWidget(tlabel, 0, i);
-    ui->gridLayout_2->addWidget(label, 1, i);
+    label->setColor(color, color);
+    connect(label, SIGNAL(clicked()), m_colorSignalMapper, SLOT(map()));
+    m_colorSignalMapper->setMapping(label, label_name);
+    m_labels.append(label);
+
+    QLabel *text_label = new QLabel(label_name);
+    ui->gridLayout->addWidget(text_label, 0, i);
+    ui->gridLayout->addWidget(label, 1, i);
   }
-  connect(colorSignalMapper, SIGNAL(mapped(const QString &)), this,
+  connect(m_colorSignalMapper, SIGNAL(mapped(const QString &)), this,
       SLOT(openSelector(const QString &)));
 }
 
@@ -42,21 +43,19 @@ ColorSettings::~ColorSettings()
   delete ui;
 }
 
-QColor ColorSettings::openSelector(const QString  color_config)
+QColor ColorSettings::openSelector(const QString color_config)
 {
   QColorDialog colorSelector;
-  QColor color(ctx.config->value("color/"+color_config).toString());
+  QColor color(ctx.config->value("color/" + color_config).toString());
   colorSelector.setCurrentColor(color);
   color = colorSelector.getColor(QColor(0, 255, 0));
-  ctx.config->setValue("color/"+color_config, color.name());
-  if(color_config == "BG")
-    label_list.at(COLOR_NUMBER)->setStyleSheet(
-      "QLabel { background-color: " + color.name() + "; color: "
-                + color.name() + "; }");
-  else
-    label_list.at(color_config.toInt()-1)->setStyleSheet(
-      "QLabel { background-color: " + color.name() + "; color: "
-                + color.name() + "; }");
+  ctx.config->setValue("color/" + color_config, color.name());
+
+  if (color_config == "BG") {
+    m_labels.at(N_COLOR)->setColor(color.name(), color.name());
+  } else {
+    m_labels.at(color_config.toInt() -1)->setColor(color.name(), color.name());
+  }
   return color;
 }
 

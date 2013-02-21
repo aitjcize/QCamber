@@ -3,12 +3,12 @@
 
 #include <QDialog>
 #include "config.h"
-#include "mylabel.h"
+#include "clickablelabel.h"
 #include "QSignalMapper"
 #include "QList"
 //extern Config cfg("config.ini");
 
-#define COLOR_NUMBER 6
+#define N_COLOR 6
 
 namespace Ui {
 class ColorSettings;
@@ -29,8 +29,8 @@ private slots:
 
 private:
   Ui::ColorSettings *ui;
-  QSignalMapper *colorSignalMapper;
-  QList<myLabel*> label_list;
+  QSignalMapper *m_colorSignalMapper;
+  QList<ClickableLabel*> m_labels;
 };
 
 #endif // COLORSETTINGS_H

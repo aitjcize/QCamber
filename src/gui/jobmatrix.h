@@ -5,7 +5,7 @@
 #include "structuredtextparser.h"
 #include "odbppgraphicsview.h"
 #include <QSignalMapper>
-#include "mylabel.h"
+#include "clickablelabel.h"
 #include "iostream"
 #include "mainwindow.h"
 
