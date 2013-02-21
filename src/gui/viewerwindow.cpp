@@ -91,19 +91,16 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
   if (!selected) {
     if (!selector->item) {
       Layer* layer = new Layer(selector->step(), selector->layer());
-      layer->setPen(QPen(selector->color(), 0));
-      layer->setBrush(QBrush(selector->color()));
       selector->item = layer;
-      ui->viewWidget->addItem(selector->item);
     }
     selector->setColor(nextColor());
-    selector->item->setOpacity(1);
+    ui->viewWidget->addItem(selector->item);
     selector->item->setDoComposite(true);
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
     selector->item->setDoComposite(false);
-    selector->item->setOpacity(0);
+    ui->viewWidget->removeItem(selector->item);
   }
 }
 

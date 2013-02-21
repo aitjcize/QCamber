@@ -3,8 +3,8 @@
 #include <QtGui>
 
 LayerGraphicsEffect::LayerGraphicsEffect(QObject* parent):
-  QGraphicsEffect(parent), m_isFullyOpaque(true), m_isFullyTransparent(false),
-  m_doComposite(false)
+  QGraphicsEffect(parent), m_opacity(1), m_isFullyOpaque(true),
+  m_isFullyTransparent(false), m_doComposite(false)
 {
   
 }
