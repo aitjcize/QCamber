@@ -1,25 +1,23 @@
 #include "layerselector.h"
-#include "QDebug"
-#include "QMenu"
-#include "QMouseEvent"
 
-LayerSelector::LayerSelector(const QString& text, const QString& path,
-    QWidget *parent)
-  :QLabel(text, parent), m_selected(false)
+#include <QtGui>
+
+LayerSelector::LayerSelector(const QString& text, const QString& step,
+    const QString& layer, QWidget *parent)
+  :QLabel(text, parent), m_step(step), m_layer(layer), m_selected(false)
 {
   setContextMenuPolicy(Qt::CustomContextMenu);
 
   m_bgStyleTmpl = "LayerSelector { background-color: %1; color: %2; }";
 
   m_color = Qt::red;
-  m_path = path;
-  features = NULL;
+  item = NULL;
 }
 
 LayerSelector::~LayerSelector()
 {
-  if (features) {
-    delete features;
+  if (item) {
+    delete item;
   }
 }
 
@@ -28,9 +26,14 @@ QColor LayerSelector::color(void)
   return m_color;
 }
 
-QString LayerSelector::path(void)
+QString LayerSelector::step(void)
 {
-  return m_path;
+  return m_step;
+}
+
+QString LayerSelector::layer(void)
+{
+  return m_layer;
 }
 
 void LayerSelector::setColor(const QColor& color)
@@ -40,8 +43,8 @@ void LayerSelector::setColor(const QColor& color)
   m_color = color;
   m_bgStyle = m_bgStyleTmpl.arg(color.name()).arg(tcolor);
   setStyleSheet(m_bgStyle);
-  features->setPen(QPen(m_color, 0));
-  features->setBrush(m_color);
+  item->setPen(QPen(m_color, 0));
+  item->setBrush(m_color);
 }
 
 void LayerSelector::mousePressEvent(QMouseEvent *ev)
@@ -62,9 +65,9 @@ void LayerSelector::colorSelector(const QString &color)
   m_bgStyle = m_bgStyleTmpl.arg(color).arg(tcolor);
   m_color = QColor(color);
 
-  if (features) {
-    features->setPen(QPen(m_color, 0));
-    features->setBrush(m_color);
+  if (item) {
+    item->setPen(QPen(m_color, 0));
+    item->setBrush(m_color);
   }
 
   if (m_selected) {

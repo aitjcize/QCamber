@@ -29,8 +29,8 @@ private slots:
 
 private:
   Ui::JobMatrix *ui;
-  QStringList step_name, layer_name;
-  ODBPPGraphicsView widget;
+  QStringList m_step_name;
+  QStringList m_layer_name;
   ViewerWindow Window;
   QSignalMapper *layerSignalMapper,*stepSignalMapper;
 };

@@ -16,6 +16,7 @@ HEADERS += \
   context.h \
   feature.h \
   layergraphicseffect.h \
+  layer.h \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \
   profile.h \
@@ -23,12 +24,13 @@ HEADERS += \
 
 SOURCES += \
   archiveloader.cpp \
-  feature.cpp \
   config.cpp \
+  feature.cpp \
+  layer.cpp \
+  layergraphicseffect.cpp \
   main.cpp \
   odbppgraphicsscene.cpp \
   odbppgraphicsview.cpp \
-  layergraphicseffect.cpp \
   profile.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui

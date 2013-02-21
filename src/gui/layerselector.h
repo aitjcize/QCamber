@@ -4,22 +4,24 @@
 #include <QLabel>
 #include <QSignalMapper>
 
-#include "feature.h"
+#include "layer.h"
 
 class LayerSelector : public QLabel
 {
   Q_OBJECT
 
 public:
-  LayerSelector(const QString& text, const QString& path, QWidget *parent = 0);
+  LayerSelector(const QString& text, const QString& step, const QString& layer,
+      QWidget *parent = 0);
   ~LayerSelector();
 
   QColor color(void);
-  QString path(void);
+  QString step(void);
+  QString layer(void);
 
   void setColor(const QColor& color);
 
-  Features *features;
+  Layer *item;
 
 signals:
   void Clicked(LayerSelector*, bool);
@@ -35,7 +37,8 @@ private:
   QString m_bgStyle;
   QString m_bgStyleTmpl;
 
-  QString m_path;
+  QString m_step;
+  QString m_layer;
   QColor m_color;
   QSignalMapper* m_colorSignalMapper;
 };

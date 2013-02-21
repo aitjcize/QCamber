@@ -38,16 +38,6 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
   scale(scaleFactor, scaleFactor);
 }
 
-Features* ODBPPGraphicsView::loadFeature(QString filename, const QColor color,
-    const QBrush brush)
-{
-  Features* features = new Features(ctx.loader->absPath(filename));
-  features->setPen(QPen(color, 0));
-  features->setBrush(brush);
-  scene()->addItem(features);
-  return features;
-}
-
 void ODBPPGraphicsView::loadProfile(QString step)
 {
   QString path;

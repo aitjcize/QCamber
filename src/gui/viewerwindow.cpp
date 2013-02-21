@@ -42,18 +42,24 @@ ViewerWindow::~ViewerWindow()
   delete ui;
 }
 
-void ViewerWindow::addLayerLabel(const QStringList& layerNames)
+void ViewerWindow::setStep(QString step)
+{
+  setWindowTitle(step);
+  m_step = step;
+}
+
+void ViewerWindow::setLayers(const QStringList& layerNames)
 {
   ui->viewWidget->clear_scene();
-  ui->viewWidget->loadProfile(this->windowTitle());
+  ui->viewWidget->loadProfile(m_step);
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
 
   for(int i = 0; i < layerNames.count(); ++i)
   {
-    LayerSelector *layer = new LayerSelector(layerNames[i],
-        pathTmpl.arg(this->windowTitle()).arg(layerNames[i]));
+    LayerSelector *layer = new LayerSelector(layerNames[i], m_step,
+        layerNames[i]);
 
     connect(layer, SIGNAL(Clicked(LayerSelector*, bool)), this,
         SLOT(showLayer(LayerSelector*, bool)));
@@ -76,32 +82,24 @@ void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
   }
 }
 
-
-Features* ViewerWindow::makeFeature(QString path, const QPen& pen,
-    const QBrush& brush)
-{
-  Features* features = new Features(ctx.loader->featuresPath(path));
-  features->setPen(pen);
-  features->setBrush(brush);
-  return features;
-}
-
 void ViewerWindow::showLayer(LayerSelector* selector, bool selected)
 {
   if (!selected) {
-    if (!selector->features) {
-      selector->features = makeFeature(selector->path(),
-          QPen(selector->color(), 0), QBrush(selector->color()));
-      ui->viewWidget->addItem(selector->features);
+    if (!selector->item) {
+      Layer* layer = new Layer(selector->step(), selector->layer());
+      layer->setPen(QPen(selector->color(), 0));
+      layer->setBrush(QBrush(selector->color()));
+      selector->item = layer;
+      ui->viewWidget->addItem(selector->item);
     }
     selector->setColor(nextColor());
-    selector->features->setOpacity(1);
-    selector->features->setDoComposite(true);
+    selector->item->setOpacity(1);
+    selector->item->setDoComposite(true);
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
-    selector->features->setDoComposite(false);
-    selector->features->setOpacity(0);
+    selector->item->setDoComposite(false);
+    selector->item->setOpacity(0);
   }
 }
 

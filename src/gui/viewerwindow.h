@@ -25,14 +25,14 @@ class ViewerWindow : public QMainWindow
 public:
   explicit ViewerWindow(QWidget *parent = 0);
   ~ViewerWindow();
-  void addLayerLabel(const QStringList& layerNames);
+  void setStep(QString step);
+  void setLayers(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
 
 public slots:
   void on_actionSetColor_triggered();
 
 protected:
-  Features* makeFeature(QString path, const QPen& pen, const QBrush& brush);
   QColor nextColor(void);
 
 private slots:
@@ -43,6 +43,7 @@ private slots:
 
 private:
   Ui::ViewerWindow *ui;
+  QString m_step;
   QVBoxLayout* m_layout;
   QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;

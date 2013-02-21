@@ -41,7 +41,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
     ClickableLabel *label = new ClickableLabel("this");
     label->setText((QString)it->second->get("NAME").c_str());
     matrix_layout->addWidget(label,0,steps++);
-    step_name.append((QString)it->second->get("NAME").c_str());
+    m_step_name.append((QString)it->second->get("NAME").c_str());
 
     connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
     stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
@@ -73,21 +73,21 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
       text += "p)  ";
     else
       text += "n)  ";
-    layer_name.append((QString)it->second->get("NAME").c_str());
+    m_layer_name.append((QString)it->second->get("NAME").c_str());
     text += (QString)it->second->get("NAME").c_str();
     label->setText(text);
     matrix_layout->addWidget(label,layers++,0);
 
     for(int i=2;i<steps;i++)
     {
-      text = step_name[i-2] + "/" + (QString)it->second->get("NAME").c_str();
+      text = m_step_name[i-2] + "/" + (QString)it->second->get("NAME").c_str();
       QPushButton *btn = new QPushButton(text);
       connect(btn, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
       layerSignalMapper->setMapping(btn,text);
 
 
       QString pathTmpl = "steps/%1/layers/%2";
-      text = pathTmpl.arg(step_name[i-2].toAscii().data()).arg(
+      text = pathTmpl.arg(m_step_name[i-2].toAscii().data()).arg(
           QString::fromStdString(it->second->get("NAME")));
 
       if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
@@ -110,14 +110,11 @@ void JobMatrix::showLayer(const QString feature_name)
   QStringList name = feature_name.toLower().split("/");
   QString pathTmpl = "steps/%1/layers/%2";
   QString path = pathTmpl.arg(name[0]).arg(name[1]);
-  widget.loadProfile(name[0]);
-  widget.loadFeature(ctx.loader->featuresPath(path.toLower()));
-  widget.show();
 }
 
-void JobMatrix::showStep(const QString step_name)
+void JobMatrix::showStep(const QString m_step_name)
 {
-  Window.setWindowTitle(step_name);
-  Window.addLayerLabel(layer_name);
+  Window.setStep(m_step_name);
+  Window.setLayers(m_layer_name);
   Window.show();
 }
