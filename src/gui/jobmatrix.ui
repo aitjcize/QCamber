@@ -15,24 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QScrollArea" name="matrix">
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollWidget">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>580</width>
-        <height>647</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
+    <widget class="QTableWidget" name="tableWidget"/>
    </item>
    <item>
     <widget class="QPushButton" name="CloseButton">

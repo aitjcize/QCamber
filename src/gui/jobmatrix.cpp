@@ -28,7 +28,6 @@ void JobMatrix::on_CloseButton_clicked()
 
 void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
 {
-  QVBoxLayout *layout = new QVBoxLayout();
   StructuredTextDataStore::BlockIterPair ip;
   QString text;
   layerSignalMapper = new QSignalMapper(this);
@@ -43,25 +42,27 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
     layers++;
 
-  QTableWidget *table = new QTableWidget(layers,steps);
-
+  ui->tableWidget->setColumnCount(steps);
+  ui->tableWidget->setRowCount(layers);
 
   steps = 1;
   ip = ds->getBlocksByKey("STEP");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
     ClickableLabel *label = new ClickableLabel("this");
-    label->setText((QString)it->second->get("NAME").c_str());
-    m_step_name.append((QString)it->second->get("NAME").c_str());
-    //table.setHorizontalHeaderItem(steps+1,label);
+    label->setText(QString::fromStdString(it->second->get("NAME")));
+    m_step_name.append(QString::fromStdString(it->second->get("NAME")));
+    //ui->tableWidget.setHorizontalHeaderItem(steps+1,label);
 
     steps++;
-    connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
-    stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
+    connect(label, SIGNAL(clicked()), stepSignalMapper, SLOT(map()));
+    stepSignalMapper->setMapping(label, QString::fromStdString(
+          it->second->get("NAME")));
   }
 
   layers = 0;
   ip = ds->getBlocksByKey("LAYER");
+
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
     QTableWidgetItem *item = new QTableWidgetItem();
@@ -89,15 +90,15 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
     m_layer_name.append((QString)it->second->get("NAME").c_str());
     text += (QString)it->second->get("NAME").c_str();
     item->setText(text);
-    table->setVerticalHeaderItem(layers,item);
+    ui->tableWidget->setVerticalHeaderItem(layers, item);
 
-    for(int i=0;i<m_step_name.size();i++)
+    for(int i = 0; i < m_step_name.size(); i++)
     {
       text = m_step_name[i] + "/" + (QString)it->second->get("NAME").c_str();
       QPushButton *btn = new QPushButton(text);
-      connect(btn, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
+      connect(btn, SIGNAL(clicked()), layerSignalMapper, SLOT(map()));
       layerSignalMapper->setMapping(btn, text);
-      table->setCellWidget(layers,i,btn);
+      ui->tableWidget->setCellWidget(layers, i, btn);
 
       QString pathTmpl = "steps/%1/layers/%2";
       text = pathTmpl.arg(m_step_name[i].toAscii().data()).arg(
@@ -113,9 +114,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
 
   connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this,
       SLOT(showLayer(const QString &)));
-  table->verticalHeader()->setMovable(true);
-  layout->addWidget(table);
-  ui->scrollWidget->setLayout(layout);
+  ui->tableWidget->verticalHeader()->setMovable(true);
 }
 
 void JobMatrix::showLayer(const QString text)
