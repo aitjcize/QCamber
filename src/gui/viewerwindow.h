@@ -50,6 +50,7 @@ private:
   QVBoxLayout* m_layout;
   QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
+  QList<LayerSelector*> m_actives;
   QMap<int, bool> m_colorsMap;
   QMap<QString, LayerSelector*> m_SelectorMap;
   QLabel* m_cursorCoordLabel;

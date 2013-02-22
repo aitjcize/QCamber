@@ -97,10 +97,12 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     }
     selector->setColor(nextColor());
     ui->viewWidget->addItem(selector->item);
+    m_actives.append(selector);
   } else {
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
     ui->viewWidget->removeItem(selector->item);
+    m_actives.removeOne(selector);
   }
 }
 
@@ -129,6 +131,11 @@ void ViewerWindow::loadColorConfig()
 
   for (int i = 0; i < m_colors.size(); ++i) {
     m_colorsMap[i] = false;
+  }
+
+  for (int i = 0; i < m_actives.size(); ++i) {
+    m_actives[i]->setColor(nextColor());
+    m_actives[i]->item->update();
   }
 }
 

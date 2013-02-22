@@ -2,6 +2,10 @@
 
 #include <QtGui>
 
+#include "context.h"
+
+extern Context ctx;
+
 LayerSelector::LayerSelector(const QString& text, const QString& step,
     const QString& layer, QWidget *parent)
   :QLabel(text, parent), m_step(step), m_layer(layer), m_selected(false)
@@ -43,8 +47,25 @@ void LayerSelector::setColor(const QColor& color)
   m_color = color;
   m_bgStyle = m_bgStyleTmpl.arg(color.name()).arg(tcolor);
   setStyleSheet(m_bgStyle);
-  item->setPen(QPen(m_color, 0));
-  item->setBrush(m_color);
+
+  // Color compensation for composite mode
+  int r, g, b, a;
+  QColor bg = ctx.bg_color;
+  if (color.lightnessF() > bg.lightnessF()) {
+    r = color.red() - bg.red();
+    g = color.green() - bg.green();
+    b = color.blue() - bg.blue();
+    a = color.alpha() - bg.alpha();
+  } else {
+    r = bg.red() - color.red();
+    g = bg.green() - color.green();
+    b = bg.blue() - color.blue();
+    a = bg.alpha() - color.alpha();
+  }
+  QColor tc = QColor(abs(r), abs(g), abs(b), 255);
+
+  item->setPen(QPen(tc, 0));
+  item->setBrush(tc);
 }
 
 void LayerSelector::mousePressEvent(QMouseEvent *ev)
