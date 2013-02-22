@@ -31,7 +31,7 @@ void LayerGraphicsEffect::draw(QPainter* painter)
   painter->save();
 
   if (m_doComposite) {
-    painter->setCompositionMode(QPainter::CompositionMode_Exclusion);
+    painter->setCompositionMode(QPainter::CompositionMode_Difference);
   }
   if (!m_isFullyTransparent) {
     painter->setOpacity(m_opacity);
