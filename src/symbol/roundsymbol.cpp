@@ -5,7 +5,7 @@
 
 
 RoundSymbol::RoundSymbol(QString def, Polarity polarity):
-    Symbol("r", "r([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "r([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

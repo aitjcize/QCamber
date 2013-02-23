@@ -8,7 +8,7 @@
 extern Context ctx;
 
 MoireSymbol::MoireSymbol(QString def, Polarity polarity):
-    Symbol("moire", "moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

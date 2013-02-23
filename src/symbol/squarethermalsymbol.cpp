@@ -5,7 +5,7 @@
 
 
 SquareThermalSymbol::SquareThermalSymbol(QString def, Polarity polarity):
-    Symbol("s_ths", "s_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "s_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

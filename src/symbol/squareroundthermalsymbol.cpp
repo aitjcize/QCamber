@@ -8,7 +8,7 @@
 extern Context ctx;
 
 SquareRoundThermalSymbol::SquareRoundThermalSymbol(QString def, Polarity polarity):
-    Symbol("sr_ths", "sr_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "sr_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

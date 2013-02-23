@@ -5,7 +5,7 @@
 
 
 RoundThermalRoundSymbol::RoundThermalRoundSymbol(QString def, Polarity polarity):
-    Symbol("ths", "thr([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "thr([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

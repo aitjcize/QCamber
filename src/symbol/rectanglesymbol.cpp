@@ -5,7 +5,7 @@
 
 
 RectangleSymbol::RectangleSymbol(QString def, Polarity polarity):
-    Symbol("rect", "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?", polarity), m_def(def)
+    Symbol(def, "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

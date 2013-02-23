@@ -5,7 +5,7 @@
 
 
 HoleSymbol::HoleSymbol(QString def, Polarity polarity):
-    Symbol("hole", "hole([0-9.]+)x([pnv])x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "hole([0-9.]+)x([pnv])x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

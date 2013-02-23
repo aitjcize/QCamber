@@ -5,7 +5,7 @@
 
 
 NullSymbol::NullSymbol(QString def, Polarity polarity):
-    Symbol("null", "null([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "null([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

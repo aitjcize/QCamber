@@ -6,7 +6,7 @@
 {{includes}}
 
 {{.#name}}::{{.#name}}(QString def, Polarity polarity):
-    Symbol("{{.#id}}", "{{pattern}}", polarity), m_def(def)
+    Symbol(def, "{{pattern}}", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

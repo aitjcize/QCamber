@@ -5,7 +5,7 @@
 
 
 HorizontalHexagonSymbol::HorizontalHexagonSymbol(QString def, Polarity polarity):
-    Symbol("hex_l", "hex_l([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "hex_l([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

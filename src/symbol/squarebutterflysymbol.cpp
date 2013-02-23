@@ -5,7 +5,7 @@
 
 
 SquareButterflySymbol::SquareButterflySymbol(QString def, Polarity polarity):
-    Symbol("bfs", "bfs([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "bfs([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

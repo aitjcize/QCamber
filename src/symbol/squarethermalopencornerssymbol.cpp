@@ -5,7 +5,7 @@
 
 
 SquareThermalOpenCornersSymbol::SquareThermalOpenCornersSymbol(QString def, Polarity polarity):
-    Symbol("s_tho", "s_tho([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "s_tho([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

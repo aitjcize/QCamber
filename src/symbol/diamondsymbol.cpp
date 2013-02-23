@@ -5,7 +5,7 @@
 
 
 DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
-    Symbol("di", "di([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+    Symbol(def, "di([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))
