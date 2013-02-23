@@ -31,6 +31,7 @@ public:
 
   string get(string key);
   BlockIterPair getBlocksByKey(string key);
+  const ValueType& getValueData(void);
 
   void put(string key, string value);
   virtual void dump(void);

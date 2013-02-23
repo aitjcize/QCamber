@@ -1,7 +1,8 @@
 #include "record.h"
 
-#include <QPainterPath>
 #include <QDateTime>
+#include <QPainterPath>
+#include <QRegExp>
 #include <QString>
 
 #include "featuresparser.h"
@@ -51,6 +52,11 @@ QString TextRecord::dynamicText(QString text)
 
   dynText.replace("$$x", QString("%1").arg(x), Qt::CaseInsensitive);
   dynText.replace("$$y", QString("%1").arg(y), Qt::CaseInsensitive);
+
+  QRegExp rx("\\$\\$(.+)");
+  if (rx.exactMatch(dynText)) {
+    dynText.replace(rx, fds->attrlist(rx.cap(1)).toUpper());
+  }
 
   return dynText;
 }

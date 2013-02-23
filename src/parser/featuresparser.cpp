@@ -1,5 +1,8 @@
 #include "featuresparser.h"
 
+#include <map>
+#include <string>
+
 #include <QtCore>
 
 FeaturesDataStore::~FeaturesDataStore()
@@ -22,6 +25,16 @@ void FeaturesDataStore::setStepName(const QString& name)
 void FeaturesDataStore::setLayerName(const QString& name)
 {
   m_layerName = name.toUpper();
+}
+
+void FeaturesDataStore::putAttrlist(StructuredTextDataStore* ds)
+{
+  const StructuredTextDataStore::ValueType d = ds->getValueData();
+  for (StructuredTextDataStore::ValueType::const_iterator it = d.begin();
+      it != d.end(); ++it) {
+    m_attrlist[QString::fromStdString(it->first)] =
+      QString::fromStdString(it->second);
+  }
 }
 
 void FeaturesDataStore::putSymbolName(const QString& line)
@@ -157,6 +170,11 @@ QString FeaturesDataStore::layerName(void)
   return m_layerName;
 }
 
+QString FeaturesDataStore::attrlist(QString name)
+{
+  return m_attrlist[name];
+}
+
 const FeaturesDataStore::IDMapType& FeaturesDataStore::symbolNameMap(void)
 {
   return m_symbolNameMap;
@@ -219,12 +237,29 @@ FeaturesDataStore* FeaturesParser::parse(void)
   FeaturesDataStore* ds = new FeaturesDataStore;
   QFile file(m_fileName);
 
+  // layer feature related
   QRegExp rx(".+_(.+)/steps/(.+)/layers/(.+)/features");
   if (rx.exactMatch(m_fileName)) {
     QStringList caps = rx.capturedTexts();
     ds->setJobName(caps[1]);
     ds->setStepName(caps[2]);
     ds->setLayerName(caps[3]);
+
+    // steps attribute
+    QRegExp rp("(steps/[^/]+)/.*");
+    QString stepAttrName = QString(m_fileName).replace(rp, "\\1/attrlist");
+    StructuredTextParser sp(stepAttrName);
+    StructuredTextDataStore* sds = sp.parse();
+    ds->putAttrlist(sds);
+    delete sds;
+
+    // layer attribute
+    rp.setPattern("(layers/[^/]+)/.*");
+    QString layerAttrName = QString(m_fileName).replace(rp, "\\1/attrlist");
+    StructuredTextParser lp(layerAttrName);
+    StructuredTextDataStore* lds = lp.parse();
+    ds->putAttrlist(lds);
+    delete lds;
   }
 
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {

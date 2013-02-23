@@ -75,6 +75,12 @@ StructuredTextDataStore::getBlocksByKey(string key)
   return m_blockData.equal_range(key);
 }
 
+const StructuredTextDataStore::ValueType&
+StructuredTextDataStore::getValueData(void)
+{
+  return m_valueData;
+}
+
 void StructuredTextDataStore::dump(void)
 {
   for (ValueType::const_iterator iter = m_valueData.begin();

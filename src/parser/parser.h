@@ -14,6 +14,7 @@ using std::vector;
 
 class DataStore {
 public:
+  virtual ~DataStore() {}
   virtual void dump(void) = 0;
 };
 

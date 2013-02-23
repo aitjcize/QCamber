@@ -3,6 +3,7 @@
 
 #include "parser.h"
 #include "record.h"
+#include "structuredtextparser.h"
 
 #include <QList>
 #include <QMap>
@@ -11,7 +12,7 @@
 
 class FeaturesDataStore: public DataStore {
 public:
-  ~FeaturesDataStore();
+  virtual ~FeaturesDataStore();
 
   typedef QMap<int, QString> IDMapType;
 
@@ -19,6 +20,7 @@ public:
   void setStepName(const QString& name);
   void setLayerName(const QString& name);
 
+  void putAttrlist(StructuredTextDataStore* ds);
   void putSymbolName(const QString& line);
   void putAttribName(const QString& line);
   void putAttribText(const QString& line);
@@ -34,6 +36,8 @@ public:
   QString jobName(void);
   QString stepName(void);
   QString layerName(void);
+  QString attrlist(QString name);
+
   const IDMapType& symbolNameMap(void);
   const IDMapType& attribNameMap(void);
   const IDMapType& attribTextMap(void);
@@ -49,6 +53,7 @@ private:
   QString m_stepName;
   QString m_layerName;
 
+  QMap<QString, QString> m_attrlist;
   IDMapType m_symbolNameMap;
   IDMapType m_attribNameMap;
   IDMapType m_attribTextMap;
