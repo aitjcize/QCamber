@@ -9,8 +9,8 @@ extern Context ctx;
 
 using namespace std;
 
-JobMatrix::JobMatrix(QWidget *parent) :
-  QDialog(parent),
+JobMatrix::JobMatrix(QWidget *parent, StructuredTextDataStore *ds) :
+    QDialog(parent),m_ds(ds),
   ui(new Ui::JobMatrix)
 {
   ui->setupUi(this);
@@ -26,17 +26,17 @@ void JobMatrix::on_CloseButton_clicked()
   this->close();
 }
 
-void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
+void JobMatrix::SetMatrix()
 {
   StructuredTextDataStore::BlockIterPair ip;
-  QString text;
+  QString text,start,end;
   int steps,layers;
 
   steps = layers = 0;
-  ip = ds->getBlocksByKey("STEP");
+  ip = m_ds->getBlocksByKey("STEP");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
     steps++;
-  ip = ds->getBlocksByKey("LAYER");
+  ip = m_ds->getBlocksByKey("LAYER");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
     layers++;
 
@@ -44,7 +44,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   ui->tableWidget->setRowCount(layers);
 
   steps = 1;
-  ip = ds->getBlocksByKey("STEP");
+  ip = m_ds->getBlocksByKey("STEP");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
     QTableWidgetItem *item = new QTableWidgetItem();
@@ -56,7 +56,7 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   }
 
   layers = 0;
-  ip = ds->getBlocksByKey("LAYER");
+  ip = m_ds->getBlocksByKey("LAYER");
 
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
@@ -104,6 +104,23 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
     layers++;
   }
 
+  ip = m_ds->getBlocksByKey("LAYER");
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
+    text = (QString)it->second->get("TYPE").c_str();
+    if(text == "DRILL"){
+        start = (QString)it->second->get("START_NAME").c_str();
+        end = (QString)it->second->get("END_NAME").c_str();
+        if(start != "")
+        {
+          drawDrillLine((QString)it->second->get("NAME").c_str(),
+                        m_layer_name.indexOf(start),m_layer_name.indexOf(end));
+        }
+    }
+  }
+
+  connect(ui->tableWidget->verticalHeader(),SIGNAL(sectionClicked(int)),this,
+          SLOT(selectDrillLine(int)));
   connect(ui->tableWidget,SIGNAL(itemClicked(QTableWidgetItem*)),this,
       SLOT(showLayer(QTableWidgetItem *)));
   ui->tableWidget->verticalHeader()->setMovable(true);
@@ -112,10 +129,54 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
 
 void JobMatrix::showLayer(QTableWidgetItem *item)
 {
+  if(item->text() == "") return;
   QStringList params = item->text().split("/");
   ViewerWindow* w = new ViewerWindow;
   w->setStep(params[0]);
   w->setLayers(m_layer_name);
   w->showLayer(params[1]);
   w->show();
+}
+
+void JobMatrix::drawDrillLine(QString layer_name,int start,int end)
+{
+    int col = ui->tableWidget->columnCount() + 1;
+    ui->tableWidget->setColumnCount(col);
+    ui->tableWidget->horizontalHeader()->resizeSection(col-1,10);
+    ui->tableWidget->setHorizontalHeaderItem(col-1,new QTableWidgetItem(layer_name));
+    for(int i = start;i<end+1;i++)
+    {
+      QTableWidgetItem *line = new QTableWidgetItem(layer_name);
+      line->setBackgroundColor(QColor("black"));
+      ui->tableWidget->setItem(i,col-1,line);
+    }
+
+}
+
+void JobMatrix::selectDrillLine(int index)
+{
+    int target_col;
+    QTableWidgetItem *item;
+    for(target_col=m_step_name.size();
+        target_col<ui->tableWidget->columnCount();target_col++)
+    {
+        if(ui->tableWidget->horizontalHeaderItem(target_col)->text() ==
+           ui->tableWidget->verticalHeaderItem(index)->text().split(" ")[2])
+            break;
+    }
+
+    if(target_col == ui->tableWidget->columnCount()) return;
+
+    for(int col = m_step_name.size();col < ui->tableWidget->columnCount();col++)
+    {
+      for(int row = 0;row < m_layer_name.size();row++)
+      {
+         if((item = ui->tableWidget->item(row,col)) != 0)
+           if(col != target_col)
+             item->setBackgroundColor(QColor("black"));
+           else
+             item->setBackgroundColor(QColor("red"));
+      }
+    }
+
 }

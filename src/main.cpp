@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
 
-  JobMatrix table;
-  table.SetMatrix(ds);
+  JobMatrix table(0,ds);
+  table.SetMatrix();
   table.show();
 
   return app.exec();
