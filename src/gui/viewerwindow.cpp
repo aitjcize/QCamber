@@ -18,13 +18,21 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
 
   m_cursorCoordLabel = new QLabel();
   m_featureDetailLabel = new QLabel();
-  m_cursorCoordLabel->setAlignment(Qt::AlignRight);
-  m_featureDetailLabel->setAlignment(Qt::AlignCenter);
+  m_featureDetailLabel->setAlignment(Qt::AlignVCenter);
+  m_cursorCoordLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   statusBar()->addPermanentWidget(m_featureDetailLabel);
   statusBar()->addPermanentWidget(m_cursorCoordLabel, 1);
 
+  QComboBox* unitCombo = new QComboBox;
+  unitCombo->addItem("Inch");
+  unitCombo->addItem("MM");
+  statusBar()->addPermanentWidget(unitCombo);
+
   m_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
+
+  connect(unitCombo, SIGNAL(currentIndexChanged(int)), this,
+      SLOT(unitChanged(int)));
 
   connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
       SLOT(updateCursorCoord(QPointF)));
@@ -147,10 +155,19 @@ void ViewerWindow::loadColorConfig()
   }
 }
 
+void ViewerWindow::unitChanged(int index)
+{
+  m_displayUnit = (DisplayUnit)index;
+}
+
 void ViewerWindow::updateCursorCoord(QPointF pos)
 {
   QString text;
-  text.sprintf("(%f, %f)", pos.x(), pos.y());
+  if (m_displayUnit == U_INCH) {
+    text.sprintf("(%f, %f)", pos.x(), -pos.y());
+  } else {
+    text.sprintf("(%f, %f)", pos.x() * 25.4, -pos.y() * 25.4);
+  }
   m_cursorCoordLabel->setText(text);
 }
 

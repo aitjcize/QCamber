@@ -23,6 +23,8 @@ class ViewerWindow : public QMainWindow
   Q_OBJECT
   
 public:
+  typedef enum { U_INCH = 0, U_MM } DisplayUnit;
+
   explicit ViewerWindow(QWidget *parent = 0);
   ~ViewerWindow();
   void setStep(QString step);
@@ -42,6 +44,7 @@ protected:
 private slots:
   void toggleShowLayer(LayerSelector* selector, bool selected);
   void loadColorConfig();
+  void unitChanged(int index);
   void updateCursorCoord(QPointF);
   void updateFeatureDetail(Symbol* symbol);
 
@@ -53,6 +56,7 @@ private:
   QList<LayerSelector*> m_actives;
   QMap<int, bool> m_colorsMap;
   QMap<QString, LayerSelector*> m_SelectorMap;
+  DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
 };
