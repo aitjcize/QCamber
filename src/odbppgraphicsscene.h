@@ -11,6 +11,7 @@ class ODBPPGraphicsScene: public QGraphicsScene {
 
 public:
   ODBPPGraphicsScene(QObject* parent = 0);
+  void setAreaZoomEnabled(bool status);
 
 signals:
   void mouseMove(QPointF);
@@ -26,6 +27,7 @@ protected:
 private:
   QPointF m_rubberPS;
   QPointF m_rubberPE;
+  bool m_areaZoomEnabled;
 };
 
 #endif /* __ODBPPGRAPHICSSCENE_H__ */

@@ -29,11 +29,12 @@ public:
   void setLayers(const QStringList& layerNames);
   void clearLayout(QLayout* , bool deleteWidgets = true);
   void showLayer(QString name);
-  void loadActionBtn();
 
 public slots:
-  void on_actionSetColor_triggered();
-  void fitViewerScreen();
+  void on_actionSetColor_triggered(void);
+  void on_homeFunc_clicked(void);
+  void on_areaZoomFunc_clicked(void);
+  void on_mousePanFunc_clicked(void);
 
 protected:
   QColor nextColor(void);
@@ -48,7 +49,6 @@ private:
   Ui::ViewerWindow *ui;
   QString m_step;
   QVBoxLayout* m_layout;
-  QVBoxLayout* m_tool_layout;
   QList<QColor> m_colors;
   QList<LayerSelector*> m_actives;
   QMap<int, bool> m_colorsMap;

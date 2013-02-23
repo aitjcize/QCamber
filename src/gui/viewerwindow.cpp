@@ -24,16 +24,12 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   statusBar()->addPermanentWidget(m_cursorCoordLabel, 1);
 
   m_layout = new QVBoxLayout();
-  m_tool_layout = new QVBoxLayout();
   ui->scrollWidget->setLayout(m_layout);
-  ui->groupBox_Tool->setLayout(m_tool_layout);
 
   connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
       SLOT(updateCursorCoord(QPointF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
-
-  loadActionBtn();
 }
 
 ViewerWindow::~ViewerWindow()
@@ -49,7 +45,7 @@ void ViewerWindow::setStep(QString step)
 
 void ViewerWindow::setLayers(const QStringList& layerNames)
 {
-  ui->viewWidget->clear_scene();
+  ui->viewWidget->clearScene();
   ui->viewWidget->loadProfile(m_step);
   ui->viewWidget->zoomToProfile();
 
@@ -139,13 +135,6 @@ void ViewerWindow::loadColorConfig()
   }
 }
 
-void ViewerWindow::on_actionSetColor_triggered()
-{
-  ColorSettings dialog;
-  dialog.exec();
-  loadColorConfig();
-}
-
 void ViewerWindow::updateCursorCoord(QPointF pos)
 {
   QString text;
@@ -158,16 +147,24 @@ void ViewerWindow::updateFeatureDetail(Symbol* symbol)
   m_featureDetailLabel->setText(symbol->name());
 }
 
-void ViewerWindow::loadActionBtn()
+void ViewerWindow::on_actionSetColor_triggered(void)
 {
-  QPushButton *home = new QPushButton("Home");
-
-  m_tool_layout->addWidget(home);
-
-  connect(home,SIGNAL(clicked()),this,SLOT(fitViewerScreen()));
+  ColorSettings dialog;
+  dialog.exec();
+  loadColorConfig();
 }
 
-void ViewerWindow::fitViewerScreen()
+void ViewerWindow::on_homeFunc_clicked(void)
 {
   ui->viewWidget->zoomToProfile();
+}
+
+void ViewerWindow::on_areaZoomFunc_clicked(void)
+{
+  ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
+}
+
+void ViewerWindow::on_mousePanFunc_clicked(void)
+{
+  ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
 }

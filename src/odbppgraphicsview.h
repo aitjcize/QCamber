@@ -11,15 +11,18 @@ class ODBPPGraphicsView: public QGraphicsView {
   Q_OBJECT
 
 public:
+  typedef enum { AreaZoom = 0, MousePan } ZoomMode;
+
   ODBPPGraphicsView(QWidget* parent = 0);
-  Features* loadFeature(QString filename, const QColor color = Qt::red,
-      const QBrush brush = Qt::red);
+  ~ODBPPGraphicsView();
+
+  void setZoomMode(ZoomMode mode);
   void loadProfile(QString step);
   void setBackgroundColor(QColor color);
 
-  void clear_scene(){ scene()->clear(); }
-  void addItem(Features *feat){ scene()->addItem(feat); }
-  void removeItem(Features *feat){ scene()->removeItem(feat); }
+  void clearScene(void);
+  void addItem(Features *feat);
+  void removeItem(Features *feat);
   void zoomToProfile(void);
 
 public slots:
@@ -30,6 +33,8 @@ protected:
   virtual void wheelEvent(QWheelEvent *event);
 
 private:
+  ODBPPGraphicsScene* m_scene;
+  ZoomMode m_zoomMode;
   Profile* m_profile;
 };
 

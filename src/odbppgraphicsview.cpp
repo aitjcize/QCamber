@@ -8,24 +8,29 @@ extern Context ctx;
 ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_profile(NULL)
 {
-  QGraphicsScene* scene = new ODBPPGraphicsScene(this);
-  scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-  scene->setSceneRect(-800, -800, 1600, 1600);
-  scene->setBackgroundBrush(ctx.bg_color);
+  m_scene = new ODBPPGraphicsScene(this);
+  m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+  m_scene->setSceneRect(-800, -800, 1600, 1600);
+  m_scene->setBackgroundBrush(ctx.bg_color);
+  setScene(m_scene);
 
-  setScene(scene);
-
+  setZoomMode(AreaZoom);
   setCacheMode(CacheBackground);
-  //setDragMode(QGraphicsView::ScrollHandDrag);
-  setDragMode(QGraphicsView::RubberBandDrag);
   setViewportUpdateMode(BoundingRectViewportUpdate);
   //setRenderHint(QPainter::Antialiasing);
+
   setTransformationAnchor(AnchorUnderMouse);
   setOptimizationFlags(QGraphicsView::DontSavePainterState);
-  setMinimumSize(600, 600);
-  setWindowTitle(tr("test"));
 
-  connect(scene, SIGNAL(rectSelected(QRectF)), this, SLOT(zoomToRect(QRectF)));
+  setMinimumSize(600, 600);
+
+  connect(m_scene, SIGNAL(rectSelected(QRectF)),
+      this, SLOT(zoomToRect(QRectF)));
+}
+
+ODBPPGraphicsView::~ODBPPGraphicsView()
+{
+  delete m_scene;
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
@@ -36,6 +41,33 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
   //    return;
 
   scale(scaleFactor, scaleFactor);
+}
+
+void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
+{
+  m_zoomMode = mode;
+  if (mode == AreaZoom) {
+    m_scene->setAreaZoomEnabled(true);
+    setDragMode(QGraphicsView::RubberBandDrag);
+  } else {
+    m_scene->setAreaZoomEnabled(false);
+    setDragMode(QGraphicsView::ScrollHandDrag);
+  }
+}
+
+void ODBPPGraphicsView::clearScene(void)
+{
+  m_scene->clear();
+}
+
+void ODBPPGraphicsView::addItem(Features *feat)
+{
+  m_scene->addItem(feat);
+}
+
+void ODBPPGraphicsView::removeItem(Features *feat)
+{
+  m_scene->removeItem(feat);
 }
 
 void ODBPPGraphicsView::loadProfile(QString step)
@@ -50,13 +82,13 @@ void ODBPPGraphicsView::loadProfile(QString step)
   m_profile->setPen(QPen(color, 0));
   m_profile->setBrush(Qt::transparent);
 
-  scene()->addItem(m_profile);
+  m_scene->addItem(m_profile);
   zoomToProfile();
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
 {
-  scene()->setBackgroundBrush(color);
+  m_scene->setBackgroundBrush(color);
 
   if (m_profile) {
     QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
