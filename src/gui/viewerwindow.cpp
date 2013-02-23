@@ -168,3 +168,4 @@ void ViewerWindow::on_mousePanFunc_clicked(void)
 {
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
 }
+
