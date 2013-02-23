@@ -114,6 +114,7 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     int index = m_colors.indexOf(selector->color());
     m_colorsMap[index] = false;
     ui->viewWidget->removeItem(selector->item);
+    selector->item->setDoComposite(false);
     m_actives.removeOne(selector);
 
     if (m_actives.size() == 1) {
