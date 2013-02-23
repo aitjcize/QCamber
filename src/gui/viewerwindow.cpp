@@ -30,6 +30,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
       SLOT(updateCursorCoord(QPointF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
+
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 ViewerWindow::~ViewerWindow()
@@ -168,4 +170,3 @@ void ViewerWindow::on_mousePanFunc_clicked(void)
 {
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
 }
-
