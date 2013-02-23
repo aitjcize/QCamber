@@ -12,12 +12,25 @@ include (tests/tests.pri)
 
 HEADERS += \
   archiveloader.h \
-  symbolfactory.h \
+  config.h \
+  context.h \
   feature.h \
+  layergraphicseffect.h \
+  layer.h \
+  odbppgraphicsscene.h \
+  odbppgraphicsview.h \
+  profile.h \
+  symbolfactory.h
 
 SOURCES += \
   archiveloader.cpp \
-  feature.cpp
+  config.cpp \
+  feature.cpp \
+  layer.cpp \
+  layergraphicseffect.cpp \
+  odbppgraphicsscene.cpp \
+  odbppgraphicsview.cpp \
+  profile.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol
 
