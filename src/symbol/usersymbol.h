@@ -9,12 +9,12 @@
 class UserSymbol: public Symbol {
 public:
   UserSymbol(QString def, Polarity polarity);
+  virtual ~UserSymbol();
 
 private:
   QString m_def;
   qreal m_d;
   FeaturesDataStore* m_ds;
-  QList<Record*> m_records;
 };
 
 #endif /* __USERSYMBOL_H__ */

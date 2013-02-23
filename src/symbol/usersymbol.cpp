@@ -29,13 +29,17 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
 
   FeaturesParser parser(path);
   m_ds = parser.parse();
-  m_records = m_ds->records();
 
-  for (QList<Record*>::const_iterator it = m_records.begin();
-      it != m_records.end(); ++it) {
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
     Record* rec = *it;
     rec->addToChild(this);
   }
 
   setHandlesChildEvents(true);
+}
+
+UserSymbol::~UserSymbol()
+{
+  delete m_ds;
 }

@@ -40,17 +40,17 @@ QString TextRecord::dynamicText(QString text)
         Date.month(), Date.day(), Date.year()%100), Qt::CaseInsensitive);
   dynText.replace("$$time", QString("").sprintf("%02d:%02d",
         Time.hour(), Time.minute()), Qt::CaseInsensitive);
-  //TODO fill with correct text
-  dynText.replace("$$job", "Current_Job", Qt::CaseInsensitive);
-  dynText.replace("$$step", "Step", Qt::CaseInsensitive);
-  dynText.replace("$$layer", "Layer", Qt::CaseInsensitive);
+
+  FeaturesDataStore* fds = dynamic_cast<FeaturesDataStore*>(ds);
+  dynText.replace("$$job", fds->jobName(), Qt::CaseInsensitive);
+  dynText.replace("$$step", fds->stepName(), Qt::CaseInsensitive);
+  dynText.replace("$$layer", fds->layerName(), Qt::CaseInsensitive);
 
   dynText.replace("$$x_mm", QString("%1").arg(x*25.4), Qt::CaseInsensitive);
   dynText.replace("$$y_mm", QString("%1").arg(y*25.4), Qt::CaseInsensitive);
 
   dynText.replace("$$x", QString("%1").arg(x), Qt::CaseInsensitive);
   dynText.replace("$$y", QString("%1").arg(y), Qt::CaseInsensitive);
-  //TODO attr_name
 
   return dynText;
 }

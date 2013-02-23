@@ -11,7 +11,13 @@
 
 class FeaturesDataStore: public DataStore {
 public:
+  ~FeaturesDataStore();
+
   typedef QMap<int, QString> IDMapType;
+
+  void setJobName(const QString& name);
+  void setStepName(const QString& name);
+  void setLayerName(const QString& name);
 
   void putSymbolName(const QString& line);
   void putAttribName(const QString& line);
@@ -25,10 +31,13 @@ public:
   void surfaceLineData(const QString& line);
   void surfaceEnd(void);
 
-  QList<Record*>& records(void);
+  QString jobName(void);
+  QString stepName(void);
+  QString layerName(void);
   const IDMapType& symbolNameMap(void);
   const IDMapType& attribNameMap(void);
   const IDMapType& attribTextMap(void);
+  QList<Record*>& records(void);
 
   virtual void dump(void);
 
@@ -36,6 +45,10 @@ protected:
   QString stripAttr(const QString& line); 
 
 private:
+  QString m_jobName;
+  QString m_stepName;
+  QString m_layerName;
+
   IDMapType m_symbolNameMap;
   IDMapType m_attribNameMap;
   IDMapType m_attribTextMap;

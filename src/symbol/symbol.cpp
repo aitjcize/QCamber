@@ -16,10 +16,6 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
 
 Symbol::~Symbol()
 {
-  for (QList<Symbol*>::iterator it = m_symbols.begin();
-      it != m_symbols.end(); ++it) {
-    delete (*it);
-  }
 }
 
 QString Symbol::name(void)

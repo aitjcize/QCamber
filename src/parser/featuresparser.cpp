@@ -2,6 +2,28 @@
 
 #include <QtCore>
 
+FeaturesDataStore::~FeaturesDataStore()
+{
+  for (int i = 0; i < m_records.size(); ++i) {
+    delete m_records[i];
+  }
+}
+
+void FeaturesDataStore::setJobName(const QString& name)
+{
+  m_jobName = name.toUpper();
+}
+
+void FeaturesDataStore::setStepName(const QString& name)
+{
+  m_stepName = name.toUpper();
+}
+
+void FeaturesDataStore::setLayerName(const QString& name)
+{
+  m_layerName = name.toUpper();
+}
+
 void FeaturesDataStore::putSymbolName(const QString& line)
 {
   QStringList param = line.split(" ", QString::SkipEmptyParts);
@@ -120,9 +142,19 @@ void FeaturesDataStore::surfaceEnd(void)
   m_currentSurface = NULL;
 }
 
-QList<Record*>& FeaturesDataStore::records(void)
+QString FeaturesDataStore::jobName(void)
 {
-  return m_records;
+  return m_jobName;
+}
+
+QString FeaturesDataStore::stepName(void)
+{
+  return m_stepName;
+}
+
+QString FeaturesDataStore::layerName(void)
+{
+  return m_layerName;
 }
 
 const FeaturesDataStore::IDMapType& FeaturesDataStore::symbolNameMap(void)
@@ -138,6 +170,11 @@ const FeaturesDataStore::IDMapType& FeaturesDataStore::attribNameMap(void)
 const FeaturesDataStore::IDMapType& FeaturesDataStore::attribTextMap(void)
 {
   return m_attribTextMap;
+}
+
+QList<Record*>& FeaturesDataStore::records(void)
+{
+  return m_records;
 }
 
 QString FeaturesDataStore::stripAttr(const QString& line)
@@ -181,6 +218,14 @@ FeaturesDataStore* FeaturesParser::parse(void)
 {
   FeaturesDataStore* ds = new FeaturesDataStore;
   QFile file(m_fileName);
+
+  QRegExp rx(".+_(.+)/steps/(.+)/layers/(.+)/features");
+  if (rx.exactMatch(m_fileName)) {
+    QStringList caps = rx.capturedTexts();
+    ds->setJobName(caps[1]);
+    ds->setStepName(caps[2]);
+    ds->setLayerName(caps[3]);
+  }
 
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));

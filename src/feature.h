@@ -13,13 +13,13 @@
 class Features: public Symbol {
 public:
   Features(QString path);
+  ~Features();
 
   void setOpacity(qreal opacity);
   void setDoComposite(bool status);
 
 private:
   FeaturesDataStore* m_ds;
-  QList<Record*> m_records;
   QList<Symbol*> m_symbols;
 
   LayerGraphicsEffect* m_layerEffect;
