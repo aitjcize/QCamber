@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 NullSymbol::NullSymbol(QString def, Polarity polarity):
     Symbol("null", "null([0-9.]+)", polarity), m_def(def)
 {

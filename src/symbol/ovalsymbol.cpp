@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 OvalSymbol::OvalSymbol(QString def, Polarity polarity):
     Symbol("oval", "oval([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {

@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 SquareThermalSymbol::SquareThermalSymbol(QString def, Polarity polarity):
     Symbol("s_ths", "s_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {

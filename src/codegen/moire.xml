@@ -1,4 +1,10 @@
 <symbol name="MoireSymbol" id="moire">
+  <includes><![CDATA[
+#include "context.h"
+
+extern Context ctx;
+  ]]></includes>
+
   <pattern><![CDATA[
   moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)
   ]]></pattern>
@@ -64,8 +70,8 @@ void MoireSymbol::paint(QPainter *painter,
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
   } else {
-    painter->setPen(QPen(Qt::white, 0));
-    painter->setBrush(Qt::white);
+    painter->setPen(QPen(ctx.bg_color, 0));
+    painter->setBrush(ctx.bg_color);
   }
 
   painterPath();

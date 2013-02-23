@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 RectangularThermalSymbol::RectangularThermalSymbol(QString def, Polarity polarity):
     Symbol("rc_ths", "rc_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {

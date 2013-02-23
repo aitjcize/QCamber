@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 SquareSymbol::SquareSymbol(QString def, Polarity polarity):
     Symbol("s", "s([0-9.]+)", polarity), m_def(def)
 {

@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QRegExp>
 
+
 RoundSymbol::RoundSymbol(QString def, Polarity polarity):
     Symbol("r", "r([0-9.]+)", polarity), m_def(def)
 {

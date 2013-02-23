@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+{{includes}}
+
 {{.#name}}::{{.#name}}(QString def, Polarity polarity):
     Symbol("{{.#id}}", "{{pattern}}", polarity), m_def(def)
 {
