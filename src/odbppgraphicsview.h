@@ -30,7 +30,8 @@ public slots:
 
 protected:
   void scaleView(qreal scaleFactor);
-  virtual void wheelEvent(QWheelEvent *event);
+  virtual void wheelEvent(QWheelEvent* event);
+  virtual void keyPressEvent(QKeyEvent* event);
 
 private:
   ODBPPGraphicsScene* m_scene;

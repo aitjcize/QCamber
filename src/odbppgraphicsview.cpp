@@ -125,3 +125,19 @@ void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
   scaleView(pow((double)2, -event->delta() / 240.0));
 }
+
+void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
+{
+  switch (event->key()) {
+  case Qt::Key_Home:
+    zoomToProfile();
+    return;
+  case Qt::Key_PageUp:
+    scaleView(2);
+    return;
+  case Qt::Key_PageDown:
+    scaleView(0.5);
+    return;
+  }
+  QGraphicsView::keyPressEvent(event);
+}
