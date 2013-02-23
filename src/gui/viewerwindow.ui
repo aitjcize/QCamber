@@ -31,6 +31,9 @@
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
           <widget class="QToolButton" name="areaZoomFunc">
+           <property name="toolTip">
+            <string>Select an area to zoom in</string>
+           </property>
            <property name="text">
             <string>AZ</string>
            </property>
@@ -38,6 +41,9 @@
          </item>
          <item row="0" column="0">
           <widget class="QToolButton" name="homeFunc">
+           <property name="toolTip">
+            <string>show entire profile</string>
+           </property>
            <property name="text">
             <string>HE</string>
            </property>
@@ -45,6 +51,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QToolButton" name="mousePanFunc">
+           <property name="toolTip">
+            <string>Use mouse to pan and zoom</string>
+           </property>
            <property name="text">
             <string>MP</string>
            </property>
