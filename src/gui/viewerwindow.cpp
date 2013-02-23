@@ -171,3 +171,4 @@ void ViewerWindow::fitViewerScreen()
 {
   ui->viewWidget->zoomToProfile();
 }
+

@@ -2,9 +2,11 @@
 #define JOBMATRIX_H
 
 #include <QDialog>
+#include <QSignalMapper>
+#include <QTableWidget>
+
 #include "structuredtextparser.h"
 #include "odbppgraphicsview.h"
-#include <QSignalMapper>
 #include "clickablelabel.h"
 #include "iostream"
 #include "viewerwindow.h"
@@ -24,15 +26,13 @@ public:
 
 private slots:
   void on_CloseButton_clicked();
-  void showLayer(const QString);
+  void showLayer(QTableWidgetItem *item);
 
 private:
   Ui::JobMatrix* ui;
   QStringList m_step_name;
   QStringList m_layer_name;
   ViewerWindow Window;
-  QSignalMapper* layerSignalMapper;
-  QSignalMapper* stepSignalMapper;
 };
 
 #endif // JOBMATRIX_H

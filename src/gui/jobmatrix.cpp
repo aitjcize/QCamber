@@ -31,8 +31,6 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   QVBoxLayout *layout = new QVBoxLayout();
   StructuredTextDataStore::BlockIterPair ip;
   QString text;
-  layerSignalMapper = new QSignalMapper(this);
-  stepSignalMapper = new  QSignalMapper(this);
   int steps,layers;
 
   steps = layers = 0;
@@ -50,14 +48,12 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
   ip = ds->getBlocksByKey("STEP");
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
-    ClickableLabel *label = new ClickableLabel("this");
-    label->setText((QString)it->second->get("NAME").c_str());
+    QTableWidgetItem *item = new QTableWidgetItem();
+    item->setText((QString)it->second->get("NAME").c_str());
     m_step_name.append((QString)it->second->get("NAME").c_str());
-    //table.setHorizontalHeaderItem(steps+1,label);
+    table->setHorizontalHeaderItem(steps - 1,item);
 
     steps++;
-    connect(label, SIGNAL(clicked()),stepSignalMapper, SLOT(map()));
-    stepSignalMapper->setMapping(label,(QString)it->second->get("NAME").c_str());
   }
 
   layers = 0;
@@ -94,33 +90,31 @@ void JobMatrix::SetMatrix(StructuredTextDataStore* ds)
     for(int i=0;i<m_step_name.size();i++)
     {
       text = m_step_name[i] + "/" + (QString)it->second->get("NAME").c_str();
-      QPushButton *btn = new QPushButton(text);
-      connect(btn, SIGNAL(clicked()),layerSignalMapper, SLOT(map()));
-      layerSignalMapper->setMapping(btn, text);
-      table->setCellWidget(layers,i,btn);
+      QTableWidgetItem *btn = new QTableWidgetItem(text);
+      table->setItem(layers,i,btn);
 
       QString pathTmpl = "steps/%1/layers/%2";
       text = pathTmpl.arg(m_step_name[i].toAscii().data()).arg(
           QString::fromStdString(it->second->get("NAME")));
 
       if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
-        //btn->setFlat(true);
         btn->setText("");
       }
     }
     layers++;
   }
 
-  connect(layerSignalMapper, SIGNAL(mapped (const QString &)), this,
-      SLOT(showLayer(const QString &)));
+  connect(table,SIGNAL(itemClicked(QTableWidgetItem*)),this,
+      SLOT(showLayer(QTableWidgetItem *)));
   table->verticalHeader()->setMovable(true);
+  table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   layout->addWidget(table);
   ui->scrollWidget->setLayout(layout);
 }
 
-void JobMatrix::showLayer(const QString text)
+void JobMatrix::showLayer(QTableWidgetItem *item)
 {
-  QStringList params = text.split("/");
+  QStringList params = item->text().split("/");
   ViewerWindow* w = new ViewerWindow;
   w->setStep(params[0]);
   w->setLayers(m_layer_name);
