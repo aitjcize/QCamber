@@ -35,7 +35,7 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
   m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
 
   QPainterPath bar;
-  bar.addRect(0, -m_gap / 2, m_od, m_gap);
+  bar.addRect(0, -m_gap / 2, m_od / qSqrt(1.8), m_gap);
 
   QMatrix mat;
   mat.rotate(-m_angle);
@@ -43,6 +43,7 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
   qreal angle_div = 360.0 / m_num_spokes;
 
   m_sub = QPainterPath();
+  m_sub.addRect(-m_od / 2 * 1.1, -m_od / 2 * 1.1, m_od * 1.1, m_od * 1.1);
   for (int i = 0; i < m_num_spokes; ++i) {
     m_sub.addPath(mat.map(bar));
     mat.rotate(-angle_div);
@@ -66,20 +67,14 @@ void SquareRoundThermalSymbol::paint(QPainter *painter,
   painterPath();
 
   if (m_polarity == P) {
+    painter->setClipPath(m_sub);
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawPath(m_cachedPath);
-
-    painter->setPen(QPen(ctx.bg_color, 0));
-    painter->setBrush(ctx.bg_color);
-    painter->drawPath(m_sub);
   } else {
+    painter->setClipPath(m_sub);
     painter->setPen(QPen(ctx.bg_color, 0));
     painter->setBrush(ctx.bg_color);
     painter->drawPath(m_cachedPath);
-
-    painter->setPen(m_pen);
-    painter->setBrush(m_brush);
-    painter->drawPath(m_sub);
   }
 }

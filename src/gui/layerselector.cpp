@@ -8,7 +8,7 @@ extern Context ctx;
 
 LayerSelector::LayerSelector(const QString& text, const QString& step,
     const QString& layer, QWidget *parent)
-  :QLabel(text, parent), m_step(step), m_layer(layer), m_selected(false)
+  :QLabel(text, parent), m_selected(false), m_step(step), m_layer(layer)
 {
   setContextMenuPolicy(Qt::CustomContextMenu);
 
