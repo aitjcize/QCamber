@@ -14,15 +14,13 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_scene->setBackgroundBrush(ctx.bg_color);
   setScene(m_scene);
 
-  setZoomMode(AreaZoom);
-  setCacheMode(CacheBackground);
-  setViewportUpdateMode(BoundingRectViewportUpdate);
   //setRenderHint(QPainter::Antialiasing);
-
-  setTransformationAnchor(AnchorUnderMouse);
-  setOptimizationFlags(QGraphicsView::DontSavePainterState);
-
+  setCacheMode(CacheBackground);
   setMinimumSize(600, 600);
+  setOptimizationFlags(DontSavePainterState);
+  setTransformationAnchor(AnchorUnderMouse);
+  setViewportUpdateMode(BoundingRectViewportUpdate);
+  setZoomMode(AreaZoom);
 
   connect(m_scene, SIGNAL(rectSelected(QRectF)),
       this, SLOT(zoomToRect(QRectF)));
@@ -37,8 +35,9 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
   qreal factor = transform().scale(scaleFactor,
       scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-  //if (factor < 0.07 || factor > 100)
-  //    return;
+
+  if (factor > 11050)
+      return;
 
   scale(scaleFactor, scaleFactor);
 }
@@ -48,10 +47,10 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
   m_zoomMode = mode;
   if (mode == AreaZoom) {
     m_scene->setAreaZoomEnabled(true);
-    setDragMode(QGraphicsView::RubberBandDrag);
+    setDragMode(RubberBandDrag);
   } else {
     m_scene->setAreaZoomEnabled(false);
-    setDragMode(QGraphicsView::ScrollHandDrag);
+    setDragMode(ScrollHandDrag);
   }
 }
 
@@ -98,7 +97,6 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
   }
 }
 
-
 void ODBPPGraphicsView::zoomToProfile(void)
 {
   zoomToRect(m_profile->boundingRect());
@@ -111,12 +109,15 @@ void ODBPPGraphicsView::zoomToRect(QRectF rect)
 
   qreal sx = width() / (current.width() * b.width() * 1.1);
   qreal sy = height() / (current.height() * b.height() * 1.1);
+  qreal s = qMin(sx, sy);
 
-  if (sx < sy) {
-    scale(sx, sx);
-  } else {
-    scale(sy, sy);
+  qreal factor = transform().scale(s, s).mapRect(QRectF(0, 0, 1, 1)).width();
+
+  if (factor > 8000) {
+    s = 8000 / current.width();
   }
+
+  scale(s, s);
 
   centerOn(b.center());
 }
