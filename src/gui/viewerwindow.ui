@@ -19,17 +19,11 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QGroupBox" name="groupBox_Tool">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>100</height>
-         </size>
-        </property>
         <property name="title">
          <string>Actions</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="0">
+         <item row="0" column="1">
           <widget class="QToolButton" name="areaZoomFunc">
            <property name="toolTip">
             <string>Select an area to zoom in</string>
@@ -49,7 +43,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="2">
           <widget class="QToolButton" name="mousePanFunc">
            <property name="toolTip">
             <string>Use mouse to pan and zoom</string>
@@ -85,7 +79,7 @@
            <x>0</x>
            <y>0</y>
            <width>148</width>
-           <height>328</height>
+           <height>368</height>
           </rect>
          </property>
          <property name="title">
