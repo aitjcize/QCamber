@@ -2,6 +2,7 @@
 #define __LAYER_H__
 
 #include "feature.h"
+#include "notes.h"
 
 class Layer: public Features {
 public:
@@ -10,6 +11,7 @@ public:
 
   QString step();
   QString layer();
+  Notes* notes();
 
   void setOpacity(qreal opacity);
   void setDoComposite(bool status);
@@ -17,6 +19,7 @@ public:
 private:
   QString m_step;
   QString m_layer;
+  Notes* m_notes;
 
   LayerGraphicsEffect* m_layerEffect;
 };

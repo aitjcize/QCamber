@@ -37,6 +37,7 @@ public slots:
   void on_homeFunc_clicked(void);
   void on_areaZoomFunc_clicked(void);
   void on_mousePanFunc_clicked(void);
+  void on_showNotesFunc_clicked(void);
 
 protected:
   QColor nextColor(void);
@@ -59,6 +60,7 @@ private:
   DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
+  bool m_showNote;
 };
 
 #endif // __MAINWINDOW_H__

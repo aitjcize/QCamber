@@ -33,6 +33,16 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="2">
+          <widget class="QToolButton" name="mousePanFunc">
+           <property name="toolTip">
+            <string>Use mouse to pan and zoom</string>
+           </property>
+           <property name="text">
+            <string>MP</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QToolButton" name="homeFunc">
            <property name="toolTip">
@@ -43,13 +53,13 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QToolButton" name="mousePanFunc">
+         <item row="0" column="3">
+          <widget class="QToolButton" name="showNotesFunc">
            <property name="toolTip">
-            <string>Use mouse to pan and zoom</string>
+            <string>show notes</string>
            </property>
            <property name="text">
-            <string>MP</string>
+            <string>NT</string>
            </property>
           </widget>
          </item>
@@ -78,7 +88,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>148</width>
+           <width>165</width>
            <height>368</height>
           </rect>
          </property>

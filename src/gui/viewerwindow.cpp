@@ -10,7 +10,7 @@
 extern Context ctx;
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
-  QMainWindow(parent), ui(new Ui::ViewerWindow)
+  QMainWindow(parent), ui(new Ui::ViewerWindow), m_showNote(false)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
@@ -100,9 +100,6 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     if (!selector->item) {
       Layer* layer = new Layer(selector->step(), selector->layer());
       selector->item = layer;
-
-      Notes* note = new Notes(selector->step(), selector->layer());
-      ui->viewWidget->addItem(note);
     }
     selector->setColor(nextColor());
     ui->viewWidget->addItem(selector->item);
@@ -200,4 +197,17 @@ void ViewerWindow::on_areaZoomFunc_clicked(void)
 void ViewerWindow::on_mousePanFunc_clicked(void)
 {
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
+}
+
+void ViewerWindow::on_showNotesFunc_clicked(void)
+{
+  m_showNote = !m_showNote;
+
+  for (int i = 0; i < m_actives.size(); ++i) {
+    if (m_showNote) {
+      ui->viewWidget->addItem(m_actives[i]->item->notes());
+    } else {
+      ui->viewWidget->removeItem(m_actives[i]->item->notes());
+    }
+  }
 }
