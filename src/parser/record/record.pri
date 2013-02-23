@@ -10,4 +10,5 @@ SOURCES += \
   parser/record/barcoderecord.cpp \
   parser/record/arcrecord.cpp \
   parser/record/charrecord.cpp \
+  parser/record/noterecord.cpp \
   parser/record/code39.cpp

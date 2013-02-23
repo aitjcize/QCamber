@@ -5,6 +5,7 @@
 #include <QDebug>
 
 #include "context.h"
+#include "notes.h"
 
 extern Context ctx;
 
@@ -99,6 +100,9 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     if (!selector->item) {
       Layer* layer = new Layer(selector->step(), selector->layer());
       selector->item = layer;
+
+      Notes* note = new Notes(selector->step(), selector->layer());
+      ui->viewWidget->addItem(note);
     }
     selector->setColor(nextColor());
     ui->viewWidget->addItem(selector->item);

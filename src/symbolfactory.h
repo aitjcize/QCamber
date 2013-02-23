@@ -33,6 +33,7 @@
 #include "moiresymbol.h"
 #include "holesymbol.h"
 #include "nullsymbol.h"
+#include "notesymbol.h"
 
 #include <QRegExp>
 

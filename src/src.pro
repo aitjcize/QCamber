@@ -17,6 +17,7 @@ HEADERS += \
   feature.h \
   layergraphicseffect.h \
   layer.h \
+  notes.h \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \
   profile.h \
@@ -29,6 +30,7 @@ SOURCES += \
   layer.cpp \
   layergraphicseffect.cpp \
   main.cpp \
+  notes.cpp \
   odbppgraphicsscene.cpp \
   odbppgraphicsview.cpp \
   profile.cpp

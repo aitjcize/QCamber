@@ -10,8 +10,6 @@ using std::endl;
 
 #include "context.h"
 
-//#define TEST_USER_SYMBOL
-
 extern Context ctx;
 
 UserSymbol::UserSymbol(QString def, Polarity polarity):
@@ -20,18 +18,12 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
   static bool first = true;
   QString path = ctx.loader->featuresPath("symbols/" + def);
 
-#ifdef TEST_USER_SYMBOL
-  if (first) {
-    path = "features";
-    first = false;
-  }
-#endif
-
   FeaturesParser parser(path);
   m_ds = parser.parse();
+  QList<Record*> records = m_ds->records();
 
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
+  for (QList<Record*>::const_iterator it = records.begin();
+      it != records.end(); ++it) {
     Record* rec = *it;
     rec->addToChild(this);
   }

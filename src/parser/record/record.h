@@ -10,6 +10,7 @@
 class DataStore;
 class FeaturesDataStore;
 class FontDataStore;
+class NotesDataStore;
 
 typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
@@ -141,7 +142,16 @@ struct CharRecord {
   FontDataStore* ds;
   char tchar;
   QList<CharLineRecord*> lines;
-  Symbol* symbol;
+};
+
+struct NoteRecord: public Record {
+  NoteRecord(NotesDataStore* ds, const QStringList& param);
+  virtual void addToChild(Symbol* group);
+
+  int timestamp;
+  QString user;
+  qreal x, y;
+  QString text;
 };
 
 #endif /* __RECORD_H__ */

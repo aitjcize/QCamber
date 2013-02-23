@@ -9,9 +9,10 @@ Features::Features(QString path): Symbol("features")
 {
   FeaturesParser parser(path);
   m_ds = parser.parse();
+  QList<Record*> records = m_ds->records();
 
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
+  for (QList<Record*>::const_iterator it = records.begin();
+      it != records.end(); ++it) {
     Record* rec = *it;
     rec->addToChild(this);
   }

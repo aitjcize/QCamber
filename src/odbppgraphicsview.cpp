@@ -59,14 +59,14 @@ void ODBPPGraphicsView::clearScene(void)
   m_scene->clear();
 }
 
-void ODBPPGraphicsView::addItem(Features *feat)
+void ODBPPGraphicsView::addItem(Symbol* symbol)
 {
-  m_scene->addItem(feat);
+  m_scene->addItem(symbol);
 }
 
-void ODBPPGraphicsView::removeItem(Features *feat)
+void ODBPPGraphicsView::removeItem(Symbol* symbol)
 {
-  m_scene->removeItem(feat);
+  m_scene->removeItem(symbol);
 }
 
 void ODBPPGraphicsView::loadProfile(QString step)

@@ -29,7 +29,8 @@ HEADERS += \
   symbol/ellipsesymbol.h \
   symbol/moiresymbol.h \
   symbol/holesymbol.h \
-  symbol/nullsymbol.h
+  symbol/nullsymbol.h \
+  symbol/notesymbol.h
 
 SOURCES += \
   symbol/symbol.cpp \
@@ -63,4 +64,5 @@ SOURCES += \
   symbol/ellipsesymbol.cpp \
   symbol/moiresymbol.cpp \
   symbol/holesymbol.cpp \
-  symbol/nullsymbol.cpp
+  symbol/nullsymbol.cpp \
+  symbol/notesymbol.cpp

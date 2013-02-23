@@ -234,9 +234,13 @@ FeaturesParser::~FeaturesParser()
 
 FeaturesDataStore* FeaturesParser::parse(void)
 {
-  FeaturesDataStore* ds = new FeaturesDataStore;
   QFile file(m_fileName);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
+    return NULL;
+  }
 
+  FeaturesDataStore* ds = new FeaturesDataStore;
   // layer feature related
   QRegExp rx(".+_(.+)/steps/(.+)/layers/(.+)/features");
   if (rx.exactMatch(m_fileName)) {
@@ -260,11 +264,6 @@ FeaturesDataStore* FeaturesParser::parse(void)
     StructuredTextDataStore* lds = lp.parse();
     ds->putAttrlist(lds);
     delete lds;
-  }
-
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
-    return NULL;
   }
 
   bool surface = false;

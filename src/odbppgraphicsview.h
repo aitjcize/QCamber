@@ -21,8 +21,8 @@ public:
   void setBackgroundColor(QColor color);
 
   void clearScene(void);
-  void addItem(Features *feat);
-  void removeItem(Features *feat);
+  void addItem(Symbol* symbol);
+  void removeItem(Symbol* symbol);
   void zoomToProfile(void);
 
 public slots:
