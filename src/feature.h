@@ -15,14 +15,8 @@ public:
   Features(QString path);
   ~Features();
 
-  void setOpacity(qreal opacity);
-  void setDoComposite(bool status);
-
 private:
   FeaturesDataStore* m_ds;
-  QList<Symbol*> m_symbols;
-
-  LayerGraphicsEffect* m_layerEffect;
 };
 
 #endif /* __FEATURES_H__ */

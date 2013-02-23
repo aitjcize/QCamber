@@ -15,22 +15,9 @@ Features::Features(QString path): Symbol("features")
     Record* rec = *it;
     rec->addToChild(this);
   }
-
-  m_layerEffect = new LayerGraphicsEffect();
-  setGraphicsEffect(m_layerEffect);
 }
 
 Features::~Features()
 {
   delete m_ds;
-}
-
-void Features::setOpacity(qreal opacity)
-{
-  m_layerEffect->setOpacity(opacity);
-}
-
-void Features::setDoComposite(bool status)
-{
-  m_layerEffect->setDoComposite(status);
 }
