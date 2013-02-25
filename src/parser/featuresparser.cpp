@@ -4,7 +4,7 @@
 #include <string>
 
 #include <QtCore>
-
+#include <QtDebug>
 FeaturesDataStore::~FeaturesDataStore()
 {
   for (int i = 0; i < m_records.size(); ++i) {
@@ -68,18 +68,33 @@ void FeaturesDataStore::putLine(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new LineRecord(this, param));
+  int id = param[5].toInt();
+  if(param[6] == "P")
+    m_posLineCount[id]++;
+  else
+    m_negLineCount[id]++;
 }
 
 void FeaturesDataStore::putPad(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new PadRecord(this, param));
+  int id = param[3].toInt();
+  if(param[4] == "P")
+    m_posLineCount[id]++;
+  else
+    m_negLineCount[id]++;
 }
 
 void FeaturesDataStore::putArc(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
   m_records.append(new ArcRecord(this, param));
+  int id = param[7].toInt();
+  if(param[8] == "P")
+    m_posLineCount[id]++;
+  else
+    m_negLineCount[id]++;
 }
 
 void FeaturesDataStore::putText(const QString& line)
@@ -118,6 +133,10 @@ void FeaturesDataStore::surfaceStart(const QString& line)
   SurfaceRecord* rec = new SurfaceRecord(this, param);
   m_records.append(rec);
   m_currentSurface = rec;
+  if(param[1] == "P")
+    m_posLineCount[0]++;
+  else
+    m_negLineCount[0]++;
 }
 
 void FeaturesDataStore::surfaceLineData(const QString& line)

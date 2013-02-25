@@ -2,6 +2,7 @@
 
 #include "context.h"
 #include <typeinfo>
+#include <QDebug>
 
 extern Context ctx;
 
@@ -21,4 +22,25 @@ Features::Features(QString path): Symbol("features")
 Features::~Features()
 {
   delete m_ds;
+}
+
+void Features::symbolCount()
+{
+    FeaturesDataStore::IDMapType nameMap;
+    FeaturesDataStore::CountMapType countMap;
+    QStringList countData;
+    nameMap = m_ds->symbolNameMap();
+
+    countMap = m_ds->posLineCountMap();
+    for(int i = 0;i < countMap.size();i++){
+        if(countMap[i] != 0){
+            QString text;
+            text.sprintf("POS\t%s,\t\t%d",nameMap[i].toAscii().data(),countMap[i]);
+            countData.append(text);
+            qDebug()<<text;
+        }
+    }
+
+
+
 }
