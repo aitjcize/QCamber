@@ -36,12 +36,12 @@ public:
 
   const CountMapType& posLineCountMap(void){return m_posLineCount;}
   const CountMapType& posPadCountMap(void){return m_posPadCount;}
-  const CountMapType& posArcCountMap(void){return m_posArchCount;}
+  const CountMapType& posArchCountMap(void){return m_posArchCount;}
   const CountMapType& posSurfaceCountMap(void){return m_posSurfaceCount;}
 
   const CountMapType& negLineCountMap(void){return m_negLineCount;}
   const CountMapType& negPadCountMap(void){return m_negPadCount;}
-  const CountMapType& negArcCountMap(void){return m_negArchCount;}
+  const CountMapType& negArchCountMap(void){return m_negArchCount;}
   const CountMapType& negSurfaceCountMap(void){return m_negSurfaceCount;}
 
   QString jobName(void);

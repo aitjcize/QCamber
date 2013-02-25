@@ -81,9 +81,9 @@ void FeaturesDataStore::putPad(const QString& line)
   m_records.append(new PadRecord(this, param));
   int id = param[3].toInt();
   if(param[4] == "P")
-    m_posLineCount[id]++;
+    m_posPadCount[id]++;
   else
-    m_negLineCount[id]++;
+    m_negPadCount[id]++;
 }
 
 void FeaturesDataStore::putArc(const QString& line)
@@ -92,9 +92,9 @@ void FeaturesDataStore::putArc(const QString& line)
   m_records.append(new ArcRecord(this, param));
   int id = param[7].toInt();
   if(param[8] == "P")
-    m_posLineCount[id]++;
+    m_posArchCount[id]++;
   else
-    m_negLineCount[id]++;
+    m_negArchCount[id]++;
 }
 
 void FeaturesDataStore::putText(const QString& line)
@@ -134,9 +134,9 @@ void FeaturesDataStore::surfaceStart(const QString& line)
   m_records.append(rec);
   m_currentSurface = rec;
   if(param[1] == "P")
-    m_posLineCount[0]++;
+    m_posSurfaceCount[0]++;
   else
-    m_negLineCount[0]++;
+    m_negSurfaceCount[0]++;
 }
 
 void FeaturesDataStore::surfaceLineData(const QString& line)
