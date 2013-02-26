@@ -24,6 +24,9 @@ public:
 
   Layer *item;
 
+private slots:
+  void showContextmenu(const QPoint&);
+  void showHistogram();
 signals:
   void Clicked(LayerSelector*, bool);
 
@@ -34,6 +37,8 @@ private:
   bool m_selected;
   QString m_bgStyle;
   QString m_bgStyleTmpl;
+  QMenu *cmenu = NULL;
+  QTableWidget *histogramTable;
 
   QString m_step;
   QString m_layer;

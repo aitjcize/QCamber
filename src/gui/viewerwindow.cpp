@@ -100,6 +100,7 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     if (!selector->item) {
       Layer* layer = new Layer(selector->step(), selector->layer());
       selector->item = layer;
+      selector->item->symbolCount();
     }
     selector->setColor(nextColor());
     ui->viewWidget->addItem(selector->item);
