@@ -117,11 +117,6 @@ int main(int argc, char *argv[])
   scene->addItem(symbol25);
   symbol25->setPos(0.6, 0.0);
 
-  Symbol* symbol26 = SymbolFactory::create("note", P);
-  scene->addItem(symbol26);
-  symbol26->setPos(0.0, 0.1);
-
-
   widget.show();
   return app.exec();
 }
