@@ -26,7 +26,7 @@ QString Symbol::name(void)
 QRectF Symbol::boundingRect() const
 {
   if (m_symbols.count()) {
-    return QGraphicsItemGroup::boundingRect();
+    return childrenBoundingRect();
   } else {
     return m_bounding;
   }
@@ -56,7 +56,7 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
   // Paint item group
-  QGraphicsItemGroup::paint(painter, option, widget);
+  //QGraphicsItemGroup::paint(painter, option, widget);
 
   // Paint painterPath
   if (m_polarity == P) {
@@ -96,7 +96,7 @@ void Symbol::invalidate(void)
 
 void Symbol::addChild(Symbol* symbol)
 {
-  //symbol->setParentItem(this);
-  addToGroup(symbol);
+  symbol->setParentItem(this);
+  //addToGroup(symbol);
   m_symbols.append(symbol);
 }

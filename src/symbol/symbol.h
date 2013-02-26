@@ -23,7 +23,7 @@ private:
   const char* m_msg;
 };
 
-class Symbol: public virtual QGraphicsItemGroup {
+class Symbol: public virtual QGraphicsItem {
 public:
   Symbol(QString name, QString pattern = QString(), Polarity polarity=P);
   virtual ~Symbol();
