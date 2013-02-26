@@ -23,23 +23,13 @@
          <string>Actions</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="1">
-          <widget class="QToolButton" name="areaZoomFunc">
-           <property name="toolTip">
-            <string>Select an area to zoom in</string>
-           </property>
-           <property name="text">
-            <string>AZ</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="2">
-          <widget class="QToolButton" name="mousePanFunc">
+          <widget class="QToolButton" name="showNotesFunc">
            <property name="toolTip">
-            <string>Use mouse to pan and zoom</string>
+            <string>show notes</string>
            </property>
            <property name="text">
-            <string>MP</string>
+            <string>NT</string>
            </property>
           </widget>
          </item>
@@ -53,13 +43,23 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QToolButton" name="showNotesFunc">
+         <item row="0" column="1">
+          <widget class="QToolButton" name="areaZoomFunc">
            <property name="toolTip">
-            <string>show notes</string>
+            <string>Select an area to zoom in</string>
            </property>
            <property name="text">
-            <string>NT</string>
+            <string>AZ</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QToolButton" name="featureSelectionFunc">
+           <property name="toolTip">
+            <string>feature selection</string>
+           </property>
+           <property name="text">
+            <string>FS</string>
            </property>
           </widget>
          </item>
@@ -88,7 +88,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>165</width>
+           <width>160</width>
            <height>368</height>
           </rect>
          </property>

@@ -5,12 +5,21 @@
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   QGraphicsScene(parent), m_areaZoomEnabled(false)
 {
-  
 }
 
 void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
 {
   m_areaZoomEnabled = status;
+}
+
+void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
+{
+  for (int i = 0; i < m_selectedSymbols.size(); ++i) {
+    m_selectedSymbols[i]->restoreColor();
+  }
+  m_selectedSymbols.clear();
+  m_selectedSymbols.append(symbol);
+  emit featureSelected(symbol);
 }
 
 void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)

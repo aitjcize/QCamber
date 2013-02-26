@@ -10,7 +10,7 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 {
   m_scene = new ODBPPGraphicsScene(this);
   m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-  m_scene->setSceneRect(-800, -800, 1600, 1600);
+  m_scene->setSceneRect(-800, -600, 1600, 1200);
   m_scene->setBackgroundBrush(ctx.bg_color);
   setScene(m_scene);
 
@@ -45,12 +45,19 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
 {
   m_zoomMode = mode;
-  if (mode == AreaZoom) {
+  switch (mode) {
+  case None:
+    m_scene->setAreaZoomEnabled(false);
+    setDragMode(RubberBandDrag);
+    break;
+  case AreaZoom:
     m_scene->setAreaZoomEnabled(true);
     setDragMode(RubberBandDrag);
-  } else {
+    break;
+  case MousePan:
     m_scene->setAreaZoomEnabled(false);
     setDragMode(ScrollHandDrag);
+    break;
   }
 }
 

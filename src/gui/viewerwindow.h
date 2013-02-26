@@ -36,8 +36,9 @@ public slots:
   void on_actionSetColor_triggered(void);
   void on_homeFunc_clicked(void);
   void on_areaZoomFunc_clicked(void);
-  void on_mousePanFunc_clicked(void);
+  //void on_mousePanFunc_clicked(void);
   void on_showNotesFunc_clicked(void);
+  void on_featureSelectionFunc_clicked(void);
 
 protected:
   QColor nextColor(void);

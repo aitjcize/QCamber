@@ -4,6 +4,7 @@
 #include <QPainterPath>
 #include <QRegExp>
 #include <QString>
+#include <QTransform>
 
 #include "featuresparser.h"
 #include "symbolfactory.h"
@@ -66,8 +67,10 @@ void TextRecord::addToChild(Symbol* group)
   symbol->setPos(x, -y);
 
   if (orient >= M_0) {
-    symbol->scale(-1, 1);
+    QTransform trans;
+    trans.scale(-1, 1);
+    symbol->setTransform(trans);
   }
-  symbol->rotate((orient % 4) * 90);
+  symbol->setRotation((orient % 4) * 90);
   group->addChild(symbol);
 }

@@ -11,7 +11,7 @@ class ODBPPGraphicsView: public QGraphicsView {
   Q_OBJECT
 
 public:
-  typedef enum { AreaZoom = 0, MousePan } ZoomMode;
+  typedef enum { None = 0, AreaZoom, MousePan } ZoomMode;
 
   ODBPPGraphicsView(QWidget* parent = 0);
   ~ODBPPGraphicsView();
