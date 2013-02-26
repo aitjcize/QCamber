@@ -49,3 +49,13 @@ void Layer::setDoComposite(bool status)
 {
   m_layerEffect->setDoComposite(status);
 }
+
+void Layer::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mousePressEvent(event);
+}
+
+void Layer::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+}

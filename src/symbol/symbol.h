@@ -41,7 +41,7 @@ public:
   virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
-  virtual QPainterPath shape() const;
+  virtual QPainterPath shape() const { return m_cachedPath; };
 
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -58,6 +58,7 @@ protected:
   QPainterPath m_cachedPath;
   Polarity m_polarity;
   bool m_valid;
+  bool m_selected;
   QList<Symbol*> m_symbols;
 };
 

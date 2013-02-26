@@ -16,6 +16,10 @@ public:
   void setOpacity(qreal opacity);
   void setDoComposite(bool status);
 
+protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+
 private:
   QString m_step;
   QString m_layer;

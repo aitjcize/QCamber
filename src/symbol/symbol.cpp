@@ -9,7 +9,7 @@ extern Context ctx;
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
-  m_polarity(polarity), m_valid(false)
+  m_polarity(polarity), m_valid(false), m_selected(false)
 {
   setHandlesChildEvents(false);
   setFlags(ItemIsSelectable);
@@ -80,16 +80,17 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
   } else {
-    painter->setPen(QPen(ctx.bg_color, 0));
-    painter->setBrush(ctx.bg_color);
+    if (m_selected) {
+      painter->setPen(m_pen);
+      painter->setBrush(m_brush);
+    } else {
+      painter->setPen(QPen(ctx.bg_color, 0));
+      painter->setBrush(ctx.bg_color);
+    }
   }
 
   painterPath();
   painter->drawPath(m_cachedPath);
-}
-
-QPainterPath Symbol::shape() const {
-  return m_cachedPath;
 }
 
 QPainterPath Symbol::painterPath(void)
@@ -113,6 +114,7 @@ void Symbol::addChild(Symbol* symbol)
 
 void Symbol::restoreColor(void)
 {
+  m_selected = false;
   setPen(m_prevPen);
   setBrush(m_prevBrush);
   update();
@@ -120,11 +122,11 @@ void Symbol::restoreColor(void)
 
 void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-  // Already selected, return
-  if (m_brush == QBrush(Qt::blue)) {
+  if (m_selected) {
     return;
   }
 
+  m_selected = true;
   m_prevPen = m_pen;
   m_prevBrush = m_brush;
 
