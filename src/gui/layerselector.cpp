@@ -14,6 +14,9 @@ LayerSelector::LayerSelector(const QString& text, const QString& step,
 
   m_bgStyleTmpl = "LayerSelector { background-color: %1; color: %2; }";
 
+  connect(this,SIGNAL(customContextMenuRequested(QPoint)),
+          this,SLOT(showContextmenu(QPoint)));
+
   m_color = Qt::red;
   item = NULL;
 }
@@ -83,4 +86,26 @@ void LayerSelector::toggle(void)
 {
   emit Clicked(this, m_selected);
   m_selected = !m_selected;
+}
+
+void LayerSelector::showContextmenu(const QPoint &)
+{
+    if(cmenu)
+    {
+        delete cmenu;
+        cmenu = NULL;
+    }
+    cmenu = new QMenu(this);
+
+    QAction *featureHistogram = cmenu->addAction("Feature Histogram");
+
+    connect(featureHistogram, SIGNAL(triggered(bool)), this, SLOT(showHistogram()));
+
+    cmenu->exec(QCursor::pos());
+}
+
+void LayerSelector::showHistogram()
+{
+    histogram = new QDialog(this);
+    histogram->show();
 }
