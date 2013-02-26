@@ -37,7 +37,7 @@ private:
   bool m_selected;
   QString m_bgStyle;
   QString m_bgStyleTmpl;
-  QMenu *cmenu = NULL;
+  QMenu* m_menu;
   QTableWidget *histogramTable;
 
   QString m_step;

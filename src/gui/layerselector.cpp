@@ -19,6 +19,12 @@ LayerSelector::LayerSelector(const QString& text, const QString& step,
 
   m_color = Qt::red;
   item = NULL;
+
+  m_menu = new QMenu(this);
+  QAction *featureHistogram = m_menu->addAction("Feature Histogram");
+
+  connect(featureHistogram, SIGNAL(triggered(bool)), this,
+      SLOT(showHistogram()));
 }
 
 LayerSelector::~LayerSelector()
@@ -90,22 +96,11 @@ void LayerSelector::toggle(void)
 
 void LayerSelector::showContextmenu(const QPoint &)
 {
-    if(cmenu)
-    {
-        delete cmenu;
-        cmenu = NULL;
-    }
-    cmenu = new QMenu(this);
-
-    QAction *featureHistogram = cmenu->addAction("Feature Histogram");
-
-    connect(featureHistogram, SIGNAL(triggered(bool)), this, SLOT(showHistogram()));
-
-    cmenu->exec(QCursor::pos());
+  m_menu->exec(QCursor::pos());
 }
 
 void LayerSelector::showHistogram()
 {
-    histogramTable = item->symbolCount();
-    histogramTable->show();
+  histogramTable = item->symbolCount();
+  histogramTable->show();
 }

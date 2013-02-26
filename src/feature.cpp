@@ -266,19 +266,5 @@ QTableWidget* Features::symbolCount()
   table->setItem(1, 1, new QTableWidgetItem("-------"));
   table->setItem(1, 2, new QTableWidgetItem("-------"));
 
-
   return table;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
