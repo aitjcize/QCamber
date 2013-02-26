@@ -174,46 +174,6 @@ void FeaturesDataStore::surfaceEnd(void)
   m_currentSurface = NULL;
 }
 
-QString FeaturesDataStore::jobName(void)
-{
-  return m_jobName;
-}
-
-QString FeaturesDataStore::stepName(void)
-{
-  return m_stepName;
-}
-
-QString FeaturesDataStore::layerName(void)
-{
-  return m_layerName;
-}
-
-QString FeaturesDataStore::attrlist(QString name)
-{
-  return m_attrlist[name];
-}
-
-const FeaturesDataStore::IDMapType& FeaturesDataStore::symbolNameMap(void)
-{
-  return m_symbolNameMap;
-}
-
-const FeaturesDataStore::IDMapType& FeaturesDataStore::attribNameMap(void)
-{
-  return m_attribNameMap;
-}
-
-const FeaturesDataStore::IDMapType& FeaturesDataStore::attribTextMap(void)
-{
-  return m_attribTextMap;
-}
-
-QList<Record*>& FeaturesDataStore::records(void)
-{
-  return m_records;
-}
-
 QString FeaturesDataStore::stripAttr(const QString& line)
 {
   int loc = line.indexOf(";");

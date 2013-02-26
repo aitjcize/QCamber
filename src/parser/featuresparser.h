@@ -34,25 +34,25 @@ public:
   void surfaceLineData(const QString& line);
   void surfaceEnd(void);
 
-  const CountMapType& posLineCountMap(void){return m_posLineCount;}
-  const CountMapType& posPadCountMap(void){return m_posPadCount;}
-  const CountMapType& posArchCountMap(void){return m_posArchCount;}
-  const CountMapType& posSurfaceCountMap(void){return m_posSurfaceCount;}
+  QString jobName(void) { return m_jobName; }
+  QString stepName(void) { return m_stepName; }
+  QString layerName(void) { return m_layerName; }
+  QString attrlist(QString name) { return m_attrlist[name]; }
 
-  const CountMapType& negLineCountMap(void){return m_negLineCount;}
-  const CountMapType& negPadCountMap(void){return m_negPadCount;}
-  const CountMapType& negArchCountMap(void){return m_negArchCount;}
-  const CountMapType& negSurfaceCountMap(void){return m_negSurfaceCount;}
+  const IDMapType& symbolNameMap(void) { return m_symbolNameMap; }
+  const IDMapType& attribNameMap(void) { return m_attribNameMap; }
+  const IDMapType& attribTextMap(void) { return m_attribTextMap; }
+  QList<Record*>& records(void) { return m_records; }
 
-  QString jobName(void);
-  QString stepName(void);
-  QString layerName(void);
-  QString attrlist(QString name);
+  const CountMapType& posLineCountMap(void) { return m_posLineCount; }
+  const CountMapType& posPadCountMap(void) { return m_posPadCount; }
+  const CountMapType& posArchCountMap(void) { return m_posArchCount; }
+  const CountMapType& posSurfaceCountMap(void) { return m_posSurfaceCount; }
 
-  const IDMapType& symbolNameMap(void);
-  const IDMapType& attribNameMap(void);
-  const IDMapType& attribTextMap(void);
-  QList<Record*>& records(void);
+  const CountMapType& negLineCountMap(void) { return m_negLineCount; }
+  const CountMapType& negPadCountMap(void) { return m_negPadCount; }
+  const CountMapType& negArchCountMap(void) { return m_negArchCount; }
+  const CountMapType& negSurfaceCountMap(void) { return m_negSurfaceCount; }
 
   virtual void dump(void);
 
