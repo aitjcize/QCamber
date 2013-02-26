@@ -32,10 +32,13 @@ QTableWidget* Features::symbolCount()
     QTableWidgetItem * item;
     QStringList countData;
     int rowCount = 0;
+    int total,local_total;
     nameMap = m_ds->symbolNameMap();
     table->setColumnCount(3);
+    total = 0;
 
-    rowCount+=2;
+    rowCount+=5;
+    local_total = 0;
     table->setRowCount(rowCount);
     item = new QTableWidgetItem("Line List");
     table->setItem(rowCount-2,0,item);
@@ -53,6 +56,7 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
     countMap = m_ds->negLineCountMap();
@@ -67,9 +71,20 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
+    table->setRowCount(rowCount+2);
+    table->setItem(rowCount,0,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("-------"));
+    table->setItem(rowCount++,2,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("Total"));
+    table->setItem(rowCount++,2,new QTableWidgetItem(
+                       QString().sprintf("%d",local_total)));
+    total += local_total;
+
     rowCount+=3;
+    local_total = 0;
     table->setRowCount(rowCount);
     item = new QTableWidgetItem("Pad List");
     table->setItem(rowCount-2,0,item);
@@ -87,6 +102,7 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
     countMap = m_ds->negPadCountMap();
@@ -101,9 +117,20 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
+    table->setRowCount(rowCount+2);
+    table->setItem(rowCount,0,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("-------"));
+    table->setItem(rowCount++,2,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("Total"));
+    table->setItem(rowCount++,2,new QTableWidgetItem(
+                       QString().sprintf("%d",local_total)));
+    total += local_total;
+
     rowCount+=3;
+    local_total = 0;
     table->setRowCount(rowCount);
     item = new QTableWidgetItem("Arch List");
     table->setItem(rowCount-2,0,item);
@@ -121,6 +148,7 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
     countMap = m_ds->negArchCountMap();
@@ -135,9 +163,20 @@ QTableWidget* Features::symbolCount()
         table->setItem(rowCount-1,1,item);
         item = new QTableWidgetItem(text);
         table->setItem(rowCount-1,2,item);
+        local_total+=countMap[i];
       }
     }
+    table->setRowCount(rowCount+2);
+    table->setItem(rowCount,0,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("-------"));
+    table->setItem(rowCount++,2,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("Total"));
+    table->setItem(rowCount++,2,new QTableWidgetItem(
+                       QString().sprintf("%d",local_total)));
+    total += local_total;
+
     rowCount+=3;
+    local_total = 0;
     table->setRowCount(rowCount);
     item = new QTableWidgetItem("Surface List");
     table->setItem(rowCount-2,0,item);
@@ -153,6 +192,7 @@ QTableWidget* Features::symbolCount()
       table->setItem(rowCount-1,0,item);
       item = new QTableWidgetItem(text);
       table->setItem(rowCount-1,1,item);
+      local_total+=countMap[0];
     }
     countMap = m_ds->negSurfaceCountMap();
     if(countMap[0] != 0)
@@ -165,7 +205,23 @@ QTableWidget* Features::symbolCount()
       table->setItem(rowCount-1,0,item);
       item = new QTableWidgetItem(text);
       table->setItem(rowCount-1,1,item);
+      local_total+=countMap[0];
     }
+    table->setRowCount(rowCount+2);
+    table->setItem(rowCount,0,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("-------"));
+    table->setItem(rowCount++,2,new QTableWidgetItem("-------"));
+    table->setItem(rowCount,1,new QTableWidgetItem("Total"));
+    table->setItem(rowCount++,2,new QTableWidgetItem(
+                       QString().sprintf("%d",local_total)));
+    total += local_total;
+
+    table->setItem(0,0,new QTableWidgetItem("Total"));
+    table->setItem(0,2,new QTableWidgetItem(
+                       QString().sprintf("%d",total)));
+    table->setItem(1,0,new QTableWidgetItem("-------"));
+    table->setItem(1,1,new QTableWidgetItem("-------"));
+    table->setItem(1,2,new QTableWidgetItem("-------"));
 
 
     return table;
