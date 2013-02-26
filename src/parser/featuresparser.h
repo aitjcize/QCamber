@@ -15,6 +15,7 @@ public:
   virtual ~FeaturesDataStore();
 
   typedef QMap<int, QString> IDMapType;
+  typedef QMap<int, int> CountMapType;
 
   void setJobName(const QString& name);
   void setStepName(const QString& name);
@@ -32,6 +33,16 @@ public:
   void surfaceStart(const QString& line);
   void surfaceLineData(const QString& line);
   void surfaceEnd(void);
+
+  const CountMapType& posLineCountMap(void){return m_posLineCount;}
+  const CountMapType& posPadCountMap(void){return m_posPadCount;}
+  const CountMapType& posArchCountMap(void){return m_posArchCount;}
+  const CountMapType& posSurfaceCountMap(void){return m_posSurfaceCount;}
+
+  const CountMapType& negLineCountMap(void){return m_negLineCount;}
+  const CountMapType& negPadCountMap(void){return m_negPadCount;}
+  const CountMapType& negArchCountMap(void){return m_negArchCount;}
+  const CountMapType& negSurfaceCountMap(void){return m_negSurfaceCount;}
 
   QString jobName(void);
   QString stepName(void);
@@ -57,6 +68,16 @@ private:
   IDMapType m_symbolNameMap;
   IDMapType m_attribNameMap;
   IDMapType m_attribTextMap;
+
+  CountMapType m_posLineCount;
+  CountMapType m_posPadCount;
+  CountMapType m_posArchCount;
+  CountMapType m_posSurfaceCount;
+
+  CountMapType m_negLineCount;
+  CountMapType m_negPadCount;
+  CountMapType m_negArchCount;
+  CountMapType m_negSurfaceCount;
 
   QList<Record*> m_records;
   SurfaceRecord* m_currentSurface;

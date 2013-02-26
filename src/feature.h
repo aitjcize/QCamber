@@ -14,6 +14,7 @@ class Features: public Symbol {
 public:
   Features(QString path);
   ~Features();
+  void symbolCount();
 
 private:
   FeaturesDataStore* m_ds;
