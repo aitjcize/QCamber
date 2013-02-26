@@ -12,6 +12,7 @@
 
 class FeaturesDataStore: public DataStore {
 public:
+  FeaturesDataStore();
   virtual ~FeaturesDataStore();
 
   typedef QMap<int, QString> IDMapType;
@@ -44,15 +45,17 @@ public:
   const IDMapType& attribTextMap(void) { return m_attribTextMap; }
   QList<Record*>& records(void) { return m_records; }
 
-  const CountMapType& posLineCountMap(void) { return m_posLineCount; }
-  const CountMapType& posPadCountMap(void) { return m_posPadCount; }
-  const CountMapType& posArchCountMap(void) { return m_posArchCount; }
-  const CountMapType& posSurfaceCountMap(void) { return m_posSurfaceCount; }
+  const CountMapType& posLineCountMap(void) { return m_posLineCountMap; }
+  const CountMapType& posPadCountMap(void) { return m_posPadCountMap; }
+  const CountMapType& posArcCountMap(void) { return m_posArcCountMap; }
+  int posSurfaceCount(void) { return m_posSurfaceCount; }
+  int posTextCount(void) { return m_posTextCount; }
 
-  const CountMapType& negLineCountMap(void) { return m_negLineCount; }
-  const CountMapType& negPadCountMap(void) { return m_negPadCount; }
-  const CountMapType& negArchCountMap(void) { return m_negArchCount; }
-  const CountMapType& negSurfaceCountMap(void) { return m_negSurfaceCount; }
+  const CountMapType& negLineCountMap(void) { return m_negLineCountMap; }
+  const CountMapType& negPadCountMap(void) { return m_negPadCountMap; }
+  const CountMapType& negArcCountMap(void) { return m_negArcCountMap; }
+  int negSurfaceCount(void) { return m_negSurfaceCount; }
+  int negTextCount(void) { return m_negTextCount; }
 
   virtual void dump(void);
 
@@ -69,15 +72,17 @@ private:
   IDMapType m_attribNameMap;
   IDMapType m_attribTextMap;
 
-  CountMapType m_posLineCount;
-  CountMapType m_posPadCount;
-  CountMapType m_posArchCount;
-  CountMapType m_posSurfaceCount;
+  CountMapType m_posLineCountMap;
+  CountMapType m_posPadCountMap;
+  CountMapType m_posArcCountMap;
+  int m_posSurfaceCount;
+  int m_posTextCount;
 
-  CountMapType m_negLineCount;
-  CountMapType m_negPadCount;
-  CountMapType m_negArchCount;
-  CountMapType m_negSurfaceCount;
+  CountMapType m_negLineCountMap;
+  CountMapType m_negPadCountMap;
+  CountMapType m_negArcCountMap;
+  int m_negSurfaceCount;
+  int m_negTextCount;
 
   QList<Record*> m_records;
   SurfaceRecord* m_currentSurface;

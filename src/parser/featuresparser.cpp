@@ -5,6 +5,13 @@
 
 #include <QtCore>
 #include <QtDebug>
+
+FeaturesDataStore::FeaturesDataStore():
+  m_posSurfaceCount(0), m_negSurfaceCount(0), m_posTextCount(0),
+  m_negTextCount(0)
+{
+}
+
 FeaturesDataStore::~FeaturesDataStore()
 {
   for (int i = 0; i < m_records.size(); ++i) {
@@ -67,34 +74,40 @@ void FeaturesDataStore::putAttribText(const QString& line)
 void FeaturesDataStore::putLine(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
-  m_records.append(new LineRecord(this, param));
-  int id = param[5].toInt();
-  if(param[6] == "P")
-    m_posLineCount[id]++;
-  else
-    m_negLineCount[id]++;
+  LineRecord* rec = new LineRecord(this, param);
+  m_records.append(rec);
+
+  if (rec->polarity == P) {
+    ++m_posLineCountMap[rec->sym_num];
+  } else {
+    ++m_negLineCountMap[rec->sym_num];
+  }
 }
 
 void FeaturesDataStore::putPad(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
-  m_records.append(new PadRecord(this, param));
-  int id = param[3].toInt();
-  if(param[4] == "P")
-    m_posPadCount[id]++;
-  else
-    m_negPadCount[id]++;
+  PadRecord* rec = new PadRecord(this, param);
+  m_records.append(rec);
+
+  if (rec->polarity == P) {
+    ++m_posPadCountMap[rec->sym_num];
+  } else {
+    ++m_negPadCountMap[rec->sym_num];
+  }
 }
 
 void FeaturesDataStore::putArc(const QString& line)
 {
   QStringList param = stripAttr(line).split(" ", QString::SkipEmptyParts);
-  m_records.append(new ArcRecord(this, param));
-  int id = param[7].toInt();
-  if(param[8] == "P")
-    m_posArchCount[id]++;
-  else
-    m_negArchCount[id]++;
+  ArcRecord* rec = new ArcRecord(this, param);
+  m_records.append(rec);
+
+  if (rec->polarity == P) {
+    ++m_posArcCountMap[rec->sym_num];
+  } else {
+    ++m_negArcCountMap[rec->sym_num];
+  }
 }
 
 void FeaturesDataStore::putText(const QString& line)
@@ -109,7 +122,14 @@ void FeaturesDataStore::putText(const QString& line)
   QStringList param = left.split(" ", QString::SkipEmptyParts);
   param << middle;
   param += right.split(" ", QString::SkipEmptyParts);
-  m_records.append(new TextRecord(this, param));
+  TextRecord* rec = new TextRecord(this, param);
+  m_records.append(rec);
+
+  if (rec->polarity == P) {
+    ++m_posTextCount;
+  } else {
+    ++m_negTextCount;
+  }
 }
 
 void FeaturesDataStore::putBarcode(const QString& line)
@@ -133,10 +153,12 @@ void FeaturesDataStore::surfaceStart(const QString& line)
   SurfaceRecord* rec = new SurfaceRecord(this, param);
   m_records.append(rec);
   m_currentSurface = rec;
-  if(param[1] == "P")
-    m_posSurfaceCount[0]++;
-  else
-    m_negSurfaceCount[0]++;
+
+  if (rec->polarity == P) {
+    ++m_posSurfaceCount;
+  } else {
+    ++m_negSurfaceCount;
+  }
 }
 
 void FeaturesDataStore::surfaceLineData(const QString& line)
