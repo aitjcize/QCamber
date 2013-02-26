@@ -4,6 +4,8 @@
 #include <QString>
 #include <QGraphicsScene>
 #include <QList>
+#include <QGridLayout>
+#include <QTableWidget>
 
 #include "symbol.h"
 #include "record.h"
@@ -14,7 +16,7 @@ class Features: public Symbol {
 public:
   Features(QString path);
   ~Features();
-  void symbolCount();
+  QTableWidget *symbolCount();
 
 private:
   FeaturesDataStore* m_ds;

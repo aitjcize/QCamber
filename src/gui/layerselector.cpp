@@ -106,6 +106,6 @@ void LayerSelector::showContextmenu(const QPoint &)
 
 void LayerSelector::showHistogram()
 {
-    histogram = new QDialog(this);
-    histogram->show();
+    histogramTable = item->symbolCount();
+    histogramTable->show();
 }

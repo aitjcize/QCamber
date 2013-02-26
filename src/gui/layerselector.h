@@ -38,7 +38,7 @@ private:
   QString m_bgStyle;
   QString m_bgStyleTmpl;
   QMenu *cmenu = NULL;
-  QDialog *histogram;
+  QTableWidget *histogramTable;
 
   QString m_step;
   QString m_layer;
