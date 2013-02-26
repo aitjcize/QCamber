@@ -4,6 +4,8 @@
 #include <iostream>
 #include <utility>
 
+#include <QDebug>
+
 #include "yyheader.h"
 #include "db.tab.h"
 
@@ -114,7 +116,7 @@ StructuredTextDataStore* StructuredTextParser::parse(void)
 {
   FILE* fin = freopen(m_fileName.toAscii(), "r", stdin);
   if (fin == NULL) {
-    fprintf(stderr, "can't open file `%s'\n", (const char*)m_fileName.toAscii());
+    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
   }
 
   yyctx.stds = new StructuredTextDataStore;

@@ -1,7 +1,7 @@
 delim       [ \t]
 nl          [\n\r]
 ws          {delim}+
-letter      [A-Za-z0-9_.\-+]
+letter      [A-Za-z0-9_.\-+/&"':]
 var         {letter}+
 
 %option noyywrap
