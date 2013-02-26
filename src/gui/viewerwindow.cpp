@@ -175,7 +175,7 @@ void ViewerWindow::updateCursorCoord(QPointF pos)
 
 void ViewerWindow::updateFeatureDetail(Symbol* symbol)
 {
-  m_featureDetailLabel->setText(symbol->name());
+  m_featureDetailLabel->setText(symbol->infoText());
 }
 
 void ViewerWindow::on_actionSetColor_triggered(void)
@@ -195,10 +195,12 @@ void ViewerWindow::on_areaZoomFunc_clicked(void)
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
 }
 
+/*
 void ViewerWindow::on_mousePanFunc_clicked(void)
 {
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
 }
+*/
 
 void ViewerWindow::on_showNotesFunc_clicked(void)
 {
@@ -211,4 +213,9 @@ void ViewerWindow::on_showNotesFunc_clicked(void)
       ui->viewWidget->removeItem(m_actives[i]->item->notes());
     }
   }
+}
+
+void ViewerWindow::on_featureSelectionFunc_clicked(void)
+{
+  ui->viewWidget->setZoomMode(ODBPPGraphicsView::None);
 }

@@ -3,11 +3,14 @@
 #include "context.h"
 
 #include <QDebug>
+#include <QTransform>
 
 extern Context ctx;
 
 Profile::Profile(QString path): Symbol("profile")
 {
+  setHandlesChildEvents(true);
+
   Features* profile = new Features(ctx.loader->absPath(path));
   addChild(profile);
   m_activeRect = profile->boundingRect();
@@ -66,7 +69,9 @@ Profile::Profile(QString path): Symbol("profile")
                     -(-step->y_datum() + y + dy * j));
         step->rotate(angle);
         if (mirror) {
-          step->scale(-1, 1);
+          QTransform trans;
+          trans.scale(-1, 1);
+          step->setTransform(trans);
         }
         addChild(step);
       }
@@ -109,4 +114,14 @@ QPainterPath Profile::painterPath(void)
   m_valid = true;
 
   return m_cachedPath;
+}
+
+void Profile::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mousePressEvent(event);
+}
+
+void Profile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
 }

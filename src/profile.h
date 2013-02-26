@@ -20,6 +20,10 @@ public:
   qreal x_datum(void);
   qreal y_datum(void);
 
+protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+
 private:
   StructuredTextDataStore* m_ds;
   QRectF m_activeRect;
