@@ -10,6 +10,10 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   m_scene->setBackgroundBrush(ctx.bg_color);
   setScene(m_scene);
+  m_scene->setSceneRect(-800, -600, 1600, 1200);
+
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   //setRenderHint(QPainter::Antialiasing);
   setCacheMode(CacheBackground);
@@ -96,10 +100,6 @@ void ODBPPGraphicsView::loadProfile(QString step)
 
   m_profile->setPen(QPen(color, 0));
   m_profile->setBrush(Qt::transparent);
-
-  // Set scene rect
-  QRectF b = m_profile->boundingRect();
-  m_scene->setSceneRect(b.x() * 5, b.y() * 5, b.width() * 5, b.height() * 5);
 
   m_scene->addItem(m_profile);
   zoomToProfile();

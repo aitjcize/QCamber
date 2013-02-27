@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
   Code39::initPatterns();
+  QApplication::setGraphicsSystem("raster");
 
 #ifdef DEPLOY
   QFileDialog diag(NULL, "Choose a tarball", "",
