@@ -127,8 +127,8 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/zoom_in.png</normaloff>:/icons/zoom_in.png</iconset>
+    <iconset>
+     <normaloff>icons/zoom-in.png</normaloff>icons/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -136,8 +136,8 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/zoom_out.png</normaloff>:/icons/zoom_out.png</iconset>
+    <iconset>
+     <normaloff>icons/zoom-out.png</normaloff>icons/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -145,8 +145,8 @@
   </action>
   <action name="actionHome">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
+    <iconset>
+     <normaloff>icons/zoom-original.png</normaloff>icons/zoom-original.png</iconset>
    </property>
    <property name="text">
     <string>Home</string>
@@ -157,8 +157,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/zoom_area.png</normaloff>:/icons/zoom_area.png</iconset>
+    <iconset>
+     <normaloff>icons/gtk-fullscreen.png</normaloff>icons/gtk-fullscreen.png</iconset>
    </property>
    <property name="text">
     <string>Area Zoom</string>
@@ -166,8 +166,8 @@
   </action>
   <action name="actionPanLeft">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/left.png</normaloff>:/icons/left.png</iconset>
+    <iconset>
+     <normaloff>icons/back.png</normaloff>icons/back.png</iconset>
    </property>
    <property name="text">
     <string>Pan Left</string>
@@ -175,8 +175,8 @@
   </action>
   <action name="actionPanRight">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/right.png</normaloff>:/icons/right.png</iconset>
+    <iconset>
+     <normaloff>icons/forward.png</normaloff>icons/forward.png</iconset>
    </property>
    <property name="text">
     <string>Pan Right</string>
@@ -184,8 +184,8 @@
   </action>
   <action name="actionPanUp">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+    <iconset>
+     <normaloff>icons/up.png</normaloff>icons/up.png</iconset>
    </property>
    <property name="text">
     <string>Pan Up</string>
@@ -193,8 +193,8 @@
   </action>
   <action name="actionPanDown">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
-     <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+    <iconset>
+     <normaloff>icons/down.png</normaloff>icons/down.png</iconset>
    </property>
    <property name="text">
     <string>Pan Down</string>
@@ -204,11 +204,19 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/ok.png</normaloff>icons/ok.png</iconset>
+   </property>
    <property name="text">
     <string>Highlight</string>
    </property>
   </action>
   <action name="actionClearHighlight">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/remove.png</normaloff>icons/remove.png</iconset>
+   </property>
    <property name="text">
     <string>Clear Highlight</string>
    </property>
@@ -219,6 +227,10 @@
   <action name="actionShowNotes">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/document-properties.png</normaloff>icons/document-properties.png</iconset>
    </property>
    <property name="text">
     <string>Show Notes</string>
@@ -232,8 +244,6 @@
    <header>odbppgraphicsview.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
