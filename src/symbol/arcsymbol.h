@@ -18,7 +18,6 @@ private:
   int m_sym_num;
   int m_dcode;
   bool m_cw;
-  QRectF m_bounding;
   QString m_sym_name;
 };
 
