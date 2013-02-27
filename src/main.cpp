@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   }
   ctx.loader = new ArchiveLoader(diag.selectedFiles()[0]);
 #else
-  ctx.loader = new ArchiveLoader("demo2.tgz");
+  ctx.loader = new ArchiveLoader("demo.tgz");
 #endif
   Settings::load("config.ini");
   ctx.bg_color = QColor(SETTINGS->get("Color", "BG").toString());
