@@ -23,7 +23,7 @@ public:
   void clearHighlight(void);
 
   void clearScene(void);
-  void addItem(Symbol* symbol);
+  void addItem(Symbol* symbol, bool scale_invariant=false);
   void removeItem(Symbol* symbol);
   void zoomToProfile(void);
   void scaleView(qreal scaleFactor);
@@ -40,6 +40,7 @@ private:
   ODBPPGraphicsScene* m_scene;
   ZoomMode m_zoomMode;
   Profile* m_profile;
+  QList<Symbol*> m_scaleInvariantSymbols;
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */

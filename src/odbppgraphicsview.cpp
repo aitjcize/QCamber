@@ -40,6 +40,10 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
   if (factor > 11050)
       return;
 
+  for (int i = 0; i < m_scaleInvariantSymbols.size(); ++i) {
+    m_scaleInvariantSymbols[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+  }
+
   setTransformationAnchor(AnchorViewCenter);
   scale(scaleFactor, scaleFactor);
   setTransformationAnchor(AnchorUnderMouse);
@@ -77,10 +81,17 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
 void ODBPPGraphicsView::clearScene(void)
 {
   m_scene->clear();
+  Symbol* origin = new OriginSymbol();
+  origin->setPen(QPen(Qt::white, 0));
+  origin->setBrush(Qt::white);
+  addItem(origin, true);
 }
 
-void ODBPPGraphicsView::addItem(Symbol* symbol)
+void ODBPPGraphicsView::addItem(Symbol* symbol , bool scale_invariant)
 {
+  if (scale_invariant) {
+    m_scaleInvariantSymbols.append(symbol);
+  }
   m_scene->addItem(symbol);
 }
 

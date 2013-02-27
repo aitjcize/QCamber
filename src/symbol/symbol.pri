@@ -1,68 +1,71 @@
 HEADERS += \
-  symbol/symbol.h \
-  symbol/roundsymbol.h \
-  symbol/rectanglesymbol.h \
-  symbol/ovalsymbol.h \
+  symbol/arcsymbol.h \
+  symbol/butterflysymbol.h \
   symbol/diamondsymbol.h \
-  symbol/octagonsymbol.h \
   symbol/donutrsymbol.h \
   symbol/donutssymbol.h \
-  symbol/squaresymbol.h \
-  symbol/trianglesymbol.h \
-  symbol/surfacesymbol.h \
-  symbol/arcsymbol.h \
-  symbol/linesymbol.h \
-  symbol/usersymbol.h \
-  symbol/textsymbol.h \
-  symbol/barcodesymbol.h \
-  symbol/horizontalhexagonsymbol.h \
-  symbol/verticalhexagonsymbol.h \
-  symbol/butterflysymbol.h \
-  symbol/squarebutterflysymbol.h \
+  symbol/ellipsesymbol.h \
   symbol/halfovalsymbol.h \
+  symbol/holesymbol.h \
+  symbol/horizontalhexagonsymbol.h \
+  symbol/moiresymbol.h \
+  symbol/nullsymbol.h \
+  symbol/octagonsymbol.h \
+  symbol/originsymbol.h \
+  symbol/ovalsymbol.h \
+  symbol/rectanglesymbol.h \
+  symbol/rectangularthermalopencornerssymbol.h \
+  symbol/rectangularthermalsymbol.h \
+  symbol/roundsymbol.h \
   symbol/roundthermalroundsymbol.h \
   symbol/roundthermalsquaresymbol.h \
-  symbol/squarethermalsymbol.h \
-  symbol/squarethermalopencornerssymbol.h \
+  symbol/squarebutterflysymbol.h \
   symbol/squareroundthermalsymbol.h \
-  symbol/rectangularthermalopencornerssymbol.h \
-  symbol/ellipsesymbol.h \
-  symbol/moiresymbol.h \
-  symbol/holesymbol.h \
-  symbol/nullsymbol.h \
-  symbol/notesymbol.h
+  symbol/squaresymbol.h \
+  symbol/squarethermalopencornerssymbol.h \
+  symbol/squarethermalsymbol.h \
+  symbol/symbol.h \
+  symbol/verticalhexagonsymbol.h \
+  symbol/trianglesymbol.h \
+  symbol/usersymbol.h \
+  symbol/barcodesymbol.h \
+  symbol/linesymbol.h \
+  symbol/notesymbol.h \
+  symbol/surfacesymbol.h \
+  symbol/textsymbol.h
 
 SOURCES += \
-  symbol/symbol.cpp \
-  symbol/roundsymbol.cpp \
-  symbol/rectanglesymbol.cpp \
-  symbol/ovalsymbol.cpp \
+  symbol/arcsymbol.cpp \
+  symbol/butterflysymbol.cpp \
   symbol/diamondsymbol.cpp \
-  symbol/octagonsymbol.cpp \
   symbol/donutrsymbol.cpp \
   symbol/donutssymbol.cpp \
-  symbol/squaresymbol.cpp \
-  symbol/surfacesymbol.cpp \
-  symbol/trianglesymbol.cpp \
-  symbol/linesymbol.cpp \
-  symbol/arcsymbol.cpp \
-  symbol/usersymbol.cpp \
-  symbol/textsymbol.cpp \
-  symbol/barcodesymbol.cpp \
-  symbol/horizontalhexagonsymbol.cpp \
-  symbol/verticalhexagonsymbol.cpp \ 
-  symbol/butterflysymbol.cpp \
-  symbol/squarebutterflysymbol.cpp \
+  symbol/ellipsesymbol.cpp \
   symbol/halfovalsymbol.cpp \
+  symbol/holesymbol.cpp \
+  symbol/horizontalhexagonsymbol.cpp \
+  symbol/moiresymbol.cpp \
+  symbol/nullsymbol.cpp \
+  symbol/octagonsymbol.cpp \
+  symbol/originsymbol.cpp \
+  symbol/ovalsymbol.cpp \
+  symbol/rectanglesymbol.cpp \
+  symbol/rectangularthermalopencornerssymbol.cpp \
+  symbol/rectangularthermalsymbol.cpp \
+  symbol/roundsymbol.cpp \
   symbol/roundthermalroundsymbol.cpp \
   symbol/roundthermalsquaresymbol.cpp \
-  symbol/squarethermalsymbol.cpp \
-  symbol/squarethermalopencornerssymbol.cpp \
+  symbol/squarebutterflysymbol.cpp \
   symbol/squareroundthermalsymbol.cpp \
-  symbol/rectangularthermalsymbol.cpp \
-  symbol/rectangularthermalopencornerssymbol.cpp \
-  symbol/ellipsesymbol.cpp \
-  symbol/moiresymbol.cpp \
-  symbol/holesymbol.cpp \
-  symbol/nullsymbol.cpp \
-  symbol/notesymbol.cpp
+  symbol/squaresymbol.cpp \
+  symbol/squarethermalopencornerssymbol.cpp \
+  symbol/squarethermalsymbol.cpp \
+  symbol/symbol.cpp \
+  symbol/verticalhexagonsymbol.cpp \
+  symbol/trianglesymbol.cpp \
+  symbol/usersymbol.cpp \
+  symbol/barcodesymbol.cpp \
+  symbol/linesymbol.cpp \
+  symbol/notesymbol.cpp \
+  symbol/surfacesymbol.cpp \
+  symbol/textsymbol.cpp
