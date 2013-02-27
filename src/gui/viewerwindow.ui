@@ -40,7 +40,7 @@
            <x>0</x>
            <y>0</y>
            <width>148</width>
-           <height>407</height>
+           <height>394</height>
           </rect>
          </property>
          <property name="title">
@@ -105,10 +105,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionHome"/>
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionAreaZoom"/>
-   <addaction name="actionHome"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionClearHighlight"/>
@@ -126,16 +126,28 @@
    </property>
   </action>
   <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/zoom_in.png</normaloff>:/icons/zoom_in.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom In</string>
    </property>
   </action>
   <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/zoom_out.png</normaloff>:/icons/zoom_out.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom Out</string>
    </property>
   </action>
   <action name="actionHome">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
+   </property>
    <property name="text">
     <string>Home</string>
    </property>
@@ -144,26 +156,46 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/zoom_area.png</normaloff>:/icons/zoom_area.png</iconset>
+   </property>
    <property name="text">
     <string>Area Zoom</string>
    </property>
   </action>
   <action name="actionPanLeft">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/left.png</normaloff>:/icons/left.png</iconset>
+   </property>
    <property name="text">
     <string>Pan Left</string>
    </property>
   </action>
   <action name="actionPanRight">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/right.png</normaloff>:/icons/right.png</iconset>
+   </property>
    <property name="text">
     <string>Pan Right</string>
    </property>
   </action>
   <action name="actionPanUp">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+   </property>
    <property name="text">
     <string>Pan Up</string>
    </property>
   </action>
   <action name="actionPanDown">
+   <property name="icon">
+    <iconset resource="../../resources.qrc">
+     <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+   </property>
    <property name="text">
     <string>Pan Down</string>
    </property>
@@ -200,6 +232,8 @@
    <header>odbppgraphicsview.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

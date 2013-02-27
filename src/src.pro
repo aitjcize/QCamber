@@ -36,6 +36,9 @@ SOURCES += \
   profile.cpp \
   settings.cpp
 
+RESOURCES += \
+  ../resources.qrc
+
 INCLUDEPATH += . .build parser parser/record symbol gui
 
 DESTDIR = ../bin
