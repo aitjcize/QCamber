@@ -6,7 +6,7 @@
 #include "fontparser.h"
 #include "context.h"
 
-TextSymbol::TextSymbol(TextRecord* rec): Symbol("text", "text")
+TextSymbol::TextSymbol(TextRecord* rec): Symbol("Text", "Text")
 {
   if (rec == NULL) {
     return;
@@ -24,6 +24,16 @@ TextSymbol::TextSymbol(TextRecord* rec): Symbol("text", "text")
   m_version = rec->version;
 
   painterPath();
+}
+
+QString TextSymbol::infoText(void)
+{
+  QString info = QString("Text, X=%1, Y=%2, %3, %4, %5") \
+    .arg(m_x).arg(m_y) \
+    .arg(m_text) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_font);
+  return info;
 }
 
 QPainterPath TextSymbol::painterPath(void)

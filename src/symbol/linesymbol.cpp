@@ -6,7 +6,7 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-LineSymbol::LineSymbol(LineRecord* rec): Symbol("line", "line", rec->polarity)
+LineSymbol::LineSymbol(LineRecord* rec): Symbol("Line", "Line", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;
@@ -28,6 +28,16 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("line", "line", rec->polarity)
   }
 
   painterPath();
+}
+
+QString LineSymbol::infoText(void)
+{
+  QString info = QString("Line, XS=%1, YS=%2, XE=%3, YE=%4, %5, %6") \
+    .arg(m_xs).arg(m_ys) \
+    .arg(m_xe).arg(m_ye) \
+    .arg(m_sym_name) \
+    .arg((m_polarity == P)? "POS": "NEG");
+  return info;
 }
 
 QPainterPath LineSymbol::painterPath()

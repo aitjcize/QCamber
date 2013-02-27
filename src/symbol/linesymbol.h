@@ -12,7 +12,8 @@ class LineSymbol: public Symbol {
 public:
   LineSymbol(LineRecord* rec);
 
-  QPainterPath painterPath(void);
+  virtual QString infoText(void);
+  virtual QPainterPath painterPath(void);
 
 private:
   qreal m_xs, m_ys;

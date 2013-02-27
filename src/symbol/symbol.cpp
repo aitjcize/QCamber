@@ -25,16 +25,15 @@ QString Symbol::name(void)
 
 QString Symbol::infoText(void)
 {
-  QString info = QString("X=%1, Y=%2, %3, %4") \
+  QString info = QString("Pad, X=%1, Y=%2, %3, %4") \
     .arg(pos().x()).arg(pos().y()) \
     .arg(m_name).arg((m_polarity == P)? "POS": "NEG");
 
-  if (m_name != "surface") {
-    info += QString(", Ang=%1").arg(rotation());
-    if (transform().m11() == -1) {
-      info += ", Mirror";
-    }
+  info += QString(", Ang=%1").arg(rotation());
+  if (transform().m11() == -1) {
+    info += ", Mirror";
   }
+
   return info;
 }
 
@@ -70,9 +69,6 @@ void Symbol::setBrush(QBrush brush)
 void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget)
 {
-  // Paint item group
-  //QGraphicsItemGroup::paint(painter, option, widget);
-
   // Paint painterPath
   if (m_polarity == P) {
     painter->setPen(m_pen);

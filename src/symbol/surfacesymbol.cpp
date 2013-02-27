@@ -11,12 +11,22 @@ using std::endl;
 #include "context.h"
 
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
-  Symbol("surface", "surface", rec->polarity)
+  Symbol("Surface", "Surface", rec->polarity)
 {
   m_dcode = rec->dcode;
   m_polygons = rec->polygons;
 
   painterPath();
+}
+
+QString SurfaceSymbol::infoText(void)
+{
+  QPointF c = m_bounding.center();
+  QString info = QString("Surface, XC=%1, YC=%2, Islands=%3, Holes=%4, %5") \
+    .arg(c.x()).arg(c.y()) \
+    .arg(m_islandCount).arg(m_holeCount) \
+    .arg((m_polarity == P)? "POS": "NEG");
+  return info;
 }
 
 QPainterPath SurfaceSymbol::painterPath(void)
@@ -30,13 +40,13 @@ QPainterPath SurfaceSymbol::painterPath(void)
       it != m_polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
     m_cachedPath.addPath(rec->painterPath());
-    /*
     if (rec->poly_type == PolygonRecord::I) {
-      ipath.addPath(rec->painterPath());
+      ++m_islandCount;
+      //ipath.addPath(rec->painterPath());
     } else {
-      ipath.addPath(rec->painterPath());
+      ++m_holeCount;
+      //ipath.addPath(rec->painterPath());
     }
-    */
   }
 
   prepareGeometryChange();

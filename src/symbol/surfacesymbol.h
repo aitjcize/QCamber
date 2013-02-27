@@ -12,10 +12,13 @@ class SurfaceSymbol: public Symbol {
 public:
   SurfaceSymbol(SurfaceRecord* rec);
 
-  QPainterPath painterPath(void);
+  virtual QString infoText(void);
+  virtual QPainterPath painterPath(void);
 
 private:
   int m_dcode;
+  int m_holeCount;
+  int m_islandCount;
   QList<PolygonRecord*> m_polygons;
 };
 

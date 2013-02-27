@@ -12,7 +12,8 @@ class TextSymbol: public Symbol {
 public:
   TextSymbol(TextRecord* rec);
 
-  QPainterPath painterPath(void);
+  virtual QString infoText(void);
+  virtual QPainterPath painterPath(void);
 
 protected:
   qreal m_x, m_y;

@@ -32,7 +32,17 @@ BarcodeSymbol::BarcodeSymbol(BarcodeRecord* rec): TextSymbol(NULL)
   painterPath();
 }
 
-#include <QDebug>
+QString BarcodeSymbol::infoText(void)
+{
+  QString info = QString("Text/BC, X=%1, Y=%2, %3, %4, %5, %6, %7") \
+    .arg(m_x).arg(m_y) \
+    .arg(m_text) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_barcode) \
+    .arg(m_fasc? "full_ascii": "no_full_ascii") \
+    .arg(m_cs? "cs": "no_cs");
+  return info;
+}
 
 void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
     QWidget*)

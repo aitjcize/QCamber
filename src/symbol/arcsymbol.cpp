@@ -4,7 +4,7 @@
 
 #include "featuresparser.h"
 
-static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
+static void addArc(QPainterPath& path, qreal sx, qreal sy,
     qreal ex, qreal ey, qreal cx, qreal cy, bool cw)
 {
   qreal sax = sx - cx, say = sy - cy;
@@ -22,7 +22,7 @@ static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
     }
     for (qreal a = sa; a >= ea; a -= 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      m_cachedPath.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
+      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   } else {
     if (ea < sa) {
@@ -30,14 +30,14 @@ static void addArc(QPainterPath& m_cachedPath, qreal sx, qreal sy,
     }
     for (qreal a = sa; a <= ea; a += 0.01) {
       qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-      m_cachedPath.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
+      path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
     }
   }
-  m_cachedPath.lineTo(ex, -ey);
+  path.lineTo(ex, -ey);
 }
 
 ArcSymbol::ArcSymbol(ArcRecord* rec):
-    Symbol("arc", "", rec->polarity)
+    Symbol("Arc", "Arc", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;
@@ -52,6 +52,19 @@ ArcSymbol::ArcSymbol(ArcRecord* rec):
                symbolNameMap()[rec->sym_num];
 
   painterPath();
+}
+
+QString ArcSymbol::infoText(void)
+{
+  QString info = QString("Arc, XC=%1, YC=%2, XS=%3, YS=%4, XE=%5, YE=%6, "
+      "%7, %8, %9") \
+    .arg(m_xc).arg(m_yc) \
+    .arg(m_xs).arg(m_ys) \
+    .arg(m_xe).arg(m_ye) \
+    .arg(m_sym_name) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_cw? "CW": "CCW");
+  return info;
 }
 
 QPainterPath ArcSymbol::painterPath(void)

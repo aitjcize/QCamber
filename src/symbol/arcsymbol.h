@@ -8,9 +8,8 @@ class ArcSymbol: public Symbol {
 public:
   ArcSymbol(ArcRecord* rec);
 
-  QPainterPath painterPath(void);
-
-protected:
+  virtual QString infoText(void);
+  virtual QPainterPath painterPath(void);
 
 private:
   qreal m_xs, m_ys;
