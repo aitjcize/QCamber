@@ -74,14 +74,12 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
       m_rubberPS = event->scenePos();
       m_rubberBandActivated = true;
       m_rubberBand->setPen(QPen(Qt::white, m_penWidth));
-      m_rubberBand->setRect(m_rubberPS.x(), m_rubberPS.y(), 0, 0);
-      m_rubberBand->setVisible(true);
+      m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS));
       addItem(m_rubberBand);
     } else {
       m_rubberBandActivated = false;
-      m_rubberPE = event->scenePos();
       removeItem(m_rubberBand);
-      emit rectSelected(QRectF(m_rubberPS, m_rubberPE));
+      emit rectSelected(QRectF(m_rubberPS, event->scenePos()));
     }
   }
   QGraphicsScene::mousePressEvent(event);
@@ -89,13 +87,5 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void ODBPPGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-  /*
-  if (m_areaZoomEnabled) {
-    m_rubberPE = event->scenePos();
-    if (m_rubberPS != m_rubberPE) {
-      emit rectSelected(QRectF(m_rubberPS, m_rubberPE));
-    }
-  }
-  */
   QGraphicsScene::mouseReleaseEvent(event);
 }

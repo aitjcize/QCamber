@@ -33,7 +33,6 @@ protected:
 private:
   QGraphicsRectItem* m_rubberBand;
   QPointF m_rubberPS;
-  QPointF m_rubberPE;
   bool m_areaZoomEnabled;
   bool m_highlight;
   bool m_rubberBandActivated;
