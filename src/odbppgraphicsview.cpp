@@ -81,10 +81,6 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
 void ODBPPGraphicsView::clearScene(void)
 {
   m_scene->clear();
-  Symbol* origin = new OriginSymbol();
-  origin->setPen(QPen(Qt::white, 0));
-  origin->setBrush(Qt::white);
-  addItem(origin, true);
 }
 
 void ODBPPGraphicsView::addItem(Symbol* symbol , bool scale_invariant)
@@ -114,6 +110,10 @@ void ODBPPGraphicsView::loadProfile(QString step)
 
   m_scene->addItem(m_profile);
   zoomToProfile();
+
+  Symbol* origin = new OriginSymbol();
+  origin->setPen(QPen(color, 0));
+  addItem(origin, true);
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
@@ -163,7 +163,7 @@ void ODBPPGraphicsView::zoomToRect(QRectF rect)
     s = 8000 / current.width();
   }
 
-  scale(s, s);
+  scaleView(s);
 
   centerOn(b.center());
 }
