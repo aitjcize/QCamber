@@ -44,6 +44,7 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
     m_scaleInvariantSymbols[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
   }
 
+  m_scene->setViewScaleFactor(scaleFactor);
   setTransformationAnchor(AnchorViewCenter);
   scale(scaleFactor, scaleFactor);
   setTransformationAnchor(AnchorUnderMouse);
@@ -64,12 +65,14 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
   switch (mode) {
   case None:
     m_scene->setAreaZoomEnabled(false);
-    setDragMode(RubberBandDrag);
+    //setDragMode(RubberBandDrag);
+    setDragMode(NoDrag);
     break;
   case AreaZoom:
     m_scene->setAreaZoomEnabled(true);
     m_scene->setHighlight(false);
-    setDragMode(RubberBandDrag);
+    //setDragMode(RubberBandDrag);
+    setDragMode(NoDrag);
     break;
   case MousePan:
     m_scene->setAreaZoomEnabled(false);
