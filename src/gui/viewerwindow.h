@@ -12,7 +12,6 @@
 #include "layerselector.h"
 #include "odbppgraphicsview.h"
 #include "structuredtextparser.h"
-#include "colorsettings.h"
 
 namespace Ui {
 class ViewerWindow;
@@ -34,11 +33,18 @@ public:
 
 public slots:
   void on_actionSetColor_triggered(void);
-  void on_homeFunc_clicked(void);
-  void on_areaZoomFunc_clicked(void);
-  //void on_mousePanFunc_clicked(void);
-  void on_showNotesFunc_clicked(void);
-  void on_featureSelectionFunc_clicked(void);
+
+  void on_actionZoomIn_triggered(void);
+  void on_actionZoomOut_triggered(void);
+  void on_actionHome_triggered(void);
+  void on_actionAreaZoom_triggered(void);
+  void on_actionPanLeft_triggered(void);
+  void on_actionPanRight_triggered(void);
+  void on_actionPanUp_triggered(void);
+  void on_actionPanDown_triggered(void);
+  void on_actionHighlight_toggled(bool checked);
+  void on_actionClearHighlight_triggered(void);
+  void on_actionShowNotes_toggled(bool checked);
 
 protected:
   QColor nextColor(void);
@@ -61,7 +67,6 @@ private:
   DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
-  bool m_showNote;
 };
 
 #endif // __MAINWINDOW_H__

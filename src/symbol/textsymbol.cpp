@@ -6,8 +6,6 @@
 #include "fontparser.h"
 #include "context.h"
 
-extern Context ctx;
-
 TextSymbol::TextSymbol(TextRecord* rec): Symbol("text", "text")
 {
   if (rec == NULL) {

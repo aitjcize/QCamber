@@ -7,8 +7,6 @@
 #include "context.h"
 #include "fontparser.h"
 
-extern Context ctx;
-
 BarcodeSymbol::BarcodeSymbol(BarcodeRecord* rec): TextSymbol(NULL)
 {
   m_polarity = rec->polarity;

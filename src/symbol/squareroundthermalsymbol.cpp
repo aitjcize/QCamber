@@ -5,8 +5,6 @@
 
 #include "context.h"
 
-extern Context ctx;
-
 SquareRoundThermalSymbol::SquareRoundThermalSymbol(QString def, Polarity polarity):
     Symbol(def, "sr_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {

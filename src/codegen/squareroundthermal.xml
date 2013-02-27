@@ -1,8 +1,6 @@
 <symbol name="SquareRoundThermalSymbol" id="sr_ths">
   <includes><![CDATA[
 #include "context.h"
-
-extern Context ctx;
   ]]></includes>
 
   <pattern><![CDATA[

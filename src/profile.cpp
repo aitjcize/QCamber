@@ -5,8 +5,6 @@
 #include <QDebug>
 #include <QTransform>
 
-extern Context ctx;
-
 Profile::Profile(QString path): Symbol("profile")
 {
   setHandlesChildEvents(true);

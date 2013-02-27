@@ -1,16 +1,9 @@
 #include "usersymbol.h"
 
-#include <iostream>
-#include <typeinfo>
-using std::cout;
-using std::endl;
-
 #include <QtGui>
 #include <QRegExp>
 
 #include "context.h"
-
-extern Context ctx;
 
 UserSymbol::UserSymbol(QString def, Polarity polarity):
   Symbol(def, def, polarity), m_def(def)

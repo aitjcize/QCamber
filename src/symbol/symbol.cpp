@@ -5,8 +5,6 @@
 #include "context.h"
 #include "odbppgraphicsscene.h"
 
-extern Context ctx;
-
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
   m_polarity(polarity), m_valid(false), m_selected(false)
@@ -122,6 +120,12 @@ void Symbol::restoreColor(void)
 
 void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+  ODBPPGraphicsScene* s = dynamic_cast<ODBPPGraphicsScene*>(scene());
+
+  if (!s->highlight()) {
+    return;
+  }
+
   if (m_selected) {
     return;
   }
@@ -134,7 +138,7 @@ void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
   setBrush(Qt::blue);
   update();
 
-  dynamic_cast<ODBPPGraphicsScene*>(scene())->updateSelection(this);
+  s->updateSelection(this);
 }
 
 void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)

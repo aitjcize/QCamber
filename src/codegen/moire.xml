@@ -1,8 +1,6 @@
 <symbol name="MoireSymbol" id="moire">
   <includes><![CDATA[
 #include "context.h"
-
-extern Context ctx;
   ]]></includes>
 
   <pattern><![CDATA[

@@ -1,13 +1,12 @@
 #include <QtGui>
 
-#include "jobmatrix.h"
 #include "code39.h"
 #include "context.h"
+#include "jobmatrix.h"
+#include "settings.h"
 #include "structuredtextparser.h"
 
-Context ctx;
-
-#define DEPLOY
+//#define DEPLOY
 
 int main(int argc, char *argv[])
 {
@@ -30,8 +29,8 @@ int main(int argc, char *argv[])
 #else
   ctx.loader = new ArchiveLoader("demo.tgz");
 #endif
-  ctx.config = new Config("config.ini");
-  ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
+  Settings::load("config.ini");
+  ctx.bg_color = QColor(SETTINGS->get("Color", "BG").toString());
 
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();

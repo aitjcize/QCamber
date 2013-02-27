@@ -20,7 +20,7 @@ class JobMatrix : public QDialog
 Q_OBJECT
 
 public:
-  explicit JobMatrix(QWidget *parent = 0,StructuredTextDataStore* ds=0);
+  explicit JobMatrix(QWidget *parent = 0, StructuredTextDataStore* ds = 0);
   void SetMatrix();
   ~JobMatrix();
 
@@ -35,7 +35,6 @@ private:
   QStringList m_step_name;
   QStringList m_layer_name;
   StructuredTextDataStore *m_ds;
-  ViewerWindow Window;
 };
 
 #endif // JOBMATRIX_H

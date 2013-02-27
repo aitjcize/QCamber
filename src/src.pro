@@ -12,7 +12,6 @@ include (gui/gui.pri)
 
 HEADERS += \
   archiveloader.h \
-  config.h \
   context.h \
   feature.h \
   layergraphicseffect.h \
@@ -21,11 +20,12 @@ HEADERS += \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \
   profile.h \
+  settings.h \
   symbolfactory.h
 
 SOURCES += \
   archiveloader.cpp \
-  config.cpp \
+  context.cpp \
   feature.cpp \
   layer.cpp \
   layergraphicseffect.cpp \
@@ -33,7 +33,8 @@ SOURCES += \
   notes.cpp \
   odbppgraphicsscene.cpp \
   odbppgraphicsview.cpp \
-  profile.cpp
+  profile.cpp \
+  settings.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui
 

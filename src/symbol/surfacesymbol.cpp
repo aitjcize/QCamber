@@ -10,8 +10,6 @@ using std::endl;
 
 #include "context.h"
 
-extern Context ctx;
-
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
   Symbol("surface", "surface", rec->polarity)
 {

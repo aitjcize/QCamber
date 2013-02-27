@@ -3,14 +3,11 @@
 #include "symbolfactory.h"
 #include "context.h"
 
-extern Context ctx;
-
 ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_profile(NULL)
 {
   m_scene = new ODBPPGraphicsScene(this);
   m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-  m_scene->setSceneRect(-800, -600, 1600, 1200);
   m_scene->setBackgroundBrush(ctx.bg_color);
   setScene(m_scene);
 
@@ -39,7 +36,18 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
   if (factor > 11050)
       return;
 
+  setTransformationAnchor(AnchorViewCenter);
   scale(scaleFactor, scaleFactor);
+  setTransformationAnchor(AnchorUnderMouse);
+}
+
+void ODBPPGraphicsView::scrollView(int dx, int dy)
+{
+  QScrollBar* hsb = horizontalScrollBar();
+  hsb->setValue(hsb->value() + dx);
+
+  QScrollBar* vsb = verticalScrollBar();
+  vsb->setValue(vsb->value() + dy);
 }
 
 void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
@@ -52,6 +60,7 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
     break;
   case AreaZoom:
     m_scene->setAreaZoomEnabled(true);
+    m_scene->setHighlight(false);
     setDragMode(RubberBandDrag);
     break;
   case MousePan:
@@ -88,6 +97,10 @@ void ODBPPGraphicsView::loadProfile(QString step)
   m_profile->setPen(QPen(color, 0));
   m_profile->setBrush(Qt::transparent);
 
+  // Set scene rect
+  QRectF b = m_profile->boundingRect();
+  m_scene->setSceneRect(b.x() * 5, b.y() * 5, b.width() * 5, b.height() * 5);
+
   m_scene->addItem(m_profile);
   zoomToProfile();
 }
@@ -102,6 +115,21 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
     m_profile->setPen(QPen(color, 0));
     m_profile->setBrush(Qt::transparent);
   }
+}
+
+void ODBPPGraphicsView::setHighlight(bool status)
+{
+  if (status) {
+    setZoomMode(ODBPPGraphicsView::None);
+  } else {
+    setZoomMode(ODBPPGraphicsView::AreaZoom);
+  }
+  m_scene->setHighlight(status);
+}
+
+void ODBPPGraphicsView::clearHighlight(void)
+{
+  m_scene->clearHighlight();
 }
 
 void ODBPPGraphicsView::zoomToProfile(void)

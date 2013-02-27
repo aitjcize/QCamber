@@ -5,8 +5,6 @@
 #include "context.h"
 #include "notesparser.h"
 
-extern Context ctx;
-
 Notes::Notes(QString step, QString layer): Symbol("symbol"), m_empty(false)
 {
   QString filename = ctx.loader->absPath(QString("steps/%1/layers/%2/notes")\

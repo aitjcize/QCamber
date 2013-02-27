@@ -4,8 +4,6 @@
 
 #include "context.h"
 
-extern Context ctx;
-
 LayerSelector::LayerSelector(const QString& text, const QString& step,
     const QString& layer, QWidget *parent)
   :QLabel(text, parent), m_selected(false), m_step(step), m_layer(layer)

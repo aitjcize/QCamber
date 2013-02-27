@@ -3,8 +3,6 @@
 
 #include <cmath>
 
-extern Context ctx;
-
 TestViewWidget::TestViewWidget(QWidget* parent): QGraphicsView(parent)
 {
   setCacheMode(CacheBackground);

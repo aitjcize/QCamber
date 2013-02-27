@@ -3,7 +3,7 @@
 #include <QtGui>
 
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
-  QGraphicsScene(parent), m_areaZoomEnabled(false)
+  QGraphicsScene(parent), m_areaZoomEnabled(false), m_highlight(false)
 {
 }
 
@@ -12,12 +12,32 @@ void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
   m_areaZoomEnabled = status;
 }
 
-void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
+
+bool ODBPPGraphicsScene::highlight(void)
+{
+  return m_highlight;
+}
+
+void ODBPPGraphicsScene::setHighlight(bool status)
+{
+  m_highlight = status;
+
+  if (!status) {
+    clearHighlight();
+  }
+}
+
+void ODBPPGraphicsScene::clearHighlight(void)
 {
   for (int i = 0; i < m_selectedSymbols.size(); ++i) {
     m_selectedSymbols[i]->restoreColor();
   }
   m_selectedSymbols.clear();
+}
+
+void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
+{
+  clearHighlight();
   m_selectedSymbols.append(symbol);
   emit featureSelected(symbol);
 }

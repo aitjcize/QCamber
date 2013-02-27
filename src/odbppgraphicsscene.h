@@ -14,6 +14,10 @@ public:
   void setAreaZoomEnabled(bool status);
   void updateSelection(Symbol* symbol);
 
+  bool highlight(void);
+  void setHighlight(bool status);
+  void clearHighlight(void);
+
 signals:
   void mouseMove(QPointF);
   void featureSelected(Symbol*);
@@ -29,6 +33,7 @@ private:
   QPointF m_rubberPS;
   QPointF m_rubberPE;
   bool m_areaZoomEnabled;
+  bool m_highlight;
   QList<Symbol*> m_selectedSymbols;
 };
 

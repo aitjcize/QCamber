@@ -2,8 +2,6 @@
 
 #include "context.h"
 
-extern Context ctx;
-
 Layer::Layer(QString step, QString layer):
   Features(ctx.loader->featuresPath(
         QString("steps/%1/layers/%2").arg(step).arg(layer))),

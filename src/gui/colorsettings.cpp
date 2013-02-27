@@ -6,8 +6,6 @@
 #include "clickablelabel.h"
 #include "context.h"
 
-extern Context ctx;
-
 ColorSettings::ColorSettings(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::ColorSettings)

@@ -5,12 +5,11 @@
 #include <QDebug>
 
 #include "context.h"
-#include "notes.h"
-
-extern Context ctx;
+#include "settingsdialog.h"
+#include "settings.h"
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
-  QMainWindow(parent), ui(new Ui::ViewerWindow), m_showNote(false)
+  QMainWindow(parent), ui(new Ui::ViewerWindow)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
@@ -138,14 +137,13 @@ QColor ViewerWindow::nextColor(void)
 
 void ViewerWindow::loadColorConfig()
 {
-  ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
+  ctx.bg_color = QColor(SETTINGS->get("color", "BG").toString());
   ui->viewWidget->setBackgroundColor(ctx.bg_color);
 
-  QString config("color/C%1");
   m_colors.clear();
-
-  for(int i = 1; i < N_COLOR + 1; i++) {
-    m_colors << QColor(ctx.config->value(config.arg(i)).toString());
+  for(int i = 0; i < 6; ++i) {
+    m_colors << QColor(SETTINGS->get("Color",
+          QString("C%1").arg(i + 1)).toString());
   }
 
   for (int i = 0; i < m_colors.size(); ++i) {
@@ -181,42 +179,68 @@ void ViewerWindow::updateFeatureDetail(Symbol* symbol)
 
 void ViewerWindow::on_actionSetColor_triggered(void)
 {
-  ColorSettings dialog;
+  SettingsDialog dialog;
   dialog.exec();
   loadColorConfig();
 }
 
-void ViewerWindow::on_homeFunc_clicked(void)
+void ViewerWindow::on_actionZoomIn_triggered(void)
+{
+  ui->viewWidget->scaleView(2);
+}
+
+void ViewerWindow::on_actionZoomOut_triggered(void)
+{
+  ui->viewWidget->scaleView(0.5);
+}
+
+void ViewerWindow::on_actionHome_triggered(void)
 {
   ui->viewWidget->zoomToProfile();
 }
 
-void ViewerWindow::on_areaZoomFunc_clicked(void)
+void ViewerWindow::on_actionAreaZoom_triggered(void)
 {
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
 }
 
-/*
-void ViewerWindow::on_mousePanFunc_clicked(void)
+void ViewerWindow::on_actionPanLeft_triggered(void)
 {
-  ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
+  ui->viewWidget->scrollView(-100, 0);
 }
-*/
 
-void ViewerWindow::on_showNotesFunc_clicked(void)
+void ViewerWindow::on_actionPanRight_triggered(void)
 {
-  m_showNote = !m_showNote;
+  ui->viewWidget->scrollView(100, 0);
+}
 
+void ViewerWindow::on_actionPanUp_triggered(void)
+{
+  ui->viewWidget->scrollView(0, -100);
+}
+
+void ViewerWindow::on_actionPanDown_triggered(void)
+{
+  ui->viewWidget->scrollView(0, 100);
+}
+
+void ViewerWindow::on_actionHighlight_toggled(bool checked)
+{
+  ui->viewWidget->setHighlight(checked);
+}
+
+void ViewerWindow::on_actionClearHighlight_triggered(void)
+{
+  ui->viewWidget->clearHighlight();
+}
+
+void ViewerWindow::on_actionShowNotes_toggled(bool checked)
+{
   for (int i = 0; i < m_actives.size(); ++i) {
-    if (m_showNote) {
+    if (checked) {
       ui->viewWidget->addItem(m_actives[i]->item->notes());
     } else {
       ui->viewWidget->removeItem(m_actives[i]->item->notes());
     }
   }
-}
-
-void ViewerWindow::on_featureSelectionFunc_clicked(void)
-{
-  ui->viewWidget->setZoomMode(ODBPPGraphicsView::None);
 }

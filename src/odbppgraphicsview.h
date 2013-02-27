@@ -19,17 +19,20 @@ public:
   void setZoomMode(ZoomMode mode);
   void loadProfile(QString step);
   void setBackgroundColor(QColor color);
+  void setHighlight(bool status);
+  void clearHighlight(void);
 
   void clearScene(void);
   void addItem(Symbol* symbol);
   void removeItem(Symbol* symbol);
   void zoomToProfile(void);
+  void scaleView(qreal scaleFactor);
+  void scrollView(int dx, int dy);
 
 public slots:
   void zoomToRect(QRectF rect);
 
 protected:
-  void scaleView(qreal scaleFactor);
   virtual void wheelEvent(QWheelEvent* event);
   virtual void keyPressEvent(QKeyEvent* event);
 

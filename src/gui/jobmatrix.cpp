@@ -5,13 +5,8 @@
 #include "QDebug"
 #include <QtGui>
 
-extern Context ctx;
-
-using namespace std;
-
-JobMatrix::JobMatrix(QWidget *parent, StructuredTextDataStore *ds) :
-    QDialog(parent),m_ds(ds),
-  ui(new Ui::JobMatrix)
+JobMatrix::JobMatrix(QWidget *parent, StructuredTextDataStore *ds):
+    QDialog(parent), ui(new Ui::JobMatrix), m_ds(ds)
 {
   ui->setupUi(this);
 }

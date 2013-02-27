@@ -4,8 +4,6 @@
 #include <typeinfo>
 #include <QDebug>
 
-extern Context ctx;
-
 Features::Features(QString path): Symbol("features")
 {
   FeaturesParser parser(path);

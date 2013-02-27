@@ -5,8 +5,6 @@
 
 #include "context.h"
 
-extern Context ctx;
-
 MoireSymbol::MoireSymbol(QString def, Polarity polarity):
     Symbol(def, "moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
 {
