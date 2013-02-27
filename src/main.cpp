@@ -15,12 +15,20 @@ int main(int argc, char *argv[])
   Code39::initPatterns();
 
 #ifdef DEPLOY
-  QFileDialog diag(NULL, "Choose a tarball", "", "ODB++ database (*.tgz)");
+  QFileDialog diag(NULL, "Choose a tarball", "",
+      "ODB++ database (*.tgz *.tar.gz)");
   diag.exec();
 
+  QString sel = diag.selectedFiles()[0];
+  if (QFileInfo(sel).isDir()) {
+    exit(1);
+  } else if (!sel.endsWith(".tgz") && !sel.endsWith(".tar.gz")) {
+    QMessageBox::critical(NULL, "Error", "Invalid file format.");
+    exit(1);
+  }
   ctx.loader = new ArchiveLoader(diag.selectedFiles()[0]);
 #else
-  ctx.loader = new ArchiveLoader("demo2.tgz");
+  ctx.loader = new ArchiveLoader("demo.tgz");
 #endif
   ctx.config = new Config("config.ini");
   ctx.bg_color = QColor(ctx.config->value("color/BG").toString());
