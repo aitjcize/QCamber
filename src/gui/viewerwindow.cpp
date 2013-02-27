@@ -9,7 +9,7 @@
 #include "settings.h"
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
-  QMainWindow(parent), ui(new Ui::ViewerWindow)
+  QMainWindow(parent), ui(new Ui::ViewerWindow), m_transition(false)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
@@ -199,8 +199,15 @@ void ViewerWindow::on_actionHome_triggered(void)
   ui->viewWidget->zoomToProfile();
 }
 
-void ViewerWindow::on_actionAreaZoom_triggered(void)
+void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
 {
+  Q_UNUSED(checked);
+  if (m_transition) {
+    return;
+  }
+  m_transition = true;
+  ui->actionHighlight->setChecked(false);
+  m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
 }
 
@@ -226,6 +233,12 @@ void ViewerWindow::on_actionPanDown_triggered(void)
 
 void ViewerWindow::on_actionHighlight_toggled(bool checked)
 {
+  if (m_transition) {
+    return;
+  }
+  m_transition = true;
+  ui->actionAreaZoom->setChecked(false);
+  m_transition = false;
   ui->viewWidget->setHighlight(checked);
 }
 

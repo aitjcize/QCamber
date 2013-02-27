@@ -141,6 +141,9 @@
    </property>
   </action>
   <action name="actionAreaZoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Area Zoom</string>
    </property>

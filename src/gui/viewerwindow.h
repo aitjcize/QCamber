@@ -37,7 +37,7 @@ public slots:
   void on_actionZoomIn_triggered(void);
   void on_actionZoomOut_triggered(void);
   void on_actionHome_triggered(void);
-  void on_actionAreaZoom_triggered(void);
+  void on_actionAreaZoom_toggled(bool checked);
   void on_actionPanLeft_triggered(void);
   void on_actionPanRight_triggered(void);
   void on_actionPanUp_triggered(void);
@@ -67,6 +67,7 @@ private:
   DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
+  bool m_transition;
 };
 
 #endif // __MAINWINDOW_H__
