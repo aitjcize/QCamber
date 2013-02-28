@@ -84,6 +84,8 @@
     <addaction name="actionPanRight"/>
     <addaction name="actionPanUp"/>
     <addaction name="actionPanDown"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowNotes"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
