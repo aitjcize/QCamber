@@ -56,7 +56,7 @@ void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
 void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
   if (m_areaZoomEnabled) {
-    m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()));
+    m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()).normalized());
   }
   emit mouseMove(event->scenePos());
   QGraphicsScene::mouseMoveEvent(event);
@@ -74,7 +74,7 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
       m_rubberPS = event->scenePos();
       m_rubberBandActivated = true;
       m_rubberBand->setPen(QPen(Qt::white, m_penWidth));
-      m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS));
+      m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
       addItem(m_rubberBand);
     } else {
       m_rubberBandActivated = false;
