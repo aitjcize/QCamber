@@ -34,6 +34,7 @@ void GraphicsLayerScene::clearHighlight(void)
     m_selectedSymbols[i]->restoreColor();
   }
   m_selectedSymbols.clear();
+  m_graphicsLayer->update();
 }
 
 void GraphicsLayerScene::updateSelection(Symbol* symbol)
