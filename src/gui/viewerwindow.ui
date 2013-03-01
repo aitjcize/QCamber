@@ -243,6 +243,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/visualization.png</normaloff>icons/visualization.png</iconset>
+   </property>
    <property name="text">
     <string>MousePan</string>
    </property>
