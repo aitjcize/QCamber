@@ -44,6 +44,9 @@ void ODBPPGraphicsScene::addLayer(GraphicsLayer* layer)
 {
   addItem(layer);
   m_layers.append(layer);
+
+  connect(layer->layerScene(), SIGNAL(featureSelected(Symbol*)),
+      this, SIGNAL(featureSelected(Symbol*)));
 }
 
 void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)

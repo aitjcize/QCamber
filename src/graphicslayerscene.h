@@ -21,6 +21,9 @@ public:
 
   void updateSelection(Symbol* symbol);
 
+signals:
+  void featureSelected(Symbol*);
+
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);

@@ -40,7 +40,7 @@ void GraphicsLayerScene::updateSelection(Symbol* symbol)
 {
   clearHighlight();
   m_selectedSymbols.append(symbol);
-  //emit featureSelected(symbol);
+  emit featureSelected(symbol);
 }
 
 void GraphicsLayerScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
