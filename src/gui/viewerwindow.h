@@ -37,6 +37,7 @@ public slots:
   void on_actionZoomIn_triggered(void);
   void on_actionZoomOut_triggered(void);
   void on_actionHome_triggered(void);
+  void on_actionMousePan_toggled(bool checked);
   void on_actionAreaZoom_toggled(bool checked);
   void on_actionPanLeft_triggered(void);
   void on_actionPanRight_triggered(void);

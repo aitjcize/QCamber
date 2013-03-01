@@ -11,7 +11,6 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_polarity(polarity), m_valid(false), m_selected(false)
 {
   setHandlesChildEvents(false);
-  setFlags(ItemIsSelectable);
 
   // Since Layer will redraw all symbol visible everytime, using cache
   // will slow down the performance

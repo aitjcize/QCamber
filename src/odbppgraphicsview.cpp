@@ -60,17 +60,16 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
   switch (mode) {
   case None:
     m_scene->setAreaZoomEnabled(false);
-    //setDragMode(RubberBandDrag);
     setDragMode(NoDrag);
     break;
   case AreaZoom:
     m_scene->setAreaZoomEnabled(true);
     m_scene->setHighlight(false);
-    //setDragMode(RubberBandDrag);
     setDragMode(NoDrag);
     break;
   case MousePan:
     m_scene->setAreaZoomEnabled(false);
+    m_scene->setHighlight(false);
     setDragMode(ScrollHandDrag);
     break;
   }

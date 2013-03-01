@@ -111,6 +111,7 @@
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionAreaZoom"/>
+   <addaction name="actionMousePan"/>
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionClearHighlight"/>
@@ -236,6 +237,17 @@
    </property>
    <property name="text">
     <string>Show Notes</string>
+   </property>
+  </action>
+  <action name="actionMousePan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>MousePan</string>
+   </property>
+   <property name="toolTip">
+    <string>Mouse panning</string>
    </property>
   </action>
  </widget>

@@ -196,6 +196,19 @@ void ViewerWindow::on_actionHome_triggered(void)
   ui->viewWidget->zoomToProfile();
 }
 
+void ViewerWindow::on_actionMousePan_toggled(bool checked)
+{
+  Q_UNUSED(checked);
+  if (m_transition) {
+    return;
+  }
+  m_transition = true;
+  ui->actionAreaZoom->setChecked(false);
+  ui->actionHighlight->setChecked(false);
+  m_transition = false;
+  ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
+}
+
 void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
 {
   Q_UNUSED(checked);
@@ -203,6 +216,7 @@ void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
     return;
   }
   m_transition = true;
+  ui->actionMousePan->setChecked(false);
   ui->actionHighlight->setChecked(false);
   m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
