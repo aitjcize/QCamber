@@ -14,7 +14,8 @@ HEADERS += \
   archiveloader.h \
   context.h \
   feature.h \
-  layergraphicseffect.h \
+  graphicslayer.h \
+  graphicslayerscene.h \
   layer.h \
   notes.h \
   odbppgraphicsscene.h \
@@ -27,8 +28,9 @@ SOURCES += \
   archiveloader.cpp \
   context.cpp \
   feature.cpp \
+  graphicslayer.cpp \
+  graphicslayerscene.cpp \
   layer.cpp \
-  layergraphicseffect.cpp \
   main.cpp \
   notes.cpp \
   odbppgraphicsscene.cpp \

@@ -10,7 +10,6 @@
 #include "symbol.h"
 #include "record.h"
 #include "featuresparser.h"
-#include "layergraphicseffect.h"
 
 class Features: public Symbol {
 public:

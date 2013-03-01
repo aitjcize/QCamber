@@ -15,7 +15,7 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  //setRenderHint(QPainter::Antialiasing);
+  setRenderHint(QPainter::Antialiasing);
   setCacheMode(CacheBackground);
   setMinimumSize(600, 600);
   setOptimizationFlags(DontSavePainterState);

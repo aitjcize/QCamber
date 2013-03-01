@@ -3,7 +3,7 @@
 #include <QtGui>
 
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
-  QGraphicsScene(parent), m_areaZoomEnabled(false), m_highlight(false),
+  QGraphicsScene(parent), m_areaZoomEnabled(false),
   m_rubberBandActivated(false), m_viewScaleFactor(-1)
 {
   m_rubberBand = new QGraphicsRectItem;
@@ -24,39 +24,26 @@ void ODBPPGraphicsScene::setViewScaleFactor(qreal factor)
   m_penWidth /= factor;
 }
 
-bool ODBPPGraphicsScene::highlight(void)
-{
-  return m_highlight;
-}
-
 void ODBPPGraphicsScene::setHighlight(bool status)
 {
-  m_highlight = status;
-
-  if (!status) {
-    clearHighlight();
+  for (int i = 0; i < m_layers.size(); ++i) {
+    dynamic_cast<GraphicsLayerScene*>(
+        m_layers[i]->layerScene())->setHighlight(status);
   }
 }
 
 void ODBPPGraphicsScene::clearHighlight(void)
 {
-  for (int i = 0; i < m_selectedSymbols.size(); ++i) {
-    m_selectedSymbols[i]->restoreColor();
+  for (int i = 0; i < m_layers.size(); ++i) {
+    dynamic_cast<GraphicsLayerScene*>(
+        m_layers[i]->layerScene())->clearHighlight();
   }
-  m_selectedSymbols.clear();
 }
 
-void ODBPPGraphicsScene::addLayer(Layer* layer)
+void ODBPPGraphicsScene::addLayer(GraphicsLayer* layer)
 {
   addItem(layer);
   m_layers.append(layer);
-}
-
-void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
-{
-  clearHighlight();
-  m_selectedSymbols.append(symbol);
-  emit featureSelected(symbol);
 }
 
 void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)
@@ -96,10 +83,17 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
       emit rectSelected(QRectF(m_rubberPS, event->scenePos()));
     }
   }
+
+  for (int i = 0; i < m_layers.size(); ++i) {
+    QApplication::sendEvent(m_layers[i]->layerScene(), event);
+  }
   QGraphicsScene::mousePressEvent(event);
 }
 
 void ODBPPGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+  for (int i = 0; i < m_layers.size(); ++i) {
+    QApplication::sendEvent(m_layers[i]->layerScene(), event);
+  }
   QGraphicsScene::mouseReleaseEvent(event);
 }

@@ -4,6 +4,7 @@
 
 #include "context.h"
 #include "odbppgraphicsscene.h"
+#include "graphicslayerscene.h"
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
@@ -11,7 +12,10 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
 {
   setHandlesChildEvents(false);
   setFlags(ItemIsSelectable);
-  //setCacheMode(DeviceCoordinateCache);
+
+  // Since Layer will redraw all symbol visible everytime, using cache
+  // will slow down the performance
+  setCacheMode(NoCache);
 }
 
 Symbol::~Symbol()
@@ -116,7 +120,7 @@ void Symbol::restoreColor(void)
 
 void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-  ODBPPGraphicsScene* s = dynamic_cast<ODBPPGraphicsScene*>(scene());
+  GraphicsLayerScene* s = dynamic_cast<GraphicsLayerScene*>(scene());
 
   if (!s->highlight()) {
     return;
