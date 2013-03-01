@@ -46,7 +46,7 @@ QRectF Symbol::boundingRect() const
   }
 }
 
-void Symbol::setPen(QPen pen)
+void Symbol::setPen(const QPen& pen)
 {
   m_pen = pen;
 
@@ -56,7 +56,7 @@ void Symbol::setPen(QPen pen)
   }
 }
 
-void Symbol::setBrush(QBrush brush)
+void Symbol::setBrush(const QBrush& brush)
 {
   m_brush = brush;
 

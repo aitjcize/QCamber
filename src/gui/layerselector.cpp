@@ -56,18 +56,16 @@ void LayerSelector::setColor(const QColor& color)
   setStyleSheet(m_bgStyle);
 
   // Color compensation for composite mode
-  int r, g, b, a;
+  int r, g, b;
   QColor bg = ctx.bg_color;
   if (color.lightnessF() > bg.lightnessF()) {
     r = color.red() - bg.red();
     g = color.green() - bg.green();
     b = color.blue() - bg.blue();
-    a = color.alpha() - bg.alpha();
   } else {
     r = bg.red() - color.red();
     g = bg.green() - color.green();
     b = bg.blue() - color.blue();
-    a = bg.alpha() - color.alpha();
   }
   QColor tc = QColor(abs(r), abs(g), abs(b), 255);
 
@@ -99,6 +97,6 @@ void LayerSelector::showContextmenu(const QPoint &)
 
 void LayerSelector::showHistogram()
 {
-  histogramTable = item->symbolCount();
-  histogramTable->show();
+  //histogramTable = item->symbolCount();
+  //histogramTable->show();
 }

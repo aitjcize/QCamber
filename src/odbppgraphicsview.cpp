@@ -34,14 +34,9 @@ ODBPPGraphicsView::~ODBPPGraphicsView()
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
-  qreal factor = transform().scale(scaleFactor,
-      scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 
-  if (factor > 11050)
-      return;
-
-  for (int i = 0; i < m_scaleInvariantSymbols.size(); ++i) {
-    m_scaleInvariantSymbols[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+  for (int i = 0; i < m_scaleInvariantItems.size(); ++i) {
+    m_scaleInvariantItems[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
   }
 
   m_scene->setViewScaleFactor(scaleFactor);
@@ -86,17 +81,22 @@ void ODBPPGraphicsView::clearScene(void)
   m_scene->clear();
 }
 
-void ODBPPGraphicsView::addItem(Symbol* symbol , bool scale_invariant)
+void ODBPPGraphicsView::addLayer(Layer* layer)
 {
-  if (scale_invariant) {
-    m_scaleInvariantSymbols.append(symbol);
-  }
-  m_scene->addItem(symbol);
+  m_scene->addLayer(layer);
 }
 
-void ODBPPGraphicsView::removeItem(Symbol* symbol)
+void ODBPPGraphicsView::addItem(QGraphicsItem* item, bool scale_invariant)
 {
-  m_scene->removeItem(symbol);
+  if (scale_invariant) {
+    m_scaleInvariantItems.append(item);
+  }
+  m_scene->addItem(item);
+}
+
+void ODBPPGraphicsView::removeItem(QGraphicsItem* item)
+{
+  m_scene->removeItem(item);
 }
 
 void ODBPPGraphicsView::loadProfile(QString step)
@@ -160,14 +160,7 @@ void ODBPPGraphicsView::zoomToRect(QRectF rect)
   qreal sy = height() / (current.height() * b.height() * 1.1);
   qreal s = qMin(sx, sy);
 
-  qreal factor = transform().scale(s, s).mapRect(QRectF(0, 0, 1, 1)).width();
-
-  if (factor > 8000) {
-    s = 8000 / current.width();
-  }
-
   scaleView(s);
-
   centerOn(b.center());
 }
 
@@ -190,4 +183,13 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
     return;
   }
   QGraphicsView::keyPressEvent(event);
+}
+
+bool ODBPPGraphicsView::viewportEvent(QEvent* event)
+{
+  QRect vrect = viewport()->rect();
+  m_scene->updateLayerViewport(vrect, mapToScene(vrect).boundingRect());
+
+  QGraphicsView::viewportEvent(event);
+  return false;
 }

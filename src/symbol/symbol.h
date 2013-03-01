@@ -30,8 +30,8 @@ public:
   QString name(void);
   virtual QString infoText(void);
 
-  virtual void setPen(QPen pen);
-  virtual void setBrush(QBrush brush);
+  virtual void setPen(const QPen& pen);
+  virtual void setBrush(const QBrush& brush);
   virtual QPainterPath painterPath(void);
   virtual void invalidate(void);
 

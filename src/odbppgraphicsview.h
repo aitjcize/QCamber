@@ -2,7 +2,7 @@
 #define __ODBPPGRAPHICSVIEW_H__
 
 #include <QGraphicsView>
-#include "feature.h"
+#include "layer.h"
 #include "profile.h"
 
 #include "odbppgraphicsscene.h"
@@ -23,8 +23,10 @@ public:
   void clearHighlight(void);
 
   void clearScene(void);
-  void addItem(Symbol* symbol, bool scale_invariant=false);
-  void removeItem(Symbol* symbol);
+  void addLayer(Layer* layer);
+  void addItem(QGraphicsItem* item, bool scale_invariant=false);
+  void removeItem(QGraphicsItem* item);
+
   void zoomToProfile(void);
   void scaleView(qreal scaleFactor);
   void scrollView(int dx, int dy);
@@ -35,12 +37,13 @@ public slots:
 protected:
   virtual void wheelEvent(QWheelEvent* event);
   virtual void keyPressEvent(QKeyEvent* event);
+  virtual bool viewportEvent(QEvent* event);
 
 private:
   ODBPPGraphicsScene* m_scene;
   ZoomMode m_zoomMode;
   Profile* m_profile;
-  QList<Symbol*> m_scaleInvariantSymbols;
+  QList<QGraphicsItem*> m_scaleInvariantItems;
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */

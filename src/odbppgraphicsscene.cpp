@@ -46,11 +46,25 @@ void ODBPPGraphicsScene::clearHighlight(void)
   m_selectedSymbols.clear();
 }
 
+void ODBPPGraphicsScene::addLayer(Layer* layer)
+{
+  addItem(layer);
+  m_layers.append(layer);
+}
+
 void ODBPPGraphicsScene::updateSelection(Symbol* symbol)
 {
   clearHighlight();
   m_selectedSymbols.append(symbol);
   emit featureSelected(symbol);
+}
+
+void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)
+{
+  for (int i = 0; i < m_layers.size(); ++i) {
+    m_layers[i]->setViewRect(viewRect);
+    m_layers[i]->setSceneRect(sceneRect);
+  }
 }
 
 void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)

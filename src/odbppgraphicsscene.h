@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QPointF>
 
+#include "layer.h"
 #include "symbol.h"
 
 class ODBPPGraphicsScene: public QGraphicsScene {
@@ -11,8 +12,12 @@ class ODBPPGraphicsScene: public QGraphicsScene {
 
 public:
   ODBPPGraphicsScene(QObject* parent = 0);
+
   void setAreaZoomEnabled(bool status);
   void setViewScaleFactor(qreal factor);
+
+  void addLayer(Layer* layer);
+  void updateLayerViewport(QRect viewRect, QRectF sceneRect);
   void updateSelection(Symbol* symbol);
 
   bool highlight(void);
@@ -38,6 +43,7 @@ private:
   bool m_rubberBandActivated;
   qreal m_viewScaleFactor;
   qreal m_penWidth;
+  QList<Layer*> m_layers;
   QList<Symbol*> m_selectedSymbols;
 };
 
