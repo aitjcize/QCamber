@@ -39,6 +39,7 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
       SLOT(updateFeatureDetail(Symbol*)));
 
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
+  ui->actionAreaZoom->setChecked(true);
 }
 
 ViewerWindow::~ViewerWindow()
