@@ -7,7 +7,7 @@ ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   m_rubberBandActivated(false), m_viewScaleFactor(-1)
 {
   m_rubberBand = new QGraphicsRectItem;
-  m_rubberBand->setBrush(Qt::transparent);
+  m_rubberBand->setBrush(QColor(255, 255, 255, 64));
 }
 
 void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
