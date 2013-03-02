@@ -32,8 +32,9 @@ private slots:
 
 private:
   Ui::JobMatrix* ui;
-  QStringList m_step_name;
-  QStringList m_layer_name;
+  QStringList m_stepNames;
+  QStringList m_layerNames;
+  QStringList m_layerTypes;
   StructuredTextDataStore *m_ds;
 };
 

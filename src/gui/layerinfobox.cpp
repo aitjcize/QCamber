@@ -13,36 +13,61 @@ static const QString bgStyle = \
   "  background: %2;"
   "}";
 
-LayerInfoBox::LayerInfoBox(QWidget *parent, const QString& name, QColor color):
-    QWidget(parent),
+LayerInfoBox::LayerInfoBox(const QString& name, const QString& step,
+    const QString& type):
+    QWidget(NULL),
     ui(new Ui::LayerInfoBox),
-    m_layer(name), m_color(color), m_checked(false)
+    m_name(name), m_step(step), m_layer(NULL), m_checked(false)
 {
   ui->setupUi(this);
   ui->layerName->setText(name);
   ui->activeIndicator->setProperty("state", "inactive");
   ui->colorIndicator->setStyleSheet(bgStyle.arg("QLabel", "transparent"));
-  ui->layerName->setStyleSheet(bgStyle.arg("QLabel", color.name()));
-  item = NULL;
+
+  QString color;
+  if (type == "SILK_SCREEN") {
+    color = "#FFFFFF";
+  } else if (type == "SOLDER_MASK") {
+    color = "#00A57C";
+  } else if (type == "SIGNAL") {
+    color = "#FCC64D";
+  } else if (type == "DRILL") {
+    color = "#9BB4BF";
+  } else if (type == "DOCUMENT") {
+    color = "#9BDBDB";
+  } else if (type == "SOLDER_PASTE") {
+    color = "#9BDBDB";
+  } else if (type == "ROUT") {
+    color = "#D8D8D8 ";
+  }
+  ui->layerName->setStyleSheet(bgStyle.arg("QLabel", color));
 }
 
 LayerInfoBox::~LayerInfoBox()
 {
   delete ui;
 
-  if (item) {
-    delete item;
+  if (m_layer) {
+    delete m_layer;
   }
 }
 
-QString LayerInfoBox::layer(void)
+QString LayerInfoBox::name(void)
 {
-  return m_layer;
+  return m_name;
 }
 
 QColor LayerInfoBox::color(void)
 {
   return m_color;
+}
+
+Layer* LayerInfoBox::layer(void)
+{
+  if (!m_layer) {
+    m_layer = new Layer(m_step, m_name);
+  }
+  return m_layer;
 }
 
 void LayerInfoBox::setColor(const QColor& color)
@@ -64,8 +89,18 @@ void LayerInfoBox::setColor(const QColor& color)
   }
   QColor tc = QColor(abs(r), abs(g), abs(b), 255);
 
-  item->setPen(QPen(tc, 0));
-  item->setBrush(tc);
+  if (m_layer) {
+    m_layer->setPen(QPen(tc, 0));
+    m_layer->setBrush(tc);
+  }
+}
+
+void LayerInfoBox::setActive(bool status)
+{
+  ui->activeIndicator->setProperty("state", (status? "active": "inactive"));
+  ui->activeIndicator->style()->unpolish(ui->activeIndicator);
+  ui->activeIndicator->style()->polish(ui->activeIndicator);
+  emit activated(status);
 }
 
 void LayerInfoBox::toggle(void)
@@ -75,14 +110,16 @@ void LayerInfoBox::toggle(void)
   
   if (!m_checked) {
     ui->colorIndicator->setStyleSheet(bgStyle.arg("QLabel", "transparent"));
+    setActive(false);
   }
 }
 
 void LayerInfoBox::on_activeIndicator_clicked(void)
 {
-  ui->activeIndicator->setProperty("state", "active");
-  ui->activeIndicator->style()->unpolish(ui->activeIndicator);
-  ui->activeIndicator->style()->polish(ui->activeIndicator);
+  if (m_checked) {
+    bool status = (ui->activeIndicator->property("state") == "active");
+    setActive(!status);
+  }
 }
 
 void LayerInfoBox::mousePressEvent(QMouseEvent *ev)

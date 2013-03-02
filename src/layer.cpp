@@ -41,6 +41,11 @@ Notes* Layer::notes()
   return m_notes;
 }
 
+void Layer::setHighlight(bool status)
+{
+  m_layerScene->setHighlight(status);
+}
+
 void Layer::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsItem::mousePressEvent(event);

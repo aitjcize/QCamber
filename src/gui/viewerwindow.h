@@ -28,7 +28,7 @@ public:
   explicit ViewerWindow(QWidget *parent = 0);
   ~ViewerWindow();
   void setStep(QString step);
-  void setLayers(const QStringList& layerNames);
+  void setLayers(const QStringList& layers, const QStringList& types);
   void clearLayout(QLayout* , bool deleteWidgets = true);
   void showLayer(QString name);
   virtual void show(void);
@@ -54,6 +54,7 @@ protected:
 
 private slots:
   void toggleShowLayer(bool selected);
+  void layerActivated(bool status);
   void loadColorConfig();
   void unitChanged(int index);
   void updateCursorCoord(QPointF);
@@ -69,6 +70,7 @@ private:
   DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;
+  LayerInfoBox* m_activeInfoBox;
   bool m_transition;
 };
 

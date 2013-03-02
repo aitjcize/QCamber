@@ -18,6 +18,8 @@ public:
   QString layer();
   Notes* notes();
 
+  void setHighlight(bool status);
+
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);

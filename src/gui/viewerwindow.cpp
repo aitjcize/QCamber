@@ -10,7 +10,8 @@
 #include "settings.h"
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
-  QMainWindow(parent), ui(new Ui::ViewerWindow), m_transition(false)
+  QMainWindow(parent), ui(new Ui::ViewerWindow), m_activeInfoBox(NULL),
+  m_transition(false)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
@@ -51,23 +52,25 @@ void ViewerWindow::setStep(QString step)
   m_step = step;
 }
 
-void ViewerWindow::setLayers(const QStringList& layerNames)
+void ViewerWindow::setLayers(const QStringList& layers,
+    const QStringList& types)
 {
   ui->viewWidget->clearScene();
   ui->viewWidget->loadProfile(m_step);
 
-  clearLayout(ui->scrollWidget->layout(), true);
+  QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->scrollWidget->layout());
+  clearLayout(layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
 
-  for(int i = 0; i < layerNames.count(); ++i) {
-    //LayerSelector *l = new LayerSelector(layerNames[i], m_step, layerNames[i]);
-    LayerInfoBox *l = new LayerInfoBox(NULL, layerNames[i], Qt::green);
+  for (int i = 0; i < layers.count(); ++i) {
+    LayerInfoBox *l = new LayerInfoBox(layers[i], m_step, types[i]);
 
-    m_SelectorMap[layerNames[i]] = l;
     connect(l, SIGNAL(toggled(bool)), this, SLOT(toggleShowLayer(bool)));
-    ui->scrollWidget->layout()->addWidget(l);
+    connect(l, SIGNAL(activated(bool)), this, SLOT(layerActivated(bool)));
+
+    m_SelectorMap[layers[i]] = l;
+    layout->addWidget(l);
   }
-  QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->scrollWidget->layout());
   layout->addStretch();
 }
 
@@ -88,8 +91,8 @@ void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 
 void ViewerWindow::showLayer(QString name)
 {
-  LayerInfoBox* selector = m_SelectorMap[name];
-  selector->toggle();
+  LayerInfoBox* infobox = m_SelectorMap[name];
+  infobox->toggle();
 }
 
 void ViewerWindow::show(void)
@@ -100,30 +103,42 @@ void ViewerWindow::show(void)
 
 void ViewerWindow::toggleShowLayer(bool selected)
 {
-  LayerInfoBox* selector = dynamic_cast<LayerInfoBox*>(sender());
+  LayerInfoBox* infobox = dynamic_cast<LayerInfoBox*>(sender());
   if (!selected) {
-    if (!selector->item) {
-      Layer* layer = new Layer(m_step, selector->layer());
-      selector->item = layer;
-      //selector->item->symbolCount();
-    }
-    selector->setColor(nextColor());
-    ui->viewWidget->addLayer(selector->item);
-    m_actives.append(selector);
+    ui->viewWidget->addLayer(infobox->layer());
+    infobox->setColor(nextColor());
+
+    m_actives.append(infobox);
     if (m_actives.size() > 1) {
       for (int i = 0; i < m_actives.size(); ++i) {
-        m_actives[i]->item->forceUpdate();
+        m_actives[i]->layer()->forceUpdate();
       }
     }
   } else {
-    int index = m_colors.indexOf(selector->color());
+    int index = m_colors.indexOf(infobox->color());
     m_colorsMap[index] = false;
-    ui->viewWidget->removeItem(selector->item);
-    m_actives.removeOne(selector);
+    ui->viewWidget->removeItem(infobox->layer());
+    m_actives.removeOne(infobox);
 
     if (m_actives.size() == 1) {
-      m_actives[0]->item->forceUpdate();
+      m_actives[0]->layer()->forceUpdate();
     }
+  }
+}
+
+void ViewerWindow::layerActivated(bool status)
+{
+  LayerInfoBox* infobox = dynamic_cast<LayerInfoBox*>(sender());
+  if (status) {
+    if (m_activeInfoBox) {
+      m_activeInfoBox->setActive(false);
+    }
+    m_activeInfoBox = infobox;
+    if (ui->actionHighlight->isChecked()) {
+      m_activeInfoBox->layer()->setHighlight(true);
+    }
+  } else {
+    m_activeInfoBox->layer()->setHighlight(false);
   }
 }
 
@@ -155,7 +170,7 @@ void ViewerWindow::loadColorConfig()
 
   for (int i = 0; i < m_actives.size(); ++i) {
     m_actives[i]->setColor(nextColor());
-    m_actives[i]->item->update();
+    m_actives[i]->layer()->forceUpdate();
   }
 }
 
@@ -258,6 +273,9 @@ void ViewerWindow::on_actionHighlight_toggled(bool checked)
   ui->actionMousePan->setChecked(false);
   m_transition = false;
   ui->viewWidget->setHighlight(checked);
+  if (m_activeInfoBox) {
+    m_activeInfoBox->layer()->setHighlight(checked);
+  }
 }
 
 void ViewerWindow::on_actionClearHighlight_triggered(void)
@@ -269,9 +287,9 @@ void ViewerWindow::on_actionShowNotes_toggled(bool checked)
 {
   for (int i = 0; i < m_actives.size(); ++i) {
     if (checked) {
-      ui->viewWidget->addItem(m_actives[i]->item->notes());
+      ui->viewWidget->addItem(m_actives[i]->layer()->notes());
     } else {
-      ui->viewWidget->removeItem(m_actives[i]->item->notes());
+      ui->viewWidget->removeItem(m_actives[i]->layer()->notes());
     }
   }
 }

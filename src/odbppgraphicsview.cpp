@@ -138,7 +138,6 @@ void ODBPPGraphicsView::setHighlight(bool status)
   } else {
     setZoomMode(ODBPPGraphicsView::AreaZoom);
   }
-  m_scene->setHighlight(status);
 }
 
 void ODBPPGraphicsView::clearHighlight(void)

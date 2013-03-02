@@ -27,7 +27,7 @@ public:
 
   void forceUpdate(void);
 
-private:
+protected:
   GraphicsLayerScene* m_layerScene;
   QRect m_viewRect;
   QRectF m_sceneRect;

@@ -44,7 +44,7 @@ void JobMatrix::SetMatrix()
   {
     QTableWidgetItem *item = new QTableWidgetItem();
     item->setText((QString)it->second->get("NAME").c_str());
-    m_step_name.append((QString)it->second->get("NAME").c_str());
+    m_stepNames.append((QString)it->second->get("NAME").c_str());
     ui->tableWidget->setHorizontalHeaderItem(steps - 1,item);
 
     steps++;
@@ -57,6 +57,8 @@ void JobMatrix::SetMatrix()
   {
     QTableWidgetItem *item = new QTableWidgetItem();
     text = (QString)it->second->get("TYPE").c_str();
+    m_layerTypes.append(text);
+
     if(text == "SILK_SCREEN")
       text = "(ss ,";
     else if(text == "SOLDER_MASK")
@@ -77,19 +79,20 @@ void JobMatrix::SetMatrix()
       text += "p)  ";
     else
       text += "n)  ";
-    m_layer_name.append((QString)it->second->get("NAME").c_str());
+
+    m_layerNames.append((QString)it->second->get("NAME").c_str());
     text += (QString)it->second->get("NAME").c_str();
     item->setText(text);
     ui->tableWidget->setVerticalHeaderItem(layers, item);
 
-    for(int i = 0; i < m_step_name.size(); i++)
+    for(int i = 0; i < m_stepNames.size(); i++)
     {
-      text = m_step_name[i] + "/" + (QString)it->second->get("NAME").c_str();
+      text = m_stepNames[i] + "/" + (QString)it->second->get("NAME").c_str();
       QTableWidgetItem *btn = new QTableWidgetItem(text);
       ui->tableWidget->setItem(layers,i,btn);
 
       QString pathTmpl = "steps/%1/layers/%2";
-      text = pathTmpl.arg(m_step_name[i].toAscii().data()).arg(
+      text = pathTmpl.arg(m_stepNames[i].toAscii().data()).arg(
           QString::fromStdString(it->second->get("NAME")));
 
       if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
@@ -109,7 +112,7 @@ void JobMatrix::SetMatrix()
         if(start != "")
         {
           drawDrillLine((QString)it->second->get("NAME").c_str(),
-                        m_layer_name.indexOf(start),m_layer_name.indexOf(end));
+                        m_layerNames.indexOf(start),m_layerNames.indexOf(end));
         }
     }
   }
@@ -128,7 +131,7 @@ void JobMatrix::showLayer(QTableWidgetItem *item)
   QStringList params = item->text().split("/");
   ViewerWindow* w = new ViewerWindow;
   w->setStep(params[0]);
-  w->setLayers(m_layer_name);
+  w->setLayers(m_layerNames, m_layerTypes);
   w->showLayer(params[1]);
   w->show();
 }
@@ -151,7 +154,7 @@ void JobMatrix::selectDrillLine(int index)
 {
   int target_col;
   QTableWidgetItem *item;
-  for(target_col=m_step_name.size();
+  for(target_col=m_stepNames.size();
       target_col<ui->tableWidget->columnCount();target_col++)
   {
     if(ui->tableWidget->horizontalHeaderItem(target_col)->text() ==
@@ -161,11 +164,11 @@ void JobMatrix::selectDrillLine(int index)
 
   if(target_col == ui->tableWidget->columnCount()) return;
 
-  for(int col = m_step_name.size();col < ui->tableWidget->columnCount();col++)
+  for(int col = m_stepNames.size();col < ui->tableWidget->columnCount();col++)
   {
-    for(int row = 0;row < m_layer_name.size();row++)
+    for(int row = 0;row < m_layerNames.size();row++)
     {
-      if((item = ui->tableWidget->item(row,col)) != 0)
+      if (((item = ui->tableWidget->item(row,col)) != 0))
         if(col != target_col)
           item->setBackgroundColor(QColor("black"));
         else

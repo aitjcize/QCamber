@@ -1,5 +1,5 @@
-#ifndef LAYERINFOBOX_H
-#define LAYERINFOBOX_H
+#ifndef __LAYERINFOBOX_H__
+#define __LAYERINFOBOX_H__
 
 #include <QColor>
 #include <QString>
@@ -16,19 +16,23 @@ class LayerInfoBox : public QWidget
   Q_OBJECT
 
 public:
-  explicit LayerInfoBox(QWidget *parent, const QString& name, QColor color);
+  explicit LayerInfoBox(const QString& name, const QString& step,
+    const QString& type);
   ~LayerInfoBox();
 
-  QString layer(void);
+  QString name(void);
   QColor color(void);
+  Layer* layer(void);
 
   void setColor(const QColor& color);
-  void toggle(void);
+  void setLayer(Layer* layer);
 
-  Layer *item;
+  void toggle(void);
+  void setActive(bool status);
 
 signals:
   void toggled(bool checked);
+  void activated(bool status);
 
 public slots:
   void on_activeIndicator_clicked(void);
@@ -38,9 +42,12 @@ protected:
     
 private:
   Ui::LayerInfoBox *ui;
-  QString m_layer;
+  QString m_name;
+  QString m_step;
+  QString m_type;
   QColor m_color;
+  Layer* m_layer;
   bool m_checked;
 };
 
-#endif // LAYERINFOBOX_H
+#endif // __LAYERINFOBOX_H__
