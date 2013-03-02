@@ -17,7 +17,6 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 
   //setRenderHint(QPainter::Antialiasing);
   setCacheMode(CacheBackground);
-  setMinimumSize(600, 600);
   setOptimizationFlags(DontSavePainterState);
   setTransformationAnchor(AnchorUnderMouse);
   setViewportUpdateMode(BoundingRectViewportUpdate);
