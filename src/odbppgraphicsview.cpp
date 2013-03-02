@@ -23,8 +23,8 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setViewportUpdateMode(BoundingRectViewportUpdate);
   setZoomMode(AreaZoom);
 
-  connect(m_scene, SIGNAL(rectSelected(QRectF)),
-      this, SLOT(zoomToRect(QRectF)));
+  connect(m_scene, SIGNAL(rectSelected(QRectF)), this,
+      SLOT(zoomToRect(QRectF)));
 }
 
 ODBPPGraphicsView::~ODBPPGraphicsView()

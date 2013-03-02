@@ -20,6 +20,7 @@ HEADERS += \
   notes.h \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \
+  odbppgraphicsminimapview.h \
   profile.h \
   settings.h \
   symbolfactory.h
@@ -35,6 +36,7 @@ SOURCES += \
   notes.cpp \
   odbppgraphicsscene.cpp \
   odbppgraphicsview.cpp \
+  odbppgraphicsminimapview.cpp \
   profile.cpp \
   settings.cpp
 

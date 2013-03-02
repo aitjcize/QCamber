@@ -38,6 +38,9 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
 
+  connect(ui->miniMapView, SIGNAL(minimapRectSelected(QRectF)), ui->viewWidget,
+      SLOT(zoomToRect(QRectF)));
+
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
   ui->actionAreaZoom->setChecked(true);
 }
@@ -58,6 +61,7 @@ void ViewerWindow::setLayers(const QStringList& layers,
 {
   ui->viewWidget->clearScene();
   ui->viewWidget->loadProfile(m_step);
+  ui->miniMapView->loadProfile(m_step);
 
   QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->scrollWidget->layout());
   clearLayout(layout, true);
@@ -100,6 +104,7 @@ void ViewerWindow::show(void)
 {
   QMainWindow::show();
   ui->viewWidget->initialZoom();
+  ui->miniMapView->zoomToAll();
 }
 
 void ViewerWindow::toggleShowLayer(bool selected)
