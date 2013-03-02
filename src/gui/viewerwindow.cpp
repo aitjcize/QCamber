@@ -99,7 +99,7 @@ void ViewerWindow::showLayer(QString name)
 void ViewerWindow::show(void)
 {
   QMainWindow::show();
-  ui->viewWidget->zoomToProfile();
+  ui->viewWidget->initialZoom();
 }
 
 void ViewerWindow::toggleShowLayer(bool selected)

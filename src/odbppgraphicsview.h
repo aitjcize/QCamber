@@ -27,6 +27,7 @@ public:
   void addItem(QGraphicsItem* item, bool scale_invariant=false);
   void removeItem(QGraphicsItem* item);
 
+  void initialZoom(void);
   void zoomToProfile(void);
   void scaleView(qreal scaleFactor);
   void scrollView(int dx, int dy);
@@ -43,6 +44,7 @@ private:
   ODBPPGraphicsScene* m_scene;
   ZoomMode m_zoomMode;
   Profile* m_profile;
+  Symbol* m_origin;
   QList<QGraphicsItem*> m_scaleInvariantItems;
 };
 

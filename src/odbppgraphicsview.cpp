@@ -29,11 +29,11 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 ODBPPGraphicsView::~ODBPPGraphicsView()
 {
   delete m_scene;
+  delete m_origin;
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
-
   for (int i = 0; i < m_scaleInvariantItems.size(); ++i) {
     m_scaleInvariantItems[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
   }
@@ -110,12 +110,10 @@ void ODBPPGraphicsView::loadProfile(QString step)
 
   m_profile->setPen(QPen(color, 0));
   m_profile->setBrush(Qt::transparent);
-
   m_scene->addItem(m_profile);
 
-  Symbol* origin = new OriginSymbol();
-  origin->setPen(QPen(color, 0));
-  addItem(origin, true);
+  m_origin = new OriginSymbol();
+  m_origin->setPen(QPen(color, 0));
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
@@ -142,6 +140,12 @@ void ODBPPGraphicsView::setHighlight(bool status)
 void ODBPPGraphicsView::clearHighlight(void)
 {
   m_scene->clearHighlight();
+}
+
+void ODBPPGraphicsView::initialZoom(void)
+{
+  zoomToProfile();
+  addItem(m_origin, true);
 }
 
 void ODBPPGraphicsView::zoomToProfile(void)
