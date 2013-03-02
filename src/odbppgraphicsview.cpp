@@ -87,6 +87,7 @@ void ODBPPGraphicsView::clearScene(void)
 void ODBPPGraphicsView::addLayer(GraphicsLayer* layer)
 {
   m_scene->addLayer(layer);
+  updateLayerViewport();
 }
 
 void ODBPPGraphicsView::removeLayer(GraphicsLayer* layer)
