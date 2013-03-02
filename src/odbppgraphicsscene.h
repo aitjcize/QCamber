@@ -14,7 +14,6 @@ public:
   ODBPPGraphicsScene(QObject* parent = 0);
 
   void setAreaZoomEnabled(bool status);
-  void setViewScaleFactor(qreal factor);
 
   QList<GraphicsLayer*> layers(void);
   void addLayer(GraphicsLayer* layer);

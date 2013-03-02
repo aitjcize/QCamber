@@ -10,8 +10,8 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_scene = new ODBPPGraphicsScene(this);
   m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   m_scene->setBackgroundBrush(ctx.bg_color);
-  setScene(m_scene);
   m_scene->setSceneRect(-800, -600, 1600, 1200);
+  setScene(m_scene);
 
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -38,7 +38,6 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
     m_scaleInvariantItems[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
   }
 
-  m_scene->setViewScaleFactor(scaleFactor);
   if (m_zoomMode != MousePan) {
     setTransformationAnchor(AnchorViewCenter);
   }
@@ -205,7 +204,10 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
 bool ODBPPGraphicsView::viewportEvent(QEvent* event)
 {
   QRect vrect = viewport()->rect();
-  m_scene->updateLayerViewport(vrect, mapToScene(vrect).boundingRect());
+  QRectF srect = mapToScene(vrect).boundingRect();
+  m_scene->updateLayerViewport(vrect, srect);
+
+  emit sceneRectChanged(srect);
 
   QGraphicsView::viewportEvent(event);
   return false;

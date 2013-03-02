@@ -33,6 +33,9 @@ public:
   void scaleView(qreal scaleFactor);
   void scrollView(int dx, int dy);
 
+signals:
+  void sceneRectChanged(QRectF);
+
 public slots:
   void zoomToRect(QRectF rect);
 

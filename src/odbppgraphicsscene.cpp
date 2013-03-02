@@ -15,15 +15,6 @@ void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
   m_areaZoomEnabled = status;
 }
 
-void ODBPPGraphicsScene::setViewScaleFactor(qreal factor)
-{
-  if (m_viewScaleFactor < 0) {
-    m_penWidth = 0.01 * factor;
-    m_viewScaleFactor = 1;
-  }
-  m_penWidth /= factor;
-}
-
 void ODBPPGraphicsScene::setHighlight(bool status)
 {
   for (int i = 0; i < m_layers.size(); ++i) {
@@ -88,7 +79,7 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if (!m_rubberBandActivated) {
       m_rubberPS = event->scenePos();
       m_rubberBandActivated = true;
-      m_rubberBand->setPen(QPen(Qt::white, m_penWidth));
+      m_rubberBand->setPen(QPen(Qt::white, 0));
       m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
       addItem(m_rubberBand);
     } else {

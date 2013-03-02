@@ -10,9 +10,9 @@ ODBPPGraphicsMiniMapView::ODBPPGraphicsMiniMapView(QWidget* parent):
   m_scene = new ODBPPGraphicsScene(this);
   m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
   m_scene->setBackgroundBrush(ctx.bg_color);
-  setScene(m_scene);
   m_scene->setSceneRect(-800, -600, 1600, 1200);
   m_scene->setAreaZoomEnabled(true);
+  setScene(m_scene);
   setDragMode(NoDrag);
 
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -39,10 +39,7 @@ ODBPPGraphicsMiniMapView::~ODBPPGraphicsMiniMapView()
 
 void ODBPPGraphicsMiniMapView::scaleView(qreal scaleFactor)
 {
-  m_scene->setViewScaleFactor(scaleFactor);
-  setTransformationAnchor(AnchorViewCenter);
   scale(scaleFactor, scaleFactor);
-  setTransformationAnchor(AnchorUnderMouse);
 }
 
 void ODBPPGraphicsMiniMapView::loadProfile(QString step)
@@ -98,18 +95,12 @@ void ODBPPGraphicsMiniMapView::zoomMainViewToRect(QRectF rect)
   emit minimapRectSelected(rect);
 }
 
-void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* event)
+void ODBPPGraphicsMiniMapView::redrawSceneRect(QRectF rect)
 {
-  switch (event->key()) {
-  case Qt::Key_Home:
-    zoomToAll();
-    return;
-  case Qt::Key_PageUp:
-    scaleView(2);
-    return;
-  case Qt::Key_PageDown:
-    scaleView(0.5);
-    return;
-  }
-  QGraphicsView::keyPressEvent(event);
+  m_rect->setRect(rect);
+}
+
+void ODBPPGraphicsMiniMapView::wheelEvent(QWheelEvent* event)
+{
+  // Do nothing
 }

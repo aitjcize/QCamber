@@ -40,6 +40,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
 
   connect(ui->miniMapView, SIGNAL(minimapRectSelected(QRectF)), ui->viewWidget,
       SLOT(zoomToRect(QRectF)));
+  connect(ui->viewWidget, SIGNAL(sceneRectChanged(QRectF)), ui->miniMapView,
+      SLOT(redrawSceneRect(QRectF)));
 
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
   ui->actionAreaZoom->setChecked(true);
