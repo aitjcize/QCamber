@@ -29,7 +29,6 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 ODBPPGraphicsView::~ODBPPGraphicsView()
 {
   delete m_scene;
-  delete m_origin;
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
