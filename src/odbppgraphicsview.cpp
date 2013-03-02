@@ -217,4 +217,5 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
 void ODBPPGraphicsView::resizeEvent(QResizeEvent* event)
 {
   updateLayerViewport();
+  QGraphicsView::resizeEvent(event);
 }
