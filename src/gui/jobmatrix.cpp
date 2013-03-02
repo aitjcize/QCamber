@@ -135,43 +135,41 @@ void JobMatrix::showLayer(QTableWidgetItem *item)
 
 void JobMatrix::drawDrillLine(QString layer_name,int start,int end)
 {
-    int col = ui->tableWidget->columnCount() + 1;
-    ui->tableWidget->setColumnCount(col);
-    ui->tableWidget->horizontalHeader()->resizeSection(col-1,10);
-    ui->tableWidget->setHorizontalHeaderItem(col-1,new QTableWidgetItem(layer_name));
-    for(int i = start;i<end+1;i++)
-    {
-      QTableWidgetItem *line = new QTableWidgetItem(layer_name);
-      line->setBackgroundColor(QColor("black"));
-      ui->tableWidget->setItem(i,col-1,line);
-    }
-
+  int col = ui->tableWidget->columnCount() + 1;
+  ui->tableWidget->setColumnCount(col);
+  ui->tableWidget->horizontalHeader()->resizeSection(col-1,10);
+  ui->tableWidget->setHorizontalHeaderItem(col-1,new QTableWidgetItem(layer_name));
+  for(int i = start;i<end+1;i++)
+  {
+    QTableWidgetItem *line = new QTableWidgetItem(layer_name);
+    line->setBackgroundColor(QColor("black"));
+    ui->tableWidget->setItem(i,col-1,line);
+  }
 }
 
 void JobMatrix::selectDrillLine(int index)
 {
-    int target_col;
-    QTableWidgetItem *item;
-    for(target_col=m_step_name.size();
-        target_col<ui->tableWidget->columnCount();target_col++)
+  int target_col;
+  QTableWidgetItem *item;
+  for(target_col=m_step_name.size();
+      target_col<ui->tableWidget->columnCount();target_col++)
+  {
+    if(ui->tableWidget->horizontalHeaderItem(target_col)->text() ==
+        ui->tableWidget->verticalHeaderItem(index)->text().split(" ")[2])
+      break;
+  }
+
+  if(target_col == ui->tableWidget->columnCount()) return;
+
+  for(int col = m_step_name.size();col < ui->tableWidget->columnCount();col++)
+  {
+    for(int row = 0;row < m_layer_name.size();row++)
     {
-        if(ui->tableWidget->horizontalHeaderItem(target_col)->text() ==
-           ui->tableWidget->verticalHeaderItem(index)->text().split(" ")[2])
-            break;
+      if((item = ui->tableWidget->item(row,col)) != 0)
+        if(col != target_col)
+          item->setBackgroundColor(QColor("black"));
+        else
+          item->setBackgroundColor(QColor("red"));
     }
-
-    if(target_col == ui->tableWidget->columnCount()) return;
-
-    for(int col = m_step_name.size();col < ui->tableWidget->columnCount();col++)
-    {
-      for(int row = 0;row < m_layer_name.size();row++)
-      {
-         if((item = ui->tableWidget->item(row,col)) != 0)
-           if(col != target_col)
-             item->setBackgroundColor(QColor("black"));
-           else
-             item->setBackgroundColor(QColor("red"));
-      }
-    }
-
+  }
 }
