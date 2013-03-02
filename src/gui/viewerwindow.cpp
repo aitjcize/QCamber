@@ -254,6 +254,7 @@ void ViewerWindow::on_actionHighlight_toggled(bool checked)
   }
   m_transition = true;
   ui->actionAreaZoom->setChecked(false);
+  ui->actionMousePan->setChecked(false);
   m_transition = false;
   ui->viewWidget->setHighlight(checked);
 }

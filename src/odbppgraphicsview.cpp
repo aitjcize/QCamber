@@ -40,7 +40,9 @@ void ODBPPGraphicsView::scaleView(qreal scaleFactor)
   }
 
   m_scene->setViewScaleFactor(scaleFactor);
-  setTransformationAnchor(AnchorViewCenter);
+  if (m_zoomMode != MousePan) {
+    setTransformationAnchor(AnchorViewCenter);
+  }
   scale(scaleFactor, scaleFactor);
   setTransformationAnchor(AnchorUnderMouse);
 }
