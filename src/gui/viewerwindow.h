@@ -2,14 +2,15 @@
 #define __MAINWINDOW_H__
 
 #include <QColor>
+#include <QLabel>
 #include <QList>
 #include <QMainWindow>
-#include <QVBoxLayout>
 #include <QMap>
+#include <QVBoxLayout>
 
 #include "context.h"
 #include "feature.h"
-#include "layerselector.h"
+#include "layerinfobox.h"
 #include "odbppgraphicsview.h"
 #include "structuredtextparser.h"
 
@@ -52,7 +53,7 @@ protected:
   QColor nextColor(void);
 
 private slots:
-  void toggleShowLayer(LayerSelector* selector, bool selected);
+  void toggleShowLayer(bool selected);
   void loadColorConfig();
   void unitChanged(int index);
   void updateCursorCoord(QPointF);
@@ -61,11 +62,10 @@ private slots:
 private:
   Ui::ViewerWindow *ui;
   QString m_step;
-  QVBoxLayout* m_layout;
   QList<QColor> m_colors;
-  QList<LayerSelector*> m_actives;
+  QList<LayerInfoBox*> m_actives;
   QMap<int, bool> m_colorsMap;
-  QMap<QString, LayerSelector*> m_SelectorMap;
+  QMap<QString, LayerInfoBox*> m_SelectorMap;
   DisplayUnit m_displayUnit;
   QLabel* m_cursorCoordLabel;
   QLabel* m_featureDetailLabel;

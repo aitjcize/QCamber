@@ -5,6 +5,7 @@
 #include <QDebug>
 
 #include "context.h"
+#include "layerinfobox.h"
 #include "settingsdialog.h"
 #include "settings.h"
 
@@ -27,9 +28,6 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   unitCombo->addItem("Inch");
   unitCombo->addItem("MM");
   statusBar()->addPermanentWidget(unitCombo);
-
-  m_layout = new QVBoxLayout();
-  ui->scrollWidget->setLayout(m_layout);
 
   connect(unitCombo, SIGNAL(currentIndexChanged(int)), this,
       SLOT(unitChanged(int)));
@@ -58,17 +56,19 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
   ui->viewWidget->clearScene();
   ui->viewWidget->loadProfile(m_step);
 
-  clearLayout(m_layout, true);
+  clearLayout(ui->scrollWidget->layout(), true);
   QString pathTmpl = "steps/%1/layers/%2";
 
   for(int i = 0; i < layerNames.count(); ++i) {
-    LayerSelector *l = new LayerSelector(layerNames[i], m_step, layerNames[i]);
+    //LayerSelector *l = new LayerSelector(layerNames[i], m_step, layerNames[i]);
+    LayerInfoBox *l = new LayerInfoBox(NULL, layerNames[i], Qt::green);
 
     m_SelectorMap[layerNames[i]] = l;
-    connect(l, SIGNAL(Clicked(LayerSelector*, bool)), this,
-        SLOT(toggleShowLayer(LayerSelector*, bool)));
-    m_layout->addWidget(l);
+    connect(l, SIGNAL(toggled(bool)), this, SLOT(toggleShowLayer(bool)));
+    ui->scrollWidget->layout()->addWidget(l);
   }
+  QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->scrollWidget->layout());
+  layout->addStretch();
 }
 
 void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
@@ -88,7 +88,7 @@ void ViewerWindow::clearLayout(QLayout* layout, bool deleteWidgets)
 
 void ViewerWindow::showLayer(QString name)
 {
-  LayerSelector* selector = m_SelectorMap[name];
+  LayerInfoBox* selector = m_SelectorMap[name];
   selector->toggle();
 }
 
@@ -98,11 +98,12 @@ void ViewerWindow::show(void)
   ui->viewWidget->zoomToProfile();
 }
 
-void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
+void ViewerWindow::toggleShowLayer(bool selected)
 {
+  LayerInfoBox* selector = dynamic_cast<LayerInfoBox*>(sender());
   if (!selected) {
     if (!selector->item) {
-      Layer* layer = new Layer(selector->step(), selector->layer());
+      Layer* layer = new Layer(m_step, selector->layer());
       selector->item = layer;
       //selector->item->symbolCount();
     }
@@ -111,7 +112,7 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     m_actives.append(selector);
     if (m_actives.size() > 1) {
       for (int i = 0; i < m_actives.size(); ++i) {
-        m_actives[i]->item->update();
+        m_actives[i]->item->forceUpdate();
       }
     }
   } else {
@@ -121,7 +122,7 @@ void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)
     m_actives.removeOne(selector);
 
     if (m_actives.size() == 1) {
-      m_actives[0]->item->update();
+      m_actives[0]->item->forceUpdate();
     }
   }
 }

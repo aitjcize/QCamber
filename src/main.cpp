@@ -5,6 +5,7 @@
 #include "jobmatrix.h"
 #include "settings.h"
 #include "structuredtextparser.h"
+#include "layerinfobox.h"
 
 //#define DEPLOY
 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
   StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
   StructuredTextDataStore* ds = parser.parse();
 
-  JobMatrix table(0,ds);
+  JobMatrix table(0, ds);
   table.SetMatrix();
   table.show();
 
