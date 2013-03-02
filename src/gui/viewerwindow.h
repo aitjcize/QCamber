@@ -64,7 +64,7 @@ private:
   Ui::ViewerWindow *ui;
   QString m_step;
   QList<QColor> m_colors;
-  QList<LayerInfoBox*> m_actives;
+  QList<LayerInfoBox*> m_visibles;
   QMap<int, bool> m_colorsMap;
   QMap<QString, LayerInfoBox*> m_SelectorMap;
   DisplayUnit m_displayUnit;

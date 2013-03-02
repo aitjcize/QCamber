@@ -95,6 +95,11 @@ void LayerInfoBox::setColor(const QColor& color)
   }
 }
 
+bool LayerInfoBox::isActive(void)
+{
+  return ui->activeIndicator->property("state") == "active";
+}
+
 void LayerInfoBox::setActive(bool status)
 {
   ui->activeIndicator->setProperty("state", (status? "active": "inactive"));

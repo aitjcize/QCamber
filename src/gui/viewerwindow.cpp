@@ -108,20 +108,24 @@ void ViewerWindow::toggleShowLayer(bool selected)
     ui->viewWidget->addLayer(infobox->layer());
     infobox->setColor(nextColor());
 
-    m_actives.append(infobox);
-    if (m_actives.size() > 1) {
-      for (int i = 0; i < m_actives.size(); ++i) {
-        m_actives[i]->layer()->forceUpdate();
+    m_visibles.append(infobox);
+    if (m_visibles.size() == 1) {
+      infobox->setActive(true);
+    } else {
+      for (int i = 0; i < m_visibles.size(); ++i) {
+        m_visibles[i]->layer()->forceUpdate();
       }
     }
   } else {
     int index = m_colors.indexOf(infobox->color());
     m_colorsMap[index] = false;
     ui->viewWidget->removeItem(infobox->layer());
-    m_actives.removeOne(infobox);
+    m_visibles.removeOne(infobox);
 
-    if (m_actives.size() == 1) {
-      m_actives[0]->layer()->forceUpdate();
+    if (infobox->isActive()) {
+      if (m_visibles.size()) {
+        m_visibles.last()->setActive(true);
+      }
     }
   }
 }
@@ -130,7 +134,7 @@ void ViewerWindow::layerActivated(bool status)
 {
   LayerInfoBox* infobox = dynamic_cast<LayerInfoBox*>(sender());
   if (status) {
-    if (m_activeInfoBox) {
+    if (m_activeInfoBox && m_activeInfoBox != infobox) {
       m_activeInfoBox->setActive(false);
     }
     m_activeInfoBox = infobox;
@@ -138,7 +142,7 @@ void ViewerWindow::layerActivated(bool status)
       m_activeInfoBox->layer()->setHighlight(true);
     }
   } else {
-    m_activeInfoBox->layer()->setHighlight(false);
+    infobox->layer()->setHighlight(false);
   }
 }
 
@@ -168,9 +172,9 @@ void ViewerWindow::loadColorConfig()
     m_colorsMap[i] = false;
   }
 
-  for (int i = 0; i < m_actives.size(); ++i) {
-    m_actives[i]->setColor(nextColor());
-    m_actives[i]->layer()->forceUpdate();
+  for (int i = 0; i < m_visibles.size(); ++i) {
+    m_visibles[i]->setColor(nextColor());
+    m_visibles[i]->layer()->forceUpdate();
   }
 }
 
@@ -285,11 +289,11 @@ void ViewerWindow::on_actionClearHighlight_triggered(void)
 
 void ViewerWindow::on_actionShowNotes_toggled(bool checked)
 {
-  for (int i = 0; i < m_actives.size(); ++i) {
+  for (int i = 0; i < m_visibles.size(); ++i) {
     if (checked) {
-      ui->viewWidget->addItem(m_actives[i]->layer()->notes());
+      ui->viewWidget->addItem(m_visibles[i]->layer()->notes());
     } else {
-      ui->viewWidget->removeItem(m_actives[i]->layer()->notes());
+      ui->viewWidget->removeItem(m_visibles[i]->layer()->notes());
     }
   }
 }

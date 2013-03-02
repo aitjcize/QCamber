@@ -28,6 +28,7 @@ public:
   void setLayer(Layer* layer);
 
   void toggle(void);
+  bool isActive(void);
   void setActive(bool status);
 
 signals:
