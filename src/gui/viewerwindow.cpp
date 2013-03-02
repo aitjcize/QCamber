@@ -57,7 +57,6 @@ void ViewerWindow::setLayers(const QStringList& layerNames)
 {
   ui->viewWidget->clearScene();
   ui->viewWidget->loadProfile(m_step);
-  ui->viewWidget->zoomToProfile();
 
   clearLayout(m_layout, true);
   QString pathTmpl = "steps/%1/layers/%2";
@@ -91,6 +90,12 @@ void ViewerWindow::showLayer(QString name)
 {
   LayerSelector* selector = m_SelectorMap[name];
   selector->toggle();
+}
+
+void ViewerWindow::show(void)
+{
+  QMainWindow::show();
+  ui->viewWidget->zoomToProfile();
 }
 
 void ViewerWindow::toggleShowLayer(LayerSelector* selector, bool selected)

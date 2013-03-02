@@ -111,7 +111,6 @@ void ODBPPGraphicsView::loadProfile(QString step)
   m_profile->setBrush(Qt::transparent);
 
   m_scene->addItem(m_profile);
-  zoomToProfile();
 
   Symbol* origin = new OriginSymbol();
   origin->setPen(QPen(color, 0));
@@ -154,9 +153,10 @@ void ODBPPGraphicsView::zoomToRect(QRectF rect)
 {
   QRectF b = rect.normalized();
   QRectF current = transform().mapRect(QRectF(0, 0, 1, 1));
+  QRectF vp = viewport()->rect();
 
-  qreal sx = width() / (current.width() * b.width() * 1.1);
-  qreal sy = height() / (current.height() * b.height() * 1.1);
+  qreal sx = vp.width() / (current.width() * b.width() * 1.1);
+  qreal sy = vp.height() / (current.height() * b.height() * 1.1);
   qreal s = qMin(sx, sy);
 
   scaleView(s);
