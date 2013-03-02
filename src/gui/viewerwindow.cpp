@@ -120,7 +120,7 @@ void ViewerWindow::toggleShowLayer(bool selected)
   } else {
     int index = m_colors.indexOf(infobox->color());
     m_colorsMap[index] = false;
-    ui->viewWidget->removeItem(infobox->layer());
+    ui->viewWidget->removeLayer(infobox->layer());
     m_visibles.removeOne(infobox);
 
     if (infobox->isActive()) {
@@ -219,7 +219,7 @@ void ViewerWindow::on_actionZoomOut_triggered(void)
 
 void ViewerWindow::on_actionHome_triggered(void)
 {
-  ui->viewWidget->zoomToProfile();
+  ui->viewWidget->zoomToAll();
 }
 
 void ViewerWindow::on_actionMousePan_toggled(bool checked)

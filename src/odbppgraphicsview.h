@@ -2,7 +2,7 @@
 #define __ODBPPGRAPHICSVIEW_H__
 
 #include <QGraphicsView>
-#include "layer.h"
+#include "graphicslayer.h"
 #include "profile.h"
 
 #include "odbppgraphicsscene.h"
@@ -23,12 +23,13 @@ public:
   void clearHighlight(void);
 
   void clearScene(void);
-  void addLayer(Layer* layer);
+  void addLayer(GraphicsLayer* layer);
+  void removeLayer(GraphicsLayer* layer);
   void addItem(QGraphicsItem* item, bool scale_invariant=false);
   void removeItem(QGraphicsItem* item);
 
   void initialZoom(void);
-  void zoomToProfile(void);
+  void zoomToAll(void);
   void scaleView(qreal scaleFactor);
   void scrollView(int dx, int dy);
 

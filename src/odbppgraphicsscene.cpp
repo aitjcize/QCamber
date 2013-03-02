@@ -40,6 +40,11 @@ void ODBPPGraphicsScene::clearHighlight(void)
   }
 }
 
+QList<GraphicsLayer*> ODBPPGraphicsScene::layers(void)
+{
+  return m_layers;
+}
+
 void ODBPPGraphicsScene::addLayer(GraphicsLayer* layer)
 {
   addItem(layer);
@@ -47,6 +52,12 @@ void ODBPPGraphicsScene::addLayer(GraphicsLayer* layer)
 
   connect(layer->layerScene(), SIGNAL(featureSelected(Symbol*)),
       this, SIGNAL(featureSelected(Symbol*)));
+}
+
+void ODBPPGraphicsScene::removeLayer(GraphicsLayer* layer)
+{
+  removeItem(layer);
+  m_layers.removeOne(layer);
 }
 
 void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)

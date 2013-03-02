@@ -16,7 +16,9 @@ public:
   void setAreaZoomEnabled(bool status);
   void setViewScaleFactor(qreal factor);
 
+  QList<GraphicsLayer*> layers(void);
   void addLayer(GraphicsLayer* layer);
+  void removeLayer(GraphicsLayer* layer);
   void updateLayerViewport(QRect viewRect, QRectF sceneRect);
 
   void setHighlight(bool status);

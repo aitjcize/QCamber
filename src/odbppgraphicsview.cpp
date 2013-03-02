@@ -1,7 +1,8 @@
 #include "odbppgraphicsview.h"
 
-#include "symbolfactory.h"
 #include "context.h"
+#include "graphicslayer.h"
+#include "symbolfactory.h"
 
 ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_profile(NULL)
@@ -80,9 +81,14 @@ void ODBPPGraphicsView::clearScene(void)
   m_scene->clear();
 }
 
-void ODBPPGraphicsView::addLayer(Layer* layer)
+void ODBPPGraphicsView::addLayer(GraphicsLayer* layer)
 {
   m_scene->addLayer(layer);
+}
+
+void ODBPPGraphicsView::removeLayer(GraphicsLayer* layer)
+{
+  m_scene->removeLayer(layer);
 }
 
 void ODBPPGraphicsView::addItem(QGraphicsItem* item, bool scale_invariant)
@@ -143,17 +149,26 @@ void ODBPPGraphicsView::clearHighlight(void)
 
 void ODBPPGraphicsView::initialZoom(void)
 {
-  zoomToProfile();
+  zoomToAll();
   addItem(m_origin, true);
 }
 
-void ODBPPGraphicsView::zoomToProfile(void)
+void ODBPPGraphicsView::zoomToAll(void)
 {
-  zoomToRect(m_profile->boundingRect());
+  QRectF bounding(m_profile->boundingRect());
+  QList<GraphicsLayer*> layers = m_scene->layers();
+  for (int i = 0; i < layers.size(); ++i) {
+    bounding = bounding.united(layers[i]->boundingRect());
+  }
+  zoomToRect(bounding);
 }
 
 void ODBPPGraphicsView::zoomToRect(QRectF rect)
 {
+  if (rect.isNull()) {
+    return;
+  }
+
   QRectF b = rect.normalized();
   QRectF current = transform().mapRect(QRectF(0, 0, 1, 1));
   QRectF vp = viewport()->rect();
@@ -175,7 +190,7 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
 {
   switch (event->key()) {
   case Qt::Key_Home:
-    zoomToProfile();
+    zoomToAll();
     return;
   case Qt::Key_PageUp:
     scaleView(2);
