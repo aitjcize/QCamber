@@ -38,11 +38,12 @@ signals:
 
 public slots:
   void zoomToRect(QRectF rect);
+  void updateLayerViewport(void);
 
 protected:
   virtual void wheelEvent(QWheelEvent* event);
   virtual void keyPressEvent(QKeyEvent* event);
-  virtual bool viewportEvent(QEvent* event);
+  virtual void resizeEvent(QResizeEvent* event);
 
 private:
   ODBPPGraphicsScene* m_scene;

@@ -25,11 +25,15 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 
   connect(m_scene, SIGNAL(rectSelected(QRectF)), this,
       SLOT(zoomToRect(QRectF)));
+  connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
+      this, SLOT(updateLayerViewport(void)));
+  connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
+      this, SLOT(updateLayerViewport(void)));
 }
 
 ODBPPGraphicsView::~ODBPPGraphicsView()
 {
-  delete m_scene;
+  m_scene->deleteLater();
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
@@ -180,6 +184,15 @@ void ODBPPGraphicsView::zoomToRect(QRectF rect)
   centerOn(b.center());
 }
 
+void ODBPPGraphicsView::updateLayerViewport(void)
+{
+  QRect vrect = viewport()->rect();
+  QRectF srect = mapToScene(vrect).boundingRect();
+  m_scene->updateLayerViewport(vrect, srect);
+
+  emit sceneRectChanged(srect);
+}
+
 void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
   scaleView(pow((double)2, -event->delta() / 240.0));
@@ -201,14 +214,7 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
   QGraphicsView::keyPressEvent(event);
 }
 
-bool ODBPPGraphicsView::viewportEvent(QEvent* event)
+void ODBPPGraphicsView::resizeEvent(QResizeEvent* event)
 {
-  QRect vrect = viewport()->rect();
-  QRectF srect = mapToScene(vrect).boundingRect();
-  m_scene->updateLayerViewport(vrect, srect);
-
-  emit sceneRectChanged(srect);
-
-  QGraphicsView::viewportEvent(event);
-  return false;
+  updateLayerViewport();
 }

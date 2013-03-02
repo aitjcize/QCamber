@@ -12,6 +12,7 @@ class ODBPPGraphicsScene: public QGraphicsScene {
 
 public:
   ODBPPGraphicsScene(QObject* parent = 0);
+  ~ODBPPGraphicsScene();
 
   void setAreaZoomEnabled(bool status);
 

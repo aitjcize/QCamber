@@ -10,6 +10,10 @@ ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   m_rubberBand->setBrush(QColor(255, 255, 255, 64));
 }
 
+ODBPPGraphicsScene::~ODBPPGraphicsScene()
+{
+}
+
 void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
 {
   m_areaZoomEnabled = status;
