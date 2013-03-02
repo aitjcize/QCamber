@@ -71,16 +71,26 @@ void GraphicsLayer::paint(QPainter *painter,
     return;
   }
 
-  QPixmap pixmap(m_viewRect.size());
-  QBitmap alphaMask(m_viewRect.size());
-  alphaMask.clear();
-  pixmap.setMask(alphaMask);
+  if (m_prevSceneRect != m_sceneRect) {
+    m_pixmap = QPixmap(m_viewRect.size());
+    QBitmap alphaMask(m_viewRect.size());
+    alphaMask.clear();
+    m_pixmap.setMask(alphaMask);
 
-  QPainter sourcePainter(&pixmap);
-  m_layerScene->render(&sourcePainter, m_viewRect, m_sceneRect);
+    m_prevSceneRect = m_sceneRect;
+
+    QPainter sourcePainter(&m_pixmap);
+    m_layerScene->render(&sourcePainter, m_viewRect, m_sceneRect);
+  }
 
   painter->save();
   painter->setCompositionMode(QPainter::CompositionMode_Difference);
-  painter->drawPixmap(m_sceneRect, pixmap, m_viewRect);
+  painter->drawPixmap(m_sceneRect, m_pixmap, m_viewRect);
   painter->restore();
+}
+
+void GraphicsLayer::forceUpdate(void)
+{
+  m_prevSceneRect = QRectF();
+  update();
 }

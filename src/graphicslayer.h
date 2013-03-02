@@ -18,7 +18,6 @@ public:
 
   void setViewRect(const QRect& rect);
   void setSceneRect(const QRectF& rect);
-
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);
 
@@ -26,10 +25,14 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
 
+  void forceUpdate(void);
+
 private:
   GraphicsLayerScene* m_layerScene;
   QRect m_viewRect;
   QRectF m_sceneRect;
+  QPixmap m_pixmap;
+  QRectF m_prevSceneRect;
 };
 
 #endif /* __GRAPHICSLAYER_H__ */

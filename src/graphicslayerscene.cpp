@@ -34,7 +34,7 @@ void GraphicsLayerScene::clearHighlight(void)
     m_selectedSymbols[i]->restoreColor();
   }
   m_selectedSymbols.clear();
-  m_graphicsLayer->update();
+  m_graphicsLayer->forceUpdate();
 }
 
 void GraphicsLayerScene::updateSelection(Symbol* symbol)
@@ -47,11 +47,11 @@ void GraphicsLayerScene::updateSelection(Symbol* symbol)
 void GraphicsLayerScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mousePressEvent(event);
-  m_graphicsLayer->update();
+  m_graphicsLayer->forceUpdate();
 }
 
 void GraphicsLayerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mouseReleaseEvent(event);
-  m_graphicsLayer->update();
+  m_graphicsLayer->forceUpdate();
 }
