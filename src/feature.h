@@ -17,6 +17,10 @@ public:
   ~Features();
   QTableWidget *symbolCount();
 
+protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+
 private:
   FeaturesDataStore* m_ds;
 };
