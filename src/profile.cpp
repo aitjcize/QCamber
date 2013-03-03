@@ -103,10 +103,7 @@ void Profile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 QPainterPath Profile::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
   m_cachedPath.addRect(m_activeRect);
 
   m_valid = true;
