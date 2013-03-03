@@ -11,11 +11,8 @@ using std::endl;
 #include "context.h"
 
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
-  Symbol("Surface", "Surface", rec->polarity)
+  Symbol("Surface", "Surface", rec->polarity), m_rec(rec)
 {
-  m_dcode = rec->dcode;
-  m_polygons = rec->polygons;
-
   painterPath();
 }
 
@@ -36,8 +33,8 @@ QPainterPath SurfaceSymbol::painterPath(void)
 
   m_cachedPath = QPainterPath();
 
-  for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
-      it != m_polygons.end(); ++it) {
+  for (QList<PolygonRecord*>::iterator it = m_rec->polygons.begin();
+      it != m_rec->polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
     m_cachedPath.addPath(rec->painterPath());
     if (rec->poly_type == PolygonRecord::I) {
