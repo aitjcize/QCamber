@@ -5,13 +5,15 @@
 #include <QGraphicsScene>
 #include <QList>
 
-#include "symbol.h"
+#include "feature.h"
 #include "record.h"
 #include "structuredtextparser.h"
+#include "symbol.h"
 
 class Profile: public Symbol {
 public:
   Profile(QString path);
+  virtual ~Profile();
 
   virtual QPainterPath painterPath(void);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -25,7 +27,7 @@ protected:
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-  StructuredTextDataStore* m_ds;
+  Features* m_profile;
   QRectF m_activeRect;
   qreal m_x_datum, m_y_datum;
   qreal m_x_origin, m_y_origin;

@@ -14,7 +14,7 @@
 class Features: public Symbol {
 public:
   Features(QString path);
-  ~Features();
+  virtual ~Features();
   QTableWidget *symbolCount();
 
 private:

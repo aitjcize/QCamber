@@ -1,5 +1,4 @@
 #include "profile.h"
-#include "feature.h"
 #include "context.h"
 
 #include <QDebug>
@@ -9,9 +8,9 @@ Profile::Profile(QString path): Symbol("profile")
 {
   setHandlesChildEvents(true);
 
-  Features* profile = new Features(ctx.loader->absPath(path));
-  addChild(profile);
-  m_activeRect = profile->boundingRect();
+  m_profile = new Features(ctx.loader->absPath(path));
+  addChild(m_profile);
+  m_activeRect = m_profile->boundingRect();
 
   StructuredTextParser stephdr_parser(path.replace("profile", "stephdr"));
   StructuredTextDataStore* hds = stephdr_parser.parse();
@@ -77,6 +76,13 @@ Profile::Profile(QString path): Symbol("profile")
 
 #undef GET
   }
+
+  delete hds;
+}
+
+Profile::~Profile()
+{
+  delete m_profile;
 }
 
 qreal Profile::x_datum(void)
