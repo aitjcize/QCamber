@@ -20,17 +20,13 @@ EllipseSymbol::EllipseSymbol(QString def, Polarity polarity):
 
 QPainterPath EllipseSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   m_cachedPath.addEllipse(-m_w / 2, -m_h / 2, m_w, m_h);
 
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }

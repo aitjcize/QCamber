@@ -20,10 +20,7 @@ DonutSSymbol::DonutSSymbol(QString def, Polarity polarity):
 
 QPainterPath DonutSSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
   m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
@@ -31,7 +28,6 @@ QPainterPath DonutSSymbol::painterPath(void)
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }

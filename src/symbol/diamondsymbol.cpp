@@ -20,10 +20,7 @@ DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
 
 QPainterPath DiamondSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   qreal x = -m_w / 2;
   qreal y = -m_h / 2;
@@ -39,7 +36,6 @@ QPainterPath DiamondSymbol::painterPath(void)
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }

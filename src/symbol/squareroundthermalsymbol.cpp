@@ -24,10 +24,7 @@ SquareRoundThermalSymbol::SquareRoundThermalSymbol(QString def, Polarity polarit
 
 QPainterPath SquareRoundThermalSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
   m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
@@ -54,7 +51,6 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }
@@ -62,17 +58,15 @@ ret:
 void SquareRoundThermalSymbol::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-  painterPath();
-
   if (m_polarity == P) {
     painter->setClipPath(m_sub);
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->drawPath(m_cachedPath);
+    painter->drawPath(painterPath());
   } else {
     painter->setClipPath(m_sub);
     painter->setPen(QPen(ctx.bg_color, 0));
     painter->setBrush(ctx.bg_color);
-    painter->drawPath(m_cachedPath);
+    painter->drawPath(painterPath());
   }
 }

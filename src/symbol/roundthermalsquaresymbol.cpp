@@ -23,10 +23,7 @@ RoundThermalSquareSymbol::RoundThermalSquareSymbol(QString def, Polarity polarit
 
 QPainterPath RoundThermalSquareSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _pie_angle = 360 / m_num_spokes;
@@ -50,7 +47,6 @@ QPainterPath RoundThermalSquareSymbol::painterPath(void)
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }

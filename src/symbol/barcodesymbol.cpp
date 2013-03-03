@@ -47,7 +47,7 @@ QString BarcodeSymbol::infoText(void)
 void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
     QWidget*)
 {
-  painterPath();
+  QPainterPath m_cachedPath = painterPath();
 
   if (m_bg) {
     painter->setPen(QPen(ctx.bg_color, 0));
@@ -67,10 +67,7 @@ void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
 
 QPainterPath BarcodeSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   QString bar_pattern = Code39::encode(m_text, m_cs, m_fasc);
   QPainterPath finalPath;

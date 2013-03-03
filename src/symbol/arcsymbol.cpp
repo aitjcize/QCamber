@@ -69,10 +69,7 @@ QString ArcSymbol::infoText(void)
 
 QPainterPath ArcSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;

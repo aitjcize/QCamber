@@ -86,15 +86,13 @@ void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
   }
 
-  painterPath();
-  painter->drawPath(m_cachedPath);
+  painter->drawPath(painterPath());
 }
 
 QPainterPath Symbol::painterPath(void)
 {
-  m_cachedPath = QPainterPath();
   m_bounding = QRectF();
-  return m_cachedPath;
+  return QPainterPath();
 }
 
 void Symbol::invalidate(void)

@@ -23,10 +23,7 @@ RoundThermalRoundSymbol::RoundThermalRoundSymbol(QString def, Polarity polarity)
 
 QPainterPath RoundThermalRoundSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _rad = (m_od - m_id) / 4;
@@ -60,7 +57,6 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
 ret:
   prepareGeometryChange();
   m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
 
   return m_cachedPath;
 }

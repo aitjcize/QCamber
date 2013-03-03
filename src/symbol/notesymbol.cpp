@@ -21,10 +21,7 @@ NoteSymbol::NoteSymbol(NoteRecord* rec): Symbol("note")
 
 QPainterPath NoteSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   qreal side = 0.04;
   qreal hside = side / 2;
@@ -47,10 +44,9 @@ ret:
 void NoteSymbol::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-  painterPath();
   painter->setPen(QPen(Qt::white, 0));
   painter->setBrush(Qt::gray);
-  painter->drawPath(m_cachedPath);
+  painter->drawPath(painterPath());
 }
 
 void NoteSymbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)

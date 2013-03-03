@@ -38,8 +38,7 @@ QString TextSymbol::infoText(void)
 
 QPainterPath TextSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
+  QPainterPath m_cachedPath;
 
   m_cachedPath = QPainterPath();
 

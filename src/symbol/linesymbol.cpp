@@ -42,10 +42,7 @@ QString LineSymbol::infoText(void)
 
 QPainterPath LineSymbol::painterPath()
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   // Set winding fill
   m_cachedPath.setFillRule(Qt::WindingFill);

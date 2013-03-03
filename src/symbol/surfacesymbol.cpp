@@ -31,10 +31,7 @@ QString SurfaceSymbol::infoText(void)
 
 QPainterPath SurfaceSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath m_cachedPath;
 
   for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
       it != m_polygons.end(); ++it) {
