@@ -15,11 +15,11 @@ Features::Features(QString path): Symbol("features")
     Record* rec = *it;
     rec->addToChild(this);
   }
+  delete m_ds;
 }
 
 Features::~Features()
 {
-  delete m_ds;
 }
 
 QTableWidget* Features::symbolCount()
