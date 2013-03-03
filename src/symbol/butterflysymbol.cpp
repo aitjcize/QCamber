@@ -19,6 +19,7 @@ ButterflySymbol::ButterflySymbol(QString def, Polarity polarity):
 
 QPainterPath ButterflySymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal m_d = 2.0 * m_r;
@@ -29,8 +30,11 @@ QPainterPath ButterflySymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

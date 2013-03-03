@@ -21,6 +21,7 @@ NoteSymbol::NoteSymbol(NoteRecord* rec): Symbol("note")
 
 QPainterPath NoteSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal side = 0.04;
@@ -33,10 +34,12 @@ QPainterPath NoteSymbol::painterPath(void)
   m_cachedPath.lineTo(0, -hside);
   m_cachedPath.closeSubpath();
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    m_valid = true;
+    first = false;
+  }
 
   return m_cachedPath;
 }

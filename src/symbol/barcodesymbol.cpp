@@ -67,6 +67,7 @@ void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
 
 QPainterPath BarcodeSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   QString bar_pattern = Code39::encode(m_text, m_cs, m_fasc);
@@ -117,9 +118,12 @@ QPainterPath BarcodeSymbol::painterPath(void)
   m_cachedPath = finalPath;
   m_cachedPath.setFillRule(Qt::WindingFill);
 
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    m_valid = true;
+    first = false;
+  }
 
   return m_cachedPath;
 }

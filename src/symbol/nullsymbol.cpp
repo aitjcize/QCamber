@@ -19,12 +19,16 @@ NullSymbol::NullSymbol(QString def, Polarity polarity):
 
 QPainterPath NullSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

@@ -25,6 +25,7 @@ MoireSymbol::MoireSymbol(QString def, Polarity polarity):
 
 QPainterPath MoireSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_circlePath = QPainterPath();
@@ -54,8 +55,11 @@ QPainterPath MoireSymbol::painterPath(void)
   m_cachedPath.addPath(m_linePath);
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

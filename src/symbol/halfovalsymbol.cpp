@@ -20,6 +20,7 @@ HalfOvalSymbol::HalfOvalSymbol(QString def, Polarity polarity):
 
 QPainterPath HalfOvalSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   if (m_w > m_h) {
@@ -39,8 +40,11 @@ QPainterPath HalfOvalSymbol::painterPath(void)
   }
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

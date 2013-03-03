@@ -21,6 +21,7 @@ HorizontalHexagonSymbol::HorizontalHexagonSymbol(QString def, Polarity polarity)
 
 QPainterPath HorizontalHexagonSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.moveTo( -m_w/2 + m_r, -m_h/2 );
@@ -32,8 +33,11 @@ QPainterPath HorizontalHexagonSymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

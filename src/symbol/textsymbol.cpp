@@ -38,6 +38,7 @@ QString TextSymbol::infoText(void)
 
 QPainterPath TextSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath = QPainterPath();
@@ -63,9 +64,12 @@ QPainterPath TextSymbol::painterPath(void)
   mat2.translate(-b.x(), -(b.y() + b.height()));
   m_cachedPath = mat2.map(m_cachedPath);
 
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    m_valid = true;
+    first = false;
+  }
 
   return m_cachedPath;
 }

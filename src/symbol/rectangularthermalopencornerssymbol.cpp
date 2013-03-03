@@ -24,6 +24,7 @@ RectangularThermalOpenCornersSymbol::RectangularThermalOpenCornersSymbol(QString
 
 QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal a2r = M_PI / 180.0;
@@ -68,8 +69,11 @@ QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
   m_cachedPath = m_cachedPath.subtracted(sub);
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }

@@ -31,6 +31,7 @@ QString SurfaceSymbol::infoText(void)
 
 QPainterPath SurfaceSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
@@ -46,9 +47,12 @@ QPainterPath SurfaceSymbol::painterPath(void)
     }
   }
 
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    m_valid = true;
+    first = false;
+  }
 
   return m_cachedPath;
 }

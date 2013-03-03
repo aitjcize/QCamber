@@ -21,6 +21,7 @@ VerticalHexagonSymbol::VerticalHexagonSymbol(QString def, Polarity polarity):
 
 QPainterPath VerticalHexagonSymbol::painterPath(void)
 {
+  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.moveTo( 0, -m_h/2 );
@@ -32,8 +33,11 @@ QPainterPath VerticalHexagonSymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
+  if (first) {
+    prepareGeometryChange();
+    m_bounding = m_cachedPath.boundingRect();
+    first = false;
+  }
 
   return m_cachedPath;
 }
