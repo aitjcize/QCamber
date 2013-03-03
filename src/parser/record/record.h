@@ -104,6 +104,7 @@ struct PolygonRecord {
   typedef enum { I = 0, H } PolyType;
 
   PolygonRecord(const QStringList& param);
+  virtual ~PolygonRecord();
   virtual QPainterPath painterPath(void);
 
   qreal xbs, ybs;
@@ -113,6 +114,7 @@ struct PolygonRecord {
 
 struct SurfaceRecord: public Record {
   SurfaceRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual ~SurfaceRecord();
   void initSymbol(void);
 
   Polarity polarity;
@@ -124,10 +126,9 @@ struct SurfaceRecord: public Record {
 struct CharLineRecord {
   typedef enum { R = 0, S } ShapeType;
 
-  CharLineRecord(FontDataStore* ds, const QStringList& param);
+  CharLineRecord(const QStringList& param);
   QPainterPath painterPath(qreal width_factor);
 
-  FontDataStore* ds;
   qreal xs, ys;
   qreal xe, ye;
   Polarity polarity;
@@ -137,6 +138,8 @@ struct CharLineRecord {
 
 struct CharRecord {
   CharRecord(FontDataStore* ds, const QStringList& param);
+  virtual ~CharRecord();
+
   QPainterPath painterPath(qreal width_factor);
   
   FontDataStore* ds;

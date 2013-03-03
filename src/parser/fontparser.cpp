@@ -34,7 +34,7 @@ void FontDataStore::charStart(const QStringList& param)
 
 void FontDataStore::charLineData(const QStringList& param)
 {
-  CharLineRecord* rec = new CharLineRecord(this, param);
+  CharLineRecord* rec = new CharLineRecord(param);
   m_currentChar->lines.append(rec);
 }
 

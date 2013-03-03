@@ -4,8 +4,7 @@
 
 #include "fontparser.h"
 
-CharLineRecord::CharLineRecord(FontDataStore* ds, const QStringList& param):
-  ds(ds)
+CharLineRecord::CharLineRecord(const QStringList& param)
 {
   int i = 0;
   xs = param[++i].toDouble();
@@ -59,6 +58,14 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
 CharRecord::CharRecord(FontDataStore* ds, const QStringList& param): ds(ds)
 {
   tchar = param[1].toAscii()[0];
+}
+
+CharRecord::~CharRecord()
+{
+  for (QList<CharLineRecord*>::iterator it = lines.begin();
+      it != lines.end(); ++it) {
+    delete *it;
+  }
 }
 
 QPainterPath CharRecord::painterPath(qreal width_factor)

@@ -14,6 +14,14 @@ PolygonRecord::PolygonRecord(const QStringList& param)
   poly_type = (param[++i] == "I")? PolygonRecord::I : PolygonRecord::H;
 }
 
+PolygonRecord::~PolygonRecord()
+{
+  for (QList<SurfaceOperation*>::iterator it = operations.begin();
+      it != operations.end(); ++it) {
+    delete *it;
+  }
+}
+
 QPainterPath PolygonRecord::painterPath(void)
 {
   QPainterPath path;
@@ -72,6 +80,14 @@ SurfaceRecord::SurfaceRecord(FeaturesDataStore* ds, const QStringList& param):
   int i = 0;
   polarity = (param[++i] == "P")? P: N;
   dcode = param[++i].toInt();
+}
+
+SurfaceRecord::~SurfaceRecord()
+{
+  for (QList<PolygonRecord*>::iterator it = polygons.begin();
+      it != polygons.end(); ++it) {
+    delete *it;
+  }
 }
 
 void SurfaceRecord::initSymbol(void)
