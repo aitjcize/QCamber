@@ -41,7 +41,9 @@ public:
   virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
-  //virtual QPainterPath shape() { return painterPath(); };
+  virtual QPainterPath shape() const {
+    return const_cast<Symbol*>(this)->painterPath();
+  };
 
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
