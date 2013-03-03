@@ -18,12 +18,11 @@ SquareThermalSymbol::SquareThermalSymbol(QString def, Polarity polarity):
   m_num_spokes = caps[4].toInt();
   m_gap = caps[5].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath SquareThermalSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
@@ -47,11 +46,6 @@ QPainterPath SquareThermalSymbol::painterPath(void)
   m_cachedPath = m_cachedPath.subtracted(sub);
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

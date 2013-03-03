@@ -16,12 +16,11 @@ OctagonSymbol::OctagonSymbol(QString def, Polarity polarity):
   m_h = caps[2].toDouble() / 1000.0;
   m_r = caps[3].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath OctagonSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal x = -m_w / 2;
@@ -38,11 +37,6 @@ QPainterPath OctagonSymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

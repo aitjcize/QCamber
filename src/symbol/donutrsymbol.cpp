@@ -15,23 +15,17 @@ DonutRSymbol::DonutRSymbol(QString def, Polarity polarity):
   m_od = caps[1].toDouble() / 1000.0;
   m_id = caps[2].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath DonutRSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
   m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

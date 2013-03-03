@@ -34,12 +34,11 @@ RectangleSymbol::RectangleSymbol(QString def, Polarity polarity):
     m_corners = 15;
   }
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath RectangleSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   QRectF rect(-m_w / 2, -m_h / 2, m_w, m_h);
@@ -110,11 +109,6 @@ QPainterPath RectangleSymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

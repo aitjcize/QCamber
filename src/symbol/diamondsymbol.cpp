@@ -15,12 +15,11 @@ DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath DiamondSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal x = -m_w / 2;
@@ -35,11 +34,6 @@ QPainterPath DiamondSymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

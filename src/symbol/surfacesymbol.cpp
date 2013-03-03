@@ -16,7 +16,7 @@ SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
   m_dcode = rec->dcode;
   m_polygons = rec->polygons;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString SurfaceSymbol::infoText(void)
@@ -31,7 +31,6 @@ QString SurfaceSymbol::infoText(void)
 
 QPainterPath SurfaceSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
@@ -45,13 +44,6 @@ QPainterPath SurfaceSymbol::painterPath(void)
       ++m_holeCount;
       //ipath.addPath(rec->painterPath());
     }
-  }
-
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    m_valid = true;
-    first = false;
   }
 
   return m_cachedPath;

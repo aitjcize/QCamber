@@ -14,21 +14,15 @@ NullSymbol::NullSymbol(QString def, Polarity polarity):
   QStringList caps = rx.capturedTexts();
   m_ext = caps[1].toInt();
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath NullSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

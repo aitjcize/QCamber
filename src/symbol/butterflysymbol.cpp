@@ -14,12 +14,11 @@ ButterflySymbol::ButterflySymbol(QString def, Polarity polarity):
   QStringList caps = rx.capturedTexts();
   m_r = caps[1].toDouble() / 1000.0 / 2.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath ButterflySymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal m_d = 2.0 * m_r;
@@ -30,11 +29,6 @@ QPainterPath ButterflySymbol::painterPath(void)
   m_cachedPath.closeSubpath();
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

@@ -16,12 +16,11 @@ NoteSymbol::NoteSymbol(NoteRecord* rec): Symbol("note")
   QString noteTmpl("Time: %1\nUser: %2\nNote: %3");
   setToolTip(noteTmpl.arg(t.toString(), m_user, m_text));
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath NoteSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal side = 0.04;
@@ -33,13 +32,6 @@ QPainterPath NoteSymbol::painterPath(void)
   m_cachedPath.lineTo(hside, -side);
   m_cachedPath.lineTo(0, -hside);
   m_cachedPath.closeSubpath();
-
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    m_valid = true;
-    first = false;
-  }
 
   return m_cachedPath;
 }

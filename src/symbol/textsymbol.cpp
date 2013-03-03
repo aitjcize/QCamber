@@ -23,7 +23,7 @@ TextSymbol::TextSymbol(TextRecord* rec): Symbol("Text", "Text")
   m_text = rec->text;
   m_version = rec->version;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString TextSymbol::infoText(void)
@@ -38,7 +38,6 @@ QString TextSymbol::infoText(void)
 
 QPainterPath TextSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath = QPainterPath();
@@ -63,13 +62,6 @@ QPainterPath TextSymbol::painterPath(void)
   QMatrix mat2;
   mat2.translate(-b.x(), -(b.y() + b.height()));
   m_cachedPath = mat2.map(m_cachedPath);
-
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    m_valid = true;
-    first = false;
-  }
 
   return m_cachedPath;
 }

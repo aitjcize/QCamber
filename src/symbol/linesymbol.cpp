@@ -27,7 +27,7 @@ LineSymbol::LineSymbol(LineRecord* rec): Symbol("Line", "Line", rec->polarity)
     m_ye = tmp;
   }
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString LineSymbol::infoText(void)
@@ -42,7 +42,6 @@ QString LineSymbol::infoText(void)
 
 QPainterPath LineSymbol::painterPath()
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   // Set winding fill
@@ -71,13 +70,6 @@ QPainterPath LineSymbol::painterPath()
   m_cachedPath.closeSubpath();
   m_cachedPath.addPath(symbolPath.translated(sx, -sy));
   m_cachedPath.addPath(symbolPath.translated(ex, -ey));
-
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    m_valid = true;
-    first = false;
-  }
 
   return m_cachedPath;
 }

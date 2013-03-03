@@ -14,23 +14,17 @@ SquareButterflySymbol::SquareButterflySymbol(QString def, Polarity polarity):
   QStringList caps = rx.capturedTexts();
   m_s = caps[1].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath SquareButterflySymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.addRect(-m_s/2, -m_s/2, m_s/2, m_s/2);
   m_cachedPath.addRect(0, 0, m_s/2, m_s/2);
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

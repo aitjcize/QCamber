@@ -14,22 +14,16 @@ RoundSymbol::RoundSymbol(QString def, Polarity polarity):
   QStringList caps = rx.capturedTexts();
   m_r = caps[1].toDouble() / 1000.0 / 2.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath RoundSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }

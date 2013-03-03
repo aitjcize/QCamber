@@ -51,7 +51,7 @@ ArcSymbol::ArcSymbol(ArcRecord* rec):
   m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
                symbolNameMap()[rec->sym_num];
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString ArcSymbol::infoText(void)
@@ -69,7 +69,6 @@ QString ArcSymbol::infoText(void)
 
 QPainterPath ArcSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal sx = m_xs, sy = m_ys;
@@ -115,13 +114,6 @@ QPainterPath ArcSymbol::painterPath(void)
   addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, !m_cw);
 
   m_cachedPath.closeSubpath();
-
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    m_valid = true;
-    first = false;
-  }
 
   return m_cachedPath;
 }

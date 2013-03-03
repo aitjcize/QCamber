@@ -18,12 +18,11 @@ RoundThermalRoundSymbol::RoundThermalRoundSymbol(QString def, Polarity polarity)
   m_num_spokes = caps[4].toInt();
   m_gap = caps[5].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath RoundThermalRoundSymbol::painterPath(void)
 {
-  static bool first = true;
   QPainterPath m_cachedPath;
 
   qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
@@ -56,11 +55,6 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
   }
 
 ret:
-  if (first) {
-    prepareGeometryChange();
-    m_bounding = m_cachedPath.boundingRect();
-    first = false;
-  }
 
   return m_cachedPath;
 }
