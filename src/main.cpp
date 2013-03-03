@@ -7,7 +7,7 @@
 #include "structuredtextparser.h"
 #include "layerinfobox.h"
 
-//#define DEPLOY
+#define DEPLOY
 
 int main(int argc, char *argv[])
 {
