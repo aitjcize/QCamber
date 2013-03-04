@@ -62,7 +62,7 @@ QString TextRecord::dynamicText(QString text)
   return dynText;
 }
 
-void TextRecord::addToChild(Symbol* group)
+void TextRecord::prepare(void)
 {
   symbol->setPos(x, -y);
 
@@ -72,5 +72,4 @@ void TextRecord::addToChild(Symbol* group)
     symbol->setTransform(trans);
   }
   symbol->setRotation((orient % 4) * 90);
-  group->addChild(symbol);
 }

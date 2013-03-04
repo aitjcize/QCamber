@@ -8,10 +8,10 @@
 Layer::Layer(QString step, QString layer):
   GraphicsLayer(NULL), m_step(step), m_layer(layer), m_notes(NULL)
 {
-  m_features = new Features(ctx.loader->featuresPath(
-        QString("steps/%1/layers/%2").arg(step).arg(layer)));
   GraphicsLayerScene* scene = new GraphicsLayerScene;
-  scene->addItem(m_features);
+  m_features = new Features(ctx.loader->featuresPath(
+        QString("steps/%1/layers/%2").arg(step).arg(layer)), false);
+  m_features->addToScene(scene);
   setLayerScene(scene);
 }
 

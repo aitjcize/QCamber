@@ -4,22 +4,36 @@
 #include <typeinfo>
 #include <QDebug>
 
-Features::Features(QString path): Symbol("features")
+Features::Features(QString path, bool single): Symbol("features")
 {
   FeaturesParser parser(path);
   m_ds = parser.parse();
-  QList<Record*> records = m_ds->records();
 
-  for (QList<Record*>::const_iterator it = records.begin();
-      it != records.end(); ++it) {
-    Record* rec = *it;
-    rec->addToChild(this);
+  if (single) {
+    QList<Record*> records = m_ds->records();
+
+    for (QList<Record*>::const_iterator it = records.begin();
+        it != records.end(); ++it) {
+      Record* rec = *it;
+      rec->addToChild(this);
+    }
   }
 }
 
 Features::~Features()
 {
   delete m_ds;
+}
+
+void Features::addToScene(QGraphicsScene* scene)
+{
+  QList<Record*> records = m_ds->records();
+
+  for (QList<Record*>::const_iterator it = records.begin();
+      it != records.end(); ++it) {
+    Record* rec = *it;
+    rec->addToScene(scene);
+  }
 }
 
 QTableWidget* Features::symbolCount()
@@ -265,14 +279,4 @@ QTableWidget* Features::symbolCount()
   table->setItem(1, 2, new QTableWidgetItem("-------"));
 
   return table;
-}
-
-void Features::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsItem::mousePressEvent(event);
-}
-
-void Features::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsItem::mouseDoubleClickEvent(event);
 }

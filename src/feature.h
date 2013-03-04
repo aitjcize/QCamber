@@ -13,13 +13,10 @@
 
 class Features: public Symbol {
 public:
-  Features(QString path);
+  Features(QString path, bool single = true);
   virtual ~Features();
+  void addToScene(QGraphicsScene* scene);
   QTableWidget *symbolCount();
-
-protected:
-  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
   FeaturesDataStore* m_ds;

@@ -17,8 +17,7 @@ NoteRecord::NoteRecord(NotesDataStore* ds, const QStringList& param):
   symbol = new NoteSymbol(this);
 }
 
-void NoteRecord::addToChild(Symbol* group)
+void NoteRecord::prepare(void)
 {
   symbol->setPos(x, -y);
-  group->addChild(symbol);
 }
