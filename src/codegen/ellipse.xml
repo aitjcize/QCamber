@@ -14,6 +14,6 @@
   ]]></constructor>
 
   <painterPath><![CDATA[
-  m_cachedPath.addEllipse(-m_w / 2, -m_h / 2, m_w, m_h);
+  path.addEllipse(-m_w / 2, -m_h / 2, m_w, m_h);
   ]]></painterPath>
 </symbol>

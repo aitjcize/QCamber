@@ -21,17 +21,15 @@ HorizontalHexagonSymbol::HorizontalHexagonSymbol(QString def, Polarity polarity)
 
 QPainterPath HorizontalHexagonSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.moveTo( -m_w/2 + m_r, -m_h/2 );
-  m_cachedPath.lineTo( -m_w/2, 0 );
-  m_cachedPath.lineTo( -m_w/2 + m_r, m_h/2 );
-  m_cachedPath.lineTo( m_w/2 - m_r, m_h/2 );
-  m_cachedPath.lineTo( m_w/2, 0 );
-  m_cachedPath.lineTo( m_w/2 - m_r, -m_h/2 );
-  m_cachedPath.closeSubpath();
+  path.moveTo( -m_w/2 + m_r, -m_h/2 );
+  path.lineTo( -m_w/2, 0 );
+  path.lineTo( -m_w/2 + m_r, m_h/2 );
+  path.lineTo( m_w/2 - m_r, m_h/2 );
+  path.lineTo( m_w/2, 0 );
+  path.lineTo( m_w/2 - m_r, -m_h/2 );
+  path.closeSubpath();
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

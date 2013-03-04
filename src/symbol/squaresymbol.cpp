@@ -19,11 +19,9 @@ SquareSymbol::SquareSymbol(QString def, Polarity polarity):
 
 QPainterPath SquareSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
+  path.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

@@ -42,10 +42,10 @@ QString LineSymbol::infoText(void)
 
 QPainterPath LineSymbol::painterPath()
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   // Set winding fill
-  m_cachedPath.setFillRule(Qt::WindingFill);
+  path.setFillRule(Qt::WindingFill);
 
   Symbol *symbol = SymbolFactory::create(m_sym_name, m_polarity);
   QPainterPath symbolPath = symbol->painterPath();
@@ -63,13 +63,13 @@ QPainterPath LineSymbol::painterPath()
   qreal a = qAtan2(dy, dx);
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
 
-  m_cachedPath.moveTo(sx + rsina, -(sy - rcosa));
-  m_cachedPath.lineTo(sx - rsina, -(sy + rcosa));
-  m_cachedPath.lineTo(ex - rsina, -(ey + rcosa));
-  m_cachedPath.lineTo(ex + rsina, -(ey - rcosa));
-  m_cachedPath.closeSubpath();
-  m_cachedPath.addPath(symbolPath.translated(sx, -sy));
-  m_cachedPath.addPath(symbolPath.translated(ex, -ey));
+  path.moveTo(sx + rsina, -(sy - rcosa));
+  path.lineTo(sx - rsina, -(sy + rcosa));
+  path.lineTo(ex - rsina, -(ey + rcosa));
+  path.lineTo(ex + rsina, -(ey - rcosa));
+  path.closeSubpath();
+  path.addPath(symbolPath.translated(sx, -sy));
+  path.addPath(symbolPath.translated(ex, -ey));
 
-  return m_cachedPath;
+  return path;
 }

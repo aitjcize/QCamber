@@ -19,11 +19,9 @@ RoundSymbol::RoundSymbol(QString def, Polarity polarity):
 
 QPainterPath RoundSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
+  path.addEllipse(QPointF(0, 0), m_r, m_r);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

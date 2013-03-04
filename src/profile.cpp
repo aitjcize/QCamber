@@ -106,8 +106,6 @@ QPainterPath Profile::painterPath(void)
   QPainterPath m_cachedPath;
   m_cachedPath.addRect(m_activeRect);
 
-  m_valid = true;
-
   return m_cachedPath;
 }
 

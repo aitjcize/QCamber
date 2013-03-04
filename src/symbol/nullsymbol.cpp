@@ -19,10 +19,8 @@ NullSymbol::NullSymbol(QString def, Polarity polarity):
 
 QPainterPath NullSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

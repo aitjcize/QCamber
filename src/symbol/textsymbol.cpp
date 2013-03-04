@@ -38,11 +38,11 @@ QString TextSymbol::infoText(void)
 
 QPainterPath TextSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath = QPainterPath();
+  path = QPainterPath();
 
-  m_cachedPath.setFillRule(Qt::WindingFill);
+  path.setFillRule(Qt::WindingFill);
 
   FontParser parser(ctx.loader->absPath("fonts/" + m_font));
   FontDataStore* data = parser.parse(); 
@@ -53,15 +53,15 @@ QPainterPath TextSymbol::painterPath(void)
     CharRecord* rec = data->charRecord(m_text[i].toAscii());
     if (rec) {
       QPainterPath path = mat.map(rec->painterPath(m_width_factor));
-      m_cachedPath.addPath(path);
+      path.addPath(path);
     }
     mat.translate(data->xsize() + data->offset(), 0);
   }
 
-  QRectF b = m_cachedPath.boundingRect();
+  QRectF b = path.boundingRect();
   QMatrix mat2;
   mat2.translate(-b.x(), -(b.y() + b.height()));
-  m_cachedPath = mat2.map(m_cachedPath);
+  path = mat2.map(path);
 
-  return m_cachedPath;
+  return path;
 }

@@ -23,7 +23,7 @@ RoundThermalSquareSymbol::RoundThermalSquareSymbol(QString def, Polarity polarit
 
 QPainterPath RoundThermalSquareSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _pie_angle = 360 / m_num_spokes;
@@ -35,16 +35,14 @@ QPainterPath RoundThermalSquareSymbol::painterPath(void)
   qreal _outer_pie_angle = _pie_angle - 2 * _half_outer_gap_angle;
 
   for( int pie_id= 0; pie_id != m_num_spokes; ++pie_id ){
-    m_cachedPath.arcMoveTo( -m_od / 2, -m_od / 2, m_od, m_od, _outer_start_angle );
-    m_cachedPath.arcTo( -m_od / 2, -m_od / 2, m_od, m_od, _outer_start_angle, _outer_pie_angle );
-    m_cachedPath.arcTo( -m_id / 2, -m_id / 2, m_id, m_id, _inner_start_angle + _inner_pie_angle, 0 );
-    m_cachedPath.arcTo( -m_id / 2, -m_id / 2, m_id, m_id, _inner_start_angle + _inner_pie_angle, -_inner_pie_angle );
-    m_cachedPath.closeSubpath();
+    path.arcMoveTo( -m_od / 2, -m_od / 2, m_od, m_od, _outer_start_angle );
+    path.arcTo( -m_od / 2, -m_od / 2, m_od, m_od, _outer_start_angle, _outer_pie_angle );
+    path.arcTo( -m_id / 2, -m_id / 2, m_id, m_id, _inner_start_angle + _inner_pie_angle, 0 );
+    path.arcTo( -m_id / 2, -m_id / 2, m_id, m_id, _inner_start_angle + _inner_pie_angle, -_inner_pie_angle );
+    path.closeSubpath();
     _inner_start_angle += _pie_angle;
     _outer_start_angle += _pie_angle;
   }
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

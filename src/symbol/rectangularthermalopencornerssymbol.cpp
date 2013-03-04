@@ -24,7 +24,7 @@ RectangularThermalOpenCornersSymbol::RectangularThermalOpenCornersSymbol(QString
 
 QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal a2r = M_PI / 180.0;
   qreal angle_div = 360.0 / m_num_spokes;
@@ -35,11 +35,11 @@ QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
   // angle can only be multiple of 45
   if ((m_num_spokes != 1 && m_num_spokes != 2 && m_num_spokes != 4) ||
       ((int)m_angle % 45 != 0)) {
-    goto ret;
+    return path;
   }
 
-  m_cachedPath.addRect(-m_w / 2, -m_h / 2, m_w, m_h);
-  m_cachedPath.addRect(-m_w / 2 + m_air_gap, -m_h / 2 + m_air_gap,
+  path.addRect(-m_w / 2, -m_h / 2, m_w, m_h);
+  path.addRect(-m_w / 2 + m_air_gap, -m_h / 2 + m_air_gap,
       m_w - 2 * m_air_gap, m_h - 2 * m_air_gap);
 
   if ((int)m_angle % 90 == 0) {
@@ -65,9 +65,7 @@ QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
     }
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

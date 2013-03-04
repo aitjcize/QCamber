@@ -24,10 +24,10 @@ RectangularThermalSymbol::RectangularThermalSymbol(QString def, Polarity polarit
 
 QPainterPath RectangularThermalSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_w / 2, -m_h / 2, m_w, m_h);
-  m_cachedPath.addRect(-m_w / 2 + m_air_gap, -m_h / 2 + m_air_gap,
+  path.addRect(-m_w / 2, -m_h / 2, m_w, m_h);
+  path.addRect(-m_w / 2 + m_air_gap, -m_h / 2 + m_air_gap,
       m_w - 2 * m_air_gap, m_h - 2 * m_air_gap);
 
   QPainterPath bar;
@@ -54,9 +54,7 @@ QPainterPath RectangularThermalSymbol::painterPath(void)
     sub.addPath(mat.map(bar));
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

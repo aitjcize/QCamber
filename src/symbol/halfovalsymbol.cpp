@@ -20,25 +20,23 @@ HalfOvalSymbol::HalfOvalSymbol(QString def, Polarity polarity):
 
 QPainterPath HalfOvalSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   if (m_w > m_h) {
     qreal rad = m_h / 2;
-    m_cachedPath.moveTo(rad, -rad);
-    m_cachedPath.arcTo(0, -m_h/2, m_h, m_h, 90, -180);
-    m_cachedPath.lineTo(m_h - m_w, m_h/2);
-    m_cachedPath.lineTo(m_h - m_w, -m_h/2);
-    m_cachedPath.closeSubpath();
+    path.moveTo(rad, -rad);
+    path.arcTo(0, -m_h/2, m_h, m_h, 90, -180);
+    path.lineTo(m_h - m_w, m_h/2);
+    path.lineTo(m_h - m_w, -m_h/2);
+    path.closeSubpath();
   } else {
     qreal rad = m_w / 2;
-    m_cachedPath.moveTo(rad, -rad);
-    m_cachedPath.arcTo(-m_w/2, -m_w, m_w, m_w, 0, 180);
-    m_cachedPath.lineTo(-m_w/2, m_h - m_w);
-    m_cachedPath.lineTo(m_w/2, m_h - m_w);
-    m_cachedPath.closeSubpath();
+    path.moveTo(rad, -rad);
+    path.arcTo(-m_w/2, -m_w, m_w, m_w, 0, 180);
+    path.lineTo(-m_w/2, m_h - m_w);
+    path.lineTo(m_w/2, m_h - m_w);
+    path.closeSubpath();
   }
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

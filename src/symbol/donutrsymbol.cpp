@@ -20,12 +20,10 @@ DonutRSymbol::DonutRSymbol(QString def, Polarity polarity):
 
 QPainterPath DonutRSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addEllipse(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

@@ -24,10 +24,10 @@ SquareRoundThermalSymbol::SquareRoundThermalSymbol(QString def, Polarity polarit
 
 QPainterPath SquareRoundThermalSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addEllipse(-m_id / 2, -m_id / 2, m_id, m_id);
 
   QPainterPath bar;
   bar.addRect(0, -m_gap / 2, m_od / qSqrt(1.8), m_gap);
@@ -46,27 +46,23 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
 
   // Simple subtraction will not work since QPainterPath::subtracted will
   // flatten the circle. We override paint to fix it.
-  //m_cachedPath = m_cachedPath.subtracted(sub);
+  //path = path.subtracted(sub);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }
 
 void SquareRoundThermalSymbol::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-  QPainterPath m_cachedPath = painterPath();
-
   if (m_polarity == P) {
     painter->setClipPath(m_sub);
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->drawPath(m_cachedPath);
+    painter->drawPath(painterPath());
   } else {
     painter->setClipPath(m_sub);
     painter->setPen(QPen(ctx.bg_color, 0));
     painter->setBrush(ctx.bg_color);
-    painter->drawPath(m_cachedPath);
+    painter->drawPath(painterPath());
   }
 }

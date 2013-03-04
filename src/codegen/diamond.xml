@@ -19,10 +19,10 @@
   qreal wh = m_w / 2;
   qreal hh = m_h / 2;
 
-  m_cachedPath.moveTo(x, y+hh);
-  m_cachedPath.lineTo(x+wh, y);
-  m_cachedPath.lineTo(x+m_w, y+hh);
-  m_cachedPath.lineTo(x+wh, y+m_h);
-  m_cachedPath.closeSubpath();
+  path.moveTo(x, y+hh);
+  path.lineTo(x+wh, y);
+  path.lineTo(x+m_w, y+hh);
+  path.lineTo(x+wh, y+m_h);
+  path.closeSubpath();
   ]]></painterPath>
 </symbol>

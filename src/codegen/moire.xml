@@ -56,8 +56,8 @@
   m_linePath.addEllipse(QPointF(0, -m_ll/2), r, r);
   m_linePath.addEllipse(QPointF(0, m_ll/2), r, r);
 
-  m_cachedPath = m_circlePath;
-  m_cachedPath.addPath(m_linePath);
+  path = m_circlePath;
+  path.addPath(m_linePath);
   ]]></painterPath>
 
   <function_body><![CDATA[

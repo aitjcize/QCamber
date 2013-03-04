@@ -33,11 +33,11 @@
   // angle can only be multiple of 45
   if ((m_num_spokes != 1 && m_num_spokes != 2 && m_num_spokes != 4) ||
       ((int)m_angle % 45 != 0)) {
-    goto ret;
+    return path;
   }
 
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
 
   if ((int)m_angle % 90 == 0) {
     QPainterPath bar;
@@ -62,6 +62,6 @@
     }
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
   ]]></painterPath>
 </symbol>

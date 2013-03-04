@@ -20,12 +20,10 @@ DonutSSymbol::DonutSSymbol(QString def, Polarity polarity):
 
 QPainterPath DonutSSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

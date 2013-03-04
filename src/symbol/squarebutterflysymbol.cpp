@@ -19,12 +19,10 @@ SquareButterflySymbol::SquareButterflySymbol(QString def, Polarity polarity):
 
 QPainterPath SquareButterflySymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_s/2, -m_s/2, m_s/2, m_s/2);
-  m_cachedPath.addRect(0, 0, m_s/2, m_s/2);
+  path.addRect(-m_s/2, -m_s/2, m_s/2, m_s/2);
+  path.addRect(0, 0, m_s/2, m_s/2);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

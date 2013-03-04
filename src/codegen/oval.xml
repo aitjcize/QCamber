@@ -19,18 +19,18 @@
 
   if (m_w > m_h) {
     qreal rad = m_h / 2;
-    m_cachedPath.arcMoveTo(x, y, m_h, m_h, 90);
-    m_cachedPath.arcTo(x, y, m_h, m_h, 270, -180);
-    m_cachedPath.arcTo(x+m_w-m_h, y, m_h, m_h, 90, -180);
-    m_cachedPath.lineTo(x+rad, y+m_h);
-    m_cachedPath.closeSubpath();
+    path.arcMoveTo(x, y, m_h, m_h, 90);
+    path.arcTo(x, y, m_h, m_h, 270, -180);
+    path.arcTo(x+m_w-m_h, y, m_h, m_h, 90, -180);
+    path.lineTo(x+rad, y+m_h);
+    path.closeSubpath();
   } else {
     qreal rad = m_w / 2;
-    m_cachedPath.arcMoveTo(x, y, m_w, m_w, 90);
-    m_cachedPath.arcTo(x, y, m_w, m_w, 180, -180);
-    m_cachedPath.arcTo(x, y+m_h-m_w, m_w, m_w, 0, -180);
-    m_cachedPath.lineTo(x, y+rad);
-    m_cachedPath.closeSubpath();
+    path.arcMoveTo(x, y, m_w, m_w, 90);
+    path.arcTo(x, y, m_w, m_w, 180, -180);
+    path.arcTo(x, y+m_h-m_w, m_w, m_w, 0, -180);
+    path.lineTo(x, y+rad);
+    path.closeSubpath();
   }
   ]]></painterPath>
 </symbol>

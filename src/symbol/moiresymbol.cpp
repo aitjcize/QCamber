@@ -25,7 +25,7 @@ MoireSymbol::MoireSymbol(QString def, Polarity polarity):
 
 QPainterPath MoireSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   m_circlePath = QPainterPath();
   qreal rad = m_rw;
@@ -50,12 +50,10 @@ QPainterPath MoireSymbol::painterPath(void)
   m_linePath.addEllipse(QPointF(0, -m_ll/2), r, r);
   m_linePath.addEllipse(QPointF(0, m_ll/2), r, r);
 
-  m_cachedPath = m_circlePath;
-  m_cachedPath.addPath(m_linePath);
+  path = m_circlePath;
+  path.addPath(m_linePath);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }
 
 void MoireSymbol::paint(QPainter *painter,

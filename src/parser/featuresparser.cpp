@@ -7,7 +7,7 @@
 #include <QtDebug>
 
 FeaturesDataStore::FeaturesDataStore():
-  m_posSurfaceCount(0), m_negSurfaceCount(0), m_posTextCount(0),
+  m_posSurfaceCount(0), m_posTextCount(0), m_negSurfaceCount(0),
   m_negTextCount(0)
 {
 }

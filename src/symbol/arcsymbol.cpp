@@ -69,7 +69,7 @@ QString ArcSymbol::infoText(void)
 
 QPainterPath ArcSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal sx = m_xs, sy = m_ys;
   qreal ex = m_xe, ey = m_ye;
@@ -107,13 +107,13 @@ QPainterPath ArcSymbol::painterPath(void)
   esx = ex - dx * hr;
   esy = ey - dy * hr;
 
-  m_cachedPath.moveTo(eex, -eey);
-  addArc(m_cachedPath, eex, eey, sex, sey, cx, cy, !m_cw);
-  addArc(m_cachedPath, sex, sey, ssx, ssy, sx, sy, !m_cw);
-  addArc(m_cachedPath, ssx, ssy, esx, esy, cx, cy, m_cw);
-  addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, !m_cw);
+  path.moveTo(eex, -eey);
+  addArc(path, eex, eey, sex, sey, cx, cy, !m_cw);
+  addArc(path, sex, sey, ssx, ssy, sx, sy, !m_cw);
+  addArc(path, ssx, ssy, esx, esy, cx, cy, m_cw);
+  addArc(path, esx, esy, eex, eey, ex, ey, !m_cw);
 
-  m_cachedPath.closeSubpath();
+  path.closeSubpath();
 
-  return m_cachedPath;
+  return path;
 }

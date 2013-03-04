@@ -21,17 +21,15 @@ VerticalHexagonSymbol::VerticalHexagonSymbol(QString def, Polarity polarity):
 
 QPainterPath VerticalHexagonSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.moveTo( 0, -m_h/2 );
-  m_cachedPath.lineTo( -m_w/2, -m_h/2 + m_r );
-  m_cachedPath.lineTo( -m_w/2, m_h/2 - m_r );
-  m_cachedPath.lineTo( 0, m_h/2 );
-  m_cachedPath.lineTo( m_w/2, m_h/2 - m_r );
-  m_cachedPath.lineTo( m_w/2, -m_h/2 + m_r );
-  m_cachedPath.closeSubpath();
+  path.moveTo( 0, -m_h/2 );
+  path.lineTo( -m_w/2, -m_h/2 + m_r );
+  path.lineTo( -m_w/2, m_h/2 - m_r );
+  path.lineTo( 0, m_h/2 );
+  path.lineTo( m_w/2, m_h/2 - m_r );
+  path.lineTo( m_w/2, -m_h/2 + m_r );
+  path.closeSubpath();
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

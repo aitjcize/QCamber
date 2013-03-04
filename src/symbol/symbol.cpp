@@ -8,7 +8,7 @@
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
-  m_polarity(polarity), m_valid(false), m_selected(false)
+  m_polarity(polarity), m_selected(false)
 {
   setHandlesChildEvents(false);
 
@@ -93,11 +93,6 @@ QPainterPath Symbol::painterPath(void)
 {
   m_bounding = QRectF();
   return QPainterPath();
-}
-
-void Symbol::invalidate(void)
-{
-  m_valid = false;
 }
 
 void Symbol::addChild(Symbol* symbol)

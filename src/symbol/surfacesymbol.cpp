@@ -31,12 +31,12 @@ QString SurfaceSymbol::infoText(void)
 
 QPainterPath SurfaceSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   for (QList<PolygonRecord*>::iterator it = m_polygons.begin();
       it != m_polygons.end(); ++it) {
     PolygonRecord* rec = (*it);
-    m_cachedPath.addPath(rec->painterPath());
+    path.addPath(rec->painterPath());
     if (rec->poly_type == PolygonRecord::I) {
       ++m_islandCount;
       //ipath.addPath(rec->painterPath());
@@ -46,5 +46,5 @@ QPainterPath SurfaceSymbol::painterPath(void)
     }
   }
 
-  return m_cachedPath;
+  return path;
 }

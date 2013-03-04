@@ -20,20 +20,18 @@ DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
 
 QPainterPath DiamondSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal x = -m_w / 2;
   qreal y = -m_h / 2;
   qreal wh = m_w / 2;
   qreal hh = m_h / 2;
 
-  m_cachedPath.moveTo(x, y+hh);
-  m_cachedPath.lineTo(x+wh, y);
-  m_cachedPath.lineTo(x+m_w, y+hh);
-  m_cachedPath.lineTo(x+wh, y+m_h);
-  m_cachedPath.closeSubpath();
+  path.moveTo(x, y+hh);
+  path.lineTo(x+wh, y);
+  path.lineTo(x+m_w, y+hh);
+  path.lineTo(x+wh, y+m_h);
+  path.closeSubpath();
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

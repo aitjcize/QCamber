@@ -23,7 +23,7 @@ RoundThermalRoundSymbol::RoundThermalRoundSymbol(QString def, Polarity polarity)
 
 QPainterPath RoundThermalRoundSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _rad = (m_od - m_id) / 4;
@@ -33,28 +33,26 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
   qreal _start_angle = m_angle + _half_gap_angle;
   qreal _span_angle = _pie_angle - 2 * _half_gap_angle;
 
-  m_cachedPath.setFillRule(Qt::WindingFill);
+  path.setFillRule(Qt::WindingFill);
 
   qreal _x, _y;
   for (int pie_id= 0; pie_id != m_num_spokes; ++pie_id) {
-    m_cachedPath.arcMoveTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle);
-    m_cachedPath.arcTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle,
+    path.arcMoveTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle);
+    path.arcTo(-m_id / 2, -m_id / 2, m_id, m_id, _start_angle,
         _span_angle);
-    m_cachedPath.arcTo(-m_od / 2, -m_od / 2, m_od, m_od,
+    path.arcTo(-m_od / 2, -m_od / 2, m_od, m_od,
         _start_angle + _span_angle, -_span_angle);
 
     _x = _orad * qCos(_start_angle * a2r);
     _y = _orad * qSin(_start_angle * a2r);
-    m_cachedPath.addEllipse(QPointF(_x, -_y), _rad, _rad);
+    path.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
     _x = _orad * qCos((_start_angle + _span_angle) * a2r);
     _y = _orad * qSin((_start_angle + _span_angle) * a2r);
-    m_cachedPath.addEllipse(QPointF(_x, -_y), _rad, _rad);
+    path.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
     _start_angle += _pie_angle;
   }
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

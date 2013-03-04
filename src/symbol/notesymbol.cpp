@@ -21,19 +21,19 @@ NoteSymbol::NoteSymbol(NoteRecord* rec): Symbol("note")
 
 QPainterPath NoteSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   qreal side = 0.04;
   qreal hside = side / 2;
 
-  m_cachedPath.lineTo(hside, 0);
-  m_cachedPath.lineTo(side, -hside);
-  m_cachedPath.lineTo(hside, -hside);
-  m_cachedPath.lineTo(hside, -side);
-  m_cachedPath.lineTo(0, -hside);
-  m_cachedPath.closeSubpath();
+  path.lineTo(hside, 0);
+  path.lineTo(side, -hside);
+  path.lineTo(hside, -hside);
+  path.lineTo(hside, -side);
+  path.lineTo(0, -hside);
+  path.closeSubpath();
 
-  return m_cachedPath;
+  return path;
 }
 
 void NoteSymbol::paint(QPainter *painter,

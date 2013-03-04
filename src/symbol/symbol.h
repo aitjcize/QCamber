@@ -33,7 +33,6 @@ public:
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);
   virtual QPainterPath painterPath(void);
-  virtual void invalidate(void);
 
   void addChild(Symbol* symbol);
   void restoreColor(void);
@@ -58,7 +57,6 @@ protected:
   QPen m_prevPen;
   QBrush m_prevBrush;
   Polarity m_polarity;
-  bool m_valid;
   bool m_selected;
   QList<Symbol*> m_symbols;
 };

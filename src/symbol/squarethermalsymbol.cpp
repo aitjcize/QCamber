@@ -23,10 +23,10 @@ SquareThermalSymbol::SquareThermalSymbol(QString def, Polarity polarity):
 
 QPainterPath SquareThermalSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
 
   QPainterPath bar;
   bar.addRect(0, -m_gap / 2, m_od, m_gap);
@@ -43,9 +43,7 @@ QPainterPath SquareThermalSymbol::painterPath(void)
     mat.rotate(-angle_div);
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

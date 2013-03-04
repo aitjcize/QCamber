@@ -20,16 +20,14 @@ TriangleSymbol::TriangleSymbol(QString def, Polarity polarity):
 
 QPainterPath TriangleSymbol::painterPath(void)
 {
-  QPainterPath m_cachedPath;
+  QPainterPath path;
 
   //The co-ordinates of y needs to be flipped
   //due to it is screen co-ordination ( increase from top to down )
-  m_cachedPath.moveTo(0, - m_h / 2);
-  m_cachedPath.lineTo(- m_base / 2, m_h / 2);
-  m_cachedPath.lineTo(m_base / 2, m_h / 2);
-  m_cachedPath.closeSubpath();
+  path.moveTo(0, - m_h / 2);
+  path.lineTo(- m_base / 2, m_h / 2);
+  path.lineTo(m_base / 2, m_h / 2);
+  path.closeSubpath();
 
-ret:
-
-  return m_cachedPath;
+  return path;
 }

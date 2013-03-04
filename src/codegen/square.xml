@@ -12,6 +12,6 @@
   ]]></constructor>
 
   <painterPath><![CDATA[
-  m_cachedPath.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
+  path.addRect(-m_s / 2, -m_s / 2, m_s, m_s);
   ]]></painterPath>
 </symbol>
