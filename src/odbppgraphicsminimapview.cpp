@@ -99,6 +99,11 @@ void ODBPPGraphicsMiniMapView::redrawSceneRect(QRectF rect)
   m_rect->setRect(rect);
 }
 
+void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* event)
+{
+  // Do nothing
+}
+
 void ODBPPGraphicsMiniMapView::wheelEvent(QWheelEvent* event)
 {
   // Do nothing

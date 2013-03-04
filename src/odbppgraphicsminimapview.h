@@ -29,6 +29,7 @@ public slots:
   void setBackgroundColor(QColor color);
 
 protected:
+  virtual void keyPressEvent(QKeyEvent* event);
   virtual void wheelEvent(QWheelEvent* event);
 
 private:
