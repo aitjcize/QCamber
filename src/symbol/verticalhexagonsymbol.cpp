@@ -16,28 +16,20 @@ VerticalHexagonSymbol::VerticalHexagonSymbol(QString def, Polarity polarity):
   m_h = caps[2].toDouble() / 1000.0;
   m_r = caps[3].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath VerticalHexagonSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath = QPainterPath();
+  path.moveTo( 0, -m_h/2 );
+  path.lineTo( -m_w/2, -m_h/2 + m_r );
+  path.lineTo( -m_w/2, m_h/2 - m_r );
+  path.lineTo( 0, m_h/2 );
+  path.lineTo( m_w/2, m_h/2 - m_r );
+  path.lineTo( m_w/2, -m_h/2 + m_r );
+  path.closeSubpath();
 
-  m_cachedPath.moveTo( 0, -m_h/2 );
-  m_cachedPath.lineTo( -m_w/2, -m_h/2 + m_r );
-  m_cachedPath.lineTo( -m_w/2, m_h/2 - m_r );
-  m_cachedPath.lineTo( 0, m_h/2 );
-  m_cachedPath.lineTo( m_w/2, m_h/2 - m_r );
-  m_cachedPath.lineTo( m_w/2, -m_h/2 + m_r );
-  m_cachedPath.closeSubpath();
-
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

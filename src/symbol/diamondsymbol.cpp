@@ -15,31 +15,23 @@ DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath DiamondSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   qreal x = -m_w / 2;
   qreal y = -m_h / 2;
   qreal wh = m_w / 2;
   qreal hh = m_h / 2;
 
-  m_cachedPath.moveTo(x, y+hh);
-  m_cachedPath.lineTo(x+wh, y);
-  m_cachedPath.lineTo(x+m_w, y+hh);
-  m_cachedPath.lineTo(x+wh, y+m_h);
-  m_cachedPath.closeSubpath();
+  path.moveTo(x, y+hh);
+  path.lineTo(x+wh, y);
+  path.lineTo(x+m_w, y+hh);
+  path.lineTo(x+wh, y+m_h);
+  path.closeSubpath();
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

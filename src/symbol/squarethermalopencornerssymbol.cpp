@@ -18,15 +18,12 @@ SquareThermalOpenCornersSymbol::SquareThermalOpenCornersSymbol(QString def, Pola
   m_num_spokes = caps[4].toInt();
   m_gap = caps[5].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath SquareThermalOpenCornersSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   qreal a2r = M_PI / 180.0;
     qreal angle_div = 360.0 / m_num_spokes;
@@ -37,11 +34,11 @@ QPainterPath SquareThermalOpenCornersSymbol::painterPath(void)
   // angle can only be multiple of 45
   if ((m_num_spokes != 1 && m_num_spokes != 2 && m_num_spokes != 4) ||
       ((int)m_angle % 45 != 0)) {
-    goto ret;
+    return path;
   }
 
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
 
   if ((int)m_angle % 90 == 0) {
     QPainterPath bar;
@@ -66,12 +63,7 @@ QPainterPath SquareThermalOpenCornersSymbol::painterPath(void)
     }
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

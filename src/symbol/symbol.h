@@ -33,7 +33,6 @@ public:
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);
   virtual QPainterPath painterPath(void);
-  virtual void invalidate(void);
 
   void addChild(Symbol* symbol);
   void restoreColor(void);
@@ -41,7 +40,9 @@ public:
   virtual QRectF boundingRect() const;
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
       QWidget *widget);
-  virtual QPainterPath shape() const { return m_cachedPath; };
+  virtual QPainterPath shape() const {
+    return const_cast<Symbol*>(this)->painterPath();
+  };
 
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -55,9 +56,7 @@ protected:
   QBrush m_brush;
   QPen m_prevPen;
   QBrush m_prevBrush;
-  QPainterPath m_cachedPath;
   Polarity m_polarity;
-  bool m_valid;
   bool m_selected;
   QList<Symbol*> m_symbols;
 };

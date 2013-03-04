@@ -43,6 +43,12 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   connect(ui->viewWidget, SIGNAL(sceneRectChanged(QRectF)), ui->miniMapView,
       SLOT(redrawSceneRect(QRectF)));
 
+  // bgColorChanged signal
+  connect(this, SIGNAL(bgColorChanged(QColor)), ui->viewWidget,
+      SLOT(setBackgroundColor(QColor)));
+  connect(this, SIGNAL(bgColorChanged(QColor)), ui->miniMapView,
+      SLOT(setBackgroundColor(QColor)));
+
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
   ui->actionAreaZoom->setChecked(true);
 }
@@ -168,7 +174,6 @@ QColor ViewerWindow::nextColor(void)
 void ViewerWindow::loadColorConfig()
 {
   ctx.bg_color = QColor(SETTINGS->get("color", "BG").toString());
-  ui->viewWidget->setBackgroundColor(ctx.bg_color);
 
   m_colors.clear();
   for(int i = 0; i < 6; ++i) {
@@ -184,6 +189,8 @@ void ViewerWindow::loadColorConfig()
     m_visibles[i]->setColor(nextColor());
     m_visibles[i]->layer()->forceUpdate();
   }
+
+  emit bgColorChanged(ctx.bg_color);
 }
 
 void ViewerWindow::unitChanged(int index)

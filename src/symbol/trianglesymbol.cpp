@@ -15,27 +15,19 @@ TriangleSymbol::TriangleSymbol(QString def, Polarity polarity):
   m_base = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath TriangleSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   //The co-ordinates of y needs to be flipped
   //due to it is screen co-ordination ( increase from top to down )
-  m_cachedPath.moveTo(0, - m_h / 2);
-  m_cachedPath.lineTo(- m_base / 2, m_h / 2);
-  m_cachedPath.lineTo(m_base / 2, m_h / 2);
-  m_cachedPath.closeSubpath();
+  path.moveTo(0, - m_h / 2);
+  path.lineTo(- m_base / 2, m_h / 2);
+  path.lineTo(m_base / 2, m_h / 2);
+  path.closeSubpath();
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

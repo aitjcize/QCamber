@@ -266,3 +266,13 @@ QTableWidget* Features::symbolCount()
 
   return table;
 }
+
+void Features::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mousePressEvent(event);
+}
+
+void Features::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+}

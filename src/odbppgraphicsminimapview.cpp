@@ -60,12 +60,11 @@ void ODBPPGraphicsMiniMapView::loadProfile(QString step)
 
 void ODBPPGraphicsMiniMapView::setBackgroundColor(QColor color)
 {
-  m_scene->setBackgroundBrush(color);
+  m_scene->setBackgroundColor(color);
 
   if (m_profile) {
-    QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
-        255 - ctx.bg_color.blue(), 255);
-    m_profile->setPen(QPen(color, 0));
+    QColor icolor(255 - color.red(), 255 - color.green(), 255 - color.blue());
+    m_profile->setPen(QPen(icolor, 0));
     m_profile->setBrush(Qt::transparent);
   }
 }

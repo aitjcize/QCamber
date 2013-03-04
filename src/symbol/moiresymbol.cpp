@@ -20,15 +20,12 @@ MoireSymbol::MoireSymbol(QString def, Polarity polarity):
   m_ll = caps[5].toDouble() / 1000.0;
   m_la = caps[6].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath MoireSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   m_circlePath = QPainterPath();
   qreal rad = m_rw;
@@ -53,15 +50,10 @@ QPainterPath MoireSymbol::painterPath(void)
   m_linePath.addEllipse(QPointF(0, -m_ll/2), r, r);
   m_linePath.addEllipse(QPointF(0, m_ll/2), r, r);
 
-  m_cachedPath = m_circlePath;
-  m_cachedPath.addPath(m_linePath);
+  path = m_circlePath;
+  path.addPath(m_linePath);
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }
 
 void MoireSymbol::paint(QPainter *painter,

@@ -16,33 +16,25 @@ OctagonSymbol::OctagonSymbol(QString def, Polarity polarity):
   m_h = caps[2].toDouble() / 1000.0;
   m_r = caps[3].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath OctagonSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   qreal x = -m_w / 2;
   qreal y = -m_h / 2;
 
-  m_cachedPath.moveTo(x, y+m_h-m_r);
-  m_cachedPath.lineTo(x, y+m_r);
-  m_cachedPath.lineTo(x+m_r, y);
-  m_cachedPath.lineTo(x+m_w-m_r, y);
-  m_cachedPath.lineTo(x+m_w, y+m_r);
-  m_cachedPath.lineTo(x+m_w, y+m_h-m_r);
-  m_cachedPath.lineTo(x+m_w-m_r, y+m_h);
-  m_cachedPath.lineTo(x+m_r, y+m_h);
-  m_cachedPath.closeSubpath();
+  path.moveTo(x, y+m_h-m_r);
+  path.lineTo(x, y+m_r);
+  path.lineTo(x+m_r, y);
+  path.lineTo(x+m_w-m_r, y);
+  path.lineTo(x+m_w, y+m_r);
+  path.lineTo(x+m_w, y+m_h-m_r);
+  path.lineTo(x+m_w-m_r, y+m_h);
+  path.lineTo(x+m_r, y+m_h);
+  path.closeSubpath();
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

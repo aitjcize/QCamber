@@ -18,7 +18,6 @@ public:
 
   void setZoomMode(ZoomMode mode);
   void loadProfile(QString step);
-  void setBackgroundColor(QColor color);
   void setHighlight(bool status);
   void clearHighlight(void);
 
@@ -39,6 +38,7 @@ signals:
 public slots:
   void zoomToRect(QRectF rect);
   void updateLayerViewport(void);
+  void setBackgroundColor(QColor color);
 
 protected:
   virtual void wheelEvent(QWheelEvent* event);

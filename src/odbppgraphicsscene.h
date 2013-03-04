@@ -29,15 +29,20 @@ signals:
   void featureSelected(Symbol*);
   void rectSelected(QRectF);
 
+public slots:
+  void setBackgroundColor(QColor color);
+
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+  virtual void keyPressEvent(QKeyEvent* event);
 
 private:
   QGraphicsRectItem* m_rubberBand;
   QPointF m_rubberPS;
+  QColor m_reubberBandColor;
   bool m_areaZoomEnabled;
   bool m_rubberBandActivated;
   qreal m_viewScaleFactor;

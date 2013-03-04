@@ -6,67 +6,51 @@
 #include "fontparser.h"
 #include "context.h"
 
-TextSymbol::TextSymbol(TextRecord* rec): Symbol("Text", "Text")
+TextSymbol::TextSymbol(TextRecord* rec, bool isbase):
+  Symbol("Text", "Text"), m_rec(rec)
 {
-  if (rec == NULL) {
-    return;
+  if (!isbase) {
+    m_bounding = painterPath().boundingRect();
   }
-
-  m_polarity = rec->polarity;
-  m_x = rec->x;
-  m_y = rec->y;
-  m_font = rec->font;
-  m_orient = rec->orient;
-  m_xsize = rec->xsize;
-  m_ysize = rec->ysize;
-  m_width_factor = rec->width_factor;
-  m_text = rec->text;
-  m_version = rec->version;
-
-  painterPath();
 }
 
 QString TextSymbol::infoText(void)
 {
   QString info = QString("Text, X=%1, Y=%2, %3, %4, %5") \
-    .arg(m_x).arg(m_y) \
-    .arg(m_text) \
-    .arg((m_polarity == P)? "POS": "NEG") \
-    .arg(m_font);
+    .arg(m_rec->x).arg(m_rec->y) \
+    .arg(m_rec->text) \
+    .arg((m_rec->polarity == P)? "POS": "NEG") \
+    .arg(m_rec->font);
   return info;
 }
 
 QPainterPath TextSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath = QPainterPath();
+  path.setFillRule(Qt::WindingFill);
 
-  m_cachedPath.setFillRule(Qt::WindingFill);
-
-  FontParser parser(ctx.loader->absPath("fonts/" + m_font));
+  FontParser parser(ctx.loader->absPath("fonts/" + m_rec->font));
   FontDataStore* data = parser.parse(); 
 
-  QMatrix mat(m_xsize / data->xsize(), 0, 0, m_ysize / data->ysize(), 0, 0);
+  QMatrix mat(m_rec->xsize / data->xsize(), 0, 0,
+      m_rec->ysize / data->ysize(), 0, 0);
 
-  for (int i = 0; i < m_text.length(); ++i) {
-    CharRecord* rec = data->charRecord(m_text[i].toAscii());
+  for (int i = 0; i < m_rec->text.length(); ++i) {
+    CharRecord* rec = data->charRecord(m_rec->text[i].toAscii());
     if (rec) {
-      QPainterPath path = mat.map(rec->painterPath(m_width_factor));
-      m_cachedPath.addPath(path);
+      QPainterPath p = mat.map(rec->painterPath(m_rec->width_factor));
+      path.addPath(p);
     }
     mat.translate(data->xsize() + data->offset(), 0);
   }
 
-  QRectF b = m_cachedPath.boundingRect();
+  QRectF b = path.boundingRect();
   QMatrix mat2;
   mat2.translate(-b.x(), -(b.y() + b.height()));
-  m_cachedPath = mat2.map(m_cachedPath);
+  path = mat2.map(path);
 
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
+  delete data;
 
-  return m_cachedPath;
+  return path;
 }

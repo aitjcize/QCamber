@@ -37,46 +37,34 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
 }
 
 ArcSymbol::ArcSymbol(ArcRecord* rec):
-    Symbol("Arc", "Arc", rec->polarity)
+  Symbol("Arc", "Arc", rec->polarity), m_rec(rec)
 {
-  m_xs = rec->xs;
-  m_ys = rec->ys;
-  m_xe = rec->xe;
-  m_ye = rec->ye;
-  m_xc = rec->xc;
-  m_yc = rec->yc;
-  m_sym_num = rec->sym_num;
-  m_dcode = rec->dcode;
-  m_cw = rec->cw;
   m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
                symbolNameMap()[rec->sym_num];
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString ArcSymbol::infoText(void)
 {
   QString info = QString("Arc, XC=%1, YC=%2, XS=%3, YS=%4, XE=%5, YE=%6, "
       "%7, %8, %9") \
-    .arg(m_xc).arg(m_yc) \
-    .arg(m_xs).arg(m_ys) \
-    .arg(m_xe).arg(m_ye) \
+    .arg(m_rec->xc).arg(m_rec->yc) \
+    .arg(m_rec->xs).arg(m_rec->ys) \
+    .arg(m_rec->xe).arg(m_rec->ye) \
     .arg(m_sym_name) \
-    .arg((m_polarity == P)? "POS": "NEG") \
-    .arg(m_cw? "CW": "CCW");
+    .arg((m_rec->polarity == P)? "POS": "NEG") \
+    .arg(m_rec->cw? "CW": "CCW");
   return info;
 }
 
 QPainterPath ArcSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath = QPainterPath();
-
-  qreal sx = m_xs, sy = m_ys;
-  qreal ex = m_xe, ey = m_ye;
-  qreal cx = m_xc, cy = m_yc;
+  qreal sx = m_rec->xs, sy = m_rec->ys;
+  qreal ex = m_rec->xe, ey = m_rec->ye;
+  qreal cx = m_rec->xc, cy = m_rec->yc;
 
   qreal rad = m_sym_name.right(m_sym_name.length() -1).toDouble() / 1000.0;
   qreal hr = rad / 2;
@@ -110,17 +98,13 @@ QPainterPath ArcSymbol::painterPath(void)
   esx = ex - dx * hr;
   esy = ey - dy * hr;
 
-  m_cachedPath.moveTo(eex, -eey);
-  addArc(m_cachedPath, eex, eey, sex, sey, cx, cy, !m_cw);
-  addArc(m_cachedPath, sex, sey, ssx, ssy, sx, sy, !m_cw);
-  addArc(m_cachedPath, ssx, ssy, esx, esy, cx, cy, m_cw);
-  addArc(m_cachedPath, esx, esy, eex, eey, ex, ey, !m_cw);
+  path.moveTo(eex, -eey);
+  addArc(path, eex, eey, sex, sey, cx, cy, !m_rec->cw);
+  addArc(path, sex, sey, ssx, ssy, sx, sy, !m_rec->cw);
+  addArc(path, ssx, ssy, esx, esy, cx, cy, m_rec->cw);
+  addArc(path, esx, esy, eex, eey, ex, ey, !m_rec->cw);
 
-  m_cachedPath.closeSubpath();
+  path.closeSubpath();
 
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

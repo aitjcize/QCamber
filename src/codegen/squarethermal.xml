@@ -20,8 +20,8 @@
   ]]></constructor>
 
   <painterPath><![CDATA[
-  m_cachedPath.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
-  m_cachedPath.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
+  path.addRect(-m_od / 2, -m_od / 2, m_od, m_od);
+  path.addRect(-m_id / 2, -m_id / 2, m_id, m_id);
 
   QPainterPath bar;
   bar.addRect(0, -m_gap / 2, m_od, m_gap);
@@ -38,6 +38,6 @@
     mat.rotate(-angle_div);
   }
 
-  m_cachedPath = m_cachedPath.subtracted(sub);
+  path = path.subtracted(sub);
   ]]></painterPath>
 </symbol>

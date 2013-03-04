@@ -113,26 +113,20 @@ void ODBPPGraphicsView::loadProfile(QString step)
   QString path;
   path = QString("steps/%1/profile").arg(step.toLower());
   m_profile = new Profile(ctx.loader->absPath(path));
-
-  QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
-      255 - ctx.bg_color.blue(), 255);
-
-  m_profile->setPen(QPen(color, 0));
-  m_profile->setBrush(Qt::transparent);
   m_scene->addItem(m_profile);
-
   m_origin = new OriginSymbol();
-  m_origin->setPen(QPen(color, 0));
+
+  setBackgroundColor(ctx.bg_color);
 }
 
 void ODBPPGraphicsView::setBackgroundColor(QColor color)
 {
-  m_scene->setBackgroundBrush(color);
+  m_scene->setBackgroundColor(color);
 
   if (m_profile) {
-    QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
-        255 - ctx.bg_color.blue(), 255);
-    m_profile->setPen(QPen(color, 0));
+    QColor icolor(255 - color.red(), 255 - color.green(), 255 - color.blue());
+    m_origin->setPen(QPen(icolor, 0));
+    m_profile->setPen(QPen(icolor, 0));
     m_profile->setBrush(Qt::transparent);
   }
 }

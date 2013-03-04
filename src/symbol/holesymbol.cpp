@@ -17,22 +17,14 @@ HoleSymbol::HoleSymbol(QString def, Polarity polarity):
   m_tp = caps[3].toDouble() / 1000.0;
   m_tm = caps[4].toDouble() / 1000.0;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath HoleSymbol::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
+  QPainterPath path;
 
-  m_cachedPath = QPainterPath();
+  path.addEllipse(QPointF(0, 0), m_r, m_r);
 
-  m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
-
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }

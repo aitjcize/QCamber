@@ -15,24 +15,16 @@
   QStringList caps = rx.capturedTexts();
   {{constructor}}
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QPainterPath {{.#name}}::painterPath(void)
 {
-  if (m_valid)
-    return m_cachedPath;
-
-  m_cachedPath = QPainterPath();
+  QPainterPath path;
 
   {{painterPath}}
 
-ret:
-  prepareGeometryChange();
-  m_bounding = m_cachedPath.boundingRect();
-  m_valid = true;
-
-  return m_cachedPath;
+  return path;
 }
 
 {{function_body}}

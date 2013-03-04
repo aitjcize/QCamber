@@ -12,6 +12,6 @@
   ]]></constructor>
 
   <painterPath><![CDATA[
-  m_cachedPath.addEllipse(QPointF(0, 0), m_r, m_r);
+  path.addEllipse(QPointF(0, 0), m_r, m_r);
   ]]></painterPath>
 </symbol>
