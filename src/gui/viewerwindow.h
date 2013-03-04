@@ -33,6 +33,9 @@ public:
   void showLayer(QString name);
   virtual void show(void);
 
+signals:
+  void bgColorChanged(QColor);
+
 public slots:
   void on_actionSetColor_triggered(void);
 

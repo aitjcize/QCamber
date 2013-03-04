@@ -2,12 +2,14 @@
 
 #include <QtGui>
 
+#include "context.h"
+
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
   QGraphicsScene(parent), m_areaZoomEnabled(false),
   m_rubberBandActivated(false), m_viewScaleFactor(-1)
 {
   m_rubberBand = new QGraphicsRectItem;
-  m_rubberBand->setBrush(QColor(255, 255, 255, 64));
+  setBackgroundColor(ctx.bg_color);
 }
 
 ODBPPGraphicsScene::~ODBPPGraphicsScene()
@@ -33,6 +35,15 @@ void ODBPPGraphicsScene::clearHighlight(void)
     dynamic_cast<GraphicsLayerScene*>(
         m_layers[i]->layerScene())->clearHighlight();
   }
+}
+
+void ODBPPGraphicsScene::setBackgroundColor(QColor color)
+{
+  setBackgroundBrush(color);
+  QColor icolor(255 - color.red(), 255 - color.green(), 255 - color.blue());
+  m_rubberBand->setPen(QPen(icolor, 0));
+  icolor.setAlpha(64);
+  m_rubberBand->setBrush(icolor);
 }
 
 QList<GraphicsLayer*> ODBPPGraphicsScene::layers(void)
@@ -83,7 +94,6 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if (!m_rubberBandActivated) {
       m_rubberPS = event->scenePos();
       m_rubberBandActivated = true;
-      m_rubberBand->setPen(QPen(Qt::white, 0));
       m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
       addItem(m_rubberBand);
     } else {

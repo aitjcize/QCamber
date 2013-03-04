@@ -16,8 +16,6 @@ public:
   ~ODBPPGraphicsMiniMapView();
 
   void loadProfile(QString step);
-  void setBackgroundColor(QColor color);
-
   void zoomToAll(void);
   void scaleView(qreal scaleFactor);
 
@@ -28,6 +26,7 @@ public slots:
   void zoomToRect(QRectF rect);
   void zoomMainViewToRect(QRectF rect);
   void redrawSceneRect(QRectF rect);
+  void setBackgroundColor(QColor color);
 
 protected:
   virtual void wheelEvent(QWheelEvent* event);
