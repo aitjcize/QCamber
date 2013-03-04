@@ -23,10 +23,6 @@ public:
 
 signals:
   void featureSelected(Symbol*);
-
-protected:
-  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-  virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
   
 private:
   GraphicsLayer* m_graphicsLayer;

@@ -43,15 +43,3 @@ void GraphicsLayerScene::updateSelection(Symbol* symbol)
   m_selectedSymbols.append(symbol);
   emit featureSelected(symbol);
 }
-
-void GraphicsLayerScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsScene::mousePressEvent(event);
-  m_graphicsLayer->forceUpdate();
-}
-
-void GraphicsLayerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsScene::mouseReleaseEvent(event);
-  m_graphicsLayer->forceUpdate();
-}
