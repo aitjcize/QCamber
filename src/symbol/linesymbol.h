@@ -16,11 +16,8 @@ public:
   virtual QPainterPath painterPath(void);
 
 private:
-  qreal m_xs, m_ys;
-  qreal m_xe, m_ye;
-  int m_sym_num;
+  LineRecord* m_rec;
   QString m_sym_name;
-  int m_dcode;
 };
 
 #endif /* __LineSymbol_H__ */
