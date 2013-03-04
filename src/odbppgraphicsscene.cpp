@@ -116,3 +116,16 @@ void ODBPPGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
   }
   QGraphicsScene::mouseReleaseEvent(event);
 }
+
+void ODBPPGraphicsScene::keyPressEvent(QKeyEvent* event)
+{
+  switch (event->key()) {
+  case Qt::Key_Escape:
+    if (m_rubberBandActivated) {
+      m_rubberBandActivated = false;
+      removeItem(m_rubberBand);
+    }
+    return;
+  }
+  QGraphicsScene::keyPressEvent(event);
+}
