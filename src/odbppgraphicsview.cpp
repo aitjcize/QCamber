@@ -205,6 +205,18 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
   case Qt::Key_PageDown:
     scaleView(0.5);
     return;
+  case Qt::Key_Up:
+    scrollView(0, -500);
+    return;
+  case Qt::Key_Down:
+    scrollView(0, 500);
+    return;
+  case Qt::Key_Left:
+    scrollView(-500, 0);
+    return;
+  case Qt::Key_Right:
+    scrollView(500, 0);
+    return;
   }
   QGraphicsView::keyPressEvent(event);
 }

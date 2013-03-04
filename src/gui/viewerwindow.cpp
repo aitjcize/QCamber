@@ -264,22 +264,22 @@ void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
 
 void ViewerWindow::on_actionPanLeft_triggered(void)
 {
-  ui->viewWidget->scrollView(-100, 0);
+  ui->viewWidget->scrollView(-500, 0);
 }
 
 void ViewerWindow::on_actionPanRight_triggered(void)
 {
-  ui->viewWidget->scrollView(100, 0);
+  ui->viewWidget->scrollView(500, 0);
 }
 
 void ViewerWindow::on_actionPanUp_triggered(void)
 {
-  ui->viewWidget->scrollView(0, -100);
+  ui->viewWidget->scrollView(0, -500);
 }
 
 void ViewerWindow::on_actionPanDown_triggered(void)
 {
-  ui->viewWidget->scrollView(0, 100);
+  ui->viewWidget->scrollView(0, 500);
 }
 
 void ViewerWindow::on_actionHighlight_toggled(bool checked)
