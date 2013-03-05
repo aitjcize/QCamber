@@ -5,8 +5,6 @@
 #include "symbolfactory.h"
 #include "context.h"
 
-Context ctx;
-
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
