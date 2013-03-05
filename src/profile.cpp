@@ -62,14 +62,14 @@ Profile::Profile(QString path): Symbol("profile")
       for (int j = 0; j < ny; ++j) {
         QString path = QString("steps/%1/profile").arg(name.toLower());
         Profile* step = new Profile(ctx.loader->absPath(path));
-        step->setPos(-step->x_datum() + x + dx * i,
-                    -(-step->y_datum() + y + dy * j));
-        step->rotate(angle);
+        step->setPos(x + dx * i, -(y + dy * j));
+        QTransform trans;
+        trans.rotate(-angle);
         if (mirror) {
-          QTransform trans;
           trans.scale(-1, 1);
-          step->setTransform(trans);
         }
+        trans.translate(-step->x_datum(), step->y_datum());
+        step->setTransform(trans);
         addChild(step);
       }
     }
