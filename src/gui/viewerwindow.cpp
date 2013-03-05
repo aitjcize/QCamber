@@ -124,9 +124,6 @@ void ViewerWindow::toggleShowLayer(bool selected)
     ui->viewWidget->addLayer(infobox->layer());
     infobox->setColor(nextColor());
 
-    m_symbolCountView.addSymbolCount(infobox->layer()->symbolCount());
-    m_symbolCountView.show();
-
     m_visibles.append(infobox);
     if (m_visibles.size() == 1) {
       infobox->setActive(true);
