@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 DonutSSymbol::DonutSSymbol(QString def, Polarity polarity):
     Symbol(def, "donut_s([0-9.]+)x([0-9.]+)", polarity), m_def(def)

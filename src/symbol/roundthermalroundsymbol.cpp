@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 RoundThermalRoundSymbol::RoundThermalRoundSymbol(QString def, Polarity polarity):
     Symbol(def, "thr([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
@@ -25,10 +27,9 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
 {
   QPainterPath path;
 
-  qreal a2r = M_PI / 180.0, r2a = 180.0 / M_PI;
   qreal _rad = (m_od - m_id) / 4;
   qreal _orad = (m_od + m_id) / 4;
-  qreal _half_gap_angle = r2a * (qAtan2(m_gap / 2 + _rad, _orad));
+  qreal _half_gap_angle = R2D * (qAtan2(m_gap / 2 + _rad, _orad));
   qreal _pie_angle = 360 / m_num_spokes;
   qreal _start_angle = m_angle + _half_gap_angle;
   qreal _span_angle = _pie_angle - 2 * _half_gap_angle;
@@ -43,12 +44,12 @@ QPainterPath RoundThermalRoundSymbol::painterPath(void)
     path.arcTo(-m_od / 2, -m_od / 2, m_od, m_od,
         _start_angle + _span_angle, -_span_angle);
 
-    _x = _orad * qCos(_start_angle * a2r);
-    _y = _orad * qSin(_start_angle * a2r);
+    _x = _orad * qCos(_start_angle * D2R);
+    _y = _orad * qSin(_start_angle * D2R);
     path.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
-    _x = _orad * qCos((_start_angle + _span_angle) * a2r);
-    _y = _orad * qSin((_start_angle + _span_angle) * a2r);
+    _x = _orad * qCos((_start_angle + _span_angle) * D2R);
+    _y = _orad * qSin((_start_angle + _span_angle) * D2R);
     path.addEllipse(QPointF(_x, -_y), _rad, _rad);
 
     _start_angle += _pie_angle;

@@ -17,6 +17,7 @@ HEADERS += \
   graphicslayer.h \
   graphicslayerscene.h \
   layer.h \
+  macros.h \
   notes.h \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \

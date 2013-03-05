@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 #include "context.h"
 
 SquareRoundThermalSymbol::SquareRoundThermalSymbol(QString def, Polarity polarity):

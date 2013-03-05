@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 VerticalHexagonSymbol::VerticalHexagonSymbol(QString def, Polarity polarity):
     Symbol(def, "hex_s([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)

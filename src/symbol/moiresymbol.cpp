@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 #include "context.h"
 
 MoireSymbol::MoireSymbol(QString def, Polarity polarity):

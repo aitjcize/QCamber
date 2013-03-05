@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 ButterflySymbol::ButterflySymbol(QString def, Polarity polarity):
     Symbol(def, "bfr([0-9.]+)", polarity), m_def(def)

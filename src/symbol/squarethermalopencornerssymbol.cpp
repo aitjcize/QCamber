@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 SquareThermalOpenCornersSymbol::SquareThermalOpenCornersSymbol(QString def, Polarity polarity):
     Symbol(def, "s_tho([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
@@ -25,8 +27,7 @@ QPainterPath SquareThermalOpenCornersSymbol::painterPath(void)
 {
   QPainterPath path;
 
-  qreal a2r = M_PI / 180.0;
-    qreal angle_div = 360.0 / m_num_spokes;
+  qreal angle_div = 360.0 / m_num_spokes;
   QPainterPath sub;
   QMatrix mat;
 
@@ -57,8 +58,8 @@ QPainterPath SquareThermalOpenCornersSymbol::painterPath(void)
 
     for (int i = 0; i < m_num_spokes; ++i) {
       QMatrix mat;
-      mat.translate(offset * sign(qCos((m_angle + angle_div * i) * a2r)),
-                    -offset * sign(qSin((m_angle + angle_div * i) * a2r)));
+      mat.translate(offset * sign(qCos((m_angle + angle_div * i) * D2R)),
+                    -offset * sign(qSin((m_angle + angle_div * i) * D2R)));
       sub.addPath(mat.map(box));
     }
   }

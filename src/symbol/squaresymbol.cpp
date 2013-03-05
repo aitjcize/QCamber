@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 SquareSymbol::SquareSymbol(QString def, Polarity polarity):
     Symbol(def, "s([0-9.]+)", polarity), m_def(def)

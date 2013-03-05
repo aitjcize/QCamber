@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 HalfOvalSymbol::HalfOvalSymbol(QString def, Polarity polarity):
     Symbol(def, "oval_h([0-9.]+)x([0-9.]+)", polarity), m_def(def)

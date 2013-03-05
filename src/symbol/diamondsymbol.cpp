@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 DiamondSymbol::DiamondSymbol(QString def, Polarity polarity):
     Symbol(def, "di([0-9.]+)x([0-9.]+)", polarity), m_def(def)

@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 RectangularThermalSymbol::RectangularThermalSymbol(QString def, Polarity polarity):
     Symbol(def, "rc_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity), m_def(def)
@@ -33,7 +35,6 @@ QPainterPath RectangularThermalSymbol::painterPath(void)
   QPainterPath bar;
   bar.addRect(0, -m_gap / 2, m_w, m_gap);
 
-  qreal a2r = M_PI / 180.0;
   QPainterPath sub;
 
   qreal angle_div = 360.0 / m_num_spokes;
@@ -45,9 +46,9 @@ QPainterPath RectangularThermalSymbol::painterPath(void)
 
     if ((int)ang % 90 != 0) {
       if (m_w > m_h) {
-        mat.translate((m_w - m_h) / 2 * sign(qCos((ang) * a2r)), 0);
+        mat.translate((m_w - m_h) / 2 * sign(qCos((ang) * D2R)), 0);
       } else {
-        mat.translate(0, -(m_h - m_w) / 2 * sign(qSin((ang) * a2r)));
+        mat.translate(0, -(m_h - m_w) / 2 * sign(qSin((ang) * D2R)));
       }
     }
     mat.rotate(-ang);

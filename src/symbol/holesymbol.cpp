@@ -3,6 +3,8 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "macros.h"
+
 
 HoleSymbol::HoleSymbol(QString def, Polarity polarity):
     Symbol(def, "hole([0-9.]+)x([pnv])x([0-9.]+)x([0-9.]+)", polarity), m_def(def)

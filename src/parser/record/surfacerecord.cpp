@@ -1,9 +1,10 @@
 #include "record.h"
 
-#include <QtCore/qmath.h>
+#include <QtCore>
 #include <QPainterPath>
 
 #include "featuresparser.h"
+#include "macros.h"
 #include "surfacesymbol.h"
 
 PolygonRecord::PolygonRecord(const QStringList& param)
@@ -26,6 +27,7 @@ QPainterPath PolygonRecord::painterPath(void)
 {
   QPainterPath path;
   qreal lx, ly;
+
   lx = xbs; ly = ybs;
   path.moveTo(lx, -ly);
 
@@ -43,8 +45,7 @@ QPainterPath PolygonRecord::painterPath(void)
       qreal sax = sx - cx, say = sy - cy;
       qreal eax = ex - cx, eay = ey - cy;
 
-      qreal rs = qSqrt(sax * sax + say * say);
-      qreal re = qSqrt(eax * eax + eay * eay);
+      qreal r = qSqrt(sax * sax + say * say);
 
       qreal sa = qAtan2(say, sax);
       qreal ea = qAtan2(eay, eax);
@@ -53,19 +54,13 @@ QPainterPath PolygonRecord::painterPath(void)
         if (sa < ea) {
           sa += 2 * M_PI;
         }
-        for (qreal a = sa; a >= ea; a -= 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
-        }
       } else {
         if (ea < sa) {
           ea += 2 * M_PI;
         }
-        for (qreal a = sa; a <= ea; a += 0.01) {
-          qreal rad = (rs * (ea - a) + re * (a - sa)) / (ea - sa);
-          path.lineTo(cx + rad * qCos(a), -(cy + rad * qSin(a)));
-        }
       }
+
+      path.arcTo(QRectF(cx -r, -cy -r, r *2, r *2), sa * R2D, (ea - sa) * R2D);
       path.lineTo(ex, -ey);
       lx = ex; ly = ey;
     }
