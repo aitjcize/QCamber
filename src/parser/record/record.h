@@ -16,7 +16,7 @@ typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 struct Record {
   Record(DataStore* _ds): ds(_ds) {}
-  virtual ~Record() { delete symbol; }
+  virtual ~Record() { }
 
   virtual void prepare(void) {}
 

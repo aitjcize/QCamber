@@ -9,6 +9,10 @@ GraphicsLayerScene::GraphicsLayerScene(QObject* parent):
 {
 }
 
+GraphicsLayerScene::~GraphicsLayerScene()
+{
+}
+
 void GraphicsLayerScene::setGraphicsLayer(GraphicsLayer* layer)
 {
   m_graphicsLayer = layer;

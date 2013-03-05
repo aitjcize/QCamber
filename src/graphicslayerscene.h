@@ -13,6 +13,7 @@ class GraphicsLayerScene: public QGraphicsScene {
 
 public:
   GraphicsLayerScene(QObject* parent = 0);
+  virtual ~GraphicsLayerScene();
 
   void setGraphicsLayer(GraphicsLayer* layer);
   bool highlight(void);
