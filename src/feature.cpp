@@ -50,8 +50,8 @@ QTableWidget* Features::symbolCount()
     total += createSection(output,"Surface",nameMap);
     total += createSection(output,"Text",nameMap);
 
-    output->append("\n-----------------------------------");
-    output->append(QString().sprintf("Total \t\t %d",total));
+    output->append("\n--------------------------------------");
+    output->append(QString().sprintf("Total \t %20s \t %d"," ",total));
     output->setReadOnly(true);
     return output;
 }
@@ -63,7 +63,8 @@ int Features::createSection(QTextEdit *output,
     QString text;
     int local_total;
     local_total = 0;
-    output->append(sectionTitle+" List\n-----------------------------------");
+    output->append(sectionTitle+
+                   " List\n--------------------------------------");
 
     if(sectionTitle == "Line"){
         posCountMap = m_ds->posLineCountMap();
@@ -75,16 +76,20 @@ int Features::createSection(QTextEdit *output,
         posCountMap = m_ds->posArcCountMap();
         negCountMap = m_ds->negArcCountMap();
     }else if(sectionTitle == "Surface"){
-        text.sprintf("POS \t\t %d", (local_total+=m_ds->posSurfaceCount()));
+        text.sprintf("POS \t %20s \t %d"," ",
+                     (local_total+=m_ds->posSurfaceCount()));
         output->append(text);
-        text.sprintf("NEG \t\t %d", (local_total+=m_ds->negSurfaceCount()));
+        text.sprintf("NEG \t %20s \t %d"," ",
+                     (local_total+=m_ds->negSurfaceCount()));
         output->append(text);
         output->append(" ");
         return local_total;
     }else if(sectionTitle == "Text"){
-        text.sprintf("POS \t\t %d", (local_total+=m_ds->posTextCount()));
+        text.sprintf("POS \t %20s \t %d"," ",
+                     (local_total+=m_ds->posTextCount()));
         output->append(text);
-        text.sprintf("NEG \t\t %d", (local_total+=m_ds->negTextCount()));
+        text.sprintf("NEG \t %20s \t %d"," ",
+                     (local_total+=m_ds->negTextCount()));
         output->append(text);
         output->append(" ");
         return local_total;
@@ -93,7 +98,7 @@ int Features::createSection(QTextEdit *output,
 
     for(int i = 0;i < posCountMap.size();i++){
       if(posCountMap[i] != 0){
-        text.sprintf("POS \t %s \t %d",
+        text.sprintf("POS \t %20s \t %d",
                      nameMap[i].toAscii().data(),posCountMap[i]);
         output->append(text);
         local_total+=posCountMap[i];
@@ -101,13 +106,13 @@ int Features::createSection(QTextEdit *output,
     }
     for(int i = 0;i < negCountMap.size();i++){
       if(negCountMap[i] != 0){
-        text.sprintf("NEG \t %s \t %d",
+        text.sprintf("NEG \t %20s \t %d",
                      nameMap[i].toAscii().data(),negCountMap[i]);
         output->append(text);
         local_total+=negCountMap[i];
       }
     }
-    output->append(text.sprintf("Total \t\t %d",local_total));
+    output->append(text.sprintf("Total \t %20s \t %d","",local_total));
     output->append(" ");
     return local_total;
 }
