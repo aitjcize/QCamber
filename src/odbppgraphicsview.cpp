@@ -38,10 +38,6 @@ ODBPPGraphicsView::~ODBPPGraphicsView()
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
-  for (int i = 0; i < m_scaleInvariantItems.size(); ++i) {
-    m_scaleInvariantItems[i]->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-  }
-
   if (m_zoomMode != MousePan) {
     setTransformationAnchor(AnchorViewCenter);
   }
@@ -95,11 +91,8 @@ void ODBPPGraphicsView::removeLayer(GraphicsLayer* layer)
   m_scene->removeLayer(layer);
 }
 
-void ODBPPGraphicsView::addItem(QGraphicsItem* item, bool scale_invariant)
+void ODBPPGraphicsView::addItem(QGraphicsItem* item)
 {
-  if (scale_invariant) {
-    m_scaleInvariantItems.append(item);
-  }
   m_scene->addItem(item);
 }
 
@@ -154,7 +147,7 @@ void ODBPPGraphicsView::clearHighlight(void)
 void ODBPPGraphicsView::initialZoom(void)
 {
   zoomToAll();
-  addItem(m_origin, true);
+  addItem(m_origin);
 }
 
 void ODBPPGraphicsView::zoomToAll(void)

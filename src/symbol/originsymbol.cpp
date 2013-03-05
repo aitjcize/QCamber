@@ -3,11 +3,11 @@
 #include <QtGui>
 #include <QRegExp>
 
-
 OriginSymbol::OriginSymbol():
     Symbol("Origin", "Origin", P)
 {
-  m_rad = 0.1;
+  m_rad = 9;
+  setFlag(ItemIgnoresTransformations);
 }
 
 QRectF OriginSymbol::boundingRect() const
@@ -19,7 +19,7 @@ void OriginSymbol::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
   qreal srad = m_rad * 0.7;
-  painter->setPen(QPen(m_pen.color(), 0.005));
+  painter->setPen(QPen(m_pen.color(), 0));
   painter->setBrush(Qt::transparent);
 
   painter->drawEllipse(QPointF(0, 0), srad, srad);

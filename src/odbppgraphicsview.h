@@ -25,7 +25,7 @@ public:
   void clearScene(void);
   void addLayer(GraphicsLayer* layer);
   void removeLayer(GraphicsLayer* layer);
-  void addItem(QGraphicsItem* item, bool scale_invariant=false);
+  void addItem(QGraphicsItem* item);
   void removeItem(QGraphicsItem* item);
 
   void initialZoom(void);
@@ -51,7 +51,6 @@ private:
   ZoomMode m_zoomMode;
   Profile* m_profile;
   Symbol* m_origin;
-  QList<QGraphicsItem*> m_scaleInvariantItems;
 };
 
 #endif /* __ODBPPGRAPHICSVIEW_H__ */
