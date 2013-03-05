@@ -4,7 +4,7 @@
 #include <QRegExp>
 
 #include "featuresparser.h"
-#include "symbolfactory.h"
+#include "symbolpool.h"
 
 LineSymbol::LineSymbol(LineRecord* rec):
   Symbol("Line", "Line", rec->polarity), m_rec(rec)
@@ -32,13 +32,12 @@ QPainterPath LineSymbol::painterPath()
   // Set winding fill
   path.setFillRule(Qt::WindingFill);
 
-  Symbol *symbol = SymbolFactory::create(m_sym_name, m_rec->polarity);
+  Symbol *symbol = SYMBOLPOOL->get(m_sym_name, m_rec->polarity);
   QPainterPath symbolPath = symbol->painterPath();
   if (symbolPath.boundingRect().height() != symbolPath.boundingRect().width()) {
     qDebug() << m_sym_name << "is not a symmetrics symbol, but we'll "
       "still try to draw lines with it";
   }
-  delete symbol;
 
   qreal radius = (qreal)symbolPath.boundingRect().height() / 2;
 

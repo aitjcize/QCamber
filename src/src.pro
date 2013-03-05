@@ -23,7 +23,8 @@ HEADERS += \
   odbppgraphicsminimapview.h \
   profile.h \
   settings.h \
-  symbolfactory.h
+  symbolfactory.h \
+  symbolpool.h
 
 SOURCES += \
   archiveloader.cpp \
@@ -38,7 +39,8 @@ SOURCES += \
   odbppgraphicsview.cpp \
   odbppgraphicsminimapview.cpp \
   profile.cpp \
-  settings.cpp
+  settings.cpp \
+  symbolpool.cpp
 
 INCLUDEPATH += . .build parser parser/record symbol gui
 
