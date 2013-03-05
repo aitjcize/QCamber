@@ -14,6 +14,8 @@ ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
 
 ODBPPGraphicsScene::~ODBPPGraphicsScene()
 {
+  delete m_rubberBand;
+  delete m_measureRubberBand;
 }
 
 void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)

@@ -13,6 +13,7 @@ SymbolPool::~SymbolPool()
       it != m_cache.end(); ++it) {
     delete it.value();
   }
+  m_Instance = NULL;
 }
 
 SymbolPool* SymbolPool::instance()
