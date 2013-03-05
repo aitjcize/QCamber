@@ -11,7 +11,8 @@ using std::endl;
 #include "context.h"
 
 SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
-  Symbol("Surface", "Surface", rec->polarity), m_rec(rec)
+  Symbol("Surface", "Surface", rec->polarity), m_rec(rec),
+  m_islandCount(0), m_holeCount(0)
 {
   m_bounding = painterPath().boundingRect();
 }
@@ -29,6 +30,9 @@ QString SurfaceSymbol::infoText(void)
 QPainterPath SurfaceSymbol::painterPath(void)
 {
   QPainterPath path;
+
+  m_islandCount = 0;
+  m_holeCount = 0;
 
   for (QList<PolygonRecord*>::iterator it = m_rec->polygons.begin();
       it != m_rec->polygons.end(); ++it) {
