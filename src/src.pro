@@ -46,4 +46,10 @@ SOURCES += \
 INCLUDEPATH += . .build parser parser/record symbol gui
 
 DESTDIR = ../bin
-TARGET = camview
+TARGET = qcamber
+
+# Product information
+VERSION = 0.1.0
+QMAKE_TARGET_PRODUCT = "QCamber"
+QMAKE_TARGET_DESCRIPTION = ""
+QMAKE_TARGET_COPYRIGHT = "Copyrights(c) 2013 QCamber Authors"
