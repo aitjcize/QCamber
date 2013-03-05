@@ -11,7 +11,7 @@
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
   QMainWindow(parent), ui(new Ui::ViewerWindow), m_activeInfoBox(NULL),
-  m_transition(false)
+  m_displayUnit(U_INCH), m_transition(false)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
