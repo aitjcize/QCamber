@@ -64,10 +64,10 @@ Profile::Profile(QString path): Symbol("profile")
         Profile* step = new Profile(ctx.loader->absPath(path));
         step->setPos(x + dx * i, -(y + dy * j));
         QTransform trans;
-        trans.rotate(-angle);
         if (mirror) {
           trans.scale(-1, 1);
         }
+        trans.rotate(angle);
         trans.translate(-step->x_datum(), step->y_datum());
         step->setTransform(trans);
         addChild(step);
