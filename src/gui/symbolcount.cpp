@@ -12,3 +12,16 @@ symbolcount::~symbolcount()
 {
     delete ui;
 }
+
+void symbolcount::addSymbolCount(QTextEdit *output)
+{
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(output);
+    ui->scrollAreaWidgetContents->setLayout(layout);
+}
+
+void symbolcount::on_pushButton_clicked()
+{
+    this->close();
+    delete ui->scrollAreaWidgetContents->layout();
+}

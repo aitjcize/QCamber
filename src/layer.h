@@ -8,6 +8,7 @@
 #include "graphicslayerscene.h"
 #include "notes.h"
 #include "symbol.h"
+#include <QTextEdit>
 
 class Layer: public GraphicsLayer {
 public:

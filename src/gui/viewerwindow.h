@@ -13,6 +13,7 @@
 #include "layerinfobox.h"
 #include "odbppgraphicsview.h"
 #include "structuredtextparser.h"
+#include "symbolcount.h"
 
 namespace Ui {
 class ViewerWindow;
@@ -77,6 +78,8 @@ private:
   QLabel* m_featureDetailLabel;
   LayerInfoBox* m_activeInfoBox;
   bool m_transition;
+  symbolcount m_symbolCountView;
+
 };
 
 #endif // __MAINWINDOW_H__

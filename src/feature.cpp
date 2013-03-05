@@ -38,245 +38,76 @@ void Features::addToScene(QGraphicsScene* scene)
 
 QTableWidget* Features::symbolCount()
 {
-  FeaturesDataStore::IDMapType nameMap;
-  FeaturesDataStore::CountMapType countMap;
-  QTableWidget *table = new QTableWidget;
-  QTableWidgetItem * item;
-  QStringList countData;
-  int rowCount = 0, count = 0;
-  int total, local_total;
-  nameMap = m_ds->symbolNameMap();
-  table->setColumnCount(3);
-  total = 0;
+    QTextEdit *output = new QTextEdit;
+    FeaturesDataStore::IDMapType nameMap;
+    int total;
+    total = 0;
+    nameMap = m_ds->symbolNameMap();
 
-  rowCount+=5;
-  local_total = 0;
-  table->setRowCount(rowCount);
-  item = new QTableWidgetItem("Lines List");
-  table->setItem(rowCount-2, 0, item);
-  item = new QTableWidgetItem("---------");
-  table->setItem(rowCount-1, 0, item);
-  countMap = m_ds->posLineCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("POS");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  countMap = m_ds->negLineCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("NEG");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  table->setRowCount(rowCount+2);
-  table->setItem(rowCount, 0, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("-------"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("Total"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem(
-        QString().sprintf("%d", local_total)));
-  total += local_total;
+    total += createSection(output,"Line",nameMap);
+    total += createSection(output,"Pad",nameMap);
+    total += createSection(output,"Arc",nameMap);
+    total += createSection(output,"Surface",nameMap);
+    total += createSection(output,"Text",nameMap);
 
-  rowCount+=3;
-  local_total = 0;
-  table->setRowCount(rowCount);
-  item = new QTableWidgetItem("Pads List");
-  table->setItem(rowCount-2, 0, item);
-  item = new QTableWidgetItem("--------");
-  table->setItem(rowCount-1, 0, item);
-  countMap = m_ds->posPadCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("POS");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  countMap = m_ds->negPadCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("NEG");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  table->setRowCount(rowCount+2);
-  table->setItem(rowCount, 0, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("-------"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("Total"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem(
-        QString().sprintf("%d", local_total)));
-  total += local_total;
+    output->append("\n-----------------------------------");
+    output->append(QString().sprintf("Total \t\t %d",total));
+    output->setReadOnly(true);
+    return output;
+}
 
-  rowCount+=3;
-  local_total = 0;
-  table->setRowCount(rowCount);
-  item = new QTableWidgetItem("Arc List");
-  table->setItem(rowCount-2, 0, item);
-  item = new QTableWidgetItem("---------");
-  table->setItem(rowCount-1, 0, item);
-  countMap = m_ds->posArcCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("POS");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  countMap = m_ds->negArcCountMap();
-  for(int i = 0;i < countMap.size();i++){
-    if(countMap[i] != 0){
-      table->setRowCount(++rowCount);
-      QString text;
-      text.sprintf("%d", countMap[i]);
-      item = new QTableWidgetItem("NEG");
-      table->setItem(rowCount-1, 0, item);
-      item = new QTableWidgetItem(nameMap[i]);
-      table->setItem(rowCount-1, 1, item);
-      item = new QTableWidgetItem(text);
-      table->setItem(rowCount-1, 2, item);
-      local_total+=countMap[i];
-    }
-  }
-  table->setRowCount(rowCount+2);
-  table->setItem(rowCount, 0, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("-------"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("Total"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem(
-        QString().sprintf("%d", local_total)));
-  total += local_total;
-
-  rowCount+=3;
-  local_total = 0;
-  table->setRowCount(rowCount);
-  item = new QTableWidgetItem("Surfaces List");
-  table->setItem(rowCount-2, 0, item);
-  item = new QTableWidgetItem("------------");
-  table->setItem(rowCount-1, 0, item);
-  {
-    count = m_ds->posSurfaceCount();
-    ++rowCount;
-    table->setRowCount(rowCount);
+int Features::createSection(QTextEdit *output,
+            QString sectionTitle, FeaturesDataStore::IDMapType nameMap)
+{
+    FeaturesDataStore::CountMapType posCountMap,negCountMap;
     QString text;
-    text.sprintf("%d", count);
-    item = new QTableWidgetItem("POS");
-    table->setItem(rowCount-1, 0, item);
-    item = new QTableWidgetItem(text);
-    table->setItem(rowCount-1, 1, item);
-    local_total+= count;
-  }
+    int local_total;
+    local_total = 0;
+    output->append(sectionTitle+" List\n-----------------------------------");
 
-  {
-    count = m_ds->negSurfaceCount();
-    ++rowCount;
-    table->setRowCount(rowCount);
-    QString text;
-    text.sprintf("%d", count);
-    item = new QTableWidgetItem("NEG");
-    table->setItem(rowCount-1, 0, item);
-    item = new QTableWidgetItem(text);
-    table->setItem(rowCount-1, 1, item);
-    local_total += count;
-  }
+    if(sectionTitle == "Line"){
+        posCountMap = m_ds->posLineCountMap();
+        negCountMap = m_ds->negLineCountMap();
+    }else if(sectionTitle == "Pad"){
+        posCountMap = m_ds->posPadCountMap();
+        negCountMap = m_ds->negPadCountMap();
+    }else if(sectionTitle == "Arc"){
+        posCountMap = m_ds->posArcCountMap();
+        negCountMap = m_ds->negArcCountMap();
+    }else if(sectionTitle == "Surface"){
+        text.sprintf("POS \t\t %d", (local_total+=m_ds->posSurfaceCount()));
+        output->append(text);
+        text.sprintf("NEG \t\t %d", (local_total+=m_ds->negSurfaceCount()));
+        output->append(text);
+        output->append(" ");
+        return local_total;
+    }else if(sectionTitle == "Text"){
+        text.sprintf("POS \t\t %d", (local_total+=m_ds->posTextCount()));
+        output->append(text);
+        text.sprintf("NEG \t\t %d", (local_total+=m_ds->negTextCount()));
+        output->append(text);
+        output->append(" ");
+        return local_total;
+    }
 
-  table->setRowCount(rowCount+2);
-  table->setItem(rowCount, 0, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("-------"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("Total"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem(
-        QString().sprintf("%d", local_total)));
-  total += local_total;
 
-  rowCount+=3;
-  local_total = 0;
-  table->setRowCount(rowCount);
-  item = new QTableWidgetItem("Texts List");
-  table->setItem(rowCount-2, 0, item);
-  item = new QTableWidgetItem("------------");
-  table->setItem(rowCount-1, 0, item);
-  {
-    count = m_ds->posTextCount();
-    ++rowCount;
-    table->setRowCount(rowCount);
-    QString text;
-    text.sprintf("%d", count);
-    item = new QTableWidgetItem("POS");
-    table->setItem(rowCount-1, 0, item);
-    item = new QTableWidgetItem(text);
-    table->setItem(rowCount-1, 1, item);
-    local_total+= count;
-  }
-
-  {
-    count = m_ds->negTextCount();
-    ++rowCount;
-    table->setRowCount(rowCount);
-    QString text;
-    text.sprintf("%d", count);
-    item = new QTableWidgetItem("NEG");
-    table->setItem(rowCount-1, 0, item);
-    item = new QTableWidgetItem(text);
-    table->setItem(rowCount-1, 1, item);
-    local_total += count;
-  }
-
-  table->setRowCount(rowCount+2);
-  table->setItem(rowCount, 0, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("-------"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem("-------"));
-  table->setItem(rowCount, 1, new QTableWidgetItem("Total"));
-  table->setItem(rowCount++, 2, new QTableWidgetItem(
-        QString().sprintf("%d", local_total)));
-  total += local_total;
-
-  table->setItem(0, 0, new QTableWidgetItem("Total"));
-  table->setItem(0, 2, new QTableWidgetItem(
-        QString().sprintf("%d", total)));
-  table->setItem(1, 0, new QTableWidgetItem("-------"));
-  table->setItem(1, 1, new QTableWidgetItem("-------"));
-  table->setItem(1, 2, new QTableWidgetItem("-------"));
-
-  return table;
+    for(int i = 0;i < posCountMap.size();i++){
+      if(posCountMap[i] != 0){
+        text.sprintf("POS \t %s \t %d",
+                     nameMap[i].toAscii().data(),posCountMap[i]);
+        output->append(text);
+        local_total+=posCountMap[i];
+      }
+    }
+    for(int i = 0;i < negCountMap.size();i++){
+      if(negCountMap[i] != 0){
+        text.sprintf("NEG \t %s \t %d",
+                     nameMap[i].toAscii().data(),negCountMap[i]);
+        output->append(text);
+        local_total+=negCountMap[i];
+      }
+    }
+    output->append(text.sprintf("Total \t\t %d",local_total));
+    output->append(" ");
+    return local_total;
 }

@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 #include <QList>
 #include <QGridLayout>
-#include <QTableWidget>
+#include <QTextEdit>
 
 #include "symbol.h"
 #include "record.h"
