@@ -10,8 +10,8 @@
 #include "settings.h"
 
 ViewerWindow::ViewerWindow(QWidget *parent) :
-  QMainWindow(parent), ui(new Ui::ViewerWindow), m_activeInfoBox(NULL),
-  m_displayUnit(U_INCH), m_transition(false)
+  QMainWindow(parent), ui(new Ui::ViewerWindow), m_displayUnit(U_INCH),
+  m_activeInfoBox(NULL), m_transition(false)
 {
   ui->setupUi(this);
   setAttribute(Qt::WA_DeleteOnClose);
