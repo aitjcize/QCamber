@@ -5,7 +5,7 @@
 #include "context.h"
 
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
-  QGraphicsScene(parent), m_state(AREA_ZOOM), m_measured(false)
+  QGraphicsScene(parent), m_state(S_AREA_ZOOM), m_measured(false)
 {
   m_rubberBand = new QGraphicsRectItem;
   m_measureRubberBand = new MeasureGraphicsItem;
@@ -22,15 +22,15 @@ void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
     removeItem(m_measureRubberBand);
     m_measured = false;
   }
-  m_state = (status? AREA_ZOOM: NONE);
+  m_state = (status? S_AREA_ZOOM: S_NONE);
 }
 
 void ODBPPGraphicsScene::setMeasureEnabled(bool status)
 {
-  if (m_state == AREA_ZOOM_ACTIVE) {
+  if (m_state == S_AREA_ZOOM_ACTIVE) {
     removeItem(m_rubberBand);
   }
-  m_state = (status? MEASURE: NONE);
+  m_state = (status? S_MEASURE: S_NONE);
 }
 
 void ODBPPGraphicsScene::setHighlightEnabled(bool status)
@@ -89,10 +89,10 @@ void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)
 void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
   switch (m_state) {
-  case AREA_ZOOM_ACTIVE:
+  case S_AREA_ZOOM_ACTIVE:
     m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()).normalized());
     break;
-  case MEASURE_ACTIVE:
+  case S_MEASURE_ACTIVE:
     QRectF rect = QRectF(m_rubberPS, event->scenePos()).normalized();
     m_measureRubberBand->setRect(rect);
     emit measureRectSelected(rect);
@@ -110,28 +110,28 @@ void ODBPPGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   switch (m_state) {
-  case AREA_ZOOM:
-    m_state = AREA_ZOOM_ACTIVE;
+  case S_AREA_ZOOM:
+    m_state = S_AREA_ZOOM_ACTIVE;
     m_rubberPS = event->scenePos();
     m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
     addItem(m_rubberBand);
     break;
-  case AREA_ZOOM_ACTIVE:
-    m_state = AREA_ZOOM;
+  case S_AREA_ZOOM_ACTIVE:
+    m_state = S_AREA_ZOOM;
     removeItem(m_rubberBand);
     emit rectSelected(QRectF(m_rubberPS, event->scenePos()));
     break;
-  case MEASURE:
+  case S_MEASURE:
     if (!m_measured) {
       addItem(m_measureRubberBand);
     }
-    m_state = MEASURE_ACTIVE;
+    m_state = S_MEASURE_ACTIVE;
     m_measured = true;
     m_rubberPS = event->scenePos();
     m_measureRubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
     break;
-  case MEASURE_ACTIVE:
-    m_state = MEASURE;
+  case S_MEASURE_ACTIVE:
+    m_state = S_MEASURE;
     break;
   }
 
@@ -153,8 +153,8 @@ void ODBPPGraphicsScene::keyPressEvent(QKeyEvent* event)
 {
   switch (event->key()) {
   case Qt::Key_Escape:
-    if (m_state == AREA_ZOOM_ACTIVE) {
-      m_state = AREA_ZOOM;
+    if (m_state == S_AREA_ZOOM_ACTIVE) {
+      m_state = S_AREA_ZOOM;
       removeItem(m_rubberBand);
     }
     return;

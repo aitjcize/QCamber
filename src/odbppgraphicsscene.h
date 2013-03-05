@@ -13,11 +13,11 @@ class ODBPPGraphicsScene: public QGraphicsScene {
 
 public:
   typedef enum {
-    NONE,
-    AREA_ZOOM,
-    AREA_ZOOM_ACTIVE,
-    MEASURE,
-    MEASURE_ACTIVE
+    S_NONE,
+    S_AREA_ZOOM,
+    S_AREA_ZOOM_ACTIVE,
+    S_MEASURE,
+    S_MEASURE_ACTIVE
   } State;
 
   ODBPPGraphicsScene(QObject* parent = 0);
