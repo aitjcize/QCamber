@@ -5,10 +5,10 @@
 #include "context.h"
 
 ODBPPGraphicsScene::ODBPPGraphicsScene(QObject* parent):
-  QGraphicsScene(parent), m_areaZoomEnabled(false),
-  m_rubberBandActivated(false), m_viewScaleFactor(-1)
+  QGraphicsScene(parent), m_state(AREA_ZOOM), m_measured(false)
 {
   m_rubberBand = new QGraphicsRectItem;
+  m_measureRubberBand = new MeasureGraphicsItem;
   setBackgroundColor(ctx.bg_color);
 }
 
@@ -18,14 +18,26 @@ ODBPPGraphicsScene::~ODBPPGraphicsScene()
 
 void ODBPPGraphicsScene::setAreaZoomEnabled(bool status)
 {
-  m_areaZoomEnabled = status;
+  if (m_measured) {
+    removeItem(m_measureRubberBand);
+    m_measured = false;
+  }
+  m_state = (status? AREA_ZOOM: NONE);
 }
 
-void ODBPPGraphicsScene::setHighlight(bool status)
+void ODBPPGraphicsScene::setMeasureEnabled(bool status)
+{
+  if (m_state == AREA_ZOOM_ACTIVE) {
+    removeItem(m_rubberBand);
+  }
+  m_state = (status? MEASURE: NONE);
+}
+
+void ODBPPGraphicsScene::setHighlightEnabled(bool status)
 {
   for (int i = 0; i < m_layers.size(); ++i) {
     dynamic_cast<GraphicsLayerScene*>(
-        m_layers[i]->layerScene())->setHighlight(status);
+        m_layers[i]->layerScene())->setHighlightEnabled(status);
   }
 }
 
@@ -76,8 +88,15 @@ void ODBPPGraphicsScene::updateLayerViewport(QRect viewRect, QRectF sceneRect)
 
 void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-  if (m_areaZoomEnabled) {
+  switch (m_state) {
+  case AREA_ZOOM_ACTIVE:
     m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()).normalized());
+    break;
+  case MEASURE_ACTIVE:
+    QRectF rect = QRectF(m_rubberPS, event->scenePos()).normalized();
+    m_measureRubberBand->setRect(rect);
+    emit measureRectSelected(rect);
+    break;
   }
   emit mouseMove(event->scenePos());
   QGraphicsScene::mouseMoveEvent(event);
@@ -90,17 +109,30 @@ void ODBPPGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 
 void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-  if (m_areaZoomEnabled) {
-    if (!m_rubberBandActivated) {
-      m_rubberPS = event->scenePos();
-      m_rubberBandActivated = true;
-      m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
-      addItem(m_rubberBand);
-    } else {
-      m_rubberBandActivated = false;
-      removeItem(m_rubberBand);
-      emit rectSelected(QRectF(m_rubberPS, event->scenePos()));
+  switch (m_state) {
+  case AREA_ZOOM:
+    m_state = AREA_ZOOM_ACTIVE;
+    m_rubberPS = event->scenePos();
+    m_rubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
+    addItem(m_rubberBand);
+    break;
+  case AREA_ZOOM_ACTIVE:
+    m_state = AREA_ZOOM;
+    removeItem(m_rubberBand);
+    emit rectSelected(QRectF(m_rubberPS, event->scenePos()));
+    break;
+  case MEASURE:
+    if (!m_measured) {
+      addItem(m_measureRubberBand);
     }
+    m_state = MEASURE_ACTIVE;
+    m_measured = true;
+    m_rubberPS = event->scenePos();
+    m_measureRubberBand->setRect(QRectF(m_rubberPS, m_rubberPS).normalized());
+    break;
+  case MEASURE_ACTIVE:
+    m_state = MEASURE;
+    break;
   }
 
   for (int i = 0; i < m_layers.size(); ++i) {
@@ -121,8 +153,8 @@ void ODBPPGraphicsScene::keyPressEvent(QKeyEvent* event)
 {
   switch (event->key()) {
   case Qt::Key_Escape:
-    if (m_rubberBandActivated) {
-      m_rubberBandActivated = false;
+    if (m_state == AREA_ZOOM_ACTIVE) {
+      m_state = AREA_ZOOM;
       removeItem(m_rubberBand);
     }
     return;

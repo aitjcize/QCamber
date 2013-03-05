@@ -50,6 +50,7 @@ public slots:
   void on_actionPanDown_triggered(void);
   void on_actionHighlight_toggled(bool checked);
   void on_actionClearHighlight_triggered(void);
+  void on_actionMeasure_toggled(bool checked);
   void on_actionShowNotes_toggled(bool checked);
 
 protected:
@@ -60,8 +61,9 @@ private slots:
   void layerActivated(bool status);
   void loadColorConfig();
   void unitChanged(int index);
-  void updateCursorCoord(QPointF);
+  void updateCursorCoord(QPointF pos);
   void updateFeatureDetail(Symbol* symbol);
+  void updateMeasureResult(QRectF rect);
 
 private:
   Ui::ViewerWindow *ui;

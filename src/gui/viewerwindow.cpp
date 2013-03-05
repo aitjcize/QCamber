@@ -35,6 +35,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
 
   connect(ui->viewWidget->scene(), SIGNAL(mouseMove(QPointF)), this,
       SLOT(updateCursorCoord(QPointF)));
+  connect(ui->viewWidget->scene(), SIGNAL(measureRectSelected(QRectF)), this,
+      SLOT(updateMeasureResult(QRectF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
 
@@ -153,10 +155,10 @@ void ViewerWindow::layerActivated(bool status)
     }
     m_activeInfoBox = infobox;
     if (ui->actionHighlight->isChecked()) {
-      m_activeInfoBox->layer()->setHighlight(true);
+      m_activeInfoBox->layer()->setHighlightEnabled(true);
     }
   } else {
-    infobox->layer()->setHighlight(false);
+    infobox->layer()->setHighlightEnabled(false);
   }
 }
 
@@ -214,6 +216,13 @@ void ViewerWindow::updateFeatureDetail(Symbol* symbol)
   m_featureDetailLabel->setText(symbol->infoText());
 }
 
+void ViewerWindow::updateMeasureResult(QRectF rect)
+{
+  QString result("DX=%1, DY=%2, D=%3");
+  m_featureDetailLabel->setText(result.arg(rect.width()).arg(rect.height())
+    .arg(qSqrt(rect.width() * rect.width() + rect.height() * rect.height())));
+}
+
 void ViewerWindow::on_actionSetColor_triggered(void)
 {
   SettingsDialog dialog;
@@ -245,6 +254,7 @@ void ViewerWindow::on_actionMousePan_toggled(bool checked)
   m_transition = true;
   ui->actionAreaZoom->setChecked(false);
   ui->actionHighlight->setChecked(false);
+  ui->actionMeasure->setChecked(false);
   m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
 }
@@ -258,6 +268,7 @@ void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
   m_transition = true;
   ui->actionMousePan->setChecked(false);
   ui->actionHighlight->setChecked(false);
+  ui->actionMeasure->setChecked(false);
   m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
 }
@@ -290,16 +301,31 @@ void ViewerWindow::on_actionHighlight_toggled(bool checked)
   m_transition = true;
   ui->actionAreaZoom->setChecked(false);
   ui->actionMousePan->setChecked(false);
+  ui->actionMeasure->setChecked(false);
   m_transition = false;
-  ui->viewWidget->setHighlight(checked);
+  ui->viewWidget->setHighlightEnabled(checked);
   if (m_activeInfoBox) {
-    m_activeInfoBox->layer()->setHighlight(checked);
+    m_activeInfoBox->layer()->setHighlightEnabled(checked);
   }
 }
 
 void ViewerWindow::on_actionClearHighlight_triggered(void)
 {
   ui->viewWidget->clearHighlight();
+}
+
+void ViewerWindow::on_actionMeasure_toggled(bool checked)
+{
+  if (m_transition) {
+    return;
+  }
+  m_transition = true;
+  ui->actionAreaZoom->setChecked(false);
+  ui->actionMousePan->setChecked(false);
+  ui->actionHighlight->setChecked(false);
+  m_transition = false;
+
+  ui->viewWidget->setMeasureEnabled(checked);
 }
 
 void ViewerWindow::on_actionShowNotes_toggled(bool checked)

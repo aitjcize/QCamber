@@ -68,12 +68,12 @@ void ODBPPGraphicsView::setZoomMode(ZoomMode mode)
     break;
   case AreaZoom:
     m_scene->setAreaZoomEnabled(true);
-    m_scene->setHighlight(false);
+    m_scene->setHighlightEnabled(false);
     setDragMode(NoDrag);
     break;
   case MousePan:
     m_scene->setAreaZoomEnabled(false);
-    m_scene->setHighlight(false);
+    m_scene->setHighlightEnabled(false);
     setDragMode(ScrollHandDrag);
     break;
   }
@@ -131,7 +131,13 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
   }
 }
 
-void ODBPPGraphicsView::setHighlight(bool status)
+void ODBPPGraphicsView::setMeasureEnabled(bool status)
+{
+  m_scene->setHighlightEnabled(false);
+  m_scene->setMeasureEnabled(status);
+}
+
+void ODBPPGraphicsView::setHighlightEnabled(bool status)
 {
   if (status) {
     setZoomMode(ODBPPGraphicsView::None);

@@ -18,10 +18,11 @@ HEADERS += \
   graphicslayerscene.h \
   layer.h \
   macros.h \
+  measuregraphicsitem.h \
   notes.h \
+  odbppgraphicsminimapview.h \
   odbppgraphicsscene.h \
   odbppgraphicsview.h \
-  odbppgraphicsminimapview.h \
   profile.h \
   settings.h \
   symbolfactory.h \
@@ -35,6 +36,7 @@ SOURCES += \
   graphicslayerscene.cpp \
   layer.cpp \
   main.cpp \
+  measuregraphicsitem.cpp \
   notes.cpp \
   odbppgraphicsscene.cpp \
   odbppgraphicsview.cpp \

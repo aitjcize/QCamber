@@ -5,12 +5,21 @@
 #include <QPointF>
 
 #include "graphicslayer.h"
+#include "measuregraphicsitem.h"
 #include "symbol.h"
 
 class ODBPPGraphicsScene: public QGraphicsScene {
   Q_OBJECT
 
 public:
+  typedef enum {
+    NONE,
+    AREA_ZOOM,
+    AREA_ZOOM_ACTIVE,
+    MEASURE,
+    MEASURE_ACTIVE
+  } State;
+
   ODBPPGraphicsScene(QObject* parent = 0);
   ~ODBPPGraphicsScene();
 
@@ -21,13 +30,15 @@ public:
   void removeLayer(GraphicsLayer* layer);
   void updateLayerViewport(QRect viewRect, QRectF sceneRect);
 
-  void setHighlight(bool status);
+  void setMeasureEnabled(bool status);
+  void setHighlightEnabled(bool status);
   void clearHighlight(void);
 
 signals:
   void mouseMove(QPointF);
   void featureSelected(Symbol*);
   void rectSelected(QRectF);
+  void measureRectSelected(QRectF);
 
 public slots:
   void setBackgroundColor(QColor color);
@@ -40,13 +51,12 @@ protected:
   virtual void keyPressEvent(QKeyEvent* event);
 
 private:
+  State m_state;
   QGraphicsRectItem* m_rubberBand;
+  MeasureGraphicsItem* m_measureRubberBand;
   QPointF m_rubberPS;
   QColor m_reubberBandColor;
-  bool m_areaZoomEnabled;
-  bool m_rubberBandActivated;
-  qreal m_viewScaleFactor;
-  qreal m_penWidth;
+  bool m_measured;
   QList<GraphicsLayer*> m_layers;
 };
 

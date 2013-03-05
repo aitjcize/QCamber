@@ -18,7 +18,8 @@ public:
 
   void setZoomMode(ZoomMode mode);
   void loadProfile(QString step);
-  void setHighlight(bool status);
+  void setMeasureEnabled(bool status);
+  void setHighlightEnabled(bool status);
   void clearHighlight(void);
 
   void clearScene(void);

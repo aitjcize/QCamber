@@ -23,7 +23,7 @@ bool GraphicsLayerScene::highlight(void)
   return m_highlight;
 }
 
-void GraphicsLayerScene::setHighlight(bool status)
+void GraphicsLayerScene::setHighlightEnabled(bool status)
 {
   m_highlight = status;
 

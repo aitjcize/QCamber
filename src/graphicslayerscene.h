@@ -17,7 +17,7 @@ public:
 
   void setGraphicsLayer(GraphicsLayer* layer);
   bool highlight(void);
-  void setHighlight(bool status);
+  void setHighlightEnabled(bool status);
   void clearHighlight(void);
 
   void updateSelection(Symbol* symbol);
