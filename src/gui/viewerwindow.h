@@ -6,6 +6,7 @@
 #include <QList>
 #include <QMainWindow>
 #include <QMap>
+#include <QSignalMapper>
 #include <QVBoxLayout>
 
 #include "context.h"
@@ -80,7 +81,6 @@ private:
   LayerInfoBox* m_activeInfoBox;
   bool m_transition;
   symbolcount m_symbolCountView;
-
 };
 
 #endif // __MAINWINDOW_H__

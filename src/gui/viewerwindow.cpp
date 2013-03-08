@@ -141,6 +141,7 @@ void ViewerWindow::toggleShowLayer(bool selected)
       }
     }
   }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::layerActivated(bool status)
@@ -157,6 +158,7 @@ void ViewerWindow::layerActivated(bool status)
   } else {
     infobox->layer()->setHighlightEnabled(false);
   }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 QColor ViewerWindow::nextColor(void)
@@ -225,21 +227,25 @@ void ViewerWindow::on_actionSetColor_triggered(void)
   SettingsDialog dialog;
   dialog.exec();
   loadColorConfig();
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionZoomIn_triggered(void)
 {
   ui->viewWidget->scaleView(2);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionZoomOut_triggered(void)
 {
   ui->viewWidget->scaleView(0.5);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionHome_triggered(void)
 {
   ui->viewWidget->zoomToAll();
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionMousePan_toggled(bool checked)
@@ -254,6 +260,7 @@ void ViewerWindow::on_actionMousePan_toggled(bool checked)
   ui->actionMeasure->setChecked(false);
   m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::MousePan);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
@@ -268,26 +275,31 @@ void ViewerWindow::on_actionAreaZoom_toggled(bool checked)
   ui->actionMeasure->setChecked(false);
   m_transition = false;
   ui->viewWidget->setZoomMode(ODBPPGraphicsView::AreaZoom);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionPanLeft_triggered(void)
 {
   ui->viewWidget->scrollView(-500, 0);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionPanRight_triggered(void)
 {
   ui->viewWidget->scrollView(500, 0);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionPanUp_triggered(void)
 {
   ui->viewWidget->scrollView(0, -500);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionPanDown_triggered(void)
 {
   ui->viewWidget->scrollView(0, 500);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionHighlight_toggled(bool checked)
@@ -304,11 +316,13 @@ void ViewerWindow::on_actionHighlight_toggled(bool checked)
   if (m_activeInfoBox) {
     m_activeInfoBox->layer()->setHighlightEnabled(checked);
   }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionClearHighlight_triggered(void)
 {
   ui->viewWidget->clearHighlight();
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionMeasure_toggled(bool checked)
@@ -323,6 +337,7 @@ void ViewerWindow::on_actionMeasure_toggled(bool checked)
   m_transition = false;
 
   ui->viewWidget->setMeasureEnabled(checked);
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionShowOutline_toggled(bool checked)
@@ -330,6 +345,7 @@ void ViewerWindow::on_actionShowOutline_toggled(bool checked)
   for (int i = 0; i < m_visibles.size(); ++i) {
     m_visibles[i]->layer()->setShowOutline(checked);
   }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
 void ViewerWindow::on_actionShowNotes_toggled(bool checked)
@@ -341,4 +357,5 @@ void ViewerWindow::on_actionShowNotes_toggled(bool checked)
       ui->viewWidget->removeItem(m_visibles[i]->layer()->notes());
     }
   }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
