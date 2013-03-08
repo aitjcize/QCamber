@@ -6,7 +6,7 @@
 #include "odbppgraphicsscene.h"
 
 GraphicsLayer::GraphicsLayer(QGraphicsItem* parent):
-  QGraphicsItem(parent)
+  QGraphicsItem(parent), m_showOutline(false)
 {
   m_layerScene = NULL;
 }
@@ -39,8 +39,16 @@ void GraphicsLayer::setSceneRect(const QRectF& rect)
   m_sceneRect = rect;
 }
 
+void GraphicsLayer::setShowOutline(bool status)
+{
+  m_showOutline = status;
+  setBrush(m_brush);
+  forceUpdate();
+}
+
 void GraphicsLayer::setPen(const QPen& pen)
 {
+  m_pen = pen;
   QList<QGraphicsItem*> items = m_layerScene->items();
   for (int i = 0; i < items.size(); ++i) {
     dynamic_cast<Symbol*>(items[i])->setPen(pen);
@@ -49,9 +57,16 @@ void GraphicsLayer::setPen(const QPen& pen)
 
 void GraphicsLayer::setBrush(const QBrush& brush)
 {
+  QBrush tbrush = brush;
+  m_brush = brush;
+
+  if (m_showOutline) {
+    tbrush = Qt::transparent;
+  }
+
   QList<QGraphicsItem*> items = m_layerScene->items();
   for (int i = 0; i < items.size(); ++i) {
-    dynamic_cast<Symbol*>(items[i])->setBrush(brush);
+    dynamic_cast<Symbol*>(items[i])->setBrush(tbrush);
   }
 }
 

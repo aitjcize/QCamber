@@ -157,6 +157,7 @@
    <addaction name="separator"/>
    <addaction name="actionMeasure"/>
    <addaction name="separator"/>
+   <addaction name="actionShowOutline"/>
    <addaction name="actionShowNotes"/>
   </widget>
   <action name="actionSetColor">
@@ -300,6 +301,21 @@
    </property>
    <property name="text">
     <string>Measure</string>
+   </property>
+  </action>
+  <action name="actionShowOutline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/view-list-icons.png</normaloff>icons/view-list-icons.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show Outline</string>
+   </property>
+   <property name="toolTip">
+    <string>Show outline of a layer</string>
    </property>
   </action>
  </widget>

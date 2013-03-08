@@ -18,6 +18,7 @@ public:
 
   void setViewRect(const QRect& rect);
   void setSceneRect(const QRectF& rect);
+  void setShowOutline(bool status);
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);
 
@@ -28,11 +29,13 @@ public:
   void forceUpdate(void);
 
 protected:
-  GraphicsLayerScene* m_layerScene;
-  QRect m_viewRect;
+  GraphicsLayerScene* m_layerScene; QRect m_viewRect;
   QRectF m_sceneRect;
   QPixmap m_pixmap;
   QRectF m_prevSceneRect;
+  QPen m_pen;
+  QBrush m_brush;
+  bool m_showOutline;
 };
 
 #endif /* __GRAPHICSLAYER_H__ */

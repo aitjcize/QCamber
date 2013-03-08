@@ -123,14 +123,11 @@ void ViewerWindow::toggleShowLayer(bool selected)
   if (!selected) {
     ui->viewWidget->addLayer(infobox->layer());
     infobox->setColor(nextColor());
+    infobox->layer()->setShowOutline(ui->actionShowOutline->isChecked());
 
     m_visibles.append(infobox);
     if (m_visibles.size() == 1) {
       infobox->setActive(true);
-    } else {
-      for (int i = 0; i < m_visibles.size(); ++i) {
-        m_visibles[i]->layer()->forceUpdate();
-      }
     }
   } else {
     int index = m_colors.indexOf(infobox->color());
@@ -326,6 +323,13 @@ void ViewerWindow::on_actionMeasure_toggled(bool checked)
   m_transition = false;
 
   ui->viewWidget->setMeasureEnabled(checked);
+}
+
+void ViewerWindow::on_actionShowOutline_toggled(bool checked)
+{
+  for (int i = 0; i < m_visibles.size(); ++i) {
+    m_visibles[i]->layer()->setShowOutline(checked);
+  }
 }
 
 void ViewerWindow::on_actionShowNotes_toggled(bool checked)
