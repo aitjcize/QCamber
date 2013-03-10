@@ -4,20 +4,84 @@
 #include <typeinfo>
 #include <QDebug>
 
-Features::Features(QString path, bool single): Symbol("features")
+Features::Features(QString step, QString path):
+  Symbol("features")
 {
-  FeaturesParser parser(path);
+  setHandlesChildEvents(true);
+
+  FeaturesParser parser(ctx.loader->absPath(path.arg(step)));
   m_ds = parser.parse();
 
-  if (single) {
-    QList<Record*> records = m_ds->records();
-
-    for (QList<Record*>::const_iterator it = records.begin();
-        it != records.end(); ++it) {
-      Record* rec = *it;
-      rec->addToChild(this);
-    }
+  if (m_ds->records().size() == 0) {
+    return;
   }
+
+  QString hdr = "steps/%1/stephdr";
+  StructuredTextParser stephdr_parser(ctx.loader->absPath(hdr.arg(step)));
+  StructuredTextDataStore* hds = stephdr_parser.parse();
+
+  StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
+      "STEP-REPEAT");
+
+  qreal top_active, bottom_active, left_active, right_active;
+
+  try {
+#define GET(key) (QString::fromStdString(hds->get(key)))
+    m_x_datum = GET("X_DATUM").toDouble();
+    m_y_datum = GET("Y_DATUM").toDouble();
+    m_x_origin = GET("X_ORIGIN").toDouble();
+    m_y_origin = GET("Y_ORIGIN").toDouble();
+
+    top_active = GET("TOP_ACTIVE").toDouble();
+    bottom_active = GET("BOTTOM_ACTIVE").toDouble();
+    left_active = GET("LEFT_ACTIVE").toDouble();
+    right_active = GET("RIGHT_ACTIVE").toDouble();
+#undef GET
+
+    m_activeRect.setX(m_activeRect.x() + left_active);
+    m_activeRect.setY(m_activeRect.y() + top_active);
+    m_activeRect.setWidth(m_activeRect.width() - right_active);
+    m_activeRect.setHeight(m_activeRect.height() - bottom_active);
+  } catch(StructuredTextDataStore::InvalidKeyException) {
+    m_x_datum = m_y_datum = m_x_origin = m_y_origin = 0;
+  }
+
+  if (ip.first == ip.second) {
+    m_activeRect = QRectF();
+  }
+
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
+#define GET(key) (QString::fromStdString(it->second->get(key)))
+    QString name = GET("NAME").toLower();
+    qreal x = GET("X").toDouble();
+    qreal y = GET("Y").toDouble();
+    qreal dx = GET("DX").toDouble();
+    qreal dy = GET("DY").toDouble();
+    int nx = GET("NX").toInt();
+    int ny = GET("NY").toInt();
+    qreal angle = GET("ANGLE").toDouble();
+    bool mirror = (GET("MIRROR") == "YES");
+
+    for (int i = 0; i < nx; ++i) {
+      for (int j = 0; j < ny; ++j) {
+        Features* step = new Features(name, path);
+        step->setPos(x + dx * i, -(y + dy * j));
+        QTransform trans;
+        if (mirror) {
+          trans.scale(-1, 1);
+        }
+        trans.rotate(angle);
+        trans.translate(-step->x_datum(), step->y_datum());
+        step->setTransform(trans);
+        m_repeats.append(step);
+      }
+    }
+
+#undef GET
+  }
+
+  delete hds;
 }
 
 Features::~Features()
@@ -25,15 +89,64 @@ Features::~Features()
   delete m_ds;
 }
 
+QRectF Features::boundingRect() const
+{
+  return QRectF();
+}
+
 void Features::addToScene(QGraphicsScene* scene)
 {
-  QList<Record*> records = m_ds->records();
-
-  for (QList<Record*>::const_iterator it = records.begin();
-      it != records.end(); ++it) {
-    Record* rec = *it;
-    rec->addToScene(scene);
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->addToScene(scene);
   }
+
+  scene->addItem(this);
+
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
+    (*it)->addToScene(scene);
+  }
+}
+
+void Features::setTransform(const QTransform& matrix, bool combine)
+{
+  m_trans = matrix;
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
+    Symbol* symbol = (*it)->symbol;
+    QTransform trans;
+    trans *= matrix;
+    (*it)->symbol->setTransform(trans, true);
+  }
+
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->setTransform(matrix, combine);
+  }
+
+  QGraphicsItem::setTransform(matrix, combine);
+}
+
+void Features::setPos(qreal x, qreal y)
+{
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
+    //QTransform trans;
+    //Jtrans.translate(x, y);
+    //(*it)->symbol->setTransform(trans, true);
+    Symbol* symbol = (*it)->symbol;
+    symbol->setPos(symbol->pos().x() + x, symbol->pos().y() + y);
+    symbol->setTransformOriginPoint(x, y);
+  }
+
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->setTransformOriginPoint(x, y);
+    (*it)->setPos(x, y);
+  }
+
+  QGraphicsItem::setPos(x, y);
 }
 
 QTableWidget* Features::symbolCount()

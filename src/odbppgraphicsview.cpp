@@ -34,6 +34,7 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
 ODBPPGraphicsView::~ODBPPGraphicsView()
 {
   m_scene->deleteLater();
+  delete m_profile;
 }
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
@@ -103,12 +104,10 @@ void ODBPPGraphicsView::removeItem(QGraphicsItem* item)
 
 void ODBPPGraphicsView::loadProfile(QString step)
 {
-  QString path;
-  path = QString("steps/%1/profile").arg(step.toLower());
-  m_profile = new Profile(ctx.loader->absPath(path));
-  m_scene->addItem(m_profile);
-  m_origin = new OriginSymbol();
+  m_profile = new Profile(step.toLower());
+  addLayer(m_profile);
 
+  m_origin = new OriginSymbol();
   setBackgroundColor(ctx.bg_color);
 }
 

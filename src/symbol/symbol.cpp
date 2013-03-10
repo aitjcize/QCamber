@@ -98,7 +98,6 @@ QPainterPath Symbol::painterPath(void)
 void Symbol::addChild(Symbol* symbol)
 {
   symbol->setParentItem(this);
-  //addToGroup(symbol);
   m_symbols.append(symbol);
 }
 

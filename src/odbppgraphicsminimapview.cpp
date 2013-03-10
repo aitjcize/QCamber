@@ -44,9 +44,7 @@ void ODBPPGraphicsMiniMapView::scaleView(qreal scaleFactor)
 
 void ODBPPGraphicsMiniMapView::loadProfile(QString step)
 {
-  QString path;
-  path = QString("steps/%1/profile").arg(step.toLower());
-  m_profile = new Profile(ctx.loader->absPath(path));
+  m_profile = new Profile(step.toLower());
 
   QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
       255 - ctx.bg_color.blue(), 255);
