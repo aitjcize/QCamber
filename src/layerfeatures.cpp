@@ -1,10 +1,10 @@
-#include "feature.h"
+#include "layerfeatures.h"
 
 #include "context.h"
 #include <typeinfo>
 #include <QDebug>
 
-Features::Features(QString step, QString path):
+LayerFeatures::LayerFeatures(QString step, QString path):
   Symbol("features"), m_showRepeat(false)
 {
   setHandlesChildEvents(true);
@@ -65,7 +65,7 @@ Features::Features(QString step, QString path):
 
     for (int i = 0; i < nx; ++i) {
       for (int j = 0; j < ny; ++j) {
-        Features* step = new Features(name, path);
+        LayerFeatures* step = new LayerFeatures(name, path);
         step->m_virtualParent = this;
         step->setPos(QPointF(x + dx * i, -(y + dy * j)));
 
@@ -86,31 +86,31 @@ Features::Features(QString step, QString path):
   delete hds;
 }
 
-Features::~Features()
+LayerFeatures::~LayerFeatures()
 {
   delete m_ds;
 }
 
-QRectF Features::boundingRect() const
+QRectF LayerFeatures::boundingRect() const
 {
   return QRectF();
 }
 
-void Features::addToScene(QGraphicsScene* scene)
+void LayerFeatures::addToScene(QGraphicsScene* scene)
 {
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     (*it)->addToScene(scene);
   }
 
-  for (QList<Features*>::iterator it = m_repeats.begin();
+  for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     (*it)->addToScene(scene);
     (*it)->setVisible(m_showRepeat);
   }
 }
 
-void Features::setTransform(const QTransform& matrix, bool combine)
+void LayerFeatures::setTransform(const QTransform& matrix, bool combine)
 {
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
@@ -123,7 +123,7 @@ void Features::setTransform(const QTransform& matrix, bool combine)
     symbol->setTransform(symbol->transform() * trans, false);
   }
 
-  for (QList<Features*>::iterator it = m_repeats.begin();
+  for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     QTransform trans;
     QPointF o = transform().inverted().map(pos());
@@ -136,12 +136,12 @@ void Features::setTransform(const QTransform& matrix, bool combine)
   QGraphicsItem::setTransform(matrix, true);
 }
 
-void Features::setPos(QPointF pos)
+void LayerFeatures::setPos(QPointF pos)
 {
   setPos(pos.x(), pos.y());
 }
 
-void Features::setPos(qreal x, qreal y)
+void LayerFeatures::setPos(qreal x, qreal y)
 {
   QTransform trans = QTransform::fromTranslate(x, y);
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
@@ -150,7 +150,7 @@ void Features::setPos(qreal x, qreal y)
     symbol->setTransform(symbol->transform() * trans, false);
   }
 
-  for (QList<Features*>::iterator it = m_repeats.begin();
+  for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     (*it)->setPos(x, y);
   }
@@ -159,30 +159,30 @@ void Features::setPos(qreal x, qreal y)
   QGraphicsItem::setPos(x, y);
 }
 
-void Features::setVisible(bool status)
+void LayerFeatures::setVisible(bool status)
 {
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     (*it)->symbol->setVisible(status);
   }
 
-  for (QList<Features*>::iterator it = m_repeats.begin();
+  for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     (*it)->setVisible(status);
   }
 }
 
-void Features::setShowStepRepeat(bool status)
+void LayerFeatures::setShowStepRepeat(bool status)
 {
   m_showRepeat = status;
 
-  for (QList<Features*>::iterator it = m_repeats.begin();
+  for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     (*it)->setVisible(status);
   }
 }
 
-QTextEdit* Features::symbolCount()
+QTextEdit* LayerFeatures::symbolCount()
 {
     QTextEdit *output = new QTextEdit;
     FeaturesDataStore::IDMapType nameMap;
@@ -202,7 +202,7 @@ QTextEdit* Features::symbolCount()
     return output;
 }
 
-int Features::createSection(QTextEdit *output,
+int LayerFeatures::createSection(QTextEdit *output,
             QString sectionTitle, FeaturesDataStore::IDMapType nameMap)
 {
     FeaturesDataStore::CountMapType posCountMap,negCountMap;

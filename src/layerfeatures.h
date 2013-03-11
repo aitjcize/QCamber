@@ -1,5 +1,5 @@
-#ifndef __FEATURES_H__
-#define __FEATURES_H__
+#ifndef __LAYERFEATURES_H__
+#define __LAYERFEATURES_H__
 
 #include <QString>
 #include <QGraphicsScene>
@@ -11,10 +11,10 @@
 #include "record.h"
 #include "featuresparser.h"
 
-class Features: public Symbol {
+class LayerFeatures: public Symbol {
 public:
-  Features(QString step, QString path);
-  virtual ~Features();
+  LayerFeatures(QString step, QString path);
+  virtual ~LayerFeatures();
 
   virtual QRectF boundingRect() const;
   void addToScene(QGraphicsScene* scene);
@@ -30,15 +30,15 @@ public:
   void setShowStepRepeat(bool status);
 
 private:
-  Features* m_virtualParent;
+  LayerFeatures* m_virtualParent;
   FeaturesDataStore* m_ds;
-  Features* m_profile;
+  LayerFeatures* m_profile;
   QRectF m_activeRect;
   qreal m_x_datum, m_y_datum;
   qreal m_x_origin, m_y_origin;
   bool m_showRepeat;
-  QList<Features*> m_repeats;
+  QList<LayerFeatures*> m_repeats;
   QTransform m_trans;
 };
 
-#endif /* __FEATURES_H__ */
+#endif /* __LAYERFEATURES_H__ */

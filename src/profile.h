@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 #include <QList>
 
-#include "feature.h"
+#include "layerfeatures.h"
 #include "graphicslayer.h"
 #include "graphicslayerscene.h"
 #include "record.h"
@@ -21,7 +21,7 @@ protected:
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-  Features* m_features;
+  LayerFeatures* m_features;
 };
 
 #endif /* __PROFILE_H__ */

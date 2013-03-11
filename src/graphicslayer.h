@@ -3,8 +3,8 @@
 
 #include <QGraphicsScene>
 
-#include "feature.h"
 #include "graphicslayerscene.h"
+#include "layerfeatures.h"
 #include "notes.h"
 #include "symbol.h"
 

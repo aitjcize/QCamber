@@ -3,7 +3,7 @@
 
 #include <QGraphicsScene>
 
-#include "feature.h"
+#include "layerfeatures.h"
 #include "graphicslayer.h"
 #include "graphicslayerscene.h"
 #include "notes.h"
@@ -26,7 +26,7 @@ protected:
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-  Features* m_features;
+  LayerFeatures* m_features;
   QString m_step;
   QString m_layer;
   Notes* m_notes;

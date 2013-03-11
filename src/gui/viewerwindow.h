@@ -10,7 +10,7 @@
 #include <QVBoxLayout>
 
 #include "context.h"
-#include "feature.h"
+#include "layerfeatures.h"
 #include "layerinfobox.h"
 #include "odbppgraphicsview.h"
 #include "structuredtextparser.h"

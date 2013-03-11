@@ -13,7 +13,7 @@ include (gui/gui.pri)
 HEADERS += \
   archiveloader.h \
   context.h \
-  feature.h \
+  layerfeatures.h \
   graphicslayer.h \
   graphicslayerscene.h \
   layer.h \
@@ -31,7 +31,7 @@ HEADERS += \
 SOURCES += \
   archiveloader.cpp \
   context.cpp \
-  feature.cpp \
+  layerfeatures.cpp \
   graphicslayer.cpp \
   graphicslayerscene.cpp \
   layer.cpp \
