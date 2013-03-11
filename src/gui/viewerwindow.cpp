@@ -124,6 +124,7 @@ void ViewerWindow::toggleShowLayer(bool selected)
     ui->viewWidget->addLayer(infobox->layer());
     infobox->setColor(nextColor());
     infobox->layer()->setShowOutline(ui->actionShowOutline->isChecked());
+    infobox->layer()->setShowStepRepeat(ui->actionShowStepRepeat->isChecked());
 
     m_visibles.append(infobox);
     if (m_visibles.size() == 1) {
