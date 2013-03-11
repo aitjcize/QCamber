@@ -13,7 +13,7 @@
 
 class Profile: public GraphicsLayer {
 public:
-  Profile(QString step);
+  Profile(QString step, bool stepRepeat = true);
   virtual ~Profile();
 
 protected:

@@ -30,6 +30,10 @@ ODBPPGraphicsMiniMapView::ODBPPGraphicsMiniMapView(QWidget* parent):
 
   connect(m_scene, SIGNAL(rectSelected(QRectF)), this,
       SLOT(zoomMainViewToRect(QRectF)));
+  connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
+      this, SLOT(updateLayerViewport(void)));
+  connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
+      this, SLOT(updateLayerViewport(void)));
 }
 
 ODBPPGraphicsMiniMapView::~ODBPPGraphicsMiniMapView()
@@ -45,13 +49,10 @@ void ODBPPGraphicsMiniMapView::scaleView(qreal scaleFactor)
 void ODBPPGraphicsMiniMapView::loadProfile(QString step)
 {
   m_profile = new Profile(step.toLower());
+  m_scene->addLayer(m_profile);
+  updateLayerViewport();
 
-  QColor color(255 - ctx.bg_color.red(), 255 - ctx.bg_color.green(),
-      255 - ctx.bg_color.blue(), 255);
-
-  m_profile->setPen(QPen(color, 0));
-  m_profile->setBrush(Qt::transparent);
-  m_scene->addItem(m_profile);
+  setBackgroundColor(ctx.bg_color);
 
   m_rect->setRect(m_profile->boundingRect());
 }
@@ -97,6 +98,13 @@ void ODBPPGraphicsMiniMapView::redrawSceneRect(QRectF rect)
   m_rect->setRect(rect);
 }
 
+void ODBPPGraphicsMiniMapView::updateLayerViewport(void)
+{
+  QRect vrect = viewport()->rect();
+  QRectF srect = mapToScene(vrect).boundingRect();
+  m_scene->updateLayerViewport(vrect, srect);
+}
+
 void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* event)
 {
   // Do nothing
@@ -105,4 +113,10 @@ void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* event)
 void ODBPPGraphicsMiniMapView::wheelEvent(QWheelEvent* event)
 {
   // Do nothing
+}
+
+void ODBPPGraphicsMiniMapView::resizeEvent(QResizeEvent* event)
+{
+  updateLayerViewport();
+  QGraphicsView::resizeEvent(event);
 }

@@ -4,12 +4,12 @@
 #include <QDebug>
 #include <QTransform>
 
-Profile::Profile(QString step): GraphicsLayer(NULL)
+Profile::Profile(QString step, bool stepRepeat): GraphicsLayer(NULL)
 {
   setHandlesChildEvents(true);
 
   GraphicsLayerScene* scene = new GraphicsLayerScene;
-  m_features = new LayerFeatures(step, "steps/%1/profile", true);
+  m_features = new LayerFeatures(step, "steps/%1/profile", stepRepeat);
   m_features->addToScene(scene);
   setLayerScene(scene);
 }
