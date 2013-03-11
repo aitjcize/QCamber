@@ -25,16 +25,6 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
   qreal ex = xe, ey = ye;
   qreal dx = ex - sx, dy = ey - sy;
 
-  //make sure start is at left hand side of end
-  if (xs > xe) {
-    qreal tmp = xs;
-    xs = xe;
-    xe = tmp;
-    tmp = ys;
-    ys = ye;
-    ye = tmp;
-  }
-
   qreal a = qAtan2(dy, dx);
   qreal rsina = radius * qSin(a), rcosa = radius * qCos(a);
 
@@ -42,6 +32,7 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
   path.lineTo(sx - rsina, -(sy + rcosa));
   path.lineTo(ex - rsina, -(ey + rcosa));
   path.lineTo(ex + rsina, -(ey - rcosa));
+  path.closeSubpath();
   if (shape == R) {
     path.addEllipse(QPointF(sx, -sy), radius, radius);
     path.addEllipse(QPointF(ex, -ey), radius, radius);
@@ -50,7 +41,6 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
     path.addRect(sx-radius, -sy-radius, radius2, radius2);
     path.addRect(ex-radius, -ey-radius, radius2, radius2);
   }
-  path.closeSubpath();
 
   return path;
 }
