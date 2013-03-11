@@ -38,7 +38,8 @@ ODBPPGraphicsMiniMapView::ODBPPGraphicsMiniMapView(QWidget* parent):
 
 ODBPPGraphicsMiniMapView::~ODBPPGraphicsMiniMapView()
 {
-  delete m_scene;
+  m_scene->deleteLater();
+  delete m_profile;
 }
 
 void ODBPPGraphicsMiniMapView::scaleView(qreal scaleFactor)
