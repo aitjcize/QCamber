@@ -46,6 +46,12 @@ void Layer::setHighlightEnabled(bool status)
   m_layerScene->setHighlightEnabled(status);
 }
 
+void Layer::setShowStepRepeat(bool status)
+{
+  m_features->setShowStepRepeat(status);
+  forceUpdate();
+}
+
 void Layer::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsItem::mousePressEvent(event);

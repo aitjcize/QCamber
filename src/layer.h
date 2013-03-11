@@ -20,6 +20,8 @@ public:
   Notes* notes();
 
   void setHighlightEnabled(bool status);
+  void setShowStepRepeat(bool status);
+  QTextEdit *symbolCount(){return m_features->symbolCount();}
 
 protected:
   virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);

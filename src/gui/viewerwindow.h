@@ -54,6 +54,7 @@ public slots:
   void on_actionClearHighlight_triggered(void);
   void on_actionMeasure_toggled(bool checked);
   void on_actionShowOutline_toggled(bool checked);
+  void on_actionShowStepRepeat_toggled(bool checked);
   void on_actionShowNotes_toggled(bool checked);
 
 protected:

@@ -348,6 +348,14 @@ void ViewerWindow::on_actionShowOutline_toggled(bool checked)
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
 }
 
+void ViewerWindow::on_actionShowStepRepeat_toggled(bool checked)
+{
+  for (int i = 0; i < m_visibles.size(); ++i) {
+    m_visibles[i]->layer()->setShowStepRepeat(checked);
+  }
+  ui->viewWidget->setFocus(Qt::MouseFocusReason);
+}
+
 void ViewerWindow::on_actionShowNotes_toggled(bool checked)
 {
   for (int i = 0; i < m_visibles.size(); ++i) {

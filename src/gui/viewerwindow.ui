@@ -158,6 +158,7 @@
    <addaction name="actionMeasure"/>
    <addaction name="separator"/>
    <addaction name="actionShowOutline"/>
+   <addaction name="actionShowStepRepeat"/>
    <addaction name="actionShowNotes"/>
   </widget>
   <action name="actionSetColor">
@@ -316,6 +317,18 @@
    </property>
    <property name="toolTip">
     <string>Show outline of a layer</string>
+   </property>
+  </action>
+  <action name="actionShowStepRepeat">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/stock_print-setup.png</normaloff>icons/stock_print-setup.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show Step &amp; Repeat Features</string>
    </property>
   </action>
  </widget>
