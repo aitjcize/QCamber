@@ -10,6 +10,7 @@ Profile::Profile(QString step): GraphicsLayer(NULL)
 
   GraphicsLayerScene* scene = new GraphicsLayerScene;
   m_features = new Features(step, "steps/%1/profile");
+  m_features->setShowStepRepeat(true);
   m_features->addToScene(scene);
   setLayerScene(scene);
 }

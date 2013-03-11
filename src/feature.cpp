@@ -5,7 +5,7 @@
 #include <QDebug>
 
 Features::Features(QString step, QString path):
-  Symbol("features")
+  Symbol("features"), m_showRepeat(false)
 {
   setHandlesChildEvents(true);
 
@@ -68,11 +68,11 @@ Features::Features(QString step, QString path):
         Features* step = new Features(name, path);
         step->m_virtualParent = this;
         step->setPos(QPointF(x + dx * i, -(y + dy * j)));
+
         QTransform trans;
         if (mirror) {
           trans.scale(-1, 1);
         }
-
         trans.rotate(angle);
         trans.translate(-step->x_datum(), step->y_datum());
         step->setTransform(trans);
@@ -98,14 +98,15 @@ QRectF Features::boundingRect() const
 
 void Features::addToScene(QGraphicsScene* scene)
 {
-  for (QList<Features*>::iterator it = m_repeats.begin();
-      it != m_repeats.end(); ++it) {
-    (*it)->addToScene(scene);
-  }
-
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     (*it)->addToScene(scene);
+  }
+
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->addToScene(scene);
+    (*it)->setVisible(m_showRepeat);
   }
 }
 
@@ -135,6 +136,11 @@ void Features::setTransform(const QTransform& matrix, bool combine)
   QGraphicsItem::setTransform(matrix, true);
 }
 
+void Features::setPos(QPointF pos)
+{
+  setPos(pos.x(), pos.y());
+}
+
 void Features::setPos(qreal x, qreal y)
 {
   QTransform trans = QTransform::fromTranslate(x, y);
@@ -153,9 +159,27 @@ void Features::setPos(qreal x, qreal y)
   QGraphicsItem::setPos(x, y);
 }
 
-void Features::setPos(QPointF pos)
+void Features::setVisible(bool status)
 {
-  setPos(pos.x(), pos.y());
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
+    (*it)->symbol->setVisible(status);
+  }
+
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->setVisible(status);
+  }
+}
+
+void Features::setShowStepRepeat(bool status)
+{
+  m_showRepeat = status;
+
+  for (QList<Features*>::iterator it = m_repeats.begin();
+      it != m_repeats.end(); ++it) {
+    (*it)->setVisible(status);
+  }
 }
 
 QTextEdit* Features::symbolCount()

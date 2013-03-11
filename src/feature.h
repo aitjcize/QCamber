@@ -23,9 +23,11 @@ public:
   qreal x_datum(void) { return m_x_datum; }
   qreal y_datum(void) { return m_y_datum; }
 
-  void setTransform(const QTransform & matrix, bool combine = false);
-  void setPos(qreal x, qreal y);
+  void setTransform(const QTransform& matrix, bool combine = false);
   void setPos(QPointF pos);
+  void setPos(qreal x, qreal y);
+  void setVisible(bool status);
+  void setShowStepRepeat(bool status);
 
 private:
   Features* m_virtualParent;
@@ -34,6 +36,7 @@ private:
   QRectF m_activeRect;
   qreal m_x_datum, m_y_datum;
   qreal m_x_origin, m_y_origin;
+  bool m_showRepeat;
   QList<Features*> m_repeats;
   QTransform m_trans;
 };
