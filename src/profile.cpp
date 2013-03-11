@@ -9,8 +9,7 @@ Profile::Profile(QString step): GraphicsLayer(NULL)
   setHandlesChildEvents(true);
 
   GraphicsLayerScene* scene = new GraphicsLayerScene;
-  m_features = new LayerFeatures(step, "steps/%1/profile");
-  m_features->setShowStepRepeat(true);
+  m_features = new LayerFeatures(step, "steps/%1/profile", true);
   m_features->addToScene(scene);
   setLayerScene(scene);
 }

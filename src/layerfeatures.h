@@ -13,7 +13,7 @@
 
 class LayerFeatures: public Symbol {
 public:
-  LayerFeatures(QString step, QString path);
+  LayerFeatures(QString step, QString path, bool stepRepeat = false);
   virtual ~LayerFeatures();
 
   virtual QRectF boundingRect() const;
@@ -29,16 +29,21 @@ public:
   void setVisible(bool status);
   void setShowStepRepeat(bool status);
 
+protected:
+  void loadStepAndRepeat(void);
+
 private:
   LayerFeatures* m_virtualParent;
+  QString m_step;
+  QString m_path;
   FeaturesDataStore* m_ds;
-  LayerFeatures* m_profile;
+  QGraphicsScene* m_scene;
   QRectF m_activeRect;
   qreal m_x_datum, m_y_datum;
   qreal m_x_origin, m_y_origin;
-  bool m_showRepeat;
+  bool m_stepRepeatLoaded;
+  bool m_showStepRepeat;
   QList<LayerFeatures*> m_repeats;
-  QTransform m_trans;
 };
 
 #endif /* __LAYERFEATURES_H__ */

@@ -4,8 +4,9 @@
 #include <typeinfo>
 #include <QDebug>
 
-LayerFeatures::LayerFeatures(QString step, QString path):
-  Symbol("features"), m_showRepeat(false)
+LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
+  Symbol("features"), m_step(step), m_path(path), m_scene(NULL),
+  m_stepRepeatLoaded(false), m_showStepRepeat(stepRepeat)
 {
   setHandlesChildEvents(true);
 
@@ -16,8 +17,15 @@ LayerFeatures::LayerFeatures(QString step, QString path):
     return;
   }
 
+  if (m_showStepRepeat) {
+    loadStepAndRepeat();
+  }
+}
+
+void LayerFeatures::loadStepAndRepeat(void)
+{
   QString hdr = "steps/%1/stephdr";
-  StructuredTextParser stephdr_parser(ctx.loader->absPath(hdr.arg(step)));
+  StructuredTextParser stephdr_parser(ctx.loader->absPath(hdr.arg(m_step)));
   StructuredTextDataStore* hds = stephdr_parser.parse();
 
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
@@ -25,8 +33,8 @@ LayerFeatures::LayerFeatures(QString step, QString path):
 
   qreal top_active, bottom_active, left_active, right_active;
 
-  try {
 #define GET(key) (QString::fromStdString(hds->get(key)))
+  try {
     m_x_datum = GET("X_DATUM").toDouble();
     m_y_datum = GET("Y_DATUM").toDouble();
     m_x_origin = GET("X_ORIGIN").toDouble();
@@ -36,7 +44,6 @@ LayerFeatures::LayerFeatures(QString step, QString path):
     bottom_active = GET("BOTTOM_ACTIVE").toDouble();
     left_active = GET("LEFT_ACTIVE").toDouble();
     right_active = GET("RIGHT_ACTIVE").toDouble();
-#undef GET
 
     m_activeRect.setX(m_activeRect.x() + left_active);
     m_activeRect.setY(m_activeRect.y() + top_active);
@@ -49,10 +56,11 @@ LayerFeatures::LayerFeatures(QString step, QString path):
   if (ip.first == ip.second) {
     m_activeRect = QRectF();
   }
+#undef GET
 
+#define GET(key) (QString::fromStdString(it->second->get(key)))
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
-#define GET(key) (QString::fromStdString(it->second->get(key)))
     QString name = GET("NAME").toLower();
     qreal x = GET("X").toDouble();
     qreal y = GET("Y").toDouble();
@@ -65,7 +73,7 @@ LayerFeatures::LayerFeatures(QString step, QString path):
 
     for (int i = 0; i < nx; ++i) {
       for (int j = 0; j < ny; ++j) {
-        LayerFeatures* step = new LayerFeatures(name, path);
+        LayerFeatures* step = new LayerFeatures(name, m_path, true);
         step->m_virtualParent = this;
         step->setPos(QPointF(x + dx * i, -(y + dy * j)));
 
@@ -79,9 +87,17 @@ LayerFeatures::LayerFeatures(QString step, QString path):
         m_repeats.append(step);
       }
     }
-
-#undef GET
   }
+#undef GET
+
+  if (m_scene) {
+    for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
+        it != m_repeats.end(); ++it) {
+      (*it)->addToScene(m_scene);
+    }
+  }
+
+  m_stepRepeatLoaded = true;
 
   delete hds;
 }
@@ -98,6 +114,8 @@ QRectF LayerFeatures::boundingRect() const
 
 void LayerFeatures::addToScene(QGraphicsScene* scene)
 {
+  m_scene = scene;
+
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     (*it)->addToScene(scene);
@@ -106,7 +124,7 @@ void LayerFeatures::addToScene(QGraphicsScene* scene)
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
     (*it)->addToScene(scene);
-    (*it)->setVisible(m_showRepeat);
+    (*it)->setVisible(m_showStepRepeat);
   }
 }
 
@@ -174,7 +192,11 @@ void LayerFeatures::setVisible(bool status)
 
 void LayerFeatures::setShowStepRepeat(bool status)
 {
-  m_showRepeat = status;
+  m_showStepRepeat = status;
+
+  if (status && !m_stepRepeatLoaded) {
+    loadStepAndRepeat();
+  }
 
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
