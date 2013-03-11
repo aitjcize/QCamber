@@ -21,10 +21,7 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
   orient = (Orient)param[++i].toInt();
   QString sym_name = ds->symbolNameMap()[sym_num];
   symbol = SymbolFactory::create(sym_name, polarity);
-}
 
-void PadRecord::prepare(void)
-{
   symbol->setPos(x, -y);
 
   if (orient >= M_0) {

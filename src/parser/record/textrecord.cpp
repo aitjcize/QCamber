@@ -29,6 +29,20 @@ TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   version = param[++i].toInt();
 
   symbol = new TextSymbol(this);
+
+  setTransform();
+}
+
+void TextRecord::setTransform(void)
+{
+  symbol->setPos(x, -y);
+
+  if (orient >= M_0) {
+    QTransform trans;
+    trans.scale(-1, 1);
+    symbol->setTransform(trans);
+  }
+  symbol->setRotation((orient % 4) * 90);
 }
 
 QString TextRecord::dynamicText(QString text)
@@ -60,16 +74,4 @@ QString TextRecord::dynamicText(QString text)
   }
 
   return dynText;
-}
-
-void TextRecord::prepare(void)
-{
-  symbol->setPos(x, -y);
-
-  if (orient >= M_0) {
-    QTransform trans;
-    trans.scale(-1, 1);
-    symbol->setTransform(trans);
-  }
-  symbol->setRotation((orient % 4) * 90);
 }

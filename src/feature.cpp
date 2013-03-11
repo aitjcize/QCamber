@@ -66,11 +66,13 @@ Features::Features(QString step, QString path):
     for (int i = 0; i < nx; ++i) {
       for (int j = 0; j < ny; ++j) {
         Features* step = new Features(name, path);
-        step->setPos(x + dx * i, -(y + dy * j));
+        step->m_virtualParent = this;
+        step->setPos(QPointF(x + dx * i, -(y + dy * j)));
         QTransform trans;
         if (mirror) {
           trans.scale(-1, 1);
         }
+
         trans.rotate(angle);
         trans.translate(-step->x_datum(), step->y_datum());
         step->setTransform(trans);
@@ -101,8 +103,6 @@ void Features::addToScene(QGraphicsScene* scene)
     (*it)->addToScene(scene);
   }
 
-  scene->addItem(this);
-
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     (*it)->addToScene(scene);
@@ -111,45 +111,54 @@ void Features::addToScene(QGraphicsScene* scene)
 
 void Features::setTransform(const QTransform& matrix, bool combine)
 {
-  m_trans = matrix;
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     Symbol* symbol = (*it)->symbol;
     QTransform trans;
-    trans *= matrix;
-    (*it)->symbol->setTransform(trans, true);
+    QPointF o = transform().inverted().map(symbol->pos());
+    trans.translate(-o.x(), -o.y());
+    trans = matrix * trans;
+    trans.translate(o.x(), o.y());
+    symbol->setTransform(symbol->transform() * trans, false);
   }
 
   for (QList<Features*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
-    (*it)->setTransform(matrix, combine);
+    QTransform trans;
+    QPointF o = transform().inverted().map(pos());
+    trans.translate(-o.x(), -o.y());
+    trans = matrix * trans;
+    trans.translate(o.x(), o.y());
+    (*it)->setTransform(trans, combine);
   }
 
-  QGraphicsItem::setTransform(matrix, combine);
+  QGraphicsItem::setTransform(matrix, true);
 }
 
 void Features::setPos(qreal x, qreal y)
 {
+  QTransform trans = QTransform::fromTranslate(x, y);
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
-    //QTransform trans;
-    //Jtrans.translate(x, y);
-    //(*it)->symbol->setTransform(trans, true);
     Symbol* symbol = (*it)->symbol;
-    symbol->setPos(symbol->pos().x() + x, symbol->pos().y() + y);
-    symbol->setTransformOriginPoint(x, y);
+    symbol->setTransform(symbol->transform() * trans, false);
   }
 
   for (QList<Features*>::iterator it = m_repeats.begin();
       it != m_repeats.end(); ++it) {
-    (*it)->setTransformOriginPoint(x, y);
     (*it)->setPos(x, y);
   }
 
+  QGraphicsItem::setTransform(trans);
   QGraphicsItem::setPos(x, y);
 }
 
-QTableWidget* Features::symbolCount()
+void Features::setPos(QPointF pos)
+{
+  setPos(pos.x(), pos.y());
+}
+
+QTextEdit* Features::symbolCount()
 {
     QTextEdit *output = new QTextEdit;
     FeaturesDataStore::IDMapType nameMap;

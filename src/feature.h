@@ -25,8 +25,10 @@ public:
 
   void setTransform(const QTransform & matrix, bool combine = false);
   void setPos(qreal x, qreal y);
+  void setPos(QPointF pos);
 
 private:
+  Features* m_virtualParent;
   FeaturesDataStore* m_ds;
   Features* m_profile;
   QRectF m_activeRect;

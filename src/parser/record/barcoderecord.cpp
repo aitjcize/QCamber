@@ -26,4 +26,6 @@ BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
   text = dynamicText(param[++i]);
 
   symbol = new BarcodeSymbol(this);
+
+  setTransform();
 }

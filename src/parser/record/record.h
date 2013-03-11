@@ -7,6 +7,7 @@
 
 #include "symbol.h"
 
+class Features;
 class DataStore;
 class FeaturesDataStore;
 class FontDataStore;
@@ -18,19 +19,15 @@ struct Record {
   Record(DataStore* _ds): ds(_ds) {}
   virtual ~Record() { }
 
-  virtual void prepare(void) {}
-
   virtual void addToChild(Symbol* group) {
-    prepare();
     group->addChild(symbol);
   }
   virtual void addToScene(QGraphicsScene* scene) {
-    prepare();
     scene->addItem(symbol);
   }
 
-  Symbol* symbol;
   DataStore* ds;
+  Symbol* symbol;
 };
 
 
@@ -46,7 +43,6 @@ struct LineRecord: public Record {
 
 struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds, const QStringList& param);
-  virtual void prepare(void);
 
   qreal x, y;
   int sym_num;
@@ -69,8 +65,9 @@ struct ArcRecord: public Record {
 
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
+
+  void setTransform(void);
   virtual QString dynamicText(QString);
-  virtual void prepare(void);
 
   qreal x, y;
   QString font;
@@ -156,7 +153,6 @@ struct CharRecord {
 
 struct NoteRecord: public Record {
   NoteRecord(NotesDataStore* ds, const QStringList& param);
-  virtual void prepare(void);
 
   int timestamp;
   QString user;
