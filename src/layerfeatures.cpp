@@ -22,6 +22,14 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
   }
 }
 
+LayerFeatures::~LayerFeatures()
+{
+  for (int i = 0; i < m_repeats.size(); ++i) {
+    delete m_repeats[i];
+  }
+  delete m_ds;
+}
+
 void LayerFeatures::loadStepAndRepeat(void)
 {
   QString hdr = "steps/%1/stephdr";
@@ -100,11 +108,6 @@ void LayerFeatures::loadStepAndRepeat(void)
   m_stepRepeatLoaded = true;
 
   delete hds;
-}
-
-LayerFeatures::~LayerFeatures()
-{
-  delete m_ds;
 }
 
 QRectF LayerFeatures::boundingRect() const
