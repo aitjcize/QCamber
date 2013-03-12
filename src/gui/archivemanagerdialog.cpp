@@ -91,6 +91,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
     QMessageBox::critical(this, "Error",
         QString("Error when decompressing `%1'").arg(filename));
     recurRemove(extractDir);
+    return;
   }
 
   // Decompress all layers
@@ -210,6 +211,8 @@ int ArchiveManagerDialog::execute(QString cmd, QStringList args)
 
   process.start(cmd, args);
   loop.exec();
+
+  return process.exitCode();
 }
 
 bool ArchiveManagerDialog::recurRemove(const QString& dirname)
