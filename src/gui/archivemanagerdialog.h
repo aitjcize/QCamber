@@ -4,8 +4,13 @@
 #include <QFileSystemModel>
 #include <QWidget>
 
-#define TAR_COMMAND "tar"
-#define GZIP_COMMAND "gzip"
+#ifdef Q_WS_WIN
+# define TAR_COMMAND "tools/tar.exe"
+# define GZIP_COMMAND "tools/gzip.exe"
+#else
+# define TAR_COMMAND "tar"
+# define GZIP_COMMAND "gzip"
+#endif
 
 namespace Ui {
 class ArchiveManagerDialog;
