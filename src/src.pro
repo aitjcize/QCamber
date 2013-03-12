@@ -8,22 +8,13 @@ BUILD_DIR = .build
 
 include (parser/parser.pri)
 include (symbol/symbol.pri)
+include (graphicsview/graphicsview.pri)
 include (gui/gui.pri)
 
 HEADERS += \
   archiveloader.h \
   context.h \
-  layerfeatures.h \
-  graphicslayer.h \
-  graphicslayerscene.h \
-  layer.h \
   macros.h \
-  measuregraphicsitem.h \
-  notes.h \
-  odbppgraphicsminimapview.h \
-  odbppgraphicsscene.h \
-  odbppgraphicsview.h \
-  profile.h \
   settings.h \
   symbolfactory.h \
   symbolpool.h
@@ -31,21 +22,11 @@ HEADERS += \
 SOURCES += \
   archiveloader.cpp \
   context.cpp \
-  layerfeatures.cpp \
-  graphicslayer.cpp \
-  graphicslayerscene.cpp \
-  layer.cpp \
   main.cpp \
-  measuregraphicsitem.cpp \
-  notes.cpp \
-  odbppgraphicsscene.cpp \
-  odbppgraphicsview.cpp \
-  odbppgraphicsminimapview.cpp \
-  profile.cpp \
   settings.cpp \
   symbolpool.cpp
 
-INCLUDEPATH += . .build parser parser/record symbol gui
+INCLUDEPATH += . .build parser parser/record symbol gui graphicsview
 
 DESTDIR = ../bin
 TARGET = qcamber
