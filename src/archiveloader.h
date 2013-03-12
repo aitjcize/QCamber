@@ -1,8 +1,13 @@
 #ifndef __ARCHIVE_LOADER_H__
 #define __ARCHIVE_LOADER_H__
 
-#define TAR_COMMAND "tar"
-#define GZIP_COMMAND "gzip"
+#ifdef Q_WS_WIN
+# define TAR_COMMAND "tools/tar.exe"
+# define GZIP_COMMAND "tools/gzip.exe"
+#else
+# define TAR_COMMAND "tar"
+# define GZIP_COMMAND "gzip"
+#endif
 
 #include <QDir>
 #include <QString>
