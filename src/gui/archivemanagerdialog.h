@@ -6,8 +6,10 @@
 
 #ifdef Q_WS_WIN
 # define TAR_CMD "./tar"
+# define GZIP_CMD "./gzip"
 #else
 # define TAR_CMD "tar"
+# define GZIP_CMD "gzip"
 #endif
 
 namespace Ui {
@@ -30,6 +32,7 @@ public slots:
   void on_listView_doubleClicked(const QModelIndex& index);
 
 private:
+  int execute(QString cmd, QStringList args);
   bool recurRemove(const QString& dirname);
     
 private:

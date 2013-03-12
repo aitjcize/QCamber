@@ -70,6 +70,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 
   QString extractDir = jobsDir.absoluteFilePath(jobName);
 
+  // Decompress tarball
   QStringList args;
 #ifdef Q_WS_WIN
   filename.replace(":", "");
@@ -77,14 +78,80 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 #endif
   args << "xf" << filename << "--strip-components=1" << "-C" << extractDir;
 
-  int ret = QProcess::execute(TAR_CMD, args);
+  QMessageBox msg(QMessageBox::Information, "Progress",
+      "Decompressing archive...");
+  msg.setStandardButtons(QMessageBox::NoButton);
+  msg.show();
+
+  int ret = execute(TAR_CMD, args);
+
+  msg.hide();
 
   if (ret != 0) {
     QMessageBox::critical(this, "Error",
         QString("Error when decompressing `%1'").arg(filename));
     recurRemove(extractDir);
   }
+
+  // Decompress all layers
+  msg.setText("Decompressing all layers...");
+  msg.show();
+
+  QString matrix = extractDir + "/matrix/matrix";
+
+  if (!QFile(matrix).exists()) {
+    QMessageBox::critical(this, "Error",
+        QString("`%1' is not a valid ODB++ database.").arg(filename));
+    recurRemove(extractDir);
+    return;
+  }
+
+  StructuredTextParser parser(matrix);
+  StructuredTextDataStore* ds = parser.parse();
+  StructuredTextDataStore::BlockIterPair ip;
+  QStringList steps, layers;
+
+  ip = ds->getBlocksByKey("STEP");
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
+    steps.append(QString::fromStdString(it->second->get("NAME")).toLower());
+  }
+
+  ip = ds->getBlocksByKey("LAYER");
+  for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
+  {
+    layers.append(QString::fromStdString(it->second->get("NAME")).toLower());
+  }
+
+  QString layerPathTmpl = extractDir + "/steps/%1/layers/%2/features";
+  for (int i = 0; i < steps.size(); ++i) {
+    for (int j = 0; j < layers.size(); ++j) {
+      QString path = layerPathTmpl.arg(steps[i]).arg(layers[j]);
+      QString gzFilename;
+      if (QFile(path + ".Z").exists()) {
+        gzFilename = path + ".Z";
+      } else if (QFile(path + ".z").exists()) {
+        gzFilename = path + ".z";
+      } else {
+        continue;
+      }
+      msg.setText("Decompressing " + gzFilename + " ...");
+      QStringList args;
+      args << "-d" << gzFilename;
+      int ret = execute(GZIP_CMD, args);
+
+      if (ret != 0) {
+        QMessageBox::critical(this, "Error",
+            QString("Error when decompressing `%1'").arg(gzFilename));
+        recurRemove(extractDir);
+        break;
+      }
+    }
+  }
+
+  msg.hide();
 }
+
 
 void ArchiveManagerDialog::on_removeButton_clicked(void)
 {
@@ -127,6 +194,22 @@ void ArchiveManagerDialog::on_listView_doubleClicked(const QModelIndex& index)
   JobMatrix* jobMatirx = new JobMatrix(0, ds);
   jobMatirx->SetMatrix();
   jobMatirx->show();
+}
+
+int ArchiveManagerDialog::execute(QString cmd, QStringList args)
+{
+  QEventLoop loop;
+
+  QProcess process;
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+  env.insert("PATH", env.value("PATH") +
+      ";" + QCoreApplication::applicationDirPath());
+  process.setProcessEnvironment(env);
+  connect(&process, SIGNAL(finished(int, QProcess::ExitStatus)),
+      &loop, SLOT(quit()));
+
+  process.start(cmd, args);
+  loop.exec();
 }
 
 bool ArchiveManagerDialog::recurRemove(const QString& dirname)

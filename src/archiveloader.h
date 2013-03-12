@@ -1,15 +1,15 @@
 #ifndef __ARCHIVE_LOADER_H__
 #define __ARCHIVE_LOADER_H__
 
+#include <QDir>
+#include <QString>
+#include <QStringList>
+
 #ifdef Q_WS_WIN
 # define GZIP_CMD "./gzip"
 #else
 # define GZIP_CMD "gzip"
 #endif
-
-#include <QDir>
-#include <QString>
-#include <QStringList>
 
 class ArchiveLoader {
 public:
