@@ -15,8 +15,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 #define MAP(mapper, name) \
   (mapper)->setMapping(ui->name, ui->name); \
-  connect(ui->name, SIGNAL(clicked()), mapper, SLOT(map())); \
-  updateColorToolButtonColor(ui->name);
+  connect(ui->name, SIGNAL(clicked()), mapper, SLOT(map()));
 
   MAP(m_sigMapper, colorBG);
   MAP(m_sigMapper, colorC1);
@@ -26,6 +25,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
   MAP(m_sigMapper, colorC5);
   MAP(m_sigMapper, colorC6);
 #undef MAP
+
+  reloadColorToolButoonColor();
 
   connect(m_sigMapper, SIGNAL(mapped(QWidget*)),
       this, SLOT(chooseColor(QWidget*)));
@@ -41,6 +42,67 @@ void SettingsDialog::accept(void)
   hide();
 }
 
+void SettingsDialog::on_loadSystemColor_clicked(void)
+{
+  QStringList names, colors;
+  names << "BG" << "C1" << "C2" << "C3" << "C4" << "C5" << "C6";
+  colors << "#000000" << "#ff0000" << "#4ba503" << "#00adc6" << "#ffff3e"
+    << "#00007f" << "#aa00ff";
+
+  for (int i = 0; i < names.size(); ++i)  {
+    SETTINGS->set("Color", names[i], colors[i]);
+  }
+
+  reloadColorToolButoonColor();
+}
+
+void SettingsDialog::on_loadUserColor_clicked(void)
+{
+  if (SETTINGS->get("Color", "UC1") == QVariant()) {
+    on_loadSystemColor_clicked();
+  }
+
+  QStringList names;
+  names << "BG" << "C1" << "C2" << "C3" << "C4" << "C5" << "C6";
+
+  for (int i = 0; i < names.size(); ++i)  {
+    QString ucolor = SETTINGS->get("Color", "U" + names[i]).toString();
+    SETTINGS->set("Color", names[i], ucolor);
+  }
+
+  reloadColorToolButoonColor();
+}
+
+void SettingsDialog::on_saveUserColor_clicked(void)
+{
+  QStringList names;
+  names << "BG" << "C1" << "C2" << "C3" << "C4" << "C5" << "C6";
+
+  for (int i = 0; i < names.size(); ++i)  {
+    QString color = SETTINGS->get("Color", names[i]).toString();
+    SETTINGS->set("Color", "U" + names[i], color);
+  }
+}
+
+void SettingsDialog::reloadColorToolButoonColor(void)
+{
+  updateColorToolButtonColor(ui->colorBG);
+  updateColorToolButtonColor(ui->colorC1);
+  updateColorToolButtonColor(ui->colorC2);
+  updateColorToolButtonColor(ui->colorC3);
+  updateColorToolButtonColor(ui->colorC4);
+  updateColorToolButtonColor(ui->colorC5);
+  updateColorToolButtonColor(ui->colorC6);
+}
+
+void SettingsDialog::updateColorToolButtonColor(QToolButton* but)
+{
+  QString tmpl("QToolButton { background-color: %1; color: %2; }");
+  QColor fg(SETTINGS->get("Color", but->text()).toString());
+  QColor bg(255 - fg.red(), 255 - fg.green(), 255 - fg.blue(), 25);
+  but->setStyleSheet(tmpl.arg(fg.name()).arg(bg.name()));
+}
+
 void SettingsDialog::chooseColor(QWidget* widget)
 {
   QToolButton* but = qobject_cast<QToolButton*>(widget);
@@ -52,12 +114,4 @@ void SettingsDialog::chooseColor(QWidget* widget)
     SETTINGS->set("Color", colorName, color.name());
     updateColorToolButtonColor(but);
   }
-}
-
-void SettingsDialog::updateColorToolButtonColor(QToolButton* but)
-{
-  QString tmpl("QToolButton { background-color: %1; color: %2; }");
-  QColor fg(SETTINGS->get("Color", but->text()).toString());
-  QColor bg(255 - fg.red(), 255 - fg.green(), 255 - fg.blue(), 25);
-  but->setStyleSheet(tmpl.arg(fg.name()).arg(bg.name()));
 }
