@@ -77,7 +77,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 #endif
   args << "xf" << filename << "--strip-components=1" << "-C" << extractDir;
 
-  int ret = QProcess::execute(TAR_COMMAND, args);
+  int ret = QProcess::execute(TAR_CMD, args);
 
   if (ret != 0) {
     QMessageBox::critical(this, "Error",

@@ -2,11 +2,11 @@
 #define __ARCHIVE_LOADER_H__
 
 #ifdef Q_WS_WIN
-# define TAR_COMMAND "tools/tar.exe"
-# define GZIP_COMMAND "tools/gzip.exe"
+# define TAR_CMD (QCoreApplication::applicationDirPath() + "tools/tar.exe")
+# define GZIP_CMD (QCoreApplication::applicationDirPath() + "tools/gzip.exe")
 #else
-# define TAR_COMMAND "tar"
-# define GZIP_COMMAND "gzip"
+# define TAR_CMD "tar"
+# define GZIP_CMD "gzip"
 #endif
 
 #include <QDir>

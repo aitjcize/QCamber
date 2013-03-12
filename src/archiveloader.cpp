@@ -48,7 +48,7 @@ QString ArchiveLoader::featuresPath(QString base)
     QStringList args;
     args << "-d" << path;
 
-    int ret = QProcess::execute(GZIP_COMMAND, args);
+    int ret = QProcess::execute(GZIP_CMD, args);
 
     if ((ret == -1) || (ret == -2)) {
       return QString();
