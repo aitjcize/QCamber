@@ -125,6 +125,7 @@ void ODBPPGraphicsView::setBackgroundColor(QColor color)
 
 void ODBPPGraphicsView::setMeasureEnabled(bool status)
 {
+  setDragMode(NoDrag);
   m_scene->setHighlightEnabled(false);
   m_scene->setMeasureEnabled(status);
 }
