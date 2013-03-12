@@ -136,7 +136,10 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
       } else {
         continue;
       }
-      msg.setText("Decompressing " + gzFilename + " ...");
+
+      msg.setText(QString("Decompressing %1/%2 ...")
+          .arg(steps[i]).arg(layers[j]));
+
       QStringList args;
       args << "-d" << gzFilename;
       int ret = execute(GZIP_CMD, args);
