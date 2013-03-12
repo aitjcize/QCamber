@@ -5,11 +5,9 @@
 #include <QWidget>
 
 #ifdef Q_WS_WIN
-# define TAR_CMD (QCoreApplication::applicationDirPath() + "tools/tar.exe")
-# define GZIP_CMD (QCoreApplication::applicationDirPath() + "tools/gzip.exe")
+# define TAR_CMD "./tar"
 #else
 # define TAR_CMD "tar"
-# define GZIP_CMD "gzip"
 #endif
 
 namespace Ui {
