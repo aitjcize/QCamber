@@ -6,43 +6,12 @@
 
 ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
 {
-  load();
+  m_dir = QDir(filename);
 }
 
 ArchiveLoader::~ArchiveLoader()
 {
   recurRemove(m_dir.path());
-}
-
-bool ArchiveLoader::load(void)
-{
-  // Use `tar' command for the time being, may switch to libarchive in the
-  // future.
-
-  unsigned timestamp = QDateTime::currentDateTime().toTime_t();
-  QFileInfo finfo(m_fileName);
-  QString extract_dir = QString::number(timestamp) + "_" + finfo.baseName();
-
-  QDir tempDir = QDir::temp();
-  tempDir.mkdir(extract_dir);
-
-  QString extract_name = tempDir.absoluteFilePath(extract_dir);
-
-  QStringList args;
-#ifdef Q_WS_WIN
-  m_fileName.replace(":", "");
-  m_fileName.prepend('/');
-#endif
-  args << "xf" << m_fileName << "--strip-components=1" << "-C" << extract_name;
-
-  int ret = QProcess::execute(TAR_COMMAND, args);
-
-  if ((ret != -1) && (ret != -2)) {
-    m_dir = QDir(extract_name);
-    return true;
-  }
-
-  return false;
 }
 
 QString ArchiveLoader::absPath(QString path)

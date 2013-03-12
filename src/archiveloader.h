@@ -13,8 +13,6 @@ public:
   ArchiveLoader(QString filename);
   ~ArchiveLoader();
 
-  bool load(void);
-
   QString absPath(QString path);
   QStringList listDir(QString filename);
   QString featuresPath(QString base);
