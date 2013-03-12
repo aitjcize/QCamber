@@ -18,9 +18,6 @@ public:
   QString featuresPath(QString base);
 
 private:
-  bool recurRemove(const QString& dirname);
-
-private:
   QDir m_dir;
   QString m_fileName;
 };

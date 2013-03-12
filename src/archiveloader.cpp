@@ -11,7 +11,6 @@ ArchiveLoader::ArchiveLoader(QString filename): m_fileName(filename)
 
 ArchiveLoader::~ArchiveLoader()
 {
-  recurRemove(m_dir.path());
 }
 
 QString ArchiveLoader::absPath(QString path)
@@ -23,31 +22,6 @@ QStringList ArchiveLoader::listDir(QString filename)
 {
   QDir dir(m_dir.absoluteFilePath(filename));
   return dir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs | QDir::Files);
-}
-
-bool ArchiveLoader::recurRemove(const QString& dirname)
-{
-  bool result = true;
-  QDir dir(dirname);
-
-  if (dir.exists(dirname)) {
-    Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot |
-          QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files,
-          QDir::DirsFirst)) {
-      if (info.isDir()) {
-        result = recurRemove(info.absoluteFilePath());
-      }
-      else {
-        result = QFile::remove(info.absoluteFilePath());
-      }
-
-      if (!result) {
-        return result;
-      }
-    }
-    result = dir.rmdir(dirname);
-  }
-  return result;
 }
 
 QString ArchiveLoader::featuresPath(QString base)
