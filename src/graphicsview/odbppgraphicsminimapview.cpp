@@ -49,7 +49,7 @@ void ODBPPGraphicsMiniMapView::scaleView(qreal scaleFactor)
 
 void ODBPPGraphicsMiniMapView::loadProfile(QString step)
 {
-  m_profile = new Profile(step.toLower());
+  m_profile = new Profile(step);
   m_scene->addLayer(m_profile);
   updateLayerViewport();
 

@@ -25,7 +25,7 @@ void JobMatrix::SetMatrix()
 {
   StructuredTextDataStore::BlockIterPair ip;
   QString text,start,end;
-  int steps,layers;
+  int steps, layers;
 
   steps = layers = 0;
   ip = m_ds->getBlocksByKey("STEP");
@@ -43,8 +43,10 @@ void JobMatrix::SetMatrix()
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
     QTableWidgetItem *item = new QTableWidgetItem();
-    item->setText((QString)it->second->get("NAME").c_str());
-    m_stepNames.append((QString)it->second->get("NAME").c_str());
+    QString stepName = QString::fromStdString(it->second->get("NAME"))
+      .toLower();
+    item->setText(stepName);
+    m_stepNames.append(stepName);
     ui->tableWidget->setHorizontalHeaderItem(steps - 1,item);
 
     steps++;
@@ -56,7 +58,7 @@ void JobMatrix::SetMatrix()
   for (StructuredTextDataStore::BlockIter it = ip.first; it != ip.second; ++it)
   {
     QTableWidgetItem *item = new QTableWidgetItem();
-    text = (QString)it->second->get("TYPE").c_str();
+    text = QString::fromStdString(it->second->get("TYPE"));
     m_layerTypes.append(text);
 
     if(text == "SILK_SCREEN")
@@ -80,20 +82,21 @@ void JobMatrix::SetMatrix()
     else
       text += "n)  ";
 
-    m_layerNames.append((QString)it->second->get("NAME").c_str());
-    text += (QString)it->second->get("NAME").c_str();
+    QString layerName = QString::fromStdString(it->second->get("NAME"))
+      .toLower();
+    m_layerNames.append(layerName);
+    text += layerName;
     item->setText(text);
     ui->tableWidget->setVerticalHeaderItem(layers, item);
 
     for(int i = 0; i < m_stepNames.size(); i++)
     {
-      text = m_stepNames[i] + "/" + (QString)it->second->get("NAME").c_str();
+      text = m_stepNames[i] + "/" + layerName;
       QTableWidgetItem *btn = new QTableWidgetItem(text);
-      ui->tableWidget->setItem(layers,i,btn);
+      ui->tableWidget->setItem(layers, i, btn);
 
       QString pathTmpl = "steps/%1/layers/%2";
-      text = pathTmpl.arg(m_stepNames[i].toAscii().data()).arg(
-          QString::fromStdString(it->second->get("NAME")));
+      text = pathTmpl.arg(m_stepNames[i]).arg(layerName);
 
       if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
         btn->setText("");
@@ -132,7 +135,7 @@ void JobMatrix::showLayer(QTableWidgetItem *item)
   ViewerWindow* w = new ViewerWindow;
   w->setStep(params[0]);
   w->setLayers(m_layerNames, m_layerTypes);
-  w->showLayer(params[1]);
+  w->showLayer(params[1].toLower());
   w->show();
 }
 

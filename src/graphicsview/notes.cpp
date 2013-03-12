@@ -7,8 +7,8 @@
 
 Notes::Notes(QString step, QString layer): Symbol("symbol"), m_empty(false)
 {
-  QString filename = ctx.loader->absPath(QString("steps/%1/layers/%2/notes")\
-      .arg(step.toLower()).arg(layer).toLower());
+  QString filename = ctx.loader->absPath(QString("steps/%1/layers/%2/notes")
+      .arg(step).arg(layer));
 
   NotesParser parser(filename);
   NotesDataStore* ds = parser.parse();

@@ -104,7 +104,7 @@ void ODBPPGraphicsView::removeItem(QGraphicsItem* item)
 
 void ODBPPGraphicsView::loadProfile(QString step)
 {
-  m_profile = new Profile(step.toLower());
+  m_profile = new Profile(step);
   addLayer(m_profile);
 
   m_origin = new OriginSymbol();
