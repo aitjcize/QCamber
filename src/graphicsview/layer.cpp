@@ -51,6 +51,18 @@ void Layer::setShowStepRepeat(bool status)
   forceUpdate();
 }
 
+void Layer::setPen(const QPen& pen)
+{
+  m_features->setPen(pen);
+  GraphicsLayer::setPen(pen);
+}
+
+void Layer::setBrush(const QBrush& brush)
+{
+  m_features->setBrush(brush);
+  GraphicsLayer::setBrush(brush);
+}
+
 void Layer::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsItem::mousePressEvent(event);

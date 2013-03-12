@@ -199,6 +199,12 @@ void LayerFeatures::setShowStepRepeat(bool status)
 
   if (status && !m_stepRepeatLoaded) {
     loadStepAndRepeat();
+
+    QList<QGraphicsItem*> items = m_scene->items();
+    for (int i = 0; i < items.size(); ++i) {
+      dynamic_cast<Symbol*>(items[i])->setPen(m_pen);
+      dynamic_cast<Symbol*>(items[i])->setBrush(m_brush);
+    }
   }
 
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
