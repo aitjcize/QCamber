@@ -7,6 +7,7 @@
 GraphicsLayerScene::GraphicsLayerScene(QObject* parent):
   QGraphicsScene(parent), m_highlight(false)
 {
+  setItemIndexMethod(NoIndex);
 }
 
 GraphicsLayerScene::~GraphicsLayerScene()
