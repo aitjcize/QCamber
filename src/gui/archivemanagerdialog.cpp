@@ -15,6 +15,12 @@ ArchiveManagerDialog::ArchiveManagerDialog(QWidget *parent) :
   ui->setupUi(this);
 
   m_rootDirName = SETTINGS->get("System", "RootDir").toString();
+
+  if (m_rootDirName.isEmpty()) {
+    m_rootDirName = QCoreApplication::applicationDirPath() + "/Jobs";
+    SETTINGS->set("System", "RootDir", m_rootDirName);
+  }
+
   QDir jobsDir(m_rootDirName);
   if (!jobsDir.exists()) {
     QDir::root().mkdir(m_rootDirName);
@@ -49,7 +55,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 {
   QString filename = ui->filenameLineEdit->text();
 
-  if (filename.length() == 0) {
+  if (filename.isEmpty()) {
     QMessageBox::critical(this, "Error", "No filename specified!");
     return;
   }
