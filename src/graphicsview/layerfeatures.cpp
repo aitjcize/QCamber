@@ -54,7 +54,6 @@ void LayerFeatures::loadStepAndRepeat(void)
     m_activeRect.setWidth(m_activeRect.width() - right_active);
     m_activeRect.setHeight(m_activeRect.height() - bottom_active);
   } catch(StructuredTextDataStore::InvalidKeyException) {
-    m_x_datum = m_y_datum = m_x_origin = m_y_origin = 0;
   }
 
   if (ip.first == ip.second) {
