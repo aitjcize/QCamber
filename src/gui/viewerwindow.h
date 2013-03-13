@@ -29,6 +29,7 @@ public:
 
   explicit ViewerWindow(QWidget *parent = 0);
   ~ViewerWindow();
+  void setJob(QString job);
   void setStep(QString step);
   void setLayers(const QStringList& layers, const QStringList& types);
   void clearLayout(QLayout* , bool deleteWidgets = true);
@@ -71,6 +72,7 @@ private slots:
 
 private:
   Ui::ViewerWindow *ui;
+  QString m_job;
   QString m_step;
   QList<QColor> m_colors;
   QList<LayerInfoBox*> m_visibles;

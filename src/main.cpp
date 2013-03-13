@@ -3,7 +3,7 @@
 #include "code39.h"
 #include "context.h"
 #include "settings.h"
-#include "archivemanagerdialog.h"
+#include "jobmanagerdialog.h"
 
 //#define DEPLOY
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
   ctx.bg_color = QColor(SETTINGS->get("Color", "BG").toString());
 
-  ArchiveManagerDialog dialog;
+  JobManagerDialog dialog;
   dialog.show();
 
   return app.exec();

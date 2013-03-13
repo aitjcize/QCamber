@@ -6,7 +6,7 @@ HEADERS += \
   gui/symbolcount.h \
   gui/settingsdialog.h \
   gui/layerinfobox.h \
-  gui/archivemanagerdialog.h
+  gui/jobmanagerdialog.h
 
 SOURCES += \
   gui/jobmatrix.cpp \
@@ -15,7 +15,7 @@ SOURCES += \
   gui/symbolcount.cpp \
   gui/settingsdialog.cpp \
   gui/layerinfobox.cpp \
-  gui/archivemanagerdialog.cpp
+  gui/jobmanagerdialog.cpp
 
 FORMS += \
   gui/jobmatrix.ui \
@@ -23,4 +23,4 @@ FORMS += \
   gui/symbolcount.ui \
   gui/settingsdialog.ui \
   gui/layerinfobox.ui \
-  gui/archivemanagerdialog.ui
+  gui/jobmanagerdialog.ui

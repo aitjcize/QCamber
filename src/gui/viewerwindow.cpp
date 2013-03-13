@@ -60,10 +60,15 @@ ViewerWindow::~ViewerWindow()
   delete ui;
 }
 
+void ViewerWindow::setJob(QString job)
+{
+  m_job = job;
+}
+
 void ViewerWindow::setStep(QString step)
 {
-  setWindowTitle(step);
   m_step = step;
+  setWindowTitle(QString("CAMViewer::%1::%2").arg(m_job).arg(m_step));
 }
 
 void ViewerWindow::setLayers(const QStringList& layers,

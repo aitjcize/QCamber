@@ -1,5 +1,5 @@
-#ifndef __ARCHIVEMANAGERDIALOG_H__
-#define __ARCHIVEMANAGERDIALOG_H__
+#ifndef __JOBMANAGERDIALOG_H__
+#define __JOBMANAGERDIALOG_H__
 
 #include <QFileSystemModel>
 #include <QWidget>
@@ -13,16 +13,16 @@
 #endif
 
 namespace Ui {
-class ArchiveManagerDialog;
+class JobManagerDialog;
 }
 
-class ArchiveManagerDialog : public QWidget
+class JobManagerDialog : public QWidget
 {
   Q_OBJECT
     
 public:
-  explicit ArchiveManagerDialog(QWidget *parent = 0);
-  ~ArchiveManagerDialog();
+  explicit JobManagerDialog(QWidget *parent = 0);
+  ~JobManagerDialog();
 
 public slots:
   void on_browseButton_clicked(void);
@@ -36,9 +36,9 @@ private:
   bool recurRemove(const QString& dirname);
     
 private:
-  Ui::ArchiveManagerDialog *ui;
+  Ui::JobManagerDialog *ui;
   QFileSystemModel* m_model;
   QString m_rootDirName;
 };
 
-#endif // __ARCHIVEMANAGERDIALOG_H__
+#endif // __JOBMANAGERDIALOG_H__

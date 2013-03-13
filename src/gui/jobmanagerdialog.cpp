@@ -1,5 +1,5 @@
-#include "archivemanagerdialog.h"
-#include "ui_archivemanagerdialog.h"
+#include "jobmanagerdialog.h"
+#include "ui_jobmanagerdialog.h"
 
 #include <QtGui>
 
@@ -8,9 +8,9 @@
 #include "settings.h"
 #include "structuredtextparser.h"
 
-ArchiveManagerDialog::ArchiveManagerDialog(QWidget *parent) :
+JobManagerDialog::JobManagerDialog(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ArchiveManagerDialog)
+    ui(new Ui::JobManagerDialog)
 {
   ui->setupUi(this);
 
@@ -33,13 +33,13 @@ ArchiveManagerDialog::ArchiveManagerDialog(QWidget *parent) :
   ui->listView->setRootIndex(m_model->index(m_rootDirName));
 }
 
-ArchiveManagerDialog::~ArchiveManagerDialog()
+JobManagerDialog::~JobManagerDialog()
 {
   delete ui;
   delete m_model;
 } 
 
-void ArchiveManagerDialog::on_browseButton_clicked(void)
+void JobManagerDialog::on_browseButton_clicked(void)
 {
   QFileDialog diag(NULL, "Choose a tarball", "",
       "ODB++ database (*.tgz *.tar.gz)");
@@ -51,7 +51,7 @@ void ArchiveManagerDialog::on_browseButton_clicked(void)
   }
 }
 
-void ArchiveManagerDialog::on_importButton_clicked(void)
+void JobManagerDialog::on_importButton_clicked(void)
 {
   QString filename = ui->filenameLineEdit->text();
 
@@ -161,7 +161,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 }
 
 
-void ArchiveManagerDialog::on_removeButton_clicked(void)
+void JobManagerDialog::on_removeButton_clicked(void)
 {
   QString name = m_model->data(ui->listView->currentIndex()).toString();
 
@@ -175,7 +175,7 @@ void ArchiveManagerDialog::on_removeButton_clicked(void)
   recurRemove(m_rootDirName + "/" + name);
 }
 
-void ArchiveManagerDialog::on_setRootButton_clicked(void)
+void JobManagerDialog::on_setRootButton_clicked(void)
 {
   QFileDialog diag(NULL, "Choose a directory", m_rootDirName);
   diag.setFileMode(QFileDialog::Directory);
@@ -191,7 +191,7 @@ void ArchiveManagerDialog::on_setRootButton_clicked(void)
   }
 }
 
-void ArchiveManagerDialog::on_listView_doubleClicked(const QModelIndex& index)
+void JobManagerDialog::on_listView_doubleClicked(const QModelIndex& index)
 {
   QString name = m_model->data(index).toString();
   ctx.loader = new ArchiveLoader(m_rootDirName + "/" + name);
@@ -204,7 +204,7 @@ void ArchiveManagerDialog::on_listView_doubleClicked(const QModelIndex& index)
   jobMatirx->show();
 }
 
-int ArchiveManagerDialog::execute(QString cmd, QStringList args)
+int JobManagerDialog::execute(QString cmd, QStringList args)
 {
   QEventLoop loop;
 
@@ -222,7 +222,7 @@ int ArchiveManagerDialog::execute(QString cmd, QStringList args)
   return process.exitCode();
 }
 
-bool ArchiveManagerDialog::recurRemove(const QString& dirname)
+bool JobManagerDialog::recurRemove(const QString& dirname)
 {
   bool result = true;
   QDir dir(dirname);
