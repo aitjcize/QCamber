@@ -13,10 +13,6 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
   FeaturesParser parser(ctx.loader->absPath(path.arg(step)));
   m_ds = parser.parse();
 
-  if (m_ds->records().size() == 0) {
-    return;
-  }
-
   if (m_showStepRepeat) {
     loadStepAndRepeat();
   }
