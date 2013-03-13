@@ -1,10 +1,12 @@
 delim       [ \t]
 nl          [\n\r]
 ws          {delim}+
-letter      [A-Za-z0-9_.\-+/&"':]
-var         {letter}+
+pletter     [A-Za-z0-9_.\-+/&"':]
+mletter     [A-Za-z0-9_.\-+/&"': ]
+var         {pletter}{mletter}*{pletter}
 
 %option noyywrap
+%option yylineno
 
 %{
 #include "yyheader.h"
@@ -19,11 +21,12 @@ extern YYSTYPE yylval;
 
 %%
 
-"{"      { return *yytext; }
-"}"      { return *yytext; }
-"="      { return *yytext; }
-{var}    { yylval = strdup(yytext); return VAR; }
-{nl}     { return NL; }
-{ws}     { }
+"{"        { return *yytext; }
+"}"        { return *yytext; }
+"="        { return *yytext; }
+{pletter}  { yylval = strdup(yytext); return VAR; }
+{var}      { yylval = strdup(yytext); return VAR; }
+{nl}       { return NL; }
+{ws}       { }
 
 %%

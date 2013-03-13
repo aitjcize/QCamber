@@ -6,7 +6,8 @@
 
 struct yycontext yyctx;
 
-extern int yyparse (void);
+extern int yyparse(void);
+extern int yylineno;
 
 void putKeyValue(const char* key, const char* value);
 int yyerror(const char* s);
@@ -48,7 +49,7 @@ op_newlines  : op_newlines NL
 
 int yyerror(const char* s)
 {
-  fprintf(stderr, "yacc: %s\n", s);
+  fprintf(stderr, "yacc: %d: %s\n", yylineno, s);
   return 0;
 }
 

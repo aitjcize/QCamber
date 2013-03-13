@@ -243,7 +243,7 @@ FeaturesDataStore* FeaturesParser::parse(void)
 
   FeaturesDataStore* ds = new FeaturesDataStore;
   // layer feature related
-  QRegExp rx("(.+)/steps/([^/]+)/layers/([^/]+)/features");
+  QRegExp rx(".*/([^/]+)/steps/([^/]+)/layers/([^/]+)/features");
   if (rx.exactMatch(m_fileName)) {
     QStringList caps = rx.capturedTexts();
     ds->setJobName(caps[1]);

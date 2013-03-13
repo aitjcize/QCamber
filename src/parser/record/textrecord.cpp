@@ -68,9 +68,12 @@ QString TextRecord::dynamicText(QString text)
   dynText.replace("$$x", QString("%1").arg(x), Qt::CaseInsensitive);
   dynText.replace("$$y", QString("%1").arg(y), Qt::CaseInsensitive);
 
-  QRegExp rx("\\$\\$(.+)");
-  if (rx.exactMatch(dynText)) {
-    dynText.replace(rx, fds->attrlist(rx.cap(1)).toUpper());
+  QRegExp rx("\\$\\$(\\S+)");
+  int pos = 0;
+  while ((pos = rx.indexIn(dynText, pos)) != -1) {
+    QString replacement = fds->attrlist(rx.cap(1)).toUpper();
+    dynText.replace(pos, rx.cap(0).length(), replacement);
+    pos += replacement.length();
   }
 
   return dynText;
