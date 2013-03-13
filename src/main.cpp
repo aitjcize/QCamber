@@ -5,8 +5,6 @@
 #include "settings.h"
 #include "jobmanagerdialog.h"
 
-//#define DEPLOY
-
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
