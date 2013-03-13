@@ -1,19 +1,26 @@
 #include "jobmatrix.h"
 #include "ui_jobmatrix.h"
-#include "structuredtextparser.h"
-#include "context.h"
-#include "QDebug"
+
 #include <QtGui>
 
-JobMatrix::JobMatrix(QWidget *parent, StructuredTextDataStore *ds):
-    QDialog(parent), ui(new Ui::JobMatrix), m_ds(ds)
+#include "context.h"
+#include "structuredtextparser.h"
+
+JobMatrix::JobMatrix(QString job, QWidget *parent):
+  QDialog(parent), ui(new Ui::JobMatrix), m_job(job)
 {
   ui->setupUi(this);
+
+  StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
+  m_ds = parser.parse();
+
+  setMatrix();
 }
 
 JobMatrix::~JobMatrix()
 {
   delete ui;
+  delete m_ds;
 }
 
 void JobMatrix::on_CloseButton_clicked()
@@ -21,7 +28,7 @@ void JobMatrix::on_CloseButton_clicked()
   this->close();
 }
 
-void JobMatrix::SetMatrix()
+void JobMatrix::setMatrix()
 {
   StructuredTextDataStore::BlockIterPair ip;
   QString text,start,end;
@@ -138,6 +145,7 @@ void JobMatrix::showLayer(QTableWidgetItem *item)
   if(item->text() == "") return;
   QStringList params = item->text().split("/");
   ViewerWindow* w = new ViewerWindow;
+  w->setJob(m_job);
   w->setStep(params[0]);
   w->setLayers(m_layerNames, m_layerTypes);
   w->showLayer(params[1].toLower());

@@ -20,9 +20,10 @@ class JobMatrix : public QDialog
 Q_OBJECT
 
 public:
-  explicit JobMatrix(QWidget *parent = 0, StructuredTextDataStore* ds = 0);
-  void SetMatrix();
+  explicit JobMatrix(QString job, QWidget *parent = 0);
   ~JobMatrix();
+
+  void setMatrix();
 
 private slots:
   void on_CloseButton_clicked();
@@ -32,6 +33,7 @@ private slots:
 
 private:
   Ui::JobMatrix* ui;
+  QString m_job;
   QStringList m_stepNames;
   QStringList m_layerNames;
   QStringList m_layerTypes;

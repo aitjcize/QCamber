@@ -196,12 +196,9 @@ void JobManagerDialog::on_listView_doubleClicked(const QModelIndex& index)
   QString name = m_model->data(index).toString();
   ctx.loader = new ArchiveLoader(m_rootDirName + "/" + name);
 
-  StructuredTextParser parser(ctx.loader->absPath("matrix/matrix"));
-  StructuredTextDataStore* ds = parser.parse();
-
-  JobMatrix* jobMatirx = new JobMatrix(0, ds);
-  jobMatirx->SetMatrix();
-  jobMatirx->show();
+  JobMatrix* job = new JobMatrix(name);
+  job->show();
+  hide();
 }
 
 int JobManagerDialog::execute(QString cmd, QStringList args)
