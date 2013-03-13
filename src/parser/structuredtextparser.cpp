@@ -14,6 +14,7 @@ using std::endl;
 
 extern struct yycontext yyctx;
 extern int yyparse (void);
+extern FILE* yyin;
 
 int StructuredTextDataStore::dumpIndent = 0;
 
@@ -106,6 +107,9 @@ void StructuredTextDataStore::dump(void)
 StructuredTextParser::StructuredTextParser(const QString& filename):
   Parser(filename)
 {
+#ifdef Q_OS_WIN
+  m_fileName.replace("/", "\\");
+#endif
 }
  
 StructuredTextParser::~StructuredTextParser()
@@ -114,14 +118,23 @@ StructuredTextParser::~StructuredTextParser()
 
 StructuredTextDataStore* StructuredTextParser::parse(void)
 {
-  FILE* fin = freopen(m_fileName.toAscii(), "r", stdin);
-  if (fin == NULL) {
+#ifdef Q_OS_WIN
+  wchar_t buf[BUFSIZ];
+  memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
+  m_fileName.toWCharArray(buf);
+
+  yyin = _wfopen(buf, (const wchar_t*)"r");
+#else
+  yyin = fopen(m_fileName.toAscii(), "r");
+#endif
+
+  if (yyin == NULL) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
+    return NULL;
   }
 
   yyctx.stds = new StructuredTextDataStore;
   yyparse();
-  //data->dump();
 
   return yyctx.stds;
 }

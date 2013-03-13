@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
   // Some initializations
   Code39::initPatterns();
   Settings::load("config.ini");
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
   ctx.bg_color = QColor(SETTINGS->get("Color", "BG").toString());
 

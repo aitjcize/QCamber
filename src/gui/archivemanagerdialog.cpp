@@ -72,10 +72,12 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 
   // Decompress tarball
   QStringList args;
+
 #ifdef Q_WS_WIN
   filename.replace(":", "");
   filename.prepend('/');
 #endif
+
   args << "xf" << filename << "--strip-components=1" << "-C" << extractDir;
 
   QMessageBox msg(QMessageBox::Information, "Progress",
@@ -100,15 +102,16 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 
   QString matrix = extractDir + "/matrix/matrix";
 
-  if (!QFile(matrix).exists()) {
+  StructuredTextParser parser(matrix);
+  StructuredTextDataStore* ds = parser.parse();
+
+  if (ds == NULL) {
     QMessageBox::critical(this, "Error",
         QString("`%1' is not a valid ODB++ database.").arg(filename));
     recurRemove(extractDir);
     return;
   }
 
-  StructuredTextParser parser(matrix);
-  StructuredTextDataStore* ds = parser.parse();
   StructuredTextDataStore::BlockIterPair ip;
   QStringList steps, layers;
 
@@ -142,6 +145,7 @@ void ArchiveManagerDialog::on_importButton_clicked(void)
 
       QStringList args;
       args << "-d" << gzFilename;
+
       int ret = execute(GZIP_CMD, args);
 
       if (ret != 0) {
