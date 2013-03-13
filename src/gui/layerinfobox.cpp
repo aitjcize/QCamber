@@ -36,7 +36,7 @@ LayerInfoBox::LayerInfoBox(const QString& name, const QString& step,
   } else if (type == "DOCUMENT") {
     color = "#9BDBDB";
   } else if (type == "SOLDER_PASTE") {
-    color = "#9BDBDB";
+    color = "#FFFFCE";
   } else if (type == "ROUT") {
     color = "#D8D8D8 ";
   }

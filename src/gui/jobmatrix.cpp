@@ -59,7 +59,12 @@ void JobMatrix::SetMatrix()
   {
     QTableWidgetItem *item = new QTableWidgetItem();
     text = QString::fromStdString(it->second->get("TYPE"));
-    m_layerTypes.append(text);
+    QString context = QString::fromStdString(it->second->get("CONTEXT"));
+    if (context == "MISC") {
+      m_layerTypes.append("DOCUMENT");
+    } else {
+      m_layerTypes.append(text);
+    }
 
     if(text == "SILK_SCREEN")
       text = "(ss ,";
