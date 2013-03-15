@@ -148,6 +148,8 @@ struct CharRecord {
   FontDataStore* ds;
   char tchar;
   QList<CharLineRecord*> lines;
+  bool valid;
+  QPainterPath cachedPath;
 };
 
 struct NoteRecord: public Record {

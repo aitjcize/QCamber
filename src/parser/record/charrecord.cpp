@@ -45,7 +45,8 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
   return path;
 }
 
-CharRecord::CharRecord(FontDataStore* ds, const QStringList& param): ds(ds)
+CharRecord::CharRecord(FontDataStore* ds, const QStringList& param):
+  ds(ds), valid(false)
 {
   tchar = param[1].toAscii()[0];
 }
@@ -60,15 +61,17 @@ CharRecord::~CharRecord()
 
 QPainterPath CharRecord::painterPath(qreal width_factor)
 {
-  QPainterPath path;
+  if (valid)
+    return cachedPath;
 
-  path.setFillRule(Qt::WindingFill);
+  cachedPath = QPainterPath();
+  cachedPath.setFillRule(Qt::WindingFill);
 
   for (QList<CharLineRecord*>::iterator it = lines.begin();
       it != lines.end(); ++it) {
-    CharLineRecord* rec = (*it);
-    path.addPath(rec->painterPath(width_factor));
+    cachedPath.addPath((*it)->painterPath(width_factor));
   }
+  valid = true;
 
-  return path;
+  return cachedPath;
 }
