@@ -31,8 +31,17 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
 }
 
 ArcSymbol::ArcSymbol(ArcRecord* rec):
-  Symbol("Arc", "Arc", rec->polarity), m_rec(rec)
+    Symbol("Arc", "Arc", rec->polarity)
 {
+  m_xs = rec->xs;
+  m_ys = rec->ys;
+  m_xe = rec->xe;
+  m_ye = rec->ye;
+  m_xc = rec->xc;
+  m_yc = rec->yc;
+  m_sym_num = rec->sym_num;
+  m_dcode = rec->dcode;
+  m_cw = rec->cw;
   m_sym_name = static_cast<FeaturesDataStore*>(rec->ds)->\
                symbolNameMap()[rec->sym_num];
 
@@ -43,12 +52,12 @@ QString ArcSymbol::infoText(void)
 {
   QString info = QString("Arc, XC=%1, YC=%2, XS=%3, YS=%4, XE=%5, YE=%6, "
       "%7, %8, %9") \
-    .arg(m_rec->xc).arg(m_rec->yc) \
-    .arg(m_rec->xs).arg(m_rec->ys) \
-    .arg(m_rec->xe).arg(m_rec->ye) \
+    .arg(m_xc).arg(m_yc) \
+    .arg(m_xs).arg(m_ys) \
+    .arg(m_xe).arg(m_ye) \
     .arg(m_sym_name) \
-    .arg((m_rec->polarity == P)? "POS": "NEG") \
-    .arg(m_rec->cw? "CW": "CCW");
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_cw? "CW": "CCW");
   return info;
 }
 
@@ -56,9 +65,9 @@ QPainterPath ArcSymbol::painterPath(void)
 {
   QPainterPath path;
 
-  qreal sx = m_rec->xs, sy = m_rec->ys;
-  qreal ex = m_rec->xe, ey = m_rec->ye;
-  qreal cx = m_rec->xc, cy = m_rec->yc;
+  qreal sx = m_xs, sy = m_ys;
+  qreal ex = m_xe, ey = m_ye;
+  qreal cx = m_xc, cy = m_yc;
 
   qreal rad = m_sym_name.right(m_sym_name.length() -1).toDouble() / 1000.0;
   qreal hr = rad / 2;
@@ -93,10 +102,10 @@ QPainterPath ArcSymbol::painterPath(void)
   esy = ey - dy * hr;
 
   path.moveTo(eex, -eey);
-  addArc(path, eex, eey, sex, sey, cx, cy, !m_rec->cw);
-  addArc(path, sex, sey, ssx, ssy, sx, sy, !m_rec->cw);
-  addArc(path, ssx, ssy, esx, esy, cx, cy, m_rec->cw);
-  addArc(path, esx, esy, eex, eey, ex, ey, !m_rec->cw);
+  addArc(path, eex, eey, sex, sey, cx, cy, !m_cw);
+  addArc(path, sex, sey, ssx, ssy, sx, sy, !m_cw);
+  addArc(path, ssx, ssy, esx, esy, cx, cy, m_cw);
+  addArc(path, esx, esy, eex, eey, ex, ey, !m_cw);
 
   path.closeSubpath();
 

@@ -12,7 +12,12 @@ public:
   virtual QPainterPath painterPath(void);
 
 private:
-  ArcRecord* m_rec;
+  qreal m_xs, m_ys;
+  qreal m_xe, m_ye;
+  qreal m_xc, m_yc;
+  int m_sym_num;
+  int m_dcode;
+  bool m_cw;
   QString m_sym_name;
 };
 

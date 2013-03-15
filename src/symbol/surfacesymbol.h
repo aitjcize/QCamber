@@ -16,9 +16,10 @@ public:
   virtual QPainterPath painterPath(void);
 
 private:
-  SurfaceRecord* m_rec;
+  int m_dcode;
   int m_holeCount;
   int m_islandCount;
+  QList<PolygonRecord*> m_polygons;
 };
 
 #endif /* __SURFACESYMBOL_H__ */

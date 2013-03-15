@@ -18,7 +18,14 @@ public:
   virtual QPainterPath painterPath(void);
 
 private:
-  BarcodeRecord* m_brec;
+  QString m_barcode;
+  QString m_e;
+  qreal m_w, m_h;
+  bool m_fasc;
+  bool m_cs;
+  bool m_bg;
+  bool m_astr;
+  BarcodeRecord::AstrPos m_astr_pos;
 };
 
 #endif /* __BARCODESYMBOL_H__ */

@@ -10,13 +10,19 @@
 
 class TextSymbol: public Symbol {
 public:
-  TextSymbol(TextRecord* rec, bool isbase=false);
+  TextSymbol(TextRecord* rec);
 
   virtual QString infoText(void);
   virtual QPainterPath painterPath(void);
 
 protected:
-  TextRecord* m_rec;
+  qreal m_x, m_y;
+  QString m_font;
+  Orient m_orient;
+  qreal m_xsize, m_ysize;
+  qreal m_width_factor;
+  QString m_text;
+  int m_version;
 };
 
 #endif /* __TEXTSYMBOL_H__ */
