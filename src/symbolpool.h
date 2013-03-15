@@ -14,7 +14,7 @@ public:
 private:
   SymbolPool();
 
-  static SymbolPool* m_Instance;
+  static SymbolPool* m_instance;
   QMap<QString, Symbol*> m_cache;
 };
 

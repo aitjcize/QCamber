@@ -1,6 +1,6 @@
 #include "symbolpool.h"
 
-SymbolPool* SymbolPool::m_Instance = NULL;
+SymbolPool* SymbolPool::m_instance = NULL;
 
 SymbolPool::SymbolPool()
 {
@@ -13,15 +13,15 @@ SymbolPool::~SymbolPool()
       it != m_cache.end(); ++it) {
     delete it.value();
   }
-  m_Instance = NULL;
+  m_instance = NULL;
 }
 
 SymbolPool* SymbolPool::instance()
 {
-  if (!m_Instance) {
-    m_Instance = new SymbolPool;
+  if (!m_instance) {
+    m_instance = new SymbolPool;
   }
-  return m_Instance;
+  return m_instance;
 }
 
 Symbol* SymbolPool::get(QString def, Polarity polarity)

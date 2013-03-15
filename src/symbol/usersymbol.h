@@ -3,7 +3,6 @@
 
 #include "symbol.h"
 
-#include "featuresparser.h"
 #include "record.h"
 
 class UserSymbol: public Symbol {
@@ -14,7 +13,6 @@ public:
 private:
   QString m_def;
   qreal m_d;
-  FeaturesDataStore* m_ds;
 };
 
 #endif /* __USERSYMBOL_H__ */

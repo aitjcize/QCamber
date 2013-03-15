@@ -3,7 +3,7 @@
 #include <QtGui>
 #include <QMatrix>
 
-#include "fontparser.h"
+#include "cachedparser.h"
 #include "context.h"
 
 TextSymbol::TextSymbol(const TextRecord* rec): Symbol("Text", "Text")
@@ -42,26 +42,24 @@ QPainterPath TextSymbol::painterPath(void)
 
   path.setFillRule(Qt::WindingFill);
 
-  FontParser parser(ctx.loader->absPath("fonts/" + m_font));
-  FontDataStore* data = parser.parse(); 
+  QString filename = ctx.loader->absPath("fonts/" + m_font);
+  FontDataStore* ds = CachedFontParser::parse(filename);
 
-  QMatrix mat(m_xsize / data->xsize(), 0, 0, m_ysize / data->ysize(), 0, 0);
+  QMatrix mat(m_xsize / ds->xsize(), 0, 0, m_ysize / ds->ysize(), 0, 0);
 
   for (int i = 0; i < m_text.length(); ++i) {
-    CharRecord* rec = data->charRecord(m_text[i].toAscii());
+    CharRecord* rec = ds->charRecord(m_text[i].toAscii());
     if (rec) {
       QPainterPath p = mat.map(rec->painterPath(m_width_factor));
       path.addPath(p);
     }
-    mat.translate(data->xsize() + data->offset(), 0);
+    mat.translate(ds->xsize() + ds->offset(), 0);
   }
 
   QRectF b = path.boundingRect();
   QMatrix mat2;
   mat2.translate(-b.x(), -(b.y() + b.height()));
   path = mat2.map(path);
-
-  delete data;
 
   return path;
 }

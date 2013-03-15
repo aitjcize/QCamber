@@ -1,8 +1,9 @@
 #include "layerfeatures.h"
 
-#include "context.h"
-#include <typeinfo>
 #include <QDebug>
+
+#include "cachedparser.h"
+#include "context.h"
 
 LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
   Symbol("features"), m_step(step), m_path(path), m_scene(NULL),
@@ -10,8 +11,7 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
 {
   setHandlesChildEvents(true);
 
-  FeaturesParser parser(ctx.loader->absPath(path.arg(step)));
-  m_ds = parser.parse();
+  m_ds = CachedFeaturesParser::parse(ctx.loader->absPath(path.arg(step)));
 
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
@@ -28,7 +28,6 @@ LayerFeatures::~LayerFeatures()
   for (int i = 0; i < m_repeats.size(); ++i) {
     delete m_repeats[i];
   }
-  delete m_ds;
 }
 
 void LayerFeatures::loadStepAndRepeat(void)

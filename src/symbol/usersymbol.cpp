@@ -3,18 +3,17 @@
 #include <QtGui>
 #include <QRegExp>
 
+#include "cachedparser.h"
 #include "context.h"
 
 UserSymbol::UserSymbol(QString def, Polarity polarity):
   Symbol(def, def, polarity), m_def(def)
 {
   QString path = ctx.loader->featuresPath("symbols/" + def);
+  FeaturesDataStore* ds = CachedFeaturesParser::parse(path);
 
-  FeaturesParser parser(path);
-  m_ds = parser.parse();
-
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
+  for (QList<Record*>::const_iterator it = ds->records().begin();
+      it != ds->records().end(); ++it) {
     Symbol* symbol = (*it)->createSymbol();
     addChild(symbol);
     m_symbols.append(symbol);
