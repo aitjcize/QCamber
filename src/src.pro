@@ -16,7 +16,6 @@ HEADERS += \
   context.h \
   macros.h \
   settings.h \
-  symbolfactory.h \
   symbolpool.h
 
 SOURCES += \

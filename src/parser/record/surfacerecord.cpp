@@ -85,7 +85,7 @@ SurfaceRecord::~SurfaceRecord()
   }
 }
 
-void SurfaceRecord::initSymbol(void)
+Symbol* SurfaceRecord::createSymbol(void) const
 {
-  symbol = new SurfaceSymbol(this);
+  return new SurfaceSymbol(this);
 }

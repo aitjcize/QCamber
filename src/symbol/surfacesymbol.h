@@ -10,7 +10,7 @@
 
 class SurfaceSymbol: public Symbol {
 public:
-  SurfaceSymbol(SurfaceRecord* rec);
+  SurfaceSymbol(const SurfaceRecord* rec);
 
   virtual QString infoText(void);
   virtual QPainterPath painterPath(void);

@@ -192,7 +192,6 @@ void FeaturesDataStore::surfaceLineData(const QString& line)
 
 void FeaturesDataStore::surfaceEnd(void)
 {
-  m_currentSurface->initSymbol();
   m_currentSurface = NULL;
 }
 

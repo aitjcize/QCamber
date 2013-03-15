@@ -15,7 +15,9 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
 
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
-    (*it)->addToChild(this);
+    Symbol* symbol = (*it)->createSymbol();
+    addChild(symbol);
+    m_symbols.append(symbol);
   }
 
   setHandlesChildEvents(true);
@@ -23,5 +25,4 @@ UserSymbol::UserSymbol(QString def, Polarity polarity):
 
 UserSymbol::~UserSymbol()
 {
-  delete m_ds;
 }

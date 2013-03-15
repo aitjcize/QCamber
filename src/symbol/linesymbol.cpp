@@ -6,7 +6,8 @@
 #include "featuresparser.h"
 #include "symbolpool.h"
 
-LineSymbol::LineSymbol(LineRecord* rec): Symbol("Line", "Line", rec->polarity)
+LineSymbol::LineSymbol(const LineRecord* rec):
+  Symbol("Line", "Line", rec->polarity)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;

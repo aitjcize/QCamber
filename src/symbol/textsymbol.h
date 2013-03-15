@@ -10,7 +10,7 @@
 
 class TextSymbol: public Symbol {
 public:
-  TextSymbol(TextRecord* rec);
+  TextSymbol(const TextRecord* rec);
 
   virtual QString infoText(void);
   virtual QPainterPath painterPath(void);

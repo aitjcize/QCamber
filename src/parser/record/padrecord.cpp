@@ -19,9 +19,12 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
   polarity = (param[++i] == "P")? P: N;
   dcode = param[++i].toInt();
   orient = (Orient)param[++i].toInt();
-  QString sym_name = ds->symbolNameMap()[sym_num];
-  symbol = SymbolFactory::create(sym_name, polarity);
+  sym_name = ds->symbolNameMap()[sym_num];
+}
 
+Symbol* PadRecord::createSymbol(void) const
+{
+  Symbol* symbol = SymbolFactory::create(sym_name, polarity);
   symbol->setPos(x, -y);
 
   if (orient >= M_0) {
@@ -30,4 +33,5 @@ PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
     symbol->setTransform(trans);
   }
   symbol->setRotation((orient % 4) * 90);
+  return symbol;
 }

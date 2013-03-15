@@ -18,21 +18,15 @@ typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 struct Record {
   Record(DataStore* _ds): ds(_ds) {}
   virtual ~Record() { }
-
-  virtual void addToChild(Symbol* group) {
-    group->addChild(symbol);
-  }
-  virtual void addToScene(QGraphicsScene* scene) {
-    scene->addItem(symbol);
-  }
+  virtual Symbol* createSymbol(void) const = 0;
 
   DataStore* ds;
-  Symbol* symbol;
 };
 
 
 struct LineRecord: public Record {
   LineRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
   qreal xs, ys;
   qreal xe, ye;
@@ -43,16 +37,19 @@ struct LineRecord: public Record {
 
 struct PadRecord: public Record {
   PadRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
   qreal x, y;
   int sym_num;
   Polarity polarity;
   int dcode;
   Orient orient;
+  QString sym_name;
 };
 
 struct ArcRecord: public Record {
   ArcRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
   qreal xs, ys;
   qreal xe, ye;
@@ -65,8 +62,9 @@ struct ArcRecord: public Record {
 
 struct TextRecord: public Record {
   TextRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
-  void setTransform(void);
+  void setTransform(Symbol* symbol) const;
   virtual QString dynamicText(QString);
 
   qreal x, y;
@@ -83,6 +81,7 @@ struct BarcodeRecord: public TextRecord {
   typedef enum { T = 0, B } AstrPos;
 
   BarcodeRecord(FeaturesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
   QString barcode;
   QString e;
@@ -119,7 +118,7 @@ struct PolygonRecord {
 struct SurfaceRecord: public Record {
   SurfaceRecord(FeaturesDataStore* ds, const QStringList& param);
   virtual ~SurfaceRecord();
-  void initSymbol(void);
+  virtual Symbol* createSymbol(void) const;
 
   Polarity polarity;
   int dcode;
@@ -153,6 +152,7 @@ struct CharRecord {
 
 struct NoteRecord: public Record {
   NoteRecord(NotesDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
 
   int timestamp;
   QString user;

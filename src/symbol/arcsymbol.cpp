@@ -30,7 +30,7 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
   path.lineTo(ex, -ey);
 }
 
-ArcSymbol::ArcSymbol(ArcRecord* rec):
+ArcSymbol::ArcSymbol(const ArcRecord* rec):
   Symbol("Arc", "Arc", rec->polarity)
 {
   m_xs = rec->xs;

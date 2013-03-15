@@ -7,7 +7,7 @@
 class NotesDataStore: public DataStore {
 public:
   void putRecord(QStringList args);
-  QList<NoteRecord*> records(void);
+  const QList<NoteRecord*>& records(void);
 
   virtual void dump(void);
 

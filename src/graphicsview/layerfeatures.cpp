@@ -13,6 +13,11 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
   FeaturesParser parser(ctx.loader->absPath(path.arg(step)));
   m_ds = parser.parse();
 
+  for (QList<Record*>::const_iterator it = m_ds->records().begin();
+      it != m_ds->records().end(); ++it) {
+    m_symbols.append((*it)->createSymbol());
+  }
+
   if (m_showStepRepeat) {
     loadStepAndRepeat();
   }
@@ -114,9 +119,8 @@ void LayerFeatures::addToScene(QGraphicsScene* scene)
 {
   m_scene = scene;
 
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
-    (*it)->addToScene(scene);
+  for (int i = 0; i < m_symbols.size(); ++i) {
+    scene->addItem(m_symbols[i]);
   }
 
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
@@ -128,9 +132,8 @@ void LayerFeatures::addToScene(QGraphicsScene* scene)
 
 void LayerFeatures::setTransform(const QTransform& matrix, bool combine)
 {
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
-    Symbol* symbol = (*it)->symbol;
+  for (int i = 0; i < m_symbols.size(); ++i) {
+    Symbol* symbol = m_symbols[i];
     QTransform trans;
     QPointF o = transform().inverted().map(symbol->pos());
     trans.translate(-o.x(), -o.y());
@@ -160,10 +163,8 @@ void LayerFeatures::setPos(QPointF pos)
 void LayerFeatures::setPos(qreal x, qreal y)
 {
   QTransform trans = QTransform::fromTranslate(x, y);
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
-    Symbol* symbol = (*it)->symbol;
-    symbol->setTransform(symbol->transform() * trans, false);
+  for (int i = 0; i < m_symbols.size(); ++i) {
+    m_symbols[i]->setTransform(m_symbols[i]->transform() * trans, false);
   }
 
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();
@@ -177,9 +178,8 @@ void LayerFeatures::setPos(qreal x, qreal y)
 
 void LayerFeatures::setVisible(bool status)
 {
-  for (QList<Record*>::const_iterator it = m_ds->records().begin();
-      it != m_ds->records().end(); ++it) {
-    (*it)->symbol->setVisible(status);
+  for (int i = 0; i < m_symbols.size(); ++i) {
+    m_symbols[i]->setVisible(status);
   }
 
   for (QList<LayerFeatures*>::iterator it = m_repeats.begin();

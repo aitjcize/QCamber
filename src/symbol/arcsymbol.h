@@ -6,7 +6,7 @@
 
 class ArcSymbol: public Symbol {
 public:
-  ArcSymbol(ArcRecord* rec);
+  ArcSymbol(const ArcRecord* rec);
 
   virtual QString infoText(void);
   virtual QPainterPath painterPath(void);

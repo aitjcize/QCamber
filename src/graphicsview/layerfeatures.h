@@ -43,6 +43,7 @@ private:
   qreal m_x_origin, m_y_origin;
   bool m_stepRepeatLoaded;
   bool m_showStepRepeat;
+  QList<Symbol*> m_symbols;
   QList<LayerFeatures*> m_repeats;
 };
 

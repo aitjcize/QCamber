@@ -24,8 +24,11 @@ BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
   astr = (param[++i] == "Y");
   astr_pos = (param[++i] == "T")? BarcodeRecord::T : BarcodeRecord::B;
   text = dynamicText(param[++i]);
+}
 
-  symbol = new BarcodeSymbol(this);
-
-  setTransform();
+Symbol* BarcodeRecord::createSymbol(void) const
+{
+  Symbol* symbol = new BarcodeSymbol(this);
+  setTransform(symbol);
+  return symbol;
 }

@@ -17,5 +17,9 @@ ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param):
   polarity = (param[++i] == "P")? P: N;
   dcode = param[++i].toInt();
   cw = (param[++i] == "Y");
-  symbol = new ArcSymbol(this);
+}
+
+Symbol* ArcRecord::createSymbol(void) const
+{
+  return new ArcSymbol(this);
 }

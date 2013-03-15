@@ -10,7 +10,7 @@ using std::endl;
 
 #include "context.h"
 
-SurfaceSymbol::SurfaceSymbol(SurfaceRecord* rec):
+SurfaceSymbol::SurfaceSymbol(const SurfaceRecord* rec):
   Symbol("Surface", "Surface", rec->polarity),
   m_islandCount(0), m_holeCount(0)
 {
@@ -43,10 +43,8 @@ QPainterPath SurfaceSymbol::painterPath(void)
     path.addPath(rec->painterPath());
     if (rec->poly_type == PolygonRecord::I) {
       ++m_islandCount;
-      //ipath.addPath(rec->painterPath());
     } else {
       ++m_holeCount;
-      //ipath.addPath(rec->painterPath());
     }
   }
 

@@ -10,7 +10,7 @@
 
 class LineSymbol: public Symbol {
 public:
-  LineSymbol(LineRecord* rec);
+  LineSymbol(const LineRecord* rec);
 
   virtual QString infoText(void);
   virtual QPainterPath painterPath(void);

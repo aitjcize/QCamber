@@ -6,7 +6,7 @@
 
 class NoteSymbol: public Symbol {
 public:
-  NoteSymbol(NoteRecord* rec);
+  NoteSymbol(const NoteRecord* rec);
 
   QPainterPath painterPath(void);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

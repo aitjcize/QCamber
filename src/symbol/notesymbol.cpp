@@ -4,7 +4,7 @@
 #include <QRegExp>
 
 
-NoteSymbol::NoteSymbol(NoteRecord* rec): Symbol("note")
+NoteSymbol::NoteSymbol(const NoteRecord* rec): Symbol("note")
 {
   m_timestamp = rec->timestamp;
   m_user = rec->user;

@@ -7,7 +7,7 @@ void NotesDataStore::putRecord(QStringList args)
   m_records.append(new NoteRecord(this, args));
 }
 
-QList<NoteRecord*> NotesDataStore::records(void)
+const QList<NoteRecord*>& NotesDataStore::records(void)
 {
   return m_records;
 }

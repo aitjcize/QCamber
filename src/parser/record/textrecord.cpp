@@ -27,13 +27,16 @@ TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
   width_factor = param[++i].toDouble();
   text = dynamicText(param[++i]);
   version = param[++i].toInt();
-
-  symbol = new TextSymbol(this);
-
-  setTransform();
 }
 
-void TextRecord::setTransform(void)
+Symbol* TextRecord::createSymbol(void) const
+{
+  Symbol* symbol = new TextSymbol(this);
+  setTransform(symbol);
+  return symbol;
+}
+
+void TextRecord::setTransform(Symbol* symbol) const
 {
   symbol->setPos(x, -y);
 
@@ -50,11 +53,11 @@ QString TextRecord::dynamicText(QString text)
   QString dynText = text;
   const QDate &Date = QDate::currentDate();
   const QTime &Time = QTime::currentTime();
-  dynText.replace("$$date-ddmmyy", QString("").sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date-ddmmyy", QString().sprintf("%02d/%02d/%02d",
         Date.day(), Date.month(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$date", QString("").sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date", QString().sprintf("%02d/%02d/%02d",
         Date.month(), Date.day(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$time", QString("").sprintf("%02d:%02d",
+  dynText.replace("$$time", QString().sprintf("%02d:%02d",
         Time.hour(), Time.minute()), Qt::CaseInsensitive);
 
   FeaturesDataStore* fds = dynamic_cast<FeaturesDataStore*>(ds);

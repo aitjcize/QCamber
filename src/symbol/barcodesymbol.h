@@ -10,7 +10,7 @@
 
 class BarcodeSymbol: public TextSymbol {
 public:
-  BarcodeSymbol(BarcodeRecord* rec);
+  BarcodeSymbol(const BarcodeRecord* rec);
 
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         QWidget *widget);

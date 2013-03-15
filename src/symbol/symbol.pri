@@ -32,7 +32,8 @@ HEADERS += \
   symbol/linesymbol.h \
   symbol/notesymbol.h \
   symbol/surfacesymbol.h \
-  symbol/textsymbol.h
+  symbol/textsymbol.h \
+  symbol/symbolfactory.h
 
 SOURCES += \
   symbol/arcsymbol.cpp \

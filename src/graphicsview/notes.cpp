@@ -18,10 +18,9 @@ Notes::Notes(QString step, QString layer): Symbol("symbol"), m_empty(false)
   }
 
   QList<NoteRecord*> records = ds->records();
-  for (QList<NoteRecord*>::const_iterator it = records.begin();
-      it != records.end(); ++it) {
-    NoteRecord* rec = *it;
-    rec->addToChild(this);
+  for (QList<NoteRecord*>::const_iterator it = ds->records().begin();
+      it != ds->records().end(); ++it) {
+    addChild((*it)->createSymbol());
   }
 }
 

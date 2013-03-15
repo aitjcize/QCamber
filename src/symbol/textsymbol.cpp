@@ -6,7 +6,7 @@
 #include "fontparser.h"
 #include "context.h"
 
-TextSymbol::TextSymbol(TextRecord* rec): Symbol("Text", "Text")
+TextSymbol::TextSymbol(const TextRecord* rec): Symbol("Text", "Text")
 {
   if (rec == NULL) {
     return;
@@ -23,7 +23,7 @@ TextSymbol::TextSymbol(TextRecord* rec): Symbol("Text", "Text")
   m_text = rec->text;
   m_version = rec->version;
 
-  painterPath();
+  m_bounding = painterPath().boundingRect();
 }
 
 QString TextSymbol::infoText(void)

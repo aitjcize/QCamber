@@ -19,6 +19,11 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity):
 
 Symbol::~Symbol()
 {
+  /*
+  for (int i = 0; i < m_symbols.size(); ++i) {
+    delete m_symbols[i];
+  }
+  */
 }
 
 QString Symbol::name(void)
