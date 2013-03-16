@@ -1,8 +1,8 @@
 delim       [ \t]
 nl          [\n\r]
 ws          {delim}+
-pletter     [A-Za-z0-9_.\-+/&"':]
-mletter     [A-Za-z0-9_.\-+/&"': ]
+pletter     [A-Za-z0-9_.\-+/&"':;]
+mletter     [A-Za-z0-9_.\-+/&"':; ]
 var         {pletter}{mletter}*{pletter}
 
 %option noyywrap
