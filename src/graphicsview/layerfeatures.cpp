@@ -33,8 +33,7 @@ LayerFeatures::~LayerFeatures()
 void LayerFeatures::loadStepAndRepeat(void)
 {
   QString hdr = "steps/%1/stephdr";
-  StructuredTextParser stephdr_parser(ctx.loader->absPath(hdr.arg(m_step)));
-  StructuredTextDataStore* hds = stephdr_parser.parse();
+  StructuredTextDataStore* hds = CachedStructuredTextParser::parse(ctx.loader->absPath(hdr.arg(m_step)));
 
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
       "STEP-REPEAT");
@@ -105,8 +104,6 @@ void LayerFeatures::loadStepAndRepeat(void)
   }
 
   m_stepRepeatLoaded = true;
-
-  delete hds;
 }
 
 QRectF LayerFeatures::boundingRect() const

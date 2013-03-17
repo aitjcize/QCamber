@@ -61,5 +61,6 @@ D* CachedParser<P, D>::realParse(QString filename)
 
 typedef CachedParser<FeaturesParser, FeaturesDataStore> CachedFeaturesParser;
 typedef CachedParser<FontParser, FontDataStore> CachedFontParser;
+typedef CachedParser<StructuredTextParser, StructuredTextDataStore> CachedStructuredTextParser;
 
 #endif /* __CACHED_PARSER_H__ */
