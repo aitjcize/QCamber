@@ -32,8 +32,8 @@ LayerFeatures::~LayerFeatures()
 
 void LayerFeatures::loadStepAndRepeat(void)
 {
-  QString hdr = "steps/%1/stephdr";
-  StructuredTextDataStore* hds = CachedStructuredTextParser::parse(ctx.loader->absPath(hdr.arg(m_step)));
+  QString path = ctx.loader->absPath(QString("steps/%1/stephdr").arg(m_step));
+  StructuredTextDataStore* hds = CachedStructuredTextParser::parse(path);
 
   StructuredTextDataStore::BlockIterPair ip = hds->getBlocksByKey(
       "STEP-REPEAT");
