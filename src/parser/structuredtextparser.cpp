@@ -5,6 +5,7 @@
 #include <utility>
 
 #include <QDebug>
+#include <QSysInfo>
 
 #include "yyheader.h"
 #include "db.tab.h"
@@ -118,15 +119,15 @@ StructuredTextParser::~StructuredTextParser()
 
 StructuredTextDataStore* StructuredTextParser::parse(void)
 {
-#ifdef Q_OS_WIN
-  wchar_t buf[BUFSIZ];
-  memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
-  m_fileName.toWCharArray(buf);
+  if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
+    wchar_t buf[BUFSIZ];
+    memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
+    m_fileName.toWCharArray(buf);
 
-  yyin = _wfopen(buf, (const wchar_t*)"r");
-#else
-  yyin = fopen(m_fileName.toAscii(), "r");
-#endif
+    yyin = _wfopen(buf, (const wchar_t*)"r");
+  } else {
+    yyin = fopen(m_fileName.toAscii(), "r");
+  }
 
   if (yyin == NULL) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
