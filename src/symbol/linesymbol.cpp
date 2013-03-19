@@ -45,11 +45,11 @@ QString LineSymbol::longInfoText(void)
 {
   QString result(
       "Line\n\n"
-      "XS\t\t= %1\n"
-      "YS\t\t= %2\n"
-      "XE\t\t= %3\n"
-      "YE\t\t= %4\n"
-      "Symbol\t\t= %5\n"
+      "XS\t= %1\n"
+      "YS\t= %2\n"
+      "XE\t= %3\n"
+      "YE\t= %4\n"
+      "Symbol\t= %5\n"
       "Polarity\t= %6\n"
   );
   return result \
