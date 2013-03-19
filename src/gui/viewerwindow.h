@@ -86,7 +86,7 @@ private:
   LayerInfoBox* m_activeInfoBox;
   bool m_transition;
   symbolcount m_symbolCountView;
-  FeaturePropertiesDialog m_featurePropertiesDialog;
+  FeaturePropertiesDialog* m_featurePropertiesDialog;
 };
 
 #endif // __MAINWINDOW_H__

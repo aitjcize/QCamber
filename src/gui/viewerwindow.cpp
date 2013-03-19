@@ -30,6 +30,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   unitCombo->addItem("MM");
   statusBar()->addPermanentWidget(unitCombo);
 
+  m_featurePropertiesDialog = new FeaturePropertiesDialog(this);
+
   connect(unitCombo, SIGNAL(currentIndexChanged(int)), this,
       SLOT(unitChanged(int)));
 
@@ -40,7 +42,7 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)),
-      &m_featurePropertiesDialog, SLOT(update(Symbol*)));
+      m_featurePropertiesDialog, SLOT(update(Symbol*)));
 
   connect(ui->miniMapView, SIGNAL(minimapRectSelected(QRectF)), ui->viewWidget,
       SLOT(zoomToRect(QRectF)));
@@ -60,6 +62,7 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
 ViewerWindow::~ViewerWindow()
 {
   delete ui;
+  delete m_featurePropertiesDialog;
 }
 
 void ViewerWindow::setJob(QString job)
@@ -335,7 +338,7 @@ void ViewerWindow::on_actionClearHighlight_triggered(void)
 
 void ViewerWindow::on_actionFeatureProperties_triggered(void)
 {
-  m_featurePropertiesDialog.show();
+  m_featurePropertiesDialog->show();
 }
 
 void ViewerWindow::on_actionMeasure_toggled(bool checked)
