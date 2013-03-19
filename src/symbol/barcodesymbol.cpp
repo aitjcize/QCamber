@@ -55,7 +55,7 @@ QString BarcodeSymbol::longInfoText(void)
       "Text\t= %3\n"
       "Polarity\t= %4\n"
       "Barcode\t= %5\n"
-      "Full Ascii\t= %6\n"
+      "Full ASCII\t= %6\n"
       "Checksum\t= %7\n"
   );
   return result \
