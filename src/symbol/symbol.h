@@ -26,7 +26,7 @@ private:
 
 class Symbol: public virtual QGraphicsItem {
 public:
-  Symbol(QString name, QString pattern = QString(), Polarity polarity=P,
+  Symbol(QString name, QString pattern = QString(), Polarity polarity = P,
       AttribData attr = AttribData());
   virtual ~Symbol();
 
