@@ -119,6 +119,7 @@ StructuredTextParser::~StructuredTextParser()
 
 StructuredTextDataStore* StructuredTextParser::parse(void)
 {
+#ifdef Q_OS_WIN
   if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
     wchar_t buf[BUFSIZ];
     memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
@@ -128,6 +129,9 @@ StructuredTextDataStore* StructuredTextParser::parse(void)
   } else {
     yyin = fopen(m_fileName.toAscii(), "r");
   }
+#else
+  yyin = fopen(m_fileName.toAscii(), "r");
+#endif
 
   if (yyin == NULL) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
