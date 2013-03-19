@@ -5,7 +5,7 @@
 #include "symbolfactory.h"
 
 NoteRecord::NoteRecord(NotesDataStore* ds, const QStringList& param):
-  Record(ds)
+  Record(ds, AttribData())
 {
   int i = 0;
   timestamp = param[i++].toInt();

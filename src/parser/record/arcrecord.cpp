@@ -3,8 +3,9 @@
 #include "featuresparser.h"
 #include "arcsymbol.h"
 
-ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param):
-  Record(ds)
+ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  Record(ds, attr)
 {
   int i = 0;
   xs = param[++i].toDouble();

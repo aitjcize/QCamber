@@ -29,6 +29,7 @@ BarcodeSymbol::BarcodeSymbol(const BarcodeRecord* rec):
   m_bg = rec->bg;
   m_astr = rec->astr;
   m_astr_pos = rec->astr_pos;
+  m_attrib = rec->attrib;
 
   m_bounding = painterPath().boundingRect();
 }

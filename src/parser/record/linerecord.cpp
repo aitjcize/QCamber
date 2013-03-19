@@ -5,8 +5,9 @@
 #include "featuresparser.h"
 #include "linesymbol.h"
 
-LineRecord::LineRecord(FeaturesDataStore* ds, const QStringList& param):
-  Record(ds)
+LineRecord::LineRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  Record(ds, attr)
 {
   int i = 0;
   xs = param[++i].toDouble();

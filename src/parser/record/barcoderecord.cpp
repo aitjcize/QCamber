@@ -5,8 +5,9 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param):
-  TextRecord(ds, QStringList())
+BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  TextRecord(ds, QStringList(), attr)
 {
   int i = 0;
   x = param[++i].toDouble();

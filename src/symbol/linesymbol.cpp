@@ -7,7 +7,7 @@
 #include "symbolpool.h"
 
 LineSymbol::LineSymbol(const LineRecord* rec):
-  Symbol("Line", "Line", rec->polarity)
+  Symbol("Line", "Line", rec->polarity, rec->attrib)
 {
   m_xs = rec->xs;
   m_ys = rec->ys;

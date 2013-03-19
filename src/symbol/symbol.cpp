@@ -6,9 +6,10 @@
 #include "odbppgraphicsscene.h"
 #include "graphicslayerscene.h"
 
-Symbol::Symbol(QString name, QString pattern, Polarity polarity):
+Symbol::Symbol(QString name, QString pattern, Polarity polarity,
+    AttribData attr):
   m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
-  m_polarity(polarity), m_selected(false)
+  m_polarity(polarity), m_selected(false), m_attrib(attr)
 {
   setHandlesChildEvents(false);
 

@@ -9,8 +9,9 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param):
-  Record(ds)
+TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  Record(ds, attr)
 {
   if (param.empty()) {
     return;

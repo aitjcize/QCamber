@@ -11,7 +11,7 @@ using std::endl;
 #include "context.h"
 
 SurfaceSymbol::SurfaceSymbol(const SurfaceRecord* rec):
-  Symbol("Surface", "Surface", rec->polarity),
+  Symbol("Surface", "Surface", rec->polarity, rec->attrib),
   m_islandCount(0), m_holeCount(0)
 {
   m_dcode = rec->dcode;

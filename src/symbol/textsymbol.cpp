@@ -6,7 +6,8 @@
 #include "cachedparser.h"
 #include "context.h"
 
-TextSymbol::TextSymbol(const TextRecord* rec): Symbol("Text", "Text")
+TextSymbol::TextSymbol(const TextRecord* rec):
+  Symbol("Text", "Text")
 {
   if (rec == NULL) {
     return;
@@ -22,6 +23,7 @@ TextSymbol::TextSymbol(const TextRecord* rec): Symbol("Text", "Text")
   m_width_factor = rec->width_factor;
   m_text = rec->text;
   m_version = rec->version;
+  m_attrib = rec->attrib;
 
   m_bounding = painterPath().boundingRect();
 }

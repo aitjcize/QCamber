@@ -9,8 +9,9 @@
 #include "featuresparser.h"
 #include "symbolfactory.h"
 
-PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param):
-  Record(ds)
+PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  Record(ds, attr)
 {
   int i = 0;
   x = param[++i].toDouble();

@@ -60,7 +60,8 @@ public:
   virtual void dump(void);
 
 protected:
-  QString stripAttr(const QString& line); 
+  void parseAttributes(const QString& line, QStringList* param,
+      AttribData* attrib);
 
 private:
   QString m_jobName;

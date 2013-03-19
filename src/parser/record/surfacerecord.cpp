@@ -69,8 +69,9 @@ QPainterPath PolygonRecord::painterPath(void)
   return path;
 }
 
-SurfaceRecord::SurfaceRecord(FeaturesDataStore* ds, const QStringList& param):
-  Record(ds)
+SurfaceRecord::SurfaceRecord(FeaturesDataStore* ds, const QStringList& param,
+    const AttribData& attr):
+  Record(ds, attr)
 {
   int i = 0;
   polarity = (param[++i] == "P")? P: N;

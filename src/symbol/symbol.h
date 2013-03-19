@@ -11,7 +11,9 @@
 #include <QPainterPath>
 #include <QString>
 
+typedef QMap<QString, QString> AttribData;
 typedef enum { P = 0, N } Polarity;
+typedef enum { N_0 = 0, N_90, N_180, N_270, M_0, M_90, M_180, M_270 } Orient;
 
 class InvalidSymbolException: public std::exception {
 public:
@@ -24,7 +26,8 @@ private:
 
 class Symbol: public virtual QGraphicsItem {
 public:
-  Symbol(QString name, QString pattern = QString(), Polarity polarity=P);
+  Symbol(QString name, QString pattern = QString(), Polarity polarity=P,
+      AttribData attr = AttribData());
   virtual ~Symbol();
 
   QString name(void);
@@ -59,6 +62,7 @@ protected:
   Polarity m_polarity;
   bool m_selected;
   QList<Symbol*> m_symbols;
+  AttribData m_attrib;
 };
 
 #endif /* __SYMBOL_H__ */
