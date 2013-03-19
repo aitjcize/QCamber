@@ -13,6 +13,7 @@ public:
   LineSymbol(const LineRecord* rec);
 
   virtual QString infoText(void);
+  virtual QString longInfoText(void);
   virtual QPainterPath painterPath(void);
 
 private:

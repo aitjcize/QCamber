@@ -61,6 +61,29 @@ QString ArcSymbol::infoText(void)
   return info;
 }
 
+QString ArcSymbol::longInfoText(void)
+{
+  QString result(
+      "Arc\n\n"
+      "XC\t= %1\n"
+      "YC\t= %2\n"
+      "XS\t= %3\n"
+      "YS\t= %4\n"
+      "XE\t= %5\n"
+      "YE\t= %6\n"
+      "Symbol\t= %5\n"
+      "Polarity\t= %6\n"
+      "Clockwise\t= %7\n"
+  );
+  return result \
+    .arg(m_xc).arg(m_yc) \
+    .arg(m_xs).arg(m_ys) \
+    .arg(m_xe).arg(m_ye) \
+    .arg(m_sym_name) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_cw? "Yes": "No");
+}
+
 QPainterPath ArcSymbol::painterPath(void)
 {
   QPainterPath path;

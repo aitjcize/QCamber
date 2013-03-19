@@ -38,6 +38,23 @@ QString TextSymbol::infoText(void)
   return info;
 }
 
+QString TextSymbol::longInfoText(void)
+{
+  QString result(
+      "Text\n\n"
+      "X\t= %1\n"
+      "Y\t= %2\n"
+      "Text\t= %3\n"
+      "Polarity\t= %4\n"
+      "Font\t= %5\n"
+  );
+  return result \
+    .arg(m_x).arg(m_y) \
+    .arg(m_text) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_font);
+}
+
 QPainterPath TextSymbol::painterPath(void)
 {
   QPainterPath path;

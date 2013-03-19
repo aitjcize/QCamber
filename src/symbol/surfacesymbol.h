@@ -13,6 +13,7 @@ public:
   SurfaceSymbol(const SurfaceRecord* rec);
 
   virtual QString infoText(void);
+  virtual QString longInfoText(void);
   virtual QPainterPath painterPath(void);
 
 private:

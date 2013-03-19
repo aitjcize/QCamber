@@ -13,6 +13,7 @@ public:
   TextSymbol(const TextRecord* rec);
 
   virtual QString infoText(void);
+  virtual QString longInfoText(void);
   virtual QPainterPath painterPath(void);
 
 protected:

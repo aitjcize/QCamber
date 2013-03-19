@@ -46,6 +46,27 @@ QString BarcodeSymbol::infoText(void)
   return info;
 }
 
+QString BarcodeSymbol::longInfoText(void)
+{
+  QString result(
+      "Text/BC\n\n"
+      "X\t= %1\n"
+      "Y\t= %2\n"
+      "Text\t= %3\n"
+      "Polarity\t= %4\n"
+      "Barcode\t= %5\n"
+      "Full Ascii\t= %6\n"
+      "Clockwise\t= %7\n"
+  );
+  return result \
+    .arg(m_x).arg(m_y) \
+    .arg(m_text) \
+    .arg((m_polarity == P)? "POS": "NEG") \
+    .arg(m_barcode) \
+    .arg(m_fasc? "Yes": "No") \
+    .arg(m_cs? "Yes": "No");
+}
+
 void BarcodeSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
     QWidget*)
 {

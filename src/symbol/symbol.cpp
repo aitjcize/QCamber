@@ -46,6 +46,24 @@ QString Symbol::infoText(void)
   return info;
 }
 
+QString Symbol::longInfoText(void)
+{
+  QString result(
+      "Pad\n\n"
+      "X\t= %1\n"
+      "Y\t= %2\n"
+      "Symbol\t = %3\n"
+      "Polarity\t = %4\n"
+  );
+  return result.arg(pos().x()).arg(pos().y()) \
+    .arg(m_name).arg((m_polarity == P)? "POS": "NEG");
+}
+
+AttribData Symbol::attrib(void)
+{
+  return m_attrib;
+}
+
 QRectF Symbol::boundingRect() const
 {
   if (m_symbols.count()) {

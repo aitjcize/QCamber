@@ -32,6 +32,8 @@ public:
 
   QString name(void);
   virtual QString infoText(void);
+  virtual QString longInfoText(void);
+  AttribData attrib(void);
 
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);

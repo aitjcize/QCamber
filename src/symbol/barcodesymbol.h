@@ -15,6 +15,7 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         QWidget *widget);
   virtual QString infoText(void);
+  virtual QString longInfoText(void);
   virtual QPainterPath painterPath(void);
 
 private:

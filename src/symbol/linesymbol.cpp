@@ -41,6 +41,24 @@ QString LineSymbol::infoText(void)
   return info;
 }
 
+QString LineSymbol::longInfoText(void)
+{
+  QString result(
+      "Line\n\n"
+      "XS\t= %1\n"
+      "YS\t= %2\n"
+      "XE\t= %3\n"
+      "YE\t= %4\n"
+      "Symbol\t= %5\n"
+      "Polarity\t= %6\n"
+  );
+  return result \
+    .arg(m_xs).arg(m_ys) \
+    .arg(m_xe).arg(m_ye) \
+    .arg(m_sym_name) \
+    .arg((m_polarity == P)? "POS": "NEG");
+}
+
 QPainterPath LineSymbol::painterPath()
 {
   QPainterPath path;

@@ -30,6 +30,23 @@ QString SurfaceSymbol::infoText(void)
   return info;
 }
 
+QString SurfaceSymbol::longInfoText(void)
+{
+  QPointF c = m_bounding.center();
+  QString result(
+      "Surface\n\n"
+      "XC\t= %1\n"
+      "YC\t= %2\n"
+      "Islands\t= %3\n"
+      "Holes\t= %4\n"
+      "PolygonRecord\t= %5\n"
+  );
+  return result \
+    .arg(c.x()).arg(c.y()) \
+    .arg(m_islandCount).arg(m_holeCount) \
+    .arg((m_polarity == P)? "POS": "NEG");
+}
+
 QPainterPath SurfaceSymbol::painterPath(void)
 {
   QPainterPath path;
