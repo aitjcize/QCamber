@@ -6,6 +6,8 @@
 
 NoteSymbol::NoteSymbol(const NoteRecord* rec): Symbol("note")
 {
+  setFlag(ItemIgnoresTransformations);
+
   m_timestamp = rec->timestamp;
   m_user = rec->user;
   m_x = rec->x;
@@ -23,7 +25,7 @@ QPainterPath NoteSymbol::painterPath(void)
 {
   QPainterPath path;
 
-  qreal side = 0.04;
+  qreal side = 15;
   qreal hside = side / 2;
 
   path.lineTo(hside, 0);
@@ -44,7 +46,10 @@ void NoteSymbol::paint(QPainter *painter,
   painter->drawPath(painterPath());
 }
 
+void NoteSymbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+}
+
 void NoteSymbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
-  update();
 }
