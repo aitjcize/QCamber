@@ -71,9 +71,9 @@ QString ArcSymbol::longInfoText(void)
       "YS\t= %4\n"
       "XE\t= %5\n"
       "YE\t= %6\n"
-      "Symbol\t= %5\n"
-      "Polarity\t= %6\n"
-      "Clockwise\t= %7\n"
+      "Symbol\t= %7\n"
+      "Polarity\t= %8\n"
+      "Clockwise\t= %9\n"
   );
   return result \
     .arg(m_xc).arg(m_yc) \
