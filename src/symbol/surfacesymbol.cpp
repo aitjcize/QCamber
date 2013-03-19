@@ -39,7 +39,7 @@ QString SurfaceSymbol::longInfoText(void)
       "YC\t= %2\n"
       "Islands\t= %3\n"
       "Holes\t= %4\n"
-      "PolygonRecord\t= %5\n"
+      "Polarity\t= %5\n"
   );
   return result \
     .arg(c.x()).arg(c.y()) \

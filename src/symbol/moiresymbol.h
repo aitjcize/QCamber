@@ -6,7 +6,8 @@
 class MoireSymbol: public Symbol {
 public:
 
-  MoireSymbol(QString def, Polarity polarity);
+  MoireSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

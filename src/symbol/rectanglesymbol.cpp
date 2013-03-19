@@ -6,8 +6,9 @@
 #include "macros.h"
 
 
-RectangleSymbol::RectangleSymbol(QString def, Polarity polarity):
-    Symbol(def, "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?", polarity), m_def(def)
+RectangleSymbol::RectangleSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+    Symbol(def, "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?", polarity, attrib), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

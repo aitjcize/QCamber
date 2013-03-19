@@ -42,69 +42,70 @@
 
 class SymbolFactory {
 public:
-  static Symbol* create(QString def, Polarity polarity) {
+  static Symbol* create(const QString& def, const Polarity& polarity,
+      const AttribData& attrib) {
     QRegExp rx("([a-z_+]+).*");
     if (!rx.exactMatch(def)) {
-      return new UserSymbol(def, polarity);
+      return new UserSymbol(def, polarity, attrib);
     }
 
     QString prefix = rx.capturedTexts()[1];
     try {
       if (prefix == "r") {
-        return new RoundSymbol(def, polarity);
+        return new RoundSymbol(def, polarity, attrib);
       } else if (prefix == "s") {
-        return new SquareSymbol(def, polarity);
+        return new SquareSymbol(def, polarity, attrib);
       } else if (prefix == "rect") {
-        return new RectangleSymbol(def, polarity);
+        return new RectangleSymbol(def, polarity, attrib);
       } else if (prefix == "oval") {
-        return new OvalSymbol(def, polarity);
+        return new OvalSymbol(def, polarity, attrib);
       } else if (prefix == "di") {
-        return new DiamondSymbol(def, polarity);
+        return new DiamondSymbol(def, polarity, attrib);
       } else if (prefix == "oct") {
-        return new OctagonSymbol(def, polarity);
+        return new OctagonSymbol(def, polarity, attrib);
       } else if (prefix == "donut_r") {
-        return new DonutRSymbol(def, polarity);
+        return new DonutRSymbol(def, polarity, attrib);
       } else if (prefix == "donut_s") {
-        return new DonutSSymbol(def, polarity);
+        return new DonutSSymbol(def, polarity, attrib);
       } else if (prefix == "tri") {
-        return new TriangleSymbol(def, polarity);
+        return new TriangleSymbol(def, polarity, attrib);
       } else if (prefix == "hex_l") {
-        return new HorizontalHexagonSymbol(def, polarity);
+        return new HorizontalHexagonSymbol(def, polarity, attrib);
       } else if (prefix == "hex_s") {
-        return new VerticalHexagonSymbol(def, polarity);
+        return new VerticalHexagonSymbol(def, polarity, attrib);
       } else if (prefix == "bfr") {
-        return new ButterflySymbol(def, polarity);
+        return new ButterflySymbol(def, polarity, attrib);
       } else if (prefix == "bfs") {
-        return new SquareButterflySymbol(def, polarity);
+        return new SquareButterflySymbol(def, polarity, attrib);
       } else if (prefix == "oval_h") {
-        return new HalfOvalSymbol(def, polarity);
+        return new HalfOvalSymbol(def, polarity, attrib);
       } else if (prefix == "ths") {
-        return new RoundThermalSquareSymbol(def, polarity);
+        return new RoundThermalSquareSymbol(def, polarity, attrib);
       } else if (prefix == "thr") {
-        return new RoundThermalRoundSymbol(def, polarity);
+        return new RoundThermalRoundSymbol(def, polarity, attrib);
       } else if (prefix == "s_ths") {
-        return new SquareThermalSymbol(def, polarity);
+        return new SquareThermalSymbol(def, polarity, attrib);
       } else if (prefix == "s_tho") {
-        return new SquareThermalOpenCornersSymbol(def, polarity);
+        return new SquareThermalOpenCornersSymbol(def, polarity, attrib);
       } else if (prefix == "sr_ths") {
-        return new SquareRoundThermalSymbol(def, polarity);
+        return new SquareRoundThermalSymbol(def, polarity, attrib);
       } else if (prefix == "rc_ths") {
-        return new RectangularThermalSymbol(def, polarity);
+        return new RectangularThermalSymbol(def, polarity, attrib);
       } else if (prefix == "rc_tho") {
-        return new RectangularThermalOpenCornersSymbol(def, polarity);
+        return new RectangularThermalOpenCornersSymbol(def, polarity, attrib);
       } else if (prefix == "el") {
-        return new EllipseSymbol(def, polarity);
+        return new EllipseSymbol(def, polarity, attrib);
       } else if (prefix == "moire") {
-        return new MoireSymbol(def, polarity);
+        return new MoireSymbol(def, polarity, attrib);
       } else if (prefix == "hole") {
-        return new HoleSymbol(def, polarity);
+        return new HoleSymbol(def, polarity, attrib);
       } else if (prefix == "null") {
-        return new NullSymbol(def, polarity);
+        return new NullSymbol(def, polarity, attrib);
       } else {
-        return new UserSymbol(def, polarity);
+        return new UserSymbol(def, polarity, attrib);
       }
     } catch (InvalidSymbolException) {
-      return new UserSymbol(def, polarity);
+      return new UserSymbol(def, polarity, attrib);
     }
   }
 };

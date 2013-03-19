@@ -6,7 +6,8 @@
 class HalfOvalSymbol: public Symbol {
 public:
 
-  HalfOvalSymbol(QString def, Polarity polarity);
+  HalfOvalSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

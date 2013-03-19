@@ -6,7 +6,8 @@
 class HoleSymbol: public Symbol {
 public:
 
-  HoleSymbol(QString def, Polarity polarity);
+  HoleSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

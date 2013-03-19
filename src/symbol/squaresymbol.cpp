@@ -6,8 +6,9 @@
 #include "macros.h"
 
 
-SquareSymbol::SquareSymbol(QString def, Polarity polarity):
-    Symbol(def, "s([0-9.]+)", polarity), m_def(def)
+SquareSymbol::SquareSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+    Symbol(def, "s([0-9.]+)", polarity, attrib), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

@@ -6,7 +6,8 @@
 class SquareRoundThermalSymbol: public Symbol {
 public:
 
-  SquareRoundThermalSymbol(QString def, Polarity polarity);
+  SquareRoundThermalSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

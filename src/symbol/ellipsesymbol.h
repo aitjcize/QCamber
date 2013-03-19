@@ -6,7 +6,8 @@
 class EllipseSymbol: public Symbol {
 public:
 
-  EllipseSymbol(QString def, Polarity polarity);
+  EllipseSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

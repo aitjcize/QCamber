@@ -7,7 +7,8 @@
 
 class UserSymbol: public Symbol {
 public:
-  UserSymbol(QString def, Polarity polarity);
+  UserSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib);
   virtual ~UserSymbol();
 
 private:

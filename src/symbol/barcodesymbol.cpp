@@ -56,7 +56,7 @@ QString BarcodeSymbol::longInfoText(void)
       "Polarity\t= %4\n"
       "Barcode\t= %5\n"
       "Full Ascii\t= %6\n"
-      "Clockwise\t= %7\n"
+      "Checksum\t= %7\n"
   );
   return result \
     .arg(m_x).arg(m_y) \

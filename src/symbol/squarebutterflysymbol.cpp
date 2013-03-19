@@ -6,8 +6,9 @@
 #include "macros.h"
 
 
-SquareButterflySymbol::SquareButterflySymbol(QString def, Polarity polarity):
-    Symbol(def, "bfs([0-9.]+)", polarity), m_def(def)
+SquareButterflySymbol::SquareButterflySymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+    Symbol(def, "bfs([0-9.]+)", polarity, attrib), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

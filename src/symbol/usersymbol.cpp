@@ -6,8 +6,9 @@
 #include "cachedparser.h"
 #include "context.h"
 
-UserSymbol::UserSymbol(QString def, Polarity polarity):
-  Symbol(def, def, polarity), m_def(def)
+UserSymbol::UserSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+  Symbol(def, def, polarity, attrib), m_def(def)
 {
   QString path = ctx.loader->featuresPath("symbols/" + def);
   FeaturesDataStore* ds = CachedFeaturesParser::parse(path);

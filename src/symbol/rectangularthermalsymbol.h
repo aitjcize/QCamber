@@ -6,7 +6,8 @@
 class RectangularThermalSymbol: public Symbol {
 public:
 
-  RectangularThermalSymbol(QString def, Polarity polarity);
+  RectangularThermalSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

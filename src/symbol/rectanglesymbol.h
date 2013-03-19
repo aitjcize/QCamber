@@ -11,7 +11,8 @@ public:
     CHAMFERED
   } Type;
 
-  RectangleSymbol(QString def, Polarity polarity);
+  RectangleSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

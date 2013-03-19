@@ -6,7 +6,8 @@
 class RoundThermalSquareSymbol: public Symbol {
 public:
 
-  RoundThermalSquareSymbol(QString def, Polarity polarity);
+  RoundThermalSquareSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

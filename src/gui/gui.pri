@@ -6,7 +6,8 @@ HEADERS += \
   gui/symbolcount.h \
   gui/settingsdialog.h \
   gui/layerinfobox.h \
-  gui/jobmanagerdialog.h
+  gui/jobmanagerdialog.h \
+    gui/featurepropertiesdialog.h
 
 SOURCES += \
   gui/jobmatrix.cpp \
@@ -15,7 +16,8 @@ SOURCES += \
   gui/symbolcount.cpp \
   gui/settingsdialog.cpp \
   gui/layerinfobox.cpp \
-  gui/jobmanagerdialog.cpp
+  gui/jobmanagerdialog.cpp \
+    gui/featurepropertiesdialog.cpp
 
 FORMS += \
   gui/jobmatrix.ui \
@@ -23,4 +25,5 @@ FORMS += \
   gui/symbolcount.ui \
   gui/settingsdialog.ui \
   gui/layerinfobox.ui \
-  gui/jobmanagerdialog.ui
+  gui/jobmanagerdialog.ui \
+    gui/featurepropertiesdialog.ui

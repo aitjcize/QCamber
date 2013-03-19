@@ -6,7 +6,8 @@
 class HorizontalHexagonSymbol: public Symbol {
 public:
 
-  HorizontalHexagonSymbol(QString def, Polarity polarity);
+  HorizontalHexagonSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

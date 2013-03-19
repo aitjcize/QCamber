@@ -6,7 +6,8 @@
 class OvalSymbol: public Symbol {
 public:
 
-  OvalSymbol(QString def, Polarity polarity);
+  OvalSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

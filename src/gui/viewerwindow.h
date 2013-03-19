@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 
 #include "context.h"
+#include "featurepropertiesdialog.h"
 #include "layerfeatures.h"
 #include "layerinfobox.h"
 #include "odbppgraphicsview.h"
@@ -53,6 +54,7 @@ public slots:
   void on_actionPanDown_triggered(void);
   void on_actionHighlight_toggled(bool checked);
   void on_actionClearHighlight_triggered(void);
+  void on_actionFeatureProperties_triggered(void);
   void on_actionMeasure_toggled(bool checked);
   void on_actionShowOutline_toggled(bool checked);
   void on_actionShowStepRepeat_toggled(bool checked);
@@ -84,6 +86,7 @@ private:
   LayerInfoBox* m_activeInfoBox;
   bool m_transition;
   symbolcount m_symbolCountView;
+  FeaturePropertiesDialog m_featurePropertiesDialog;
 };
 
 #endif // __MAINWINDOW_H__

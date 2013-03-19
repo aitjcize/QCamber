@@ -6,8 +6,9 @@
 #include "macros.h"
 
 
-EllipseSymbol::EllipseSymbol(QString def, Polarity polarity):
-    Symbol(def, "el([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+EllipseSymbol::EllipseSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+    Symbol(def, "el([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

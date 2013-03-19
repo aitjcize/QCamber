@@ -24,13 +24,14 @@ SymbolPool* SymbolPool::instance()
   return m_instance;
 }
 
-Symbol* SymbolPool::get(QString def, Polarity polarity)
+Symbol* SymbolPool::get(const QString& def, const Polarity& polarity,
+    const AttribData& attrib)
 {
   if (m_cache.find(def) != m_cache.end()) {
     return m_cache[def];
   }
 
-  Symbol* symbol = SymbolFactory::create(def, polarity);
+  Symbol* symbol = SymbolFactory::create(def, polarity, attrib);
 
   if (symbol) {
     m_cache[def] = symbol;

@@ -39,6 +39,8 @@ ViewerWindow::ViewerWindow(QWidget *parent) :
       SLOT(updateMeasureResult(QRectF)));
   connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)), this,
       SLOT(updateFeatureDetail(Symbol*)));
+  connect(ui->viewWidget->scene(), SIGNAL(featureSelected(Symbol*)),
+      &m_featurePropertiesDialog, SLOT(update(Symbol*)));
 
   connect(ui->miniMapView, SIGNAL(minimapRectSelected(QRectF)), ui->viewWidget,
       SLOT(zoomToRect(QRectF)));
@@ -329,6 +331,11 @@ void ViewerWindow::on_actionClearHighlight_triggered(void)
 {
   ui->viewWidget->clearHighlight();
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
+}
+
+void ViewerWindow::on_actionFeatureProperties_triggered(void)
+{
+  m_featurePropertiesDialog.show();
 }
 
 void ViewerWindow::on_actionMeasure_toggled(bool checked)

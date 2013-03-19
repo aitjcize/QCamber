@@ -52,11 +52,14 @@ QString Symbol::longInfoText(void)
       "Pad\n\n"
       "X\t= %1\n"
       "Y\t= %2\n"
-      "Symbol\t = %3\n"
-      "Polarity\t = %4\n"
+      "Symbol\t= %3\n"
+      "Polarity\t= %4\n"
+      "Angle\t= %5\n"
+      "Mirror\t= %6\n"
   );
   return result.arg(pos().x()).arg(pos().y()) \
-    .arg(m_name).arg((m_polarity == P)? "POS": "NEG");
+    .arg(m_name).arg((m_polarity == P)? "POS": "NEG").arg(rotation()) \
+    .arg(transform().m11() == -1? "Yes": "No");
 }
 
 AttribData Symbol::attrib(void)

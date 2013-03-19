@@ -6,8 +6,9 @@
 #include "macros.h"
 
 
-OvalSymbol::OvalSymbol(QString def, Polarity polarity):
-    Symbol(def, "oval([0-9.]+)x([0-9.]+)", polarity), m_def(def)
+OvalSymbol::OvalSymbol(const QString& def, const Polarity& polarity,
+    const AttribData& attrib):
+    Symbol(def, "oval([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))

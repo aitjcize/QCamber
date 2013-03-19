@@ -149,6 +149,7 @@
    <addaction name="separator"/>
    <addaction name="actionHighlight"/>
    <addaction name="actionClearHighlight"/>
+   <addaction name="actionFeatureProperties"/>
    <addaction name="separator"/>
    <addaction name="actionPanLeft"/>
    <addaction name="actionPanRight"/>
@@ -329,6 +330,15 @@
    </property>
    <property name="text">
     <string>Show Step &amp; Repeat Features</string>
+   </property>
+  </action>
+  <action name="actionFeatureProperties">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/gtk-underline.png</normaloff>icons/gtk-underline.png</iconset>
+   </property>
+   <property name="text">
+    <string>Feature Properties</string>
    </property>
   </action>
  </widget>

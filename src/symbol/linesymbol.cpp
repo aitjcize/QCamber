@@ -45,11 +45,11 @@ QString LineSymbol::longInfoText(void)
 {
   QString result(
       "Line\n\n"
-      "XS\t= %1\n"
-      "YS\t= %2\n"
-      "XE\t= %3\n"
-      "YE\t= %4\n"
-      "Symbol\t= %5\n"
+      "XS\t\t= %1\n"
+      "YS\t\t= %2\n"
+      "XE\t\t= %3\n"
+      "YE\t\t= %4\n"
+      "Symbol\t\t= %5\n"
       "Polarity\t= %6\n"
   );
   return result \
@@ -66,7 +66,7 @@ QPainterPath LineSymbol::painterPath()
   // Set winding fill
   path.setFillRule(Qt::WindingFill);
 
-  Symbol *symbol = SYMBOLPOOL->get(m_sym_name, m_polarity);
+  Symbol *symbol = SYMBOLPOOL->get(m_sym_name, m_polarity, m_attrib);
   QPainterPath symbolPath = symbol->painterPath();
   if (symbolPath.boundingRect().height() != symbolPath.boundingRect().width()) {
     qDebug() << m_sym_name << "is not a symmetrics symbol, but we'll still "

@@ -6,7 +6,8 @@
 class DonutSSymbol: public Symbol {
 public:
 
-  DonutSSymbol(QString def, Polarity polarity);
+  DonutSSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

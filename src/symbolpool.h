@@ -9,7 +9,8 @@ public:
   static SymbolPool* instance();
   virtual ~SymbolPool();
 
-  Symbol* get(QString def, Polarity polarity);
+  Symbol* get(const QString& def, const Polarity& polarity,
+    const AttribData& attrib);
 
 private:
   SymbolPool();

@@ -6,7 +6,8 @@
 class VerticalHexagonSymbol: public Symbol {
 public:
 
-  VerticalHexagonSymbol(QString def, Polarity polarity);
+  VerticalHexagonSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

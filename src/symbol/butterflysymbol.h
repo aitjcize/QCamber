@@ -6,7 +6,8 @@
 class ButterflySymbol: public Symbol {
 public:
 
-  ButterflySymbol(QString def, Polarity polarity);
+  ButterflySymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

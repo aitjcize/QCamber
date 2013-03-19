@@ -6,7 +6,8 @@
 class SquareThermalOpenCornersSymbol: public Symbol {
 public:
 
-  SquareThermalOpenCornersSymbol(QString def, Polarity polarity);
+  SquareThermalOpenCornersSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 

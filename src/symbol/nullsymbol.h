@@ -6,7 +6,8 @@
 class NullSymbol: public Symbol {
 public:
 
-  NullSymbol(QString def, Polarity polarity);
+  NullSymbol(const QString& def, const Polarity& polarity,
+      const AttribData& attrib);
 
   virtual QPainterPath painterPath(void);
 
