@@ -40,6 +40,11 @@ Notes* Layer::notes()
   return m_notes;
 }
 
+QStandardItemModel* Layer::reportModel(void)
+{
+  return m_features->reportModel();
+}
+
 void Layer::setHighlightEnabled(bool status)
 {
   m_layerScene->setHighlightEnabled(status);

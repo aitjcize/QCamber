@@ -141,7 +141,14 @@ void FeaturesDataStore::putBarcode(const QString& line)
   AttribData attrib;
   parseAttributes(line, &param, &attrib);
 
-  m_records.append(new BarcodeRecord(this, param, attrib));
+  BarcodeRecord* rec = new BarcodeRecord(this, param, attrib);
+  m_records.append(rec);
+
+  if (rec->polarity == P) {
+    ++m_posBarcodeCount;
+  } else {
+    ++m_negBarcodeCount;
+  }
 }
 
 void FeaturesDataStore::surfaceStart(const QString& line)

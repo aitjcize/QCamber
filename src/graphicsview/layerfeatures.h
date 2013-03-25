@@ -6,10 +6,12 @@
 #include <QList>
 #include <QGridLayout>
 #include <QTextEdit>
+#include <QStandardItemModel>
 
-#include "symbol.h"
-#include "record.h"
 #include "featuresparser.h"
+#include "macros.h"
+#include "record.h"
+#include "symbol.h"
 
 class LayerFeatures: public Symbol {
 public:
@@ -18,10 +20,10 @@ public:
 
   virtual QRectF boundingRect() const;
   void addToScene(QGraphicsScene* scene);
-  QTableWidget *symbolCount();
 
   qreal x_datum(void) { return m_x_datum; }
   qreal y_datum(void) { return m_y_datum; }
+  QStandardItemModel* reportModel(void);
 
   void setTransform(const QTransform& matrix, bool combine = false);
   void setPos(QPointF pos);
@@ -45,6 +47,7 @@ private:
   bool m_showStepRepeat;
   QList<Symbol*> m_symbols;
   QList<LayerFeatures*> m_repeats;
+  QStandardItemModel* m_reportModel;
 };
 
 #endif /* __LAYERFEATURES_H__ */

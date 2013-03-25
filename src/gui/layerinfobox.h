@@ -2,6 +2,7 @@
 #define __LAYERINFOBOX_H__
 
 #include <QColor>
+#include <QMenu>
 #include <QString>
 #include <QWidget>
 
@@ -36,7 +37,9 @@ signals:
   void activated(bool status);
 
 public slots:
+  void showContextMenu(const QPoint& point);
   void on_activeIndicator_clicked(void);
+  void on_actionFeaturesHistogram_activated(void);
 
 protected:
   virtual void mousePressEvent(QMouseEvent *ev);
@@ -49,6 +52,7 @@ private:
   QColor m_color;
   Layer* m_layer;
   bool m_checked;
+  QMenu* m_contextMenu;
 };
 
 #endif // __LAYERINFOBOX_H__

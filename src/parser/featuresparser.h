@@ -50,12 +50,14 @@ public:
   const CountMapType& posArcCountMap(void) const { return m_posArcCountMap; }
   int posSurfaceCount(void) const { return m_posSurfaceCount; }
   int posTextCount(void) const { return m_posTextCount; }
+  int posBarcodeCount(void) const { return m_posBarcodeCount; }
 
   const CountMapType& negLineCountMap(void) const { return m_negLineCountMap; }
   const CountMapType& negPadCountMap(void) const { return m_negPadCountMap; }
   const CountMapType& negArcCountMap(void) const { return m_negArcCountMap; }
   int negSurfaceCount(void) const { return m_negSurfaceCount; }
   int negTextCount(void) const { return m_negTextCount; }
+  int negBarcodeCount(void) const { return m_negBarcodeCount; }
 
   virtual void dump(void);
 
@@ -78,12 +80,14 @@ private:
   CountMapType m_posArcCountMap;
   int m_posSurfaceCount;
   int m_posTextCount;
+  int m_posBarcodeCount;
 
   CountMapType m_negLineCountMap;
   CountMapType m_negPadCountMap;
   CountMapType m_negArcCountMap;
   int m_negSurfaceCount;
   int m_negTextCount;
+  int m_negBarcodeCount;
 
   QList<Record*> m_records;
   SurfaceRecord* m_currentSurface;

@@ -18,10 +18,10 @@ public:
   QString step();
   QString layer();
   Notes* notes();
+  QStandardItemModel* reportModel(void);
 
   void setHighlightEnabled(bool status);
   void setShowStepRepeat(bool status);
-  QTextEdit *symbolCount(){return m_features->symbolCount();}
 
   virtual void setPen(const QPen& pen);
   virtual void setBrush(const QBrush& brush);

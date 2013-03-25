@@ -7,7 +7,8 @@
 
 LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
   Symbol("features"), m_step(step), m_path(path), m_scene(NULL),
-  m_stepRepeatLoaded(false), m_showStepRepeat(stepRepeat)
+  m_stepRepeatLoaded(false), m_showStepRepeat(stepRepeat),
+  m_reportModel(NULL)
 {
   setHandlesChildEvents(true);
 
@@ -27,6 +28,10 @@ LayerFeatures::~LayerFeatures()
 {
   for (int i = 0; i < m_repeats.size(); ++i) {
     delete m_repeats[i];
+  }
+
+  if (m_reportModel) {
+    delete m_reportModel;
   }
 }
 
@@ -204,83 +209,98 @@ void LayerFeatures::setShowStepRepeat(bool status)
   }
 }
 
-QTextEdit* LayerFeatures::symbolCount()
+QStandardItemModel* LayerFeatures::reportModel(void)
 {
-    QTextEdit *output = new QTextEdit;
-    FeaturesDataStore::IDMapType nameMap;
-    int total;
-    total = 0;
-    nameMap = m_ds->symbolNameMap();
+  if (m_reportModel) {
+    return m_reportModel;
+  }
 
-    total += createSection(output,"Line",nameMap);
-    total += createSection(output,"Pad",nameMap);
-    total += createSection(output,"Arc",nameMap);
-    total += createSection(output,"Surface",nameMap);
-    total += createSection(output,"Text",nameMap);
+  m_reportModel = new QStandardItemModel;
+  m_reportModel->setColumnCount(2);
+  m_reportModel->setHeaderData(0, Qt::Horizontal, "name");
+  m_reportModel->setHeaderData(1, Qt::Horizontal, "count");
 
-    output->append("\n--------------------------------------");
-    output->append(QString().sprintf("Total \t %20s \t %d"," ",total));
-    output->setReadOnly(true);
-    return output;
-}
+  const FeaturesDataStore::IDMapType& nameMap = m_ds->symbolNameMap();
+  FeaturesDataStore::CountMapType countMap;
+  QStandardItem* root = m_reportModel->invisibleRootItem();
+  QStandardItem* node = NULL;
 
-int LayerFeatures::createSection(QTextEdit *output,
-            QString sectionTitle, FeaturesDataStore::IDMapType nameMap)
-{
-    FeaturesDataStore::CountMapType posCountMap,negCountMap;
-    QString text;
-    int local_total;
-    local_total = 0;
-    output->append(sectionTitle+
-                   " List\n--------------------------------------");
+  unsigned total = 0, n_nodes = 0;
 
-    if(sectionTitle == "Line"){
-        posCountMap = m_ds->posLineCountMap();
-        negCountMap = m_ds->negLineCountMap();
-    }else if(sectionTitle == "Pad"){
-        posCountMap = m_ds->posPadCountMap();
-        negCountMap = m_ds->negPadCountMap();
-    }else if(sectionTitle == "Arc"){
-        posCountMap = m_ds->posArcCountMap();
-        negCountMap = m_ds->negArcCountMap();
-    }else if(sectionTitle == "Surface"){
-        text.sprintf("POS \t %20s \t %d"," ",
-                     (local_total+=m_ds->posSurfaceCount()));
-        output->append(text);
-        text.sprintf("NEG \t %20s \t %d"," ",
-                     (local_total+=m_ds->negSurfaceCount()));
-        output->append(text);
-        output->append(" ");
-        return local_total;
-    }else if(sectionTitle == "Text"){
-        text.sprintf("POS \t %20s \t %d"," ",
-                     (local_total+=m_ds->posTextCount()));
-        output->append(text);
-        text.sprintf("NEG \t %20s \t %d"," ",
-                     (local_total+=m_ds->negTextCount()));
-        output->append(text);
-        output->append(" ");
-        return local_total;
-    }
+  // Lines
+  node = APPEND_ROW(root, "Lines", "");
+  total = 0;
 
+  countMap = m_ds->posLineCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    total += it.value();
+  }
+  countMap = m_ds->negLineCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    total += it.value();
+  }
+  root->child(n_nodes++, 1)->setText(QString::number(total));
 
-    for(int i = 0;i < posCountMap.size();i++){
-      if(posCountMap[i] != 0){
-        text.sprintf("POS \t %20s \t %d",
-                     nameMap[i].toAscii().data(),posCountMap[i]);
-        output->append(text);
-        local_total+=posCountMap[i];
-      }
-    }
-    for(int i = 0;i < negCountMap.size();i++){
-      if(negCountMap[i] != 0){
-        text.sprintf("NEG \t %20s \t %d",
-                     nameMap[i].toAscii().data(),negCountMap[i]);
-        output->append(text);
-        local_total+=negCountMap[i];
-      }
-    }
-    output->append(text.sprintf("Total \t %20s \t %d","",local_total));
-    output->append(" ");
-    return local_total;
+  // Pad
+  node = APPEND_ROW(root, "Pad", "");
+  total = 0;
+
+  countMap = m_ds->posPadCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    total += it.value();
+  }
+  countMap = m_ds->negPadCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    total += it.value();
+  }
+  root->child(n_nodes++, 1)->setText(QString::number(total));
+
+  // Arc
+  node = APPEND_ROW(root, "Arc", "");
+  total = 0;
+
+  countMap = m_ds->posPadCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    total += it.value();
+  }
+  countMap = m_ds->negPadCountMap();
+  for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+      it != countMap.end(); ++it) {
+    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    total += it.value();
+  }
+  root->child(n_nodes++, 1)->setText(QString::number(total));
+
+  // Surface
+  node = APPEND_ROW(root, "Surface", "");
+  APPEND_ROW(node, "POS", QString::number(m_ds->posSurfaceCount()));
+  APPEND_ROW(node, "NEG", QString::number(m_ds->negSurfaceCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(
+        m_ds->posSurfaceCount() + m_ds->negSurfaceCount()));
+
+  // Text
+  node = APPEND_ROW(root, "Text", "");
+  APPEND_ROW(node, "POS", QString::number(m_ds->posTextCount()));
+  APPEND_ROW(node, "NEG", QString::number(m_ds->negTextCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(
+        m_ds->posTextCount() + m_ds->negTextCount()));
+
+  // Barcode
+  node = APPEND_ROW(root, "Barcode", "");
+  APPEND_ROW(node, "POS", QString::number(m_ds->posBarcodeCount()));
+  APPEND_ROW(node, "NEG", QString::number(m_ds->negBarcodeCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(
+        m_ds->posBarcodeCount() + m_ds->negBarcodeCount()));
+
+  return m_reportModel;
 }

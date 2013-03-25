@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>LayerInfoBox</class>
  <widget class="QWidget" name="LayerInfoBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>101</width>
+    <height>20</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -100,6 +108,11 @@ ClickableLabel[state=&quot;inactive&quot;]:hover {
     </widget>
    </item>
   </layout>
+  <action name="actionFeaturesHistogram">
+   <property name="text">
+    <string>Features Histogram</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

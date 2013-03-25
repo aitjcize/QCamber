@@ -41,6 +41,13 @@ LayerInfoBox::LayerInfoBox(const QString& name, const QString& step,
     color = "#D8D8D8 ";
   }
   ui->layerName->setStyleSheet(bgStyle.arg("QLabel", color));
+
+  m_contextMenu = new QMenu;
+  m_contextMenu->addAction(ui->actionFeaturesHistogram);
+
+  setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+      this, SLOT(showContextMenu(const QPoint&)));
 }
 
 LayerInfoBox::~LayerInfoBox()
@@ -119,12 +126,26 @@ void LayerInfoBox::toggle(void)
   }
 }
 
+void LayerInfoBox::showContextMenu(const QPoint& point)
+{
+  m_contextMenu->exec(mapToGlobal(point));
+}
+
 void LayerInfoBox::on_activeIndicator_clicked(void)
 {
   if (m_checked) {
     bool status = (ui->activeIndicator->property("state") == "active");
     setActive(!status);
   }
+}
+
+void LayerInfoBox::on_actionFeaturesHistogram_activated(void)
+{
+  QTreeView* m_treeView = new QTreeView;
+  m_treeView->setModel(m_layer->reportModel());
+  m_treeView->resizeColumnToContents(0);
+  m_treeView->resizeColumnToContents(1);
+  m_treeView->show();
 }
 
 void LayerInfoBox::mousePressEvent(QMouseEvent *ev)
