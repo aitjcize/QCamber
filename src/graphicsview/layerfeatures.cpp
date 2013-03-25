@@ -19,6 +19,19 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
     m_symbols.append((*it)->createSymbol());
   }
 
+  m_posLineCount = m_ds->posLineCountMap();
+  m_negLineCount = m_ds->posLineCountMap();
+  m_posPadCount = m_ds->posPadCountMap();
+  m_negPadCount = m_ds->negPadCountMap();
+  m_posArcCount = m_ds->posArcCountMap();
+  m_negArcCount = m_ds->negArcCountMap();
+  m_posSurfaceCount = m_ds->posSurfaceCount();
+  m_negSurfaceCount = m_ds->negSurfaceCount();
+  m_posTextCount = m_ds->posTextCount();
+  m_negTextCount = m_ds->negTextCount();
+  m_posBarcodeCount = m_ds->posBarcodeCount();
+  m_negBarcodeCount = m_ds->negBarcodeCount();
+
   if (m_showStepRepeat) {
     loadStepAndRepeat();
   }
@@ -82,6 +95,8 @@ void LayerFeatures::loadStepAndRepeat(void)
     qreal angle = GET("ANGLE").toDouble();
     bool mirror = (GET("MIRROR") == "YES");
 
+    FeaturesDataStore::CountMapType countMap;
+
     for (int i = 0; i < nx; ++i) {
       for (int j = 0; j < ny; ++j) {
         LayerFeatures* step = new LayerFeatures(name, m_path, true);
@@ -96,6 +111,46 @@ void LayerFeatures::loadStepAndRepeat(void)
         trans.translate(-step->x_datum(), step->y_datum());
         step->setTransform(trans);
         m_repeats.append(step);
+
+        countMap = step->m_posLineCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_posLineCount[it.key()] += it.value();
+        }
+        countMap = step->m_negLineCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_negLineCount[it.key()] += it.value();
+        }
+        countMap = step->m_posPadCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_posPadCount[it.key()] += it.value();
+        }
+        countMap = step->m_negPadCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_negPadCount[it.key()] += it.value();
+        }
+        countMap = step->m_posArcCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_posArcCount[it.key()] += it.value();
+        }
+        countMap = step->m_negArcCount;
+        for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
+            it != countMap.end(); ++it) {
+          m_negArcCount[it.key()] += it.value();
+        }
+
+        m_posSurfaceCount += step->m_posSurfaceCount;
+        m_negSurfaceCount += step->m_negSurfaceCount;
+
+        m_posTextCount += step->m_posTextCount;
+        m_negTextCount += step->m_negTextCount;
+
+        m_posBarcodeCount += step->m_posBarcodeCount;
+        m_negBarcodeCount += step->m_negBarcodeCount;
       }
     }
   }
@@ -193,6 +248,11 @@ void LayerFeatures::setShowStepRepeat(bool status)
 {
   m_showStepRepeat = status;
 
+  if (m_reportModel) {
+    delete m_reportModel;
+    m_reportModel = NULL;
+  }
+
   if (status && !m_stepRepeatLoaded) {
     loadStepAndRepeat();
 
@@ -231,16 +291,16 @@ QStandardItemModel* LayerFeatures::reportModel(void)
   node = APPEND_ROW(root, "Lines", "");
   total = 0;
 
-  countMap = m_ds->posLineCountMap();
+  countMap = (m_showStepRepeat? m_posLineCount: m_ds->posLineCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " POS", QString::number(it.value()));
     total += it.value();
   }
-  countMap = m_ds->negLineCountMap();
+  countMap = (m_showStepRepeat? m_negLineCount: m_ds->negLineCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " NEG", QString::number(it.value()));
     total += it.value();
   }
   root->child(n_nodes++, 1)->setText(QString::number(total));
@@ -249,16 +309,16 @@ QStandardItemModel* LayerFeatures::reportModel(void)
   node = APPEND_ROW(root, "Pad", "");
   total = 0;
 
-  countMap = m_ds->posPadCountMap();
+  countMap = (m_showStepRepeat? m_posPadCount: m_ds->posPadCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " POS", QString::number(it.value()));
     total += it.value();
   }
-  countMap = m_ds->negPadCountMap();
+  countMap = (m_showStepRepeat? m_negPadCount: m_ds->negPadCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " NEG", QString::number(it.value()));
     total += it.value();
   }
   root->child(n_nodes++, 1)->setText(QString::number(total));
@@ -267,40 +327,44 @@ QStandardItemModel* LayerFeatures::reportModel(void)
   node = APPEND_ROW(root, "Arc", "");
   total = 0;
 
-  countMap = m_ds->posPadCountMap();
+  countMap = (m_showStepRepeat? m_posArcCount: m_ds->posArcCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " POS", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " POS", QString::number(it.value()));
     total += it.value();
   }
-  countMap = m_ds->negPadCountMap();
+  countMap = (m_showStepRepeat? m_negArcCount: m_ds->negArcCountMap());
   for (FeaturesDataStore::CountMapType::iterator it = countMap.begin();
       it != countMap.end(); ++it) {
-    APPEND_ROW(node, nameMap[it.key()] + " NEG", QString::number(it.value()));
+    APPEND_ROW(node, it.key() + " NEG", QString::number(it.value()));
     total += it.value();
   }
   root->child(n_nodes++, 1)->setText(QString::number(total));
 
   // Surface
+  unsigned pos = 0, neg = 0;
   node = APPEND_ROW(root, "Surface", "");
+  pos = (m_showStepRepeat? m_posSurfaceCount: m_ds->posSurfaceCount());
   APPEND_ROW(node, "POS", QString::number(m_ds->posSurfaceCount()));
+  neg = (m_showStepRepeat? m_negSurfaceCount: m_ds->negSurfaceCount());
   APPEND_ROW(node, "NEG", QString::number(m_ds->negSurfaceCount()));
-  root->child(n_nodes++, 1)->setText(QString::number(
-        m_ds->posSurfaceCount() + m_ds->negSurfaceCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(pos + neg));
 
   // Text
   node = APPEND_ROW(root, "Text", "");
+  pos = (m_showStepRepeat? m_posTextCount: m_ds->posTextCount());
   APPEND_ROW(node, "POS", QString::number(m_ds->posTextCount()));
+  neg = (m_showStepRepeat? m_negTextCount: m_ds->negTextCount());
   APPEND_ROW(node, "NEG", QString::number(m_ds->negTextCount()));
-  root->child(n_nodes++, 1)->setText(QString::number(
-        m_ds->posTextCount() + m_ds->negTextCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(pos + neg));
 
   // Barcode
   node = APPEND_ROW(root, "Barcode", "");
+  pos = (m_showStepRepeat? m_posBarcodeCount: m_ds->posBarcodeCount());
   APPEND_ROW(node, "POS", QString::number(m_ds->posBarcodeCount()));
+  neg = (m_showStepRepeat? m_negBarcodeCount: m_ds->negBarcodeCount());
   APPEND_ROW(node, "NEG", QString::number(m_ds->negBarcodeCount()));
-  root->child(n_nodes++, 1)->setText(QString::number(
-        m_ds->posBarcodeCount() + m_ds->negBarcodeCount()));
+  root->child(n_nodes++, 1)->setText(QString::number(pos + neg));
 
   return m_reportModel;
 }

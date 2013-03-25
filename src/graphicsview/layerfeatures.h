@@ -1,12 +1,13 @@
 #ifndef __LAYERFEATURES_H__
 #define __LAYERFEATURES_H__
 
-#include <QString>
 #include <QGraphicsScene>
-#include <QList>
 #include <QGridLayout>
-#include <QTextEdit>
+#include <QList>
+#include <QMap>
 #include <QStandardItemModel>
+#include <QString>
+#include <QTextEdit>
 
 #include "featuresparser.h"
 #include "macros.h"
@@ -23,6 +24,8 @@ public:
 
   qreal x_datum(void) { return m_x_datum; }
   qreal y_datum(void) { return m_y_datum; }
+  FeaturesDataStore* dataStore(void) { return m_ds; }
+
   QStandardItemModel* reportModel(void);
 
   void setTransform(const QTransform& matrix, bool combine = false);
@@ -48,6 +51,19 @@ private:
   QList<Symbol*> m_symbols;
   QList<LayerFeatures*> m_repeats;
   QStandardItemModel* m_reportModel;
+
+  FeaturesDataStore::CountMapType m_posLineCount;
+  FeaturesDataStore::CountMapType m_negLineCount;
+  FeaturesDataStore::CountMapType m_posPadCount;
+  FeaturesDataStore::CountMapType m_negPadCount;
+  FeaturesDataStore::CountMapType m_posArcCount;
+  FeaturesDataStore::CountMapType m_negArcCount;
+  unsigned m_posSurfaceCount;
+  unsigned m_negSurfaceCount;
+  unsigned m_posTextCount;
+  unsigned m_negTextCount;
+  unsigned m_posBarcodeCount;
+  unsigned m_negBarcodeCount;
 };
 
 #endif /* __LAYERFEATURES_H__ */

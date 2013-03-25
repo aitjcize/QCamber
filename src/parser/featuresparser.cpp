@@ -81,9 +81,9 @@ void FeaturesDataStore::putLine(const QString& line)
   m_records.append(rec);
 
   if (rec->polarity == P) {
-    ++m_posLineCountMap[rec->sym_num];
+    ++m_posLineCountMap[m_symbolNameMap[rec->sym_num]];
   } else {
-    ++m_negLineCountMap[rec->sym_num];
+    ++m_negLineCountMap[m_symbolNameMap[rec->sym_num]];
   }
 }
 
@@ -97,9 +97,9 @@ void FeaturesDataStore::putPad(const QString& line)
   m_records.append(rec);
 
   if (rec->polarity == P) {
-    ++m_posPadCountMap[rec->sym_num];
+    ++m_posPadCountMap[m_symbolNameMap[rec->sym_num]];
   } else {
-    ++m_negPadCountMap[rec->sym_num];
+    ++m_negPadCountMap[m_symbolNameMap[rec->sym_num]];
   }
 }
 
@@ -113,9 +113,9 @@ void FeaturesDataStore::putArc(const QString& line)
   m_records.append(rec);
 
   if (rec->polarity == P) {
-    ++m_posArcCountMap[rec->sym_num];
+    ++m_posArcCountMap[m_symbolNameMap[rec->sym_num]];
   } else {
-    ++m_negArcCountMap[rec->sym_num];
+    ++m_negArcCountMap[m_symbolNameMap[rec->sym_num]];
   }
 }
 

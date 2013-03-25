@@ -16,7 +16,7 @@ public:
   virtual ~FeaturesDataStore();
 
   typedef QMap<int, QString> IDMapType;
-  typedef QMap<int, int> CountMapType;
+  typedef QMap<QString, int> CountMapType;
 
   void setJobName(const QString& name);
   void setStepName(const QString& name);
