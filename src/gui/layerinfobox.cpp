@@ -141,11 +141,8 @@ void LayerInfoBox::on_activeIndicator_clicked(void)
 
 void LayerInfoBox::on_actionFeaturesHistogram_activated(void)
 {
-  QTreeView* m_treeView = new QTreeView;
-  m_treeView->setModel(m_layer->reportModel());
-  m_treeView->resizeColumnToContents(0);
-  m_treeView->resizeColumnToContents(1);
-  m_treeView->show();
+  m_featuresHistogramWidget.setTreeViewModel(layer()->reportModel());
+  m_featuresHistogramWidget.show();
 }
 
 void LayerInfoBox::mousePressEvent(QMouseEvent *ev)

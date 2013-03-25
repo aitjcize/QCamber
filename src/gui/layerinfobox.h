@@ -6,6 +6,7 @@
 #include <QString>
 #include <QWidget>
 
+#include "featureshistogramwidget.h"
 #include "layer.h"
 
 namespace Ui {
@@ -53,6 +54,7 @@ private:
   Layer* m_layer;
   bool m_checked;
   QMenu* m_contextMenu;
+  FeaturesHistogramWidget m_featuresHistogramWidget;
 };
 
 #endif // __LAYERINFOBOX_H__
