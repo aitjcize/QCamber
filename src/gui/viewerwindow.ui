@@ -112,6 +112,10 @@
     <addaction name="actionHome"/>
     <addaction name="actionAreaZoom"/>
     <addaction name="separator"/>
+    <addaction name="actionHighlight"/>
+    <addaction name="actionClearHighlight"/>
+    <addaction name="actionFeatureProperties"/>
+    <addaction name="separator"/>
     <addaction name="actionPanLeft"/>
     <addaction name="actionPanRight"/>
     <addaction name="actionPanUp"/>
@@ -119,14 +123,10 @@
     <addaction name="separator"/>
     <addaction name="actionMeasure"/>
     <addaction name="separator"/>
+    <addaction name="actionShowOutline"/>
+    <addaction name="actionShowStepRepeat"/>
     <addaction name="actionShowNotes"/>
    </widget>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-   </widget>
-   <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menu"/>
   </widget>
