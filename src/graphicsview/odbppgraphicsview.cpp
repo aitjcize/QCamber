@@ -16,7 +16,6 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  //setRenderHint(QPainter::Antialiasing);
   setCacheMode(CacheBackground);
   setOptimizationFlags(DontSavePainterState);
   setTransformationAnchor(AnchorUnderMouse);
@@ -39,9 +38,6 @@ ODBPPGraphicsView::~ODBPPGraphicsView()
 
 void ODBPPGraphicsView::scaleView(qreal scaleFactor)
 {
-  if (m_zoomMode != MousePan) {
-    setTransformationAnchor(AnchorViewCenter);
-  }
   scale(scaleFactor, scaleFactor);
   setTransformationAnchor(AnchorUnderMouse);
 }
@@ -189,6 +185,7 @@ void ODBPPGraphicsView::updateLayerViewport(void)
 
 void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
+  setTransformationAnchor(AnchorUnderMouse);
   scaleView(pow((double)2, -event->delta() / 240.0));
 }
 
@@ -205,9 +202,11 @@ void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
     zoomToAll();
     return;
   case Qt::Key_PageUp:
+    setTransformationAnchor(AnchorViewCenter);
     scaleView(2);
     return;
   case Qt::Key_PageDown:
+    setTransformationAnchor(AnchorViewCenter);
     scaleView(0.5);
     return;
   case Qt::Key_Up:
