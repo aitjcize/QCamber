@@ -17,11 +17,11 @@ static void addArc(QPainterPath& path, qreal sx, qreal sy,
   qreal ea = qAtan2(eay, eax);
 
   if (cw) {
-    if (sa < ea) {
+    if (sa <= ea) {
       sa += 2 * M_PI;
     }
   } else {
-    if (ea < sa) {
+    if (ea <= sa) {
       ea += 2 * M_PI;
     }
   }
@@ -131,6 +131,7 @@ QPainterPath ArcSymbol::painterPath(void)
   addArc(path, esx, esy, eex, eey, ex, ey, !m_cw);
 
   path.closeSubpath();
+  path.setFillRule(Qt::WindingFill);
 
   return path;
 }

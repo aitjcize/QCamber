@@ -51,11 +51,11 @@ QPainterPath PolygonRecord::painterPath(void)
       qreal ea = qAtan2(eay, eax);
 
       if (op->cw) {
-        if (sa < ea) {
+        if (sa <= ea) {
           sa += 2 * M_PI;
         }
       } else {
-        if (ea < sa) {
+        if (ea <= sa) {
           ea += 2 * M_PI;
         }
       }
