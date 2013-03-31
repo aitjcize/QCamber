@@ -95,9 +95,9 @@ void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()).normalized());
     break;
   case S_MEASURE_ACTIVE:
-    QRectF rect = QRectF(m_rubberPS, event->scenePos()).normalized();
+    QRectF rect = QRectF(m_rubberPS, event->scenePos());
     m_measureRubberBand->setRect(rect);
-    emit measureRectSelected(rect);
+    emit measureRectSelected(rect.normalized());
     break;
   }
   emit mouseMove(event->scenePos());
