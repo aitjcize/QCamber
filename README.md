@@ -1,7 +1,7 @@
 # QCamber
 Free and open source PCB design viewer written in Qt.
 
-![screenshot](https://raw.github.com/aitjcize/QCamber/master/wiki/qcamber.png)
+![screenshot](https://raw.github.com/aitjcize/QCamber/master/wiki/screenshot.png)
 
 QCamber is developed in the hope to provide high quaility open source PCB design/viewer suite for everyone. Anyone can contribute to the project and the project is guaranteed to be free and open source in the future.
 
