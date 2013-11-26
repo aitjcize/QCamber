@@ -16,3 +16,5 @@ QCamber currently only supports Valor ODB++ format, but with the help of a siste
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/7d963ff5121059c077f0f7fc9380c5d2 "githalytics.com")](http://githalytics.com/aitjcize/QCamber)
