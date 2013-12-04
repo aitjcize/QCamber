@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+	<file>icons/back.png</file>
+	<file>icons/document-properties.png</file>
+	<file>icons/down.png</file>
+	<file>icons/forward.png</file>
+	<file>icons/gtk-fullscreen.png</file>
+	<file>icons/gtk-leave-fullscreen.png</file>
+	<file>icons/gtk-underline.png</file>
+	<file>icons/ok.png</file>
+	<file>icons/remove.png</file>
+	<file>icons/screenruler.png</file>
+	<file>icons/stock_print-setup.png</file>
+	<file>icons/up.png</file>
+	<file>icons/view-list-icons.png</file>
+	<file>icons/visualization.png</file>
+	<file>icons/zoom-in.png</file>
+	<file>icons/zoom-original.png</file>
+	<file>icons/zoom-out.png</file>
+    </qresource>
+</RCC>

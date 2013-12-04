@@ -25,6 +25,9 @@ SOURCES += \
   settings.cpp \
   symbolpool.cpp
 
+RESOURCES += \
+    resources.qrc
+
 INCLUDEPATH += . .build parser parser/record symbol gui graphicsview
 
 DESTDIR = ../bin

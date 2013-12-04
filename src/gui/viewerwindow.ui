@@ -169,8 +169,8 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/zoom-in.png</normaloff>icons/zoom-in.png</iconset>
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/zoom-in.png</normaloff>:/icons/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -179,7 +179,7 @@
   <action name="actionZoomOut">
    <property name="icon">
     <iconset>
-     <normaloff>icons/zoom-out.png</normaloff>icons/zoom-out.png</iconset>
+     <normaloff>:/icons/zoom-out.png</normaloff>:/icons/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -188,7 +188,7 @@
   <action name="actionHome">
    <property name="icon">
     <iconset>
-     <normaloff>icons/zoom-original.png</normaloff>icons/zoom-original.png</iconset>
+     <normaloff>:/icons/zoom-original.png</normaloff>:/icons/zoom-original.png</iconset>
    </property>
    <property name="text">
     <string>Home</string>
@@ -200,7 +200,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/gtk-fullscreen.png</normaloff>icons/gtk-fullscreen.png</iconset>
+     <normaloff>:/icons/gtk-fullscreen.png</normaloff>:/icons/gtk-fullscreen.png</iconset>
    </property>
    <property name="text">
     <string>Area Zoom</string>
@@ -209,7 +209,7 @@
   <action name="actionPanLeft">
    <property name="icon">
     <iconset>
-     <normaloff>icons/back.png</normaloff>icons/back.png</iconset>
+     <normaloff>:/icons/back.png</normaloff>:/icons/back.png</iconset>
    </property>
    <property name="text">
     <string>Pan Left</string>
@@ -218,7 +218,7 @@
   <action name="actionPanRight">
    <property name="icon">
     <iconset>
-     <normaloff>icons/forward.png</normaloff>icons/forward.png</iconset>
+     <normaloff>:/icons/forward.png</normaloff>:/icons/forward.png</iconset>
    </property>
    <property name="text">
     <string>Pan Right</string>
@@ -227,7 +227,7 @@
   <action name="actionPanUp">
    <property name="icon">
     <iconset>
-     <normaloff>icons/up.png</normaloff>icons/up.png</iconset>
+     <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
    </property>
    <property name="text">
     <string>Pan Up</string>
@@ -236,7 +236,7 @@
   <action name="actionPanDown">
    <property name="icon">
     <iconset>
-     <normaloff>icons/down.png</normaloff>icons/down.png</iconset>
+     <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
    </property>
    <property name="text">
     <string>Pan Down</string>
@@ -248,7 +248,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/ok.png</normaloff>icons/ok.png</iconset>
+     <normaloff>:/icons/ok.png</normaloff>:/icons/ok.png</iconset>
    </property>
    <property name="text">
     <string>Highlight</string>
@@ -257,7 +257,7 @@
   <action name="actionClearHighlight">
    <property name="icon">
     <iconset>
-     <normaloff>icons/remove.png</normaloff>icons/remove.png</iconset>
+     <normaloff>:/icons/remove.png</normaloff>:/icons/remove.png</iconset>
    </property>
    <property name="text">
     <string>Clear Highlight</string>
@@ -272,7 +272,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/document-properties.png</normaloff>icons/document-properties.png</iconset>
+     <normaloff>:/icons/document-properties.png</normaloff>:/icons/document-properties.png</iconset>
    </property>
    <property name="text">
     <string>Show Notes</string>
@@ -284,7 +284,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/visualization.png</normaloff>icons/visualization.png</iconset>
+     <normaloff>:/icons/visualization.png</normaloff>:/icons/visualization.png</iconset>
    </property>
    <property name="text">
     <string>MousePan</string>
@@ -299,7 +299,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/screenruler.png</normaloff>icons/screenruler.png</iconset>
+     <normaloff>:/icons/screenruler.png</normaloff>:/icons/screenruler.png</iconset>
    </property>
    <property name="text">
     <string>Measure</string>
@@ -311,7 +311,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/view-list-icons.png</normaloff>icons/view-list-icons.png</iconset>
+     <normaloff>:/icons/view-list-icons.png</normaloff>:/icons/view-list-icons.png</iconset>
    </property>
    <property name="text">
     <string>Show Outline</string>
@@ -326,7 +326,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/stock_print-setup.png</normaloff>icons/stock_print-setup.png</iconset>
+     <normaloff>:/icons/stock_print-setup.png</normaloff>:/icons/stock_print-setup.png</iconset>
    </property>
    <property name="text">
     <string>Show Step &amp; Repeat Features</string>
@@ -335,7 +335,7 @@
   <action name="actionFeatureProperties">
    <property name="icon">
     <iconset>
-     <normaloff>icons/gtk-underline.png</normaloff>icons/gtk-underline.png</iconset>
+     <normaloff>:/icons/gtk-underline.png</normaloff>:/icons/gtk-underline.png</iconset>
    </property>
    <property name="text">
     <string>Feature Properties</string>
@@ -354,6 +354,8 @@
    <header>odbppgraphicsminimapview.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
