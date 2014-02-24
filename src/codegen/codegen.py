@@ -41,7 +41,7 @@ class TemplateEngine(object):
 
         target = ops[0]
         attrib = None
-        
+
         if '#' in target:
             target, attrib = target.split('#')
 
@@ -58,7 +58,7 @@ class TemplateEngine(object):
 
         if matchobj.group(0).endswith('\n'):
             result += '\n'
-        
+
         return result
 
     def render(self, dataxml):

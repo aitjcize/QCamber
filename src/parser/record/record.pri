@@ -2,7 +2,7 @@ HEADERS += \
   parser/record/record.h \
   parser/record/code39.h
 
-SOURCES += \  
+SOURCES += \
   parser/record/surfacerecord.cpp \
   parser/record/textrecord.cpp \
   parser/record/padrecord.cpp \
