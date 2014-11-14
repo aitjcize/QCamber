@@ -48,7 +48,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
   MAP(m_sigMapper, colorC6);
 #undef MAP
 
-  reloadColorToolButoonColor();
+  reloadColorToolButtonColor();
 
   connect(m_sigMapper, SIGNAL(mapped(QWidget*)),
       this, SLOT(chooseColor(QWidget*)));
@@ -75,7 +75,7 @@ void SettingsDialog::on_loadSystemColor_clicked(void)
     SETTINGS->set("Color", names[i], colors[i]);
   }
 
-  reloadColorToolButoonColor();
+  reloadColorToolButtonColor();
 }
 
 void SettingsDialog::on_loadUserColor_clicked(void)
@@ -92,7 +92,7 @@ void SettingsDialog::on_loadUserColor_clicked(void)
     SETTINGS->set("Color", names[i], ucolor);
   }
 
-  reloadColorToolButoonColor();
+  reloadColorToolButtonColor();
 }
 
 void SettingsDialog::on_saveUserColor_clicked(void)
@@ -106,7 +106,7 @@ void SettingsDialog::on_saveUserColor_clicked(void)
   }
 }
 
-void SettingsDialog::reloadColorToolButoonColor(void)
+void SettingsDialog::reloadColorToolButtonColor(void)
 {
   updateColorToolButtonColor(ui->colorBG);
   updateColorToolButtonColor(ui->colorC1);

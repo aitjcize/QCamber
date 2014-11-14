@@ -66,7 +66,7 @@ public slots:
 
 protected:
   virtual void mousePressEvent(QMouseEvent *ev);
-    
+
 private:
   Ui::LayerInfoBox *ui;
   QString m_name;

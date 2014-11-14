@@ -134,7 +134,7 @@ StructuredTextParser::StructuredTextParser(const QString& filename):
   m_fileName.replace("/", "\\");
 #endif
 }
- 
+
 StructuredTextParser::~StructuredTextParser()
 {
 }

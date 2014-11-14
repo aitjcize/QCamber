@@ -51,7 +51,8 @@ public:
   void forceUpdate(void);
 
 protected:
-  GraphicsLayerScene* m_layerScene; QRect m_viewRect;
+  GraphicsLayerScene* m_layerScene;
+  QRect m_viewRect;
   QRectF m_sceneRect;
   QPixmap m_pixmap;
   QRectF m_prevSceneRect;

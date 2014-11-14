@@ -46,7 +46,7 @@ public:
 
 signals:
   void featureSelected(Symbol*);
-  
+
 private:
   GraphicsLayer* m_graphicsLayer;
   bool m_highlight;

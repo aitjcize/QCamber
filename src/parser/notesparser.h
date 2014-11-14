@@ -41,7 +41,7 @@ class NotesParser: public Parser {
 public:
   NotesParser(const QString& filename);
   virtual ~NotesParser();
-  
+
   virtual NotesDataStore* parse(void);
 };
 

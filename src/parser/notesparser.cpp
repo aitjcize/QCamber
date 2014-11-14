@@ -45,7 +45,7 @@ NotesParser::NotesParser(const QString& filename): Parser(filename)
 NotesParser::~NotesParser()
 {
 }
-  
+
 NotesDataStore* NotesParser::parse(void)
 {
   QFile file(m_fileName);
