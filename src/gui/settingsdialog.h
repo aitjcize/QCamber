@@ -48,7 +48,7 @@ public slots:
   void on_saveUserColor_clicked(void);
 
 protected:
-  void reloadColorToolButoonColor(void);
+  void reloadColorToolButtonColor(void);
   void updateColorToolButtonColor(QToolButton* but);
 
 private:
