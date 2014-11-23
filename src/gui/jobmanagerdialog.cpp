@@ -230,7 +230,7 @@ int JobManagerDialog::execute(QString cmd, QStringList args)
   QProcess process;
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   env.insert("PATH", env.value("PATH") +
-      ";" + QCoreApplication::applicationDirPath());
+      PATH_SEP + QCoreApplication::applicationDirPath());
   process.setProcessEnvironment(env);
   connect(&process, SIGNAL(finished(int, QProcess::ExitStatus)),
       &loop, SLOT(quit()));

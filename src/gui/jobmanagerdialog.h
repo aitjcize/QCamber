@@ -29,9 +29,11 @@
 #ifdef Q_WS_WIN
 # define TAR_CMD "./tar"
 # define GZIP_CMD "./gzip"
+# define PATH_SEP ";"
 #else
 # define TAR_CMD "tar"
 # define GZIP_CMD "gzip"
+# define PATH_SEP ":"
 #endif
 
 namespace Ui {
