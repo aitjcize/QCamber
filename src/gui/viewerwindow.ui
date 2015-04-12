@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>ViewerWindow</class>
  <widget class="QMainWindow" name="ViewerWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -61,6 +64,9 @@
       </item>
       <item>
        <widget class="ODBPPGraphicsMiniMapView" name="miniMapView">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -178,7 +184,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/zoom-out.png</normaloff>:/icons/zoom-out.png</iconset>
    </property>
    <property name="text">
@@ -187,7 +193,7 @@
   </action>
   <action name="actionHome">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/zoom-original.png</normaloff>:/icons/zoom-original.png</iconset>
    </property>
    <property name="text">
@@ -199,7 +205,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/gtk-fullscreen.png</normaloff>:/icons/gtk-fullscreen.png</iconset>
    </property>
    <property name="text">
@@ -208,7 +214,7 @@
   </action>
   <action name="actionPanLeft">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/back.png</normaloff>:/icons/back.png</iconset>
    </property>
    <property name="text">
@@ -217,7 +223,7 @@
   </action>
   <action name="actionPanRight">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/forward.png</normaloff>:/icons/forward.png</iconset>
    </property>
    <property name="text">
@@ -226,7 +232,7 @@
   </action>
   <action name="actionPanUp">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
    </property>
    <property name="text">
@@ -235,7 +241,7 @@
   </action>
   <action name="actionPanDown">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
    </property>
    <property name="text">
@@ -247,7 +253,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/ok.png</normaloff>:/icons/ok.png</iconset>
    </property>
    <property name="text">
@@ -256,7 +262,7 @@
   </action>
   <action name="actionClearHighlight">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/remove.png</normaloff>:/icons/remove.png</iconset>
    </property>
    <property name="text">
@@ -271,7 +277,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/document-properties.png</normaloff>:/icons/document-properties.png</iconset>
    </property>
    <property name="text">
@@ -283,7 +289,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/visualization.png</normaloff>:/icons/visualization.png</iconset>
    </property>
    <property name="text">
@@ -298,7 +304,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/screenruler.png</normaloff>:/icons/screenruler.png</iconset>
    </property>
    <property name="text">
@@ -310,7 +316,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/view-list-icons.png</normaloff>:/icons/view-list-icons.png</iconset>
    </property>
    <property name="text">
@@ -325,7 +331,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/stock_print-setup.png</normaloff>:/icons/stock_print-setup.png</iconset>
    </property>
    <property name="text">
@@ -334,7 +340,7 @@
   </action>
   <action name="actionFeatureProperties">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/gtk-underline.png</normaloff>:/icons/gtk-underline.png</iconset>
    </property>
    <property name="text">
