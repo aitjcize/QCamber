@@ -348,7 +348,7 @@ FeaturesDataStore* FeaturesParser::parse(void)
       }
       continue;
     }
-    
+
     if (line.startsWith("$")) { // symbol names
       ds->putSymbolName(line);
     } else if (line.startsWith("@")) { // attrib names

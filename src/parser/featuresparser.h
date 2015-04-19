@@ -119,7 +119,7 @@ class FeaturesParser: public Parser {
 public:
   FeaturesParser(const QString& filename);
   virtual ~FeaturesParser();
-  
+
   virtual FeaturesDataStore* parse(void);
 };
 
