@@ -8,36 +8,24 @@ BUILD_DIR = .build
 
 include (parser/parser.pri)
 include (symbol/symbol.pri)
+include (graphicsview/graphicsview.pri)
+include (gui/gui.pri)
 include (tests/tests.pri)
 
 HEADERS += \
   archiveloader.h \
   context.h \
-  feature.h \
-  graphicslayer.h \
-  graphicslayerscene.h \
-  layer.h \
-  notes.h \
-  odbppgraphicsscene.h \
-  odbppgraphicsview.h \
-  profile.h \
+  macros.h \
   settings.h \
-  symbolfactory.h
+  symbolpool.h
 
 SOURCES += \
   archiveloader.cpp \
   context.cpp \
-  feature.cpp \
-  layer.cpp \
-  graphicslayer.cpp \
-  graphicslayerscene.cpp \
-  notes.cpp \
-  odbppgraphicsscene.cpp \
-  odbppgraphicsview.cpp \
-  profile.cpp \
-  settings.cpp
+  settings.cpp \
+  symbolpool.cpp
 
-INCLUDEPATH += . .build parser parser/record symbol
+INCLUDEPATH += . .build parser parser/record symbol gui graphicsview
 
 DESTDIR = ../bin
 TARGET = test

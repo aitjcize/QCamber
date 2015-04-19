@@ -162,11 +162,7 @@ void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   GraphicsLayerScene* s = dynamic_cast<GraphicsLayerScene*>(scene());
 
-  if (!s->highlight()) {
-    return;
-  }
-
-  if (m_selected) {
+  if (!s || !s->highlight() || m_selected) {
     return;
   }
 
