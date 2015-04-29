@@ -173,7 +173,7 @@ struct CharRecord {
   virtual ~CharRecord();
 
   QPainterPath painterPath(qreal width_factor);
-  
+
   FontDataStore* ds;
   char tchar;
   QList<CharLineRecord*> lines;

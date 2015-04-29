@@ -36,6 +36,10 @@ LayerFeatures::LayerFeatures(QString step, QString path, bool stepRepeat):
 
   m_ds = CachedFeaturesParser::parse(ctx.loader->absPath(path.arg(step)));
 
+  if (!m_ds) {
+    return;
+  }
+
   for (QList<Record*>::const_iterator it = m_ds->records().begin();
       it != m_ds->records().end(); ++it) {
     m_symbols.append((*it)->createSymbol());
@@ -301,6 +305,10 @@ QStandardItemModel* LayerFeatures::reportModel(void)
   m_reportModel->setColumnCount(2);
   m_reportModel->setHeaderData(0, Qt::Horizontal, "name");
   m_reportModel->setHeaderData(1, Qt::Horizontal, "count");
+
+  if (!m_ds) {
+    return m_reportModel;
+  }
 
   const FeaturesDataStore::IDMapType& nameMap = m_ds->symbolNameMap();
   FeaturesDataStore::CountMapType countMap;

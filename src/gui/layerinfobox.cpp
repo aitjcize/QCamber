@@ -141,7 +141,7 @@ void LayerInfoBox::toggle(void)
 {
   emit toggled(m_checked);
   m_checked = !m_checked;
-  
+
   if (!m_checked) {
     ui->colorIndicator->setStyleSheet(bgStyle.arg("QLabel", "transparent"));
     setActive(false);
