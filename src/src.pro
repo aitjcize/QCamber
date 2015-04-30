@@ -28,7 +28,7 @@ SOURCES += \
 RESOURCES += \
     resources.qrc
 
-INCLUDEPATH += . .build parser parser/record symbol gui graphicsview
+INCLUDEPATH += . .build parser/odbpp parser/record symbol gui graphicsview
 
 DESTDIR = ../bin
 TARGET = qcamber
