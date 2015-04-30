@@ -26,6 +26,7 @@
 #include <QMap>
 #include <QString>
 
+#include "datastore.h"
 #include "parser.h"
 #include "featuresparser.h"
 #include "fontparser.h"

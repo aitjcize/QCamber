@@ -23,22 +23,11 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
-#include <map>
+#include "datastore.h"
+
 #include <stdexcept>
-#include <vector>
 
 #include <QString>
-
-using std::map;
-using std::multimap;
-using std::pair;
-using std::vector;
-
-class DataStore {
-public:
-  virtual ~DataStore() {}
-  virtual void dump(void) = 0;
-};
 
 class Parser {
 public:

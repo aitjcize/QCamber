@@ -1,5 +1,5 @@
 /**
- * @file   featuresparser.h
+ * @file   fontdatastore.h
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,18 +20,34 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __FEATURES_PARSER_H__
-#define __FEATURES_PARSER_H__
+#ifndef __FONT_DATASTORE_H__
+#define __FONT_DATASTORE_H__
 
-#include "parser.h"
-#include "featuresdatastore.h"
+#include "datastore.h"
+#include "record.h"
 
-class FeaturesParser: public Parser {
+class FontDataStore: public DataStore {
 public:
-  FeaturesParser(const QString& filename);
-  virtual ~FeaturesParser();
+  void putXSize(const QStringList& param);
+  void putYSize(const QStringList& param);
+  void putOffset(const QStringList& param);
+  void charStart(const QStringList& param);
+  void charLineData(const QStringList& param);
+  void charEnd(void);
 
-  virtual FeaturesDataStore* parse(void);
+  qreal offset(void);
+  qreal xsize(void);
+  qreal ysize(void);
+  CharRecord* charRecord(const char tchar);
+
+  virtual void dump(void);
+
+private:
+  qreal m_xsize, m_ysize;
+  qreal m_offset;
+  QMap<char, CharRecord*> m_records;
+
+  CharRecord* m_currentChar;
 };
 
-#endif /* __FEATURES_PARSER_H__ */
+#endif /* __FONT_DATASTORE_H__ */

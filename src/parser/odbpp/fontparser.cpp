@@ -21,74 +21,10 @@
  */
 
 #include "fontparser.h"
+#include "fontdatastore.h"
 
 #include <QDebug>
 #include <QFile>
-
-void FontDataStore::putXSize(const QStringList& param)
-{
-  if (param.length() == 2) {
-    m_xsize = param[1].toDouble();
-  }
-}
-
-void FontDataStore::putYSize(const QStringList& param)
-{
-  if (param.length() == 2) {
-    m_ysize = param[1].toDouble();
-  }
-}
-
-void FontDataStore::putOffset(const QStringList& param)
-{
-  if (param.length() == 2) {
-    m_offset = param[1].toDouble();
-  }
-}
-
-void FontDataStore::charStart(const QStringList& param)
-{
-  CharRecord* rec = new CharRecord(this, param);
-  char tchar = param[1].toAscii()[0];
-  m_records[tchar] = rec;
-  m_currentChar = rec;
-}
-
-void FontDataStore::charLineData(const QStringList& param)
-{
-  CharLineRecord* rec = new CharLineRecord(param);
-  m_currentChar->lines.append(rec);
-}
-
-void FontDataStore::charEnd(void)
-{
-  m_currentChar = NULL;
-}
-
-qreal FontDataStore::offset(void)
-{
-  return m_offset;
-}
-
-qreal FontDataStore::xsize(void)
-{
-  return m_xsize;
-}
-
-qreal FontDataStore::ysize(void)
-{
-  return m_ysize;
-}
-
-CharRecord* FontDataStore::charRecord(const char tchar)
-{
-  return m_records[tchar];
-}
-
-void FontDataStore::dump(void)
-{
-  
-}
 
 FontParser::FontParser(const QString& filename): Parser(filename)
 {

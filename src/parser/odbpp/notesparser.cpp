@@ -24,20 +24,6 @@
 
 #include <QtCore>
 
-void NotesDataStore::putRecord(QStringList args)
-{
-  m_records.append(new NoteRecord(this, args));
-}
-
-const QList<NoteRecord*>& NotesDataStore::records(void)
-{
-  return m_records;
-}
-
-void NotesDataStore::dump(void)
-{
-}
-
 NotesParser::NotesParser(const QString& filename): Parser(filename)
 {
 }
@@ -62,3 +48,4 @@ NotesDataStore* NotesParser::parse(void)
 
   return ds;
 }
+

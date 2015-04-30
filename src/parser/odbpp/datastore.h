@@ -1,5 +1,5 @@
 /**
- * @file   featuresparser.h
+ * @file   datastore.h
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,18 +20,13 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __FEATURES_PARSER_H__
-#define __FEATURES_PARSER_H__
+#ifndef __DATASTORE_H__
+#define __DATASTORE_H__
 
-#include "parser.h"
-#include "featuresdatastore.h"
-
-class FeaturesParser: public Parser {
+class DataStore {
 public:
-  FeaturesParser(const QString& filename);
-  virtual ~FeaturesParser();
-
-  virtual FeaturesDataStore* parse(void);
+  virtual ~DataStore() {}
+  virtual void dump(void) = 0;
 };
 
-#endif /* __FEATURES_PARSER_H__ */
+#endif /* __DATASTORE_H__ */
