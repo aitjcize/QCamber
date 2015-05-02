@@ -1,5 +1,5 @@
 /**
- * @file   notesparser.h
+ * @file   notesdatastore.cpp
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,29 +20,19 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __NOTES_PARSER_H__
-#define __NOTES_PARSER_H__
+#include "notesdatastore.h"
 
-#include "parser.h"
-#include "record.h"
+void NotesDataStore::putRecord(QStringList args)
+{
+  m_records.append(new NoteRecord(this, args));
+}
 
-class NotesDataStore: public DataStore {
-public:
-  void putRecord(QStringList args);
-  const QList<NoteRecord*>& records(void);
+const QList<NoteRecord*>& NotesDataStore::records(void)
+{
+  return m_records;
+}
 
-  virtual void dump(void);
+void NotesDataStore::dump(void)
+{
+}
 
-private:
-  QList<NoteRecord*> m_records;
-};
-
-class NotesParser: public Parser {
-public:
-  NotesParser(const QString& filename);
-  virtual ~NotesParser();
-
-  virtual NotesDataStore* parse(void);
-};
-
-#endif /* __NOTES_PARSER_H__ */

@@ -1,5 +1,5 @@
 /**
- * @file   parser.h
+ * @file   featuresparser.h
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,35 +20,18 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __PARSER_H__
-#define __PARSER_H__
+#ifndef __FEATURES_PARSER_H__
+#define __FEATURES_PARSER_H__
 
-#include <map>
-#include <stdexcept>
-#include <vector>
+#include "parser.h"
+#include "featuresdatastore.h"
 
-#include <QString>
-
-using std::map;
-using std::multimap;
-using std::pair;
-using std::vector;
-
-class DataStore {
+class FeaturesParser: public Parser {
 public:
-  virtual ~DataStore() {}
-  virtual void dump(void) = 0;
+  FeaturesParser(const QString& filename);
+  virtual ~FeaturesParser();
+
+  virtual FeaturesDataStore* parse(void);
 };
 
-class Parser {
-public:
-  Parser(const QString& filename);
-  virtual ~Parser();
-
-  virtual DataStore* parse(void) = 0;
-
-protected:
-  QString m_fileName;
-};
-
-#endif /* __PARSER_H__ */
+#endif /* __FEATURES_PARSER_H__ */

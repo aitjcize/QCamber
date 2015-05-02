@@ -1,5 +1,5 @@
 /**
- * @file   featuresparser.h
+ * @file   featuresdatastore.h
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,12 +20,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __FEATURES_PARSER_H__
-#define __FEATURES_PARSER_H__
+#ifndef __FEATURES_DATASTORE_H__
+#define __FEATURES_DATASTORE_H__
 
-#include "parser.h"
-#include "record.h"
+#include "datastore.h"
 #include "structuredtextparser.h"
+#include "record.h"
 
 #include <QList>
 #include <QMap>
@@ -115,12 +115,4 @@ private:
   SurfaceRecord* m_currentSurface;
 };
 
-class FeaturesParser: public Parser {
-public:
-  FeaturesParser(const QString& filename);
-  virtual ~FeaturesParser();
-
-  virtual FeaturesDataStore* parse(void);
-};
-
-#endif /* __FEATURES_PARSER_H__ */
+#endif /* __FEATURES_DATASTORE_H__ */

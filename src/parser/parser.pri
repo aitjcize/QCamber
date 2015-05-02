@@ -1,22 +1,25 @@
-include (flex.pri)
-include (bison.pri)
-include (record/record.pri)
+include (odbpp/odbpp.pri)
 
 HEADERS += \
-  parser/cachedparser.h \
-  parser/featuresparser.h \
-  parser/fontparser.h \
-  parser/notesparser.h \
-  parser/parser.h \
-  parser/structuredtextparser.h \
-  parser/yyheader.h
+  parser/record.h \
+  parser/code39.h \
+  parser/featuresdatastore.h \
+  parser/fontdatastore.h \
+  parser/datastore.h \
+  parser/notesdatastore.h \
+  parser/structuredtextdatastore.h
 
 SOURCES += \
-  parser/featuresparser.cpp \
-  parser/fontparser.cpp \
-  parser/notesparser.cpp \
-  parser/parser.cpp \
-  parser/structuredtextparser.cpp
-
-FLEXSOURCES += parser/db.l
-BISONSOURCES += parser/db.y
+  parser/surfacerecord.cpp \
+  parser/textrecord.cpp \
+  parser/padrecord.cpp \
+  parser/linerecord.cpp \
+  parser/barcoderecord.cpp \
+  parser/arcrecord.cpp \
+  parser/charrecord.cpp \
+  parser/noterecord.cpp \
+  parser/code39.cpp \
+  parser/featuresdatastore.cpp \
+  parser/fontdatastore.cpp \
+  parser/notesdatastore.cpp \
+  parser/structuredtextdatastore.cpp

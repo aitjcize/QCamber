@@ -1,5 +1,5 @@
 /**
- * @file   fontparser.h
+ * @file   notesparser.cpp
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,42 +20,32 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __FONT_PARSER_H__
-#define __FONT_PARSER_H__
+#include "notesparser.h"
 
-#include "parser.h"
-#include "record.h"
+#include <QtCore>
 
-class FontDataStore: public DataStore {
-public:
-  void putXSize(const QStringList& param);
-  void putYSize(const QStringList& param);
-  void putOffset(const QStringList& param);
-  void charStart(const QStringList& param);
-  void charLineData(const QStringList& param);
-  void charEnd(void);
+NotesParser::NotesParser(const QString& filename): Parser(filename)
+{
+}
 
-  qreal offset(void);
-  qreal xsize(void);
-  qreal ysize(void);
-  CharRecord* charRecord(const char tchar);
+NotesParser::~NotesParser()
+{
+}
 
-  virtual void dump(void);
+NotesDataStore* NotesParser::parse(void)
+{
+  QFile file(m_fileName);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
+    return NULL;
+  }
 
-private:
-  qreal m_xsize, m_ysize;
-  qreal m_offset;
-  QMap<char, CharRecord*> m_records;
+  NotesDataStore* ds = new NotesDataStore;
+  while (!file.atEnd()) {
+    QString line = file.readLine();
+    ds->putRecord(line.split(","));
+  }
 
-  CharRecord* m_currentChar;
-};
+  return ds;
+}
 
-class FontParser: public Parser {
-public:
-  FontParser(const QString& filename);
-  virtual ~FontParser();
-  
-  virtual FontDataStore* parse(void);
-};
-
-#endif /* __FONT_PARSER_H__ */

@@ -1,5 +1,5 @@
 /**
- * @file   structuredtextparser.cpp
+ * @file   structuredtextdatastore.cpp
  * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
@@ -20,24 +20,14 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "structuredtextparser.h"
+#include "structuredtextdatastore.h"
 
 #include <cstdio>
-#include <iostream>
 #include <utility>
-
-#include <QDebug>
-#include <QSysInfo>
-
-#include "yyheader.h"
-#include "db.tab.h"
+#include <iostream>
 
 using std::cout;
 using std::endl;
-
-extern struct yycontext yyctx;
-extern int yyparse (void);
-extern FILE* yyin;
 
 int StructuredTextDataStore::dumpIndent = 0;
 
@@ -127,41 +117,3 @@ void StructuredTextDataStore::dump(void)
   dumpIndent -= 1;
 }
 
-StructuredTextParser::StructuredTextParser(const QString& filename):
-  Parser(filename)
-{
-#ifdef Q_OS_WIN
-  m_fileName.replace("/", "\\");
-#endif
-}
-
-StructuredTextParser::~StructuredTextParser()
-{
-}
-
-StructuredTextDataStore* StructuredTextParser::parse(void)
-{
-#ifdef Q_OS_WIN
-  if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
-    wchar_t buf[BUFSIZ];
-    memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
-    m_fileName.toWCharArray(buf);
-
-    yyin = _wfopen(buf, (const wchar_t*)"r");
-  } else {
-    yyin = fopen(m_fileName.toAscii(), "r");
-  }
-#else
-  yyin = fopen(m_fileName.toAscii(), "r");
-#endif
-
-  if (yyin == NULL) {
-    qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
-    return NULL;
-  }
-
-  yyctx.stds = new StructuredTextDataStore;
-  yyparse();
-
-  return yyctx.stds;
-}
