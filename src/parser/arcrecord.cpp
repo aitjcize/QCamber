@@ -22,7 +22,7 @@
 
 #include "record.h"
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "arcsymbol.h"
 
 ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param,

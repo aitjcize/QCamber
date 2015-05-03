@@ -24,7 +24,7 @@
 #define __FEATURES_DATASTORE_H__
 
 #include "datastore.h"
-#include "structuredtextparser.h"
+#include "structuredtextdatastore.h"
 #include "record.h"
 
 #include <QList>

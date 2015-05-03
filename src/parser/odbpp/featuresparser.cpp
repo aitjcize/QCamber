@@ -21,6 +21,7 @@
  */
 
 #include "featuresparser.h"
+#include "structuredtextparser.h"
 
 #include <map>
 #include <string>

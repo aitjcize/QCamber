@@ -28,7 +28,7 @@
 #include <QString>
 #include <QTransform>
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "symbolfactory.h"
 
 TextRecord::TextRecord(FeaturesDataStore* ds, const QStringList& param,

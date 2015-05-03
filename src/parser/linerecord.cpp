@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "linesymbol.h"
 
 LineRecord::LineRecord(FeaturesDataStore* ds, const QStringList& param,
