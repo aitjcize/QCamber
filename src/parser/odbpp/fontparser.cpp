@@ -21,7 +21,6 @@
  */
 
 #include "fontparser.h"
-#include "fontdatastore.h"
 
 #include <QDebug>
 #include <QFile>

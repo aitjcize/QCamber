@@ -22,7 +22,7 @@
 
 #include "record.h"
 
-#include "notesparser.h"
+#include "notesdatastore.h"
 #include "notesymbol.h"
 #include "symbolfactory.h"
 
