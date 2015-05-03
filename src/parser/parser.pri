@@ -1,6 +1,7 @@
 include (odbpp/odbpp.pri)
 
 HEADERS += \
+  parser/parser.h \
   parser/record.h \
   parser/code39.h \
   parser/featuresdatastore.h \
@@ -10,6 +11,7 @@ HEADERS += \
   parser/structuredtextdatastore.h
 
 SOURCES += \
+  parser/parser.cpp \
   parser/surfacerecord.cpp \
   parser/textrecord.cpp \
   parser/padrecord.cpp \
