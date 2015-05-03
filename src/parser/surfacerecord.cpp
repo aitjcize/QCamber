@@ -25,7 +25,7 @@
 #include <QtCore>
 #include <QPainterPath>
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "macros.h"
 #include "surfacesymbol.h"
 

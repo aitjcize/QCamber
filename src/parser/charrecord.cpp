@@ -24,7 +24,7 @@
 
 #include <QtCore/qmath.h>
 
-#include "fontparser.h"
+#include "fontdatastore.h"
 
 CharLineRecord::CharLineRecord(const QStringList& param)
 {
