@@ -1,6 +1,6 @@
 /**
- * @file   fontparser.cpp
- * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
+ * @file   gerberparser.cpp
+ * @author yodalee <lc85301@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
@@ -20,60 +20,38 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "fontparser.h"
+#include "gerberparser.h"
 
-#include <QDebug>
-#include <QFile>
+#include <map>
+#include <string>
 
-FontParser::FontParser(const QString& filename): Parser(filename)
+#include <QtCore>
+#include <QtDebug>
+
+GerberParser::GerberParser(const QString& filename): Parser(filename)
 {
 }
 
-FontParser::~FontParser()
+GerberParser::~GerberParser()
 {
 }
 
-FontDataStore* FontParser::parse(void)
+FeaturesDataStore* GerberParser::parse(void)
 {
-  FontDataStore* ds = new FontDataStore;
   QFile file(m_fileName);
-  
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
     return NULL;
   }
 
-  bool block = false;
+  FeaturesDataStore* ds = new FeaturesDataStore;
 
   while (!file.atEnd()) {
     QString line = file.readLine();
     line.chop(1); // remove newline character
 
-    if (line.startsWith("#") && line.length() == 0) { // comment
+    if (line.startsWith("G04") && line.length() == 0) { // comment
       continue;
-    }
-
-    QStringList param = line.split(" ", QString::SkipEmptyParts);
-
-    if (block) {
-      if (line.startsWith("ECHAR")) {
-        block = false;
-        ds->charEnd();
-      } else {
-        ds->charLineData(param);
-      }
-      continue;
-    }
-    
-    if (line.startsWith("XSIZE")) { // xsize
-      ds->putXSize(param);
-    } else if (line.startsWith("YSIZE")) { // ysize
-      ds->putYSize(param);
-    } else if (line.startsWith("OFFSET")) { // offset
-      ds->putOffset(param);
-    } else if (line.startsWith("CHAR")) { // char
-      block = true;
-      ds->charStart(param);
     }
   }
   return ds;

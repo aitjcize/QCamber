@@ -24,7 +24,7 @@
 
 #include <QPainterPath>
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "symbolfactory.h"
 
 BarcodeRecord::BarcodeRecord(FeaturesDataStore* ds, const QStringList& param,

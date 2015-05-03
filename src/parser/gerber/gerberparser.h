@@ -1,6 +1,6 @@
 /**
- * @file   arcrecord.cpp
- * @author Wei-Ning Huang (AZ) <aitjcize@gmail.com>
+ * @file   gerberparser.h
+ * @author yodalee <lc85301@gmail.com>
  *
  * Copyright (C) 2012 - 2014 Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
@@ -20,29 +20,18 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "record.h"
+#ifndef __GERBER_PARSER_H__
+#define __GERBER_PARSER_H__
 
+#include "parser.h"
 #include "featuresdatastore.h"
-#include "arcsymbol.h"
 
-ArcRecord::ArcRecord(FeaturesDataStore* ds, const QStringList& param,
-    const AttribData& attr):
-  Record(ds, attr)
-{
-  int i = 0;
-  xs = param[++i].toDouble();
-  ys = param[++i].toDouble();
-  xe = param[++i].toDouble();
-  ye = param[++i].toDouble();
-  xc = param[++i].toDouble();
-  yc = param[++i].toDouble();
-  sym_num = param[++i].toInt();
-  polarity = (param[++i] == "P")? P: N;
-  dcode = param[++i].toInt();
-  cw = (param[++i] == "Y");
-}
+class GerberParser: public Parser {
+public:
+  GerberParser(const QString& filename);
+  virtual ~GerberParser();
 
-Symbol* ArcRecord::createSymbol(void) const
-{
-  return new ArcSymbol(this);
-}
+  virtual FeaturesDataStore* parse(void);
+};
+
+#endif /* __GERBER_PARSER_H__ */

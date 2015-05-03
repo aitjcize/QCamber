@@ -28,7 +28,7 @@
 #include <QPainterPath>
 #include <QTransform>
 
-#include "featuresparser.h"
+#include "featuresdatastore.h"
 #include "symbolfactory.h"
 
 PadRecord::PadRecord(FeaturesDataStore* ds, const QStringList& param,
