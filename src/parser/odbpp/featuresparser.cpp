@@ -77,7 +77,7 @@ FeaturesDataStore* FeaturesParser::parse(void)
     QString line = file.readLine();
     line.chop(1); // remove newline character
 
-    if (line.startsWith("#") && line.length() == 0) { // comment
+    if (line.startsWith("#") || line.length() == 0) { // comment
       continue;
     }
 
