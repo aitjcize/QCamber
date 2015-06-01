@@ -92,7 +92,7 @@ StructuredTextDataStore::getBlocksByKey(string key)
 }
 
 const StructuredTextDataStore::ValueType&
-StructuredTextDataStore::getValueData(void)
+StructuredTextDataStore::getValueData(void) const
 {
   return m_valueData;
 }

@@ -52,50 +52,29 @@ void FeaturesDataStore::setLayerName(const QString& name)
   m_layerName = name.toUpper();
 }
 
-void FeaturesDataStore::putAttrlist(StructuredTextDataStore* ds)
+void FeaturesDataStore::putAttrlistItem(const QString& key,
+    const QString& value)
 {
-  const StructuredTextDataStore::ValueType d = ds->getValueData();
-  for (StructuredTextDataStore::ValueType::const_iterator it = d.begin();
-      it != d.end(); ++it) {
-    m_attrlist[QString::fromStdString(it->first)] =
-      QString::fromStdString(it->second);
-  }
+  m_attrlist[key] = value;
 }
 
-void FeaturesDataStore::putSymbolName(const QString& line)
+void FeaturesDataStore::putSymbolName(int id, const QString& name)
 {
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-  if (param.length() == 2) {
-    int id = param[0].right(param[0].length() - 1).toInt();
-    m_symbolNameMap[id] = param[1];
-  }
+  m_symbolNameMap[id] = name;
 }
 
-void FeaturesDataStore::putAttribName(const QString& line)
+void FeaturesDataStore::putAttribName(int id, const QString& name)
 {
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-  if (param.length() == 2) {
-    int id = param[0].right(param[0].length() - 1).toInt();
-    m_attribNameMap[id] = param[1];
-  }
+  m_attribNameMap[id] = name;
 }
 
-void FeaturesDataStore::putAttribText(const QString& line)
+void FeaturesDataStore::putAttribText(int id, const QString& text)
 {
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-  if (param.length() == 2) {
-    int id = param[0].right(param[0].length() - 1).toInt();
-    m_attribTextMap[id] = param[1];
-  }
+  m_attribTextMap[id] = text;
 }
 
-void FeaturesDataStore::putLine(const QString& line)
+void FeaturesDataStore::putLine(LineRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  LineRecord* rec = new LineRecord(this, param, attrib);
   m_records.append(rec);
 
   if (rec->polarity == P) {
@@ -105,13 +84,8 @@ void FeaturesDataStore::putLine(const QString& line)
   }
 }
 
-void FeaturesDataStore::putPad(const QString& line)
+void FeaturesDataStore::putPad(PadRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  PadRecord* rec = new PadRecord(this, param, attrib);
   m_records.append(rec);
 
   if (rec->polarity == P) {
@@ -121,13 +95,8 @@ void FeaturesDataStore::putPad(const QString& line)
   }
 }
 
-void FeaturesDataStore::putArc(const QString& line)
+void FeaturesDataStore::putArc(ArcRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  ArcRecord* rec = new ArcRecord(this, param, attrib);
   m_records.append(rec);
 
   if (rec->polarity == P) {
@@ -137,13 +106,8 @@ void FeaturesDataStore::putArc(const QString& line)
   }
 }
 
-void FeaturesDataStore::putText(const QString& line)
+void FeaturesDataStore::putText(TextRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  TextRecord* rec = new TextRecord(this, param, attrib);
   m_records.append(rec);
 
   if (rec->polarity == P) {
@@ -153,13 +117,8 @@ void FeaturesDataStore::putText(const QString& line)
   }
 }
 
-void FeaturesDataStore::putBarcode(const QString& line)
+void FeaturesDataStore::putBarcode(BarcodeRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  BarcodeRecord* rec = new BarcodeRecord(this, param, attrib);
   m_records.append(rec);
 
   if (rec->polarity == P) {
@@ -169,94 +128,14 @@ void FeaturesDataStore::putBarcode(const QString& line)
   }
 }
 
-void FeaturesDataStore::surfaceStart(const QString& line)
+void FeaturesDataStore::putSurfaceRecord(SurfaceRecord* rec)
 {
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  SurfaceRecord* rec = new SurfaceRecord(this, param, attrib);
   m_records.append(rec);
-  m_currentSurface = rec;
 
   if (rec->polarity == P) {
     ++m_posSurfaceCount;
   } else {
     ++m_negSurfaceCount;
-  }
-}
-
-void FeaturesDataStore::surfaceLineData(const QString& line)
-{
-  QStringList param;
-  AttribData attrib;
-  parseAttributes(line, &param, &attrib);
-
-  if (line.startsWith("OB")) {
-    PolygonRecord* rec = new PolygonRecord(param);
-    m_currentSurface->polygons.append(rec);
-    m_currentSurface->currentRecord = rec;
-  } else if (line.startsWith("OS")) {
-    SurfaceOperation* op = new SurfaceOperation;
-    int i = 0;
-    op->type = SurfaceOperation::SEGMENT;
-    op->x = param[++i].toDouble();
-    op->y = param[++i].toDouble();
-    m_currentSurface->currentRecord->operations.append(op);
-  } else if (line.startsWith("OC")) {
-    SurfaceOperation* op = new SurfaceOperation;
-    int i = 0;
-    op->type = SurfaceOperation::CURVE;
-    op->xe = param[++i].toDouble();
-    op->ye = param[++i].toDouble();
-    op->xc = param[++i].toDouble();
-    op->yc = param[++i].toDouble();
-    op->cw = (param[++i] == "Y");
-    m_currentSurface->currentRecord->operations.append(op);
-  } else if (line.startsWith("OE")) {
-    m_currentSurface->currentRecord = NULL;
-  }
-}
-
-void FeaturesDataStore::surfaceEnd(void)
-{
-  m_currentSurface = NULL;
-}
-
-void FeaturesDataStore::parseAttributes(const QString& line,
-    QStringList* param, AttribData* attrib)
-{
-  int loc = line.lastIndexOf(";");
-  QString record = line.left(loc).trimmed();
-  QString attr;
-  if (loc != -1) {
-    attr = line.right(line.length() - loc - 1).trimmed();
-  }
-
-  if (record.indexOf("'") != -1) {
-    int loc = record.indexOf("'");
-    int loc2 = record.indexOf("'", loc + 1);
-    QString left = record.left(loc);
-    QString middle = record.mid(loc + 1, loc2 - loc - 1);
-    QString right = record.right(record.length() - loc2 - 1);
-    *param = left.split(" ", QString::SkipEmptyParts);
-    *param << middle;
-    *param += right.split(" ", QString::SkipEmptyParts);
-  } else {
-    *param = record.split(" ", QString::SkipEmptyParts);
-  }
-
-  if (!attr.isEmpty()) {
-    QStringList terms = attr.split(',');
-    for (int i = 0; i < terms.size(); ++i) {
-      QStringList v = terms[i].split('=');
-      QString key = m_attribNameMap[v[0].toInt()];
-      if (v.size() == 1) {
-        (*attrib)[key] = "true";
-      } else {
-        (*attrib)[key] = m_attribTextMap[v[1].toInt()];
-      }
-    }
   }
 }
 
@@ -282,4 +161,3 @@ void FeaturesDataStore::dump(void)
     qDebug() << it.key() << it.value();
   }
 }
-

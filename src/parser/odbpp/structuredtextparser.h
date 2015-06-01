@@ -26,7 +26,7 @@
 #include "parser.h"
 #include "structuredtextdatastore.h"
 
-class StructuredTextParser : public Parser{
+class StructuredTextParser : public Parser {
 public:
   StructuredTextParser(const QString& filename);
   virtual ~StructuredTextParser();

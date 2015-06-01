@@ -27,9 +27,10 @@
 #include <QString>
 
 #include "datastore.h"
-#include "parser.h"
 #include "featuresparser.h"
 #include "fontparser.h"
+#include "parser.h"
+#include "structuredtextparser.h"
 
 template <typename P, typename D>
 class CachedParser {

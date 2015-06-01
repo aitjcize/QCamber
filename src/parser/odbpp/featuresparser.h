@@ -23,8 +23,9 @@
 #ifndef __FEATURES_PARSER_H__
 #define __FEATURES_PARSER_H__
 
-#include "parser.h"
 #include "featuresdatastore.h"
+
+#include "parser.h"
 
 class FeaturesParser: public Parser {
 public:
@@ -32,6 +33,26 @@ public:
   virtual ~FeaturesParser();
 
   virtual FeaturesDataStore* parse(void);
+
+private:
+  void putAttrlist(const StructuredTextDataStore* ds);
+  void parseSymbolName(const QString& line);
+  void parseAttribName(const QString& line);
+  void parseAttribText(const QString& line);
+  void parseLine(const QString& line);
+  void parsePad(const QString& line);
+  void parseArc(const QString& line);
+  void parseText(const QString& line);
+  void parseBarcode(const QString& line);
+  void parseSurfaceStart(const QString& line);
+  void parseSurfaceLineData(const QString& line);
+  void parseSurfaceEnd(void);
+
+  void parseAttributes(const QString& line, QStringList* param,
+      AttribData* attrib);
+
+  FeaturesDataStore* m_ds;
+  SurfaceRecord* m_currentSurface;
 };
 
 #endif /* __FEATURES_PARSER_H__ */

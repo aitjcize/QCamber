@@ -23,10 +23,10 @@
 #ifndef __STRUCTURED_TEXT_DATASTORE_H__
 #define __STRUCTURED_TEXT_DATASTORE_H__
 
-#include "datastore.h"
-
 #include <map>
 #include <string>
+
+#include "datastore.h"
 
 using std::string;
 using std::map;
@@ -57,7 +57,7 @@ public:
 
   string get(string key);
   BlockIterPair getBlocksByKey(string key);
-  const ValueType& getValueData(void);
+  const ValueType& getValueData(void) const;
 
   void put(string key, string value);
   virtual void dump(void);

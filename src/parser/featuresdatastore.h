@@ -23,14 +23,14 @@
 #ifndef __FEATURES_DATASTORE_H__
 #define __FEATURES_DATASTORE_H__
 
-#include "datastore.h"
-#include "structuredtextdatastore.h"
-#include "record.h"
-
 #include <QList>
 #include <QMap>
 #include <QString>
 #include <QStringList>
+
+#include "datastore.h"
+#include "structuredtextdatastore.h"
+#include "record.h"
 
 class FeaturesDataStore: public DataStore {
 public:
@@ -44,18 +44,16 @@ public:
   void setStepName(const QString& name);
   void setLayerName(const QString& name);
 
-  void putAttrlist(StructuredTextDataStore* ds);
-  void putSymbolName(const QString& line);
-  void putAttribName(const QString& line);
-  void putAttribText(const QString& line);
-  void putLine(const QString& line);
-  void putPad(const QString& line);
-  void putArc(const QString& line);
-  void putText(const QString& line);
-  void putBarcode(const QString& line);
-  void surfaceStart(const QString& line);
-  void surfaceLineData(const QString& line);
-  void surfaceEnd(void);
+  void putAttrlistItem(const QString& key, const QString& value);
+  void putSymbolName(int id, const QString& name);
+  void putAttribName(int id, const QString& name);
+  void putAttribText(int id, const QString& text);
+  void putLine(LineRecord* rec);
+  void putPad(PadRecord* rec);
+  void putArc(ArcRecord* rec);
+  void putText(TextRecord* rec);
+  void putBarcode(BarcodeRecord* rec);
+  void putSurfaceRecord(SurfaceRecord* rec);
 
   QString jobName(void) const { return m_jobName; }
   QString stepName(void) const { return m_stepName; }
@@ -83,10 +81,6 @@ public:
 
   virtual void dump(void);
 
-protected:
-  void parseAttributes(const QString& line, QStringList* param,
-      AttribData* attrib);
-
 private:
   QString m_jobName;
   QString m_stepName;
@@ -112,7 +106,6 @@ private:
   int m_negBarcodeCount;
 
   QList<Record*> m_records;
-  SurfaceRecord* m_currentSurface;
 };
 
 #endif /* __FEATURES_DATASTORE_H__ */

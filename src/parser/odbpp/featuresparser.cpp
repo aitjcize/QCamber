@@ -21,7 +21,6 @@
  */
 
 #include "featuresparser.h"
-#include "structuredtextparser.h"
 
 #include <map>
 #include <string>
@@ -29,7 +28,11 @@
 #include <QtCore>
 #include <QtDebug>
 
-FeaturesParser::FeaturesParser(const QString& filename): Parser(filename)
+#include "structuredtextparser.h"
+#include "record.h"
+
+FeaturesParser::FeaturesParser(const QString& filename):
+  Parser(filename), m_ds(NULL)
 {
 }
 
@@ -46,6 +49,8 @@ FeaturesDataStore* FeaturesParser::parse(void)
   }
 
   FeaturesDataStore* ds = new FeaturesDataStore;
+  m_ds = ds;
+
   // layer feature related
   QRegExp rx(".*/([^/]+)/steps/([^/]+)/layers/([^/]+)/features");
   if (rx.exactMatch(m_fileName)) {
@@ -59,7 +64,7 @@ FeaturesDataStore* FeaturesParser::parse(void)
     QString stepAttrName = QString(m_fileName).replace(rp, "\\1/attrlist");
     StructuredTextParser sp(stepAttrName);
     StructuredTextDataStore* sds = sp.parse();
-    ds->putAttrlist(sds);
+    putAttrlist(sds);
     delete sds;
 
     // layer attribute
@@ -67,7 +72,7 @@ FeaturesDataStore* FeaturesParser::parse(void)
     QString layerAttrName = QString(m_fileName).replace(rp, "\\1/attrlist");
     StructuredTextParser lp(layerAttrName);
     StructuredTextDataStore* lds = lp.parse();
-    ds->putAttrlist(lds);
+    putAttrlist(lds);
     delete lds;
   }
 
@@ -84,33 +89,205 @@ FeaturesDataStore* FeaturesParser::parse(void)
     if (surface) {
       if (line.startsWith("SE")) {
         surface = false;
-        ds->surfaceEnd();
+        parseSurfaceEnd();
       } else {
-        ds->surfaceLineData(line);
+        parseSurfaceLineData(line);
       }
       continue;
     }
 
     if (line.startsWith("$")) { // symbol names
-      ds->putSymbolName(line);
+      parseSymbolName(line);
     } else if (line.startsWith("@")) { // attrib names
-      ds->putAttribName(line);
+      parseAttribName(line);
     } else if (line.startsWith("&")) { // attrib text strings
-      ds->putAttribText(line);
+      parseAttribText(line);
     } else if (line.startsWith("L")) { // line
-      ds->putLine(line);
+      parseLine(line);
     } else if (line.startsWith("P")) { // pad
-      ds->putPad(line);
+      parsePad(line);
     } else if (line.startsWith("A")) { // arc
-      ds->putArc(line);
+      parseArc(line);
     } else if (line.startsWith("T")) { // text
-      ds->putText(line);
+      parseText(line);
     } else if (line.startsWith("B")) { // barcode
-      ds->putBarcode(line);
+      parseBarcode(line);
     } else if (line.startsWith("S")) { // surface
-      ds->surfaceStart(line);
+      parseSurfaceStart(line);
       surface = true;
     }
   }
   return ds;
+}
+
+void FeaturesParser::putAttrlist(const StructuredTextDataStore* ds)
+{
+  const StructuredTextDataStore::ValueType d = ds->getValueData();
+  for (StructuredTextDataStore::ValueType::const_iterator it = d.begin();
+      it != d.end(); ++it) {
+    m_ds->putAttrlistItem(QString::fromStdString(it->first),
+        QString::fromStdString(it->second));
+  }
+}
+
+void FeaturesParser::parseSymbolName(const QString& line)
+{
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
+  if (param.length() == 2) {
+    int id = param[0].right(param[0].length() - 1).toInt();
+    m_ds->putSymbolName(id, param[1]);
+  }
+}
+
+void FeaturesParser::parseAttribName(const QString& line)
+{
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
+  if (param.length() == 2) {
+    int id = param[0].right(param[0].length() - 1).toInt();
+    m_ds->putAttribName(id, param[1]);
+  }
+}
+
+void FeaturesParser::parseAttribText(const QString& line)
+{
+  QStringList param = line.split(" ", QString::SkipEmptyParts);
+  if (param.length() == 2) {
+    int id = param[0].right(param[0].length() - 1).toInt();
+    m_ds->putAttribText(id, param[1]);
+  }
+}
+
+void FeaturesParser::parseLine(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  LineRecord* rec = new LineRecord(m_ds, param, attrib);
+  m_ds->putLine(rec);
+}
+
+void FeaturesParser::parsePad(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  PadRecord* rec = new PadRecord(m_ds, param, attrib);
+  m_ds->putPad(rec);
+}
+
+void FeaturesParser::parseArc(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  ArcRecord* rec = new ArcRecord(m_ds, param, attrib);
+  m_ds->putArc(rec);
+}
+
+void FeaturesParser::parseText(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  TextRecord* rec = new TextRecord(m_ds, param, attrib);
+  m_ds->putText(rec);
+}
+
+void FeaturesParser::parseBarcode(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  BarcodeRecord* rec = new BarcodeRecord(m_ds, param, attrib);
+  m_ds->putBarcode(rec);
+}
+
+void FeaturesParser::parseSurfaceStart(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  SurfaceRecord* rec = new SurfaceRecord(m_ds, param, attrib);
+  m_currentSurface = rec;
+  m_ds->putSurfaceRecord(rec);
+}
+
+void FeaturesParser::parseSurfaceLineData(const QString& line)
+{
+  QStringList param;
+  AttribData attrib;
+  parseAttributes(line, &param, &attrib);
+
+  if (line.startsWith("OB")) {
+    PolygonRecord* rec = new PolygonRecord(param);
+    m_currentSurface->polygons.append(rec);
+    m_currentSurface->currentRecord = rec;
+  } else if (line.startsWith("OS")) {
+    SurfaceOperation* op = new SurfaceOperation;
+    int i = 0;
+    op->type = SurfaceOperation::SEGMENT;
+    op->x = param[++i].toDouble();
+    op->y = param[++i].toDouble();
+    m_currentSurface->currentRecord->operations.append(op);
+  } else if (line.startsWith("OC")) {
+    SurfaceOperation* op = new SurfaceOperation;
+    int i = 0;
+    op->type = SurfaceOperation::CURVE;
+    op->xe = param[++i].toDouble();
+    op->ye = param[++i].toDouble();
+    op->xc = param[++i].toDouble();
+    op->yc = param[++i].toDouble();
+    op->cw = (param[++i] == "Y");
+    m_currentSurface->currentRecord->operations.append(op);
+  } else if (line.startsWith("OE")) {
+    m_currentSurface->currentRecord = NULL;
+  }
+}
+
+void FeaturesParser::parseSurfaceEnd()
+{
+  m_currentSurface = NULL;
+}
+
+void FeaturesParser::parseAttributes(const QString& line,
+    QStringList* param, AttribData* attrib)
+{
+  int loc = line.lastIndexOf(";");
+  QString record = line.left(loc).trimmed();
+  QString attr;
+  if (loc != -1) {
+    attr = line.right(line.length() - loc - 1).trimmed();
+  }
+
+  if (record.indexOf("'") != -1) {
+    int loc = record.indexOf("'");
+    int loc2 = record.indexOf("'", loc + 1);
+    QString left = record.left(loc);
+    QString middle = record.mid(loc + 1, loc2 - loc - 1);
+    QString right = record.right(record.length() - loc2 - 1);
+    *param = left.split(" ", QString::SkipEmptyParts);
+    *param << middle;
+    *param += right.split(" ", QString::SkipEmptyParts);
+  } else {
+    *param = record.split(" ", QString::SkipEmptyParts);
+  }
+
+  if (!attr.isEmpty()) {
+    QStringList terms = attr.split(',');
+    for (int i = 0; i < terms.size(); ++i) {
+      QStringList v = terms[i].split('=');
+      QString key = m_ds->attribNameMap()[v[0].toInt()];
+      if (v.size() == 1) {
+        (*attrib)[key] = "true";
+      } else {
+        (*attrib)[key] = m_ds->attribTextMap()[v[1].toInt()];
+      }
+    }
+  }
 }
