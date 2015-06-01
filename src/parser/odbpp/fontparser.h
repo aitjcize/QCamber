@@ -32,6 +32,12 @@ public:
   virtual ~FontParser();
   
   virtual FontDataStore* parse(void);
+
+private:
+  void charLineData(const QStringList& param);
+  void charEnd(void);
+
+  CharRecord* m_currentChar;
 };
 
 #endif /* __FONT_PARSER_H__ */

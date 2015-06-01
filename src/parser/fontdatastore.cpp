@@ -22,44 +22,24 @@
 
 #include "fontdatastore.h"
 
-void FontDataStore::putXSize(const QStringList& param)
+void FontDataStore::putXSize(qreal xsize)
 {
-  if (param.length() == 2) {
-    m_xsize = param[1].toDouble();
-  }
+  m_xsize = xsize;
 }
 
-void FontDataStore::putYSize(const QStringList& param)
+void FontDataStore::putYSize(qreal ysize)
 {
-  if (param.length() == 2) {
-    m_ysize = param[1].toDouble();
-  }
+  m_ysize = ysize;
 }
 
-void FontDataStore::putOffset(const QStringList& param)
+void FontDataStore::putOffset(qreal offset)
 {
-  if (param.length() == 2) {
-    m_offset = param[1].toDouble();
-  }
+  m_offset = offset;
 }
 
-void FontDataStore::charStart(const QStringList& param)
+void FontDataStore::putCharRecord(CharRecord* rec)
 {
-  CharRecord* rec = new CharRecord(this, param);
-  char tchar = param[1].toAscii()[0];
-  m_records[tchar] = rec;
-  m_currentChar = rec;
-}
-
-void FontDataStore::charLineData(const QStringList& param)
-{
-  CharLineRecord* rec = new CharLineRecord(param);
-  m_currentChar->lines.append(rec);
-}
-
-void FontDataStore::charEnd(void)
-{
-  m_currentChar = NULL;
+  m_records[rec->tchar] = rec;
 }
 
 qreal FontDataStore::offset(void)

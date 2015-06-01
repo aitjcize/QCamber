@@ -58,23 +58,36 @@ FontDataStore* FontParser::parse(void)
     if (block) {
       if (line.startsWith("ECHAR")) {
         block = false;
-        ds->charEnd();
+        charEnd();
       } else {
-        ds->charLineData(param);
+        charLineData(param);
       }
       continue;
     }
     
     if (line.startsWith("XSIZE")) { // xsize
-      ds->putXSize(param);
+      ds->putXSize(param[1].toDouble());
     } else if (line.startsWith("YSIZE")) { // ysize
-      ds->putYSize(param);
+      ds->putYSize(param[1].toDouble());
     } else if (line.startsWith("OFFSET")) { // offset
-      ds->putOffset(param);
+      ds->putOffset(param[1].toDouble());
     } else if (line.startsWith("CHAR")) { // char
+      CharRecord* rec = new CharRecord(ds, param);
+      ds->putCharRecord(rec);
       block = true;
-      ds->charStart(param);
     }
   }
   return ds;
+}
+
+
+void FontParser::charLineData(const QStringList& param)
+{
+  CharLineRecord* rec = new CharLineRecord(param);
+  m_currentChar->lines.append(rec);
+}
+
+void FontParser::charEnd(void)
+{
+  m_currentChar = NULL;
 }

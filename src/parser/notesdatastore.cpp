@@ -22,9 +22,9 @@
 
 #include "notesdatastore.h"
 
-void NotesDataStore::putRecord(QStringList args)
+void NotesDataStore::putRecord(const QStringList& param)
 {
-  m_records.append(new NoteRecord(this, args));
+  m_records.append(new NoteRecord(this, param));
 }
 
 const QList<NoteRecord*>& NotesDataStore::records(void)

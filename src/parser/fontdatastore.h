@@ -28,12 +28,10 @@
 
 class FontDataStore: public DataStore {
 public:
-  void putXSize(const QStringList& param);
-  void putYSize(const QStringList& param);
-  void putOffset(const QStringList& param);
-  void charStart(const QStringList& param);
-  void charLineData(const QStringList& param);
-  void charEnd(void);
+  void putXSize(qreal xsize);
+  void putYSize(qreal ysize);
+  void putOffset(qreal offset);
+  void putCharRecord(CharRecord* rec);
 
   qreal offset(void);
   qreal xsize(void);
@@ -46,8 +44,6 @@ private:
   qreal m_xsize, m_ysize;
   qreal m_offset;
   QMap<char, CharRecord*> m_records;
-
-  CharRecord* m_currentChar;
 };
 
 #endif /* __FONT_DATASTORE_H__ */
