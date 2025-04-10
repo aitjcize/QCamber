@@ -89,7 +89,7 @@ QPainterPath TextSymbol::painterPath(void)
   QMatrix mat(m_xsize / ds->xsize(), 0, 0, m_ysize / ds->ysize(), 0, 0);
 
   for (int i = 0; i < m_text.length(); ++i) {
-    CharRecord* rec = ds->charRecord(m_text[i].toAscii());
+    CharRecord* rec = ds->charRecord(m_text[i].toLatin1());
     if (rec) {
       QPainterPath p = mat.map(rec->painterPath(m_width_factor));
       path.addPath(p);

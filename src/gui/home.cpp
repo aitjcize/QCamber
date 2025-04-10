@@ -160,7 +160,7 @@ void Home::showCustomSymbolPage()
   DIR *dp;
   int i,j;
   struct dirent *dirp;
-  if((dp = opendir(ctx.loader->absPath("symbols").toAscii().data())) == NULL){
+  if((dp = opendir(ctx.loader->absPath("symbols").toLatin1().data())) == NULL){
     qDebug()<<"Error cant find symbol path";
   }
   i=j=0;

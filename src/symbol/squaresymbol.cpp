@@ -34,7 +34,7 @@ SquareSymbol::SquareSymbol(const QString& def, const Polarity& polarity,
 {
   QRegExp rx(m_pattern);
   if (!rx.exactMatch(def))
-    throw InvalidSymbolException(def.toAscii());
+    throw InvalidSymbolException(def.toLatin1());
 
   QStringList caps = rx.capturedTexts();
   m_s = caps[1].toDouble() / 1000.0;

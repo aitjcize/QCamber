@@ -69,7 +69,7 @@ QPainterPath CharLineRecord::painterPath(qreal width_factor)
 
 CharRecord::CharRecord(FontDataStore* ds, const QStringList& param): ds(ds)
 {
-  tchar = param[1].toAscii()[0];
+  tchar = param[1].toLatin1()[0];
 }
 
 CharRecord::~CharRecord()
