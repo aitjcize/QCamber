@@ -53,7 +53,7 @@ FontDataStore* FontParser::parse(void)
       continue;
     }
 
-    QStringList param = line.split(" ", QString::SkipEmptyParts);
+    QStringList param = line.split(" ", Qt::SkipEmptyParts);
 
     if (block) {
       if (line.startsWith("ECHAR")) {
