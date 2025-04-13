@@ -23,6 +23,7 @@
 #include "odbppgraphicsscene.h"
 
 #include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 

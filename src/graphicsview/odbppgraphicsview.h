@@ -23,6 +23,7 @@
 #ifndef __ODBPPGRAPHICSVIEW_H__
 #define __ODBPPGRAPHICSVIEW_H__
 
+#include <QtWidgets>
 #include <QGraphicsView>
 #include "graphicslayer.h"
 #include "profile.h"

@@ -23,6 +23,7 @@
 #include "jobmanagerdialog.h"
 #include "ui_jobmanagerdialog.h"
 
+#include <QtWidgets>
 #include <QtGui>
 
 #include "context.h"

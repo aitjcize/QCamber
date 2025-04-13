@@ -1,4 +1,5 @@
 TEMPLATE = app
+QT+=widgets
 
 MOC_DIR = .build
 UI_DIR = .build

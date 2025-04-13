@@ -24,6 +24,7 @@
 #include "ui_viewerwindow.h"
 
 #include <QtGui>
+#include <QtWidgets>
 #include <QDebug>
 
 #include "context.h"

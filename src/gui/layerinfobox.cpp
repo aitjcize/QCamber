@@ -23,6 +23,7 @@
 #include "layerinfobox.h"
 #include "ui_layerinfobox.h"
 
+#include <QtWidgets>
 #include <QtGui>
 
 #include "context.h"

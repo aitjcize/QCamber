@@ -23,6 +23,7 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
+#include <QtWidgets>
 #include <QtGui>
 
 #include "settings.h"
