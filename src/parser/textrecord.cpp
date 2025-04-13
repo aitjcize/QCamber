@@ -76,11 +76,11 @@ QString TextRecord::dynamicText(QString text)
   QString dynText = text;
   const QDate &Date = QDate::currentDate();
   const QTime &Time = QTime::currentTime();
-  dynText.replace("$$date-ddmmyy", QString().sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date-ddmmyy", QString().asprintf("%02d/%02d/%02d",
         Date.day(), Date.month(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$date", QString().sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date", QString().asprintf("%02d/%02d/%02d",
         Date.month(), Date.day(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$time", QString().sprintf("%02d:%02d",
+  dynText.replace("$$time", QString().asprintf("%02d:%02d",
         Time.hour(), Time.minute()), Qt::CaseInsensitive);
 
   FeaturesDataStore* fds = dynamic_cast<FeaturesDataStore*>(ds);

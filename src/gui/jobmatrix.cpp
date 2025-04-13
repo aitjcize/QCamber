@@ -183,7 +183,7 @@ void JobMatrix::drawDrillLine(QString layer_name,int start,int end)
   for(int i = start;i<end+1;i++)
   {
     QTableWidgetItem *line = new QTableWidgetItem(layer_name);
-    line->setBackgroundColor(QColor("black"));
+    line->setBackground(QColor("black"));
     ui->tableWidget->setItem(i,col-1,line);
   }
 }
@@ -208,9 +208,9 @@ void JobMatrix::selectDrillLine(int index)
     {
       if (((item = ui->tableWidget->item(row,col)) != 0))
         if(col != target_col)
-          item->setBackgroundColor(QColor("black"));
+          item->setBackground(QColor("black"));
         else
-          item->setBackgroundColor(QColor("red"));
+          item->setBackground(QColor("red"));
     }
   }
 }

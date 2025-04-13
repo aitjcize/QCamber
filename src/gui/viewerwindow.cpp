@@ -237,9 +237,9 @@ void ViewerWindow::updateCursorCoord(QPointF pos)
 {
   QString text;
   if (m_displayUnit == U_INCH) {
-    text.sprintf("(%f, %f)", pos.x(), -pos.y());
+    text.asprintf("(%f, %f)", pos.x(), -pos.y());
   } else {
-    text.sprintf("(%f, %f)", pos.x() * 25.4, -pos.y() * 25.4);
+    text.asprintf("(%f, %f)", pos.x() * 25.4, -pos.y() * 25.4);
   }
   m_cursorCoordLabel->setText(text);
 }

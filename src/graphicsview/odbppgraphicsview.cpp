@@ -208,7 +208,7 @@ void ODBPPGraphicsView::updateLayerViewport(void)
 void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
   setTransformationAnchor(AnchorUnderMouse);
-  scaleView(pow((double)2, -event->delta() / 240.0));
+  scaleView(pow((double)2, -event->angleDelta().y() / 240.0));
 }
 
 void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)
