@@ -22,8 +22,7 @@
 
 #include "rectangularthermalsymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,11 +31,12 @@ RectangularThermalSymbol::RectangularThermalSymbol(const QString& def, const Pol
     const AttribData& attrib):
     Symbol(def, "rc_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
   m_angle = caps[3].toDouble();
@@ -64,7 +64,7 @@ QPainterPath RectangularThermalSymbol::painterPath(void)
 
   qreal ang = m_angle;
   for (int i = 0; i < m_num_spokes; ++i, ang += angle_div) {
-    QMatrix mat;
+    QTransform mat;
     ang = qCeil(ang / 45) * 45.0;
 
     if ((int)ang % 90 != 0) {

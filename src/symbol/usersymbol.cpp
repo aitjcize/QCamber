@@ -22,8 +22,7 @@
 
 #include "usersymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "cachedparser.h"
 #include "context.h"
@@ -34,12 +33,13 @@ UserSymbol::UserSymbol(const QString& def, const Polarity& polarity,
 {
   QString path = ctx.loader->featuresPath("symbols/" + def);
   FeaturesDataStore* ds = CachedFeaturesParser::parse(path);
-
-  for (QList<Record*>::const_iterator it = ds->records().begin();
+  if (ds) {
+    for (QList<Record*>::const_iterator it = ds->records().begin();
       it != ds->records().end(); ++it) {
-    Symbol* symbol = (*it)->createSymbol();
-    addChild(symbol);
-    m_symbols.append(symbol);
+      Symbol* symbol = (*it)->createSymbol();
+      addChild(symbol);
+      m_symbols.append(symbol);
+    }
   }
 
   setHandlesChildEvents(true);

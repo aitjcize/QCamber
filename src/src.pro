@@ -1,4 +1,6 @@
 TEMPLATE = app
+QT += widgets
+CONFIG += debug_and_release
 
 MOC_DIR = .build
 UI_DIR = .build

@@ -23,7 +23,7 @@
 #include "layerinfobox.h"
 #include "ui_layerinfobox.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 
@@ -161,7 +161,7 @@ void LayerInfoBox::on_activeIndicator_clicked(void)
   }
 }
 
-void LayerInfoBox::on_actionFeaturesHistogram_activated(void)
+void LayerInfoBox::on_actionFeaturesHistogram_triggered()
 {
   m_featuresHistogramWidget.setTreeViewModel(layer()->reportModel());
   m_featuresHistogramWidget.show();

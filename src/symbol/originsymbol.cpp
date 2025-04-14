@@ -22,8 +22,7 @@
 
 #include "originsymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 OriginSymbol::OriginSymbol():
     Symbol("Origin", "Origin", P)
@@ -38,7 +37,7 @@ QRectF OriginSymbol::boundingRect() const
 }
 
 void OriginSymbol::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
+    const QStyleOptionGraphicsItem *, QWidget *)
 {
   qreal srad = m_rad * 0.7;
   painter->setPen(QPen(m_pen.color(), 0));

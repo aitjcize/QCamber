@@ -22,8 +22,7 @@
 
 #include "rectanglesymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,27 +31,31 @@ RectangleSymbol::RectangleSymbol(const QString& def, const Polarity& polarity,
     const AttribData& attrib):
     Symbol(def, "rect([0-9.]+)x([0-9.]+)(?:(x[cr])([0-9.]+)(?:x([1-4]+))?)?", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
-  if (caps[3] == "xr") {
-    m_rad = caps[4].toDouble() / 1000.0;
-    m_type = ROUNDED;
-  } else if (caps[3] == "xc") {
-    m_rad = caps[4].toDouble() / 1000.0;
-    m_type = CHAMFERED;
-  } else {  
+  if (caps.count() > 4) {
+    if (caps[3] == "xr") {
+      m_rad = caps[4].toDouble() / 1000.0;
+      m_type = ROUNDED;
+    } else if (caps[3] == "xc") {
+      m_rad = caps[4].toDouble() / 1000.0;
+      m_type = CHAMFERED;
+    }
+  }
+  else {
     m_rad = 0;
     m_type = NORMAL;
   }
-  if (caps[5].length()) {
+  if (caps.count() > 5) {
     m_corners = 0;
     QByteArray cors = caps[5].toLatin1();
-    for (int i = 0; i < cors.count(); ++i) {
+    for (int i = 0; i < cors.size(); ++i) {
       m_corners |= (1 << (cors[i] - '1'));
     }
   } else {

@@ -22,7 +22,7 @@
 
 #include "graphicslayerscene.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "graphicslayer.h"
 

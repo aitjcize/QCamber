@@ -22,8 +22,7 @@
 
 #include "roundthermalroundsymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,11 +31,12 @@ RoundThermalRoundSymbol::RoundThermalRoundSymbol(const QString& def, const Polar
     const AttribData& attrib):
     Symbol(def, "thr([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_od = caps[1].toDouble() / 1000.0;
   m_id = caps[2].toDouble() / 1000.0;
   m_angle = caps[3].toDouble();

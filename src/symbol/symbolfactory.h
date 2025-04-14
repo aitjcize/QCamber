@@ -60,18 +60,19 @@
 #include "notesymbol.h"
 #include "originsymbol.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 class SymbolFactory {
 public:
   static Symbol* create(const QString& def, const Polarity& polarity,
       const AttribData& attrib) {
-    QRegExp rx("([a-z_+]+).*");
-    if (!rx.exactMatch(def)) {
+    QRegularExpression rx("^([a-z_+]+).*$");
+    QRegularExpressionMatch m = rx.match(def);
+    if (!m.hasMatch()) {
       return new UserSymbol(def, polarity, attrib);
     }
 
-    QString prefix = rx.capturedTexts()[1];
+    QString prefix = m.captured(1);
     try {
       if (prefix == "r") {
         return new RoundSymbol(def, polarity, attrib);
@@ -126,7 +127,7 @@ public:
       } else {
         return new UserSymbol(def, polarity, attrib);
       }
-    } catch (InvalidSymbolException) {
+    } catch (InvalidSymbolException&) {
       return new UserSymbol(def, polarity, attrib);
     }
   }

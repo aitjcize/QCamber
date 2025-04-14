@@ -22,8 +22,7 @@
 
 #include "linesymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "featuresparser.h"
 #include "symbolpool.h"

@@ -22,7 +22,7 @@
 
 #include "odbppgraphicsscene.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 
@@ -116,10 +116,13 @@ void ODBPPGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
   case S_AREA_ZOOM_ACTIVE:
     m_rubberBand->setRect(QRectF(m_rubberPS, event->scenePos()).normalized());
     break;
-  case S_MEASURE_ACTIVE:
+  case S_MEASURE_ACTIVE: {
     QRectF rect = QRectF(m_rubberPS, event->scenePos());
     m_measureRubberBand->setRect(rect);
     emit measureRectSelected(rect.normalized());
+    break;
+  }
+  default:
     break;
   }
   emit mouseMove(event->scenePos());
@@ -156,6 +159,8 @@ void ODBPPGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     break;
   case S_MEASURE_ACTIVE:
     m_state = S_MEASURE;
+    break;
+  default:
     break;
   }
 
