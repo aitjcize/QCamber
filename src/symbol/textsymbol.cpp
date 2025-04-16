@@ -84,6 +84,8 @@ QPainterPath TextSymbol::painterPath(void)
 
   QString filename = ctx.loader->absPath("fonts/" + m_font);
   FontDataStore* ds = CachedFontParser::parse(filename);
+  if (!ds)
+    return path;
 
   QTransform mat(m_xsize / ds->xsize(), 0, 0, m_ysize / ds->ysize(), 0, 0);
 

@@ -123,6 +123,8 @@ FeaturesDataStore* FeaturesParser::parse(void)
 
 void FeaturesParser::putAttrlist(const StructuredTextDataStore* ds)
 {
+  if (!ds)
+    return;
   const StructuredTextDataStore::ValueType d = ds->getValueData();
   for (StructuredTextDataStore::ValueType::const_iterator it = d.begin();
       it != d.end(); ++it) {
