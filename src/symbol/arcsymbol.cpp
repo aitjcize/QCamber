@@ -22,7 +22,7 @@
 
 #include "arcsymbol.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "featuresparser.h"
 #include "macros.h"

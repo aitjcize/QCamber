@@ -22,8 +22,8 @@
 
 #include "barcodesymbol.h"
 
-#include <QtGui>
-#include <QMatrix>
+#include <QtWidgets>
+#include <QTransform>
 
 #include "code39.h"
 #include "context.h"

@@ -22,8 +22,7 @@
 
 #include "moiresymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -33,11 +32,12 @@ MoireSymbol::MoireSymbol(const QString& def, const Polarity& polarity,
     const AttribData& attrib):
     Symbol(def, "moire([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_rw = caps[1].toDouble() / 1000.0;
   m_rg = caps[2].toDouble() / 1000.0;
   m_nr = caps[3].toInt();
@@ -82,7 +82,7 @@ QPainterPath MoireSymbol::painterPath(void)
 }
 
 void MoireSymbol::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
+    const QStyleOptionGraphicsItem *, QWidget *)
 {
   if (m_polarity == P) {
     painter->setPen(m_pen);

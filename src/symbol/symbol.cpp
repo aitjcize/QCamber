@@ -30,7 +30,7 @@
 
 Symbol::Symbol(QString name, QString pattern, Polarity polarity,
     AttribData attr):
-  m_name(name), m_pattern(pattern), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
+  m_name(name), m_pattern('^' + pattern + '$'), m_pen(QPen(Qt::red, 0)), m_brush(Qt::red),
   m_polarity(polarity), m_selected(false), m_attrib(attr)
 {
   setHandlesChildEvents(false);
@@ -118,8 +118,8 @@ void Symbol::setBrush(const QBrush& brush)
   }
 }
 
-void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-      QWidget *widget)
+void Symbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
+      QWidget *)
 {
   // Paint painterPath
   if (m_polarity == P) {
@@ -158,7 +158,7 @@ void Symbol::restoreColor(void)
   update();
 }
 
-void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* )
 {
   GraphicsLayerScene* s = dynamic_cast<GraphicsLayerScene*>(scene());
 
@@ -177,6 +177,6 @@ void Symbol::mousePressEvent(QGraphicsSceneMouseEvent* event)
   s->updateSelection(this);
 }
 
-void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+void Symbol::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* )
 {
 }

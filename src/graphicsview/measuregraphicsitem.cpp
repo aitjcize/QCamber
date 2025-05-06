@@ -22,11 +22,11 @@
 
 #include "measuregraphicsitem.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 MeasureGraphicsItem::MeasureGraphicsItem(QRectF rect): m_rect(rect)
 {
-  
+
 }
 
 QRectF MeasureGraphicsItem::boundingRect() const
@@ -42,7 +42,7 @@ void MeasureGraphicsItem::setRect(const QRectF& rect)
 }
 
 void MeasureGraphicsItem::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
+    const QStyleOptionGraphicsItem *, QWidget *)
 {
   painter->setPen(QPen(Qt::white));
   painter->setBrush(Qt::transparent);

@@ -22,8 +22,7 @@
 
 #include "squareroundthermalsymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -33,11 +32,12 @@ SquareRoundThermalSymbol::SquareRoundThermalSymbol(const QString& def, const Pol
     const AttribData& attrib):
     Symbol(def, "sr_ths([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_od = caps[1].toDouble() / 1000.0;
   m_id = caps[2].toDouble() / 1000.0;
   m_angle = caps[3].toDouble();
@@ -57,7 +57,7 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
   QPainterPath bar;
   bar.addRect(0, -m_gap / 2, m_od / qSqrt(1.8), m_gap);
 
-  QMatrix mat;
+  QTransform mat;
   mat.rotate(-m_angle);
 
   qreal angle_div = 360.0 / m_num_spokes;
@@ -77,7 +77,7 @@ QPainterPath SquareRoundThermalSymbol::painterPath(void)
 }
 
 void SquareRoundThermalSymbol::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
+    const QStyleOptionGraphicsItem *, QWidget *)
 {
   if (m_polarity == P) {
     painter->setClipPath(m_sub);

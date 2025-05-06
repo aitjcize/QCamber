@@ -24,7 +24,7 @@
 
 #include <QDateTime>
 #include <QPainterPath>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QString>
 #include <QTransform>
 
@@ -76,11 +76,11 @@ QString TextRecord::dynamicText(QString text)
   QString dynText = text;
   const QDate &Date = QDate::currentDate();
   const QTime &Time = QTime::currentTime();
-  dynText.replace("$$date-ddmmyy", QString().sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date-ddmmyy", QString::asprintf("%02d/%02d/%02d",
         Date.day(), Date.month(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$date", QString().sprintf("%02d/%02d/%02d",
+  dynText.replace("$$date", QString::asprintf("%02d/%02d/%02d",
         Date.month(), Date.day(), Date.year()%100), Qt::CaseInsensitive);
-  dynText.replace("$$time", QString().sprintf("%02d:%02d",
+  dynText.replace("$$time", QString::asprintf("%02d:%02d",
         Time.hour(), Time.minute()), Qt::CaseInsensitive);
 
   FeaturesDataStore* fds = dynamic_cast<FeaturesDataStore*>(ds);
@@ -94,11 +94,13 @@ QString TextRecord::dynamicText(QString text)
   dynText.replace("$$x", QString("%1").arg(x), Qt::CaseInsensitive);
   dynText.replace("$$y", QString("%1").arg(y), Qt::CaseInsensitive);
 
-  QRegExp rx("\\$\\$(\\S+)");
+  QRegularExpression rx("\\$\\$(\\S+)");
   int pos = 0;
-  while ((pos = rx.indexIn(dynText, pos)) != -1) {
-    QString replacement = fds->attrlist(rx.cap(1)).toUpper();
-    dynText.replace(pos, rx.cap(0).length(), replacement);
+  QRegularExpressionMatchIterator i = rx.globalMatch(dynText);
+  while (i.hasNext()) {
+    QRegularExpressionMatch m = i.next();
+    QString replacement = fds->attrlist(m.captured(1)).toUpper();
+    dynText.replace(pos, m.captured(1).length(), replacement);
     pos += replacement.length();
   }
 

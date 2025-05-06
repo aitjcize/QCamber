@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-#include <QMatrix>
+#include <QTransform>
 #include <QPainterPath>
 #include <QTransform>
 

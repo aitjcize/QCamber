@@ -28,7 +28,7 @@
 #include <QString>
 
 struct code39map {
-  QChar tchar;
+  char tchar;
   QString pattern;
 };
 

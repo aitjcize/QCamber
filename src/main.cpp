@@ -20,7 +20,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "code39.h"
 #include "context.h"
@@ -30,8 +30,8 @@
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
-  QApplication::setGraphicsSystem("raster");
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  //QApplication::setGraphicsSystem("raster");
+  //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
   Code39::initPatterns();
   Settings::load("config.ini");

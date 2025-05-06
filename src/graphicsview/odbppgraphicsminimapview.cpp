@@ -25,6 +25,8 @@
 #include "symbolfactory.h"
 #include "context.h"
 
+#include <QScrollBar>
+
 ODBPPGraphicsMiniMapView::ODBPPGraphicsMiniMapView(QWidget* parent):
   QGraphicsView(parent),
   m_profile(NULL)
@@ -128,12 +130,12 @@ void ODBPPGraphicsMiniMapView::updateLayerViewport(void)
   m_scene->updateLayerViewport(vrect, srect);
 }
 
-void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* event)
+void ODBPPGraphicsMiniMapView::keyPressEvent(QKeyEvent* )
 {
   // Do nothing
 }
 
-void ODBPPGraphicsMiniMapView::wheelEvent(QWheelEvent* event)
+void ODBPPGraphicsMiniMapView::wheelEvent(QWheelEvent* )
 {
   // Do nothing
 }

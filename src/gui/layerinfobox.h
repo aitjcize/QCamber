@@ -62,7 +62,7 @@ signals:
 public slots:
   void showContextMenu(const QPoint& point);
   void on_activeIndicator_clicked(void);
-  void on_actionFeaturesHistogram_activated(void);
+  void on_actionFeaturesHistogram_triggered();
 
 protected:
   virtual void mousePressEvent(QMouseEvent *ev);

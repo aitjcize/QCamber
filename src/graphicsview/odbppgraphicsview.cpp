@@ -26,6 +26,8 @@
 #include "graphicslayer.h"
 #include "symbolfactory.h"
 
+#include <QScrollBar>
+
 ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_profile(NULL)
 {
@@ -47,9 +49,9 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   connect(m_scene, SIGNAL(rectSelected(QRectF)), this,
       SLOT(zoomToRect(QRectF)));
   connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
-      this, SLOT(updateLayerViewport(void)));
+      this, SLOT(updateLayerViewport()));
   connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
-      this, SLOT(updateLayerViewport(void)));
+      this, SLOT(updateLayerViewport()));
 }
 
 ODBPPGraphicsView::~ODBPPGraphicsView()
@@ -208,7 +210,7 @@ void ODBPPGraphicsView::updateLayerViewport(void)
 void ODBPPGraphicsView::wheelEvent(QWheelEvent *event)
 {
   setTransformationAnchor(AnchorUnderMouse);
-  scaleView(pow((double)2, -event->delta() / 240.0));
+  scaleView(pow((double)2, -event->angleDelta().y() / 240.0));
 }
 
 void ODBPPGraphicsView::keyPressEvent(QKeyEvent* event)

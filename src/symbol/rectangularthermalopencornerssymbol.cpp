@@ -22,8 +22,7 @@
 
 #include "rectangularthermalopencornerssymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,11 +31,12 @@ RectangularThermalOpenCornersSymbol::RectangularThermalOpenCornersSymbol(const Q
     const AttribData& attrib):
     Symbol(def, "rc_tho([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)x([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_w = caps[1].toDouble() / 1000.0;
   m_h = caps[2].toDouble() / 1000.0;
   m_angle = caps[3].toDouble();
@@ -53,7 +53,7 @@ QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
 
   qreal angle_div = 360.0 / m_num_spokes;
   QPainterPath sub;
-  QMatrix mat;
+  QTransform mat;
 
   // From what we seen in Genesis 2000, num_spokes can only be 1, 2, 4
   // angle can only be multiple of 45
@@ -82,7 +82,7 @@ QPainterPath RectangularThermalOpenCornersSymbol::painterPath(void)
     box.addRect(-side / 2, -side / 2, side, side);
 
     for (int i = 0; i < m_num_spokes; ++i) {
-      QMatrix mat;
+      QTransform mat;
       mat.translate(offset_w * sign(qCos((m_angle + angle_div * i) * D2R)),
                     -offset_h * sign(qSin((m_angle + angle_div * i) * D2R)));
       sub.addPath(mat.map(box));

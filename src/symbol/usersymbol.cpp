@@ -22,8 +22,7 @@
 
 #include "usersymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "cachedparser.h"
 #include "context.h"

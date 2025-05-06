@@ -60,7 +60,7 @@ signals:
 
 public slots:
   void zoomToRect(QRectF rect);
-  void updateLayerViewport(void);
+  void updateLayerViewport();
   void setBackgroundColor(QColor color);
 
 protected:

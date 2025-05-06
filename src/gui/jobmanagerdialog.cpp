@@ -23,7 +23,7 @@
 #include "jobmanagerdialog.h"
 #include "ui_jobmanagerdialog.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 #include "jobmatrix.h"
@@ -59,7 +59,7 @@ JobManagerDialog::~JobManagerDialog()
 {
   delete ui;
   delete m_model;
-} 
+}
 
 void JobManagerDialog::on_browseButton_clicked(void)
 {

@@ -22,7 +22,7 @@
 
 #include "home.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "ui_home.h"
 #include "code39.h"

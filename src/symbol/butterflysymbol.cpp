@@ -22,8 +22,7 @@
 
 #include "butterflysymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,11 +31,12 @@ ButterflySymbol::ButterflySymbol(const QString& def, const Polarity& polarity,
     const AttribData& attrib):
     Symbol(def, "bfr([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_r = caps[1].toDouble() / 1000.0 / 2.0;
 
   m_bounding = painterPath().boundingRect();

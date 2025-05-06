@@ -23,7 +23,7 @@
 #include "featureshistogramwidget.h"
 #include "ui_featureshistogramwidget.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 FeaturesHistogramWidget::FeaturesHistogramWidget(QWidget *parent) :
   QWidget(parent),
