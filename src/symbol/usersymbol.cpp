@@ -33,14 +33,14 @@ UserSymbol::UserSymbol(const QString& def, const Polarity& polarity,
 {
   QString path = ctx.loader->featuresPath("symbols/" + def);
   FeaturesDataStore* ds = CachedFeaturesParser::parse(path);
-  if (ds) {
+  
+  if (ds)
     for (QList<Record*>::const_iterator it = ds->records().begin();
-      it != ds->records().end(); ++it) {
+        it != ds->records().end(); ++it) {
       Symbol* symbol = (*it)->createSymbol();
       addChild(symbol);
       m_symbols.append(symbol);
     }
-  }
 
   setHandlesChildEvents(true);
 }
