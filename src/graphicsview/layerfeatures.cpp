@@ -310,7 +310,6 @@ QStandardItemModel* LayerFeatures::reportModel(void)
     return m_reportModel;
   }
 
-  //const FeaturesDataStore::IDMapType& nameMap = m_ds->symbolNameMap();
   FeaturesDataStore::CountMapType countMap;
   QStandardItem* root = m_reportModel->invisibleRootItem();
   QStandardItem* node = NULL;
