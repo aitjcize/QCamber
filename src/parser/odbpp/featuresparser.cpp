@@ -135,11 +135,7 @@ void FeaturesParser::putAttrlist(const StructuredTextDataStore* ds)
 
 void FeaturesParser::parseSymbolName(const QString& line)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
   QStringList param = line.split(" ", Qt::SkipEmptyParts);
-#else
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-#endif
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_ds->putSymbolName(id, param[1]);
@@ -148,11 +144,7 @@ void FeaturesParser::parseSymbolName(const QString& line)
 
 void FeaturesParser::parseAttribName(const QString& line)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
   QStringList param = line.split(" ", Qt::SkipEmptyParts);
-#else
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-#endif
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_ds->putAttribName(id, param[1]);
@@ -161,11 +153,7 @@ void FeaturesParser::parseAttribName(const QString& line)
 
 void FeaturesParser::parseAttribText(const QString& line)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
   QStringList param = line.split(" ", Qt::SkipEmptyParts);
-#else
-  QStringList param = line.split(" ", QString::SkipEmptyParts);
-#endif
   if (param.length() == 2) {
     int id = param[0].right(param[0].length() - 1).toInt();
     m_ds->putAttribText(id, param[1]);
@@ -280,7 +268,6 @@ void FeaturesParser::parseAttributes(const QString& line,
     attr = line.right(line.length() - loc - 1).trimmed();
   }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
   if (record.indexOf("'") != -1) {
     int loc = record.indexOf("'");
     int loc2 = record.indexOf("'", loc + 1);
@@ -293,20 +280,6 @@ void FeaturesParser::parseAttributes(const QString& line,
   } else {
     *param = record.split(" ", Qt::SkipEmptyParts);
   }
-#else
-  if (record.indexOf("'") != -1) {
-    int loc = record.indexOf("'");
-    int loc2 = record.indexOf("'", loc + 1);
-    QString left = record.left(loc);
-    QString middle = record.mid(loc + 1, loc2 - loc - 1);
-    QString right = record.right(record.length() - loc2 - 1);
-    *param = left.split(" ", QString::SkipEmptyParts);
-    *param << middle;
-    *param += right.split(" ", QString::SkipEmptyParts);
-  } else {
-    *param = record.split(" ", QString::SkipEmptyParts);
-  }
-#endif
 
   if (!attr.isEmpty()) {
     QStringList terms = attr.split(',');
