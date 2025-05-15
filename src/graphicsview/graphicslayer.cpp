@@ -22,7 +22,7 @@
 
 #include "graphicslayer.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 #include "odbppgraphicsscene.h"
@@ -102,7 +102,7 @@ QRectF GraphicsLayer::boundingRect() const
 }
 
 void GraphicsLayer::paint(QPainter *painter,
-    const QStyleOptionGraphicsItem *option, QWidget *widget)
+    const QStyleOptionGraphicsItem *, QWidget *)
 {
   if (!m_layerScene) {
     return;

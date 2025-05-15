@@ -27,14 +27,13 @@
 using std::cout;
 using std::endl;
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "context.h"
 
 SurfaceSymbol::SurfaceSymbol(const SurfaceRecord* rec):
   Symbol("Surface", "Surface", rec->polarity, rec->attrib),
-  m_islandCount(0), m_holeCount(0)
+  m_holeCount(0), m_islandCount(0)
 {
   m_dcode = rec->dcode;
   m_polygons = rec->polygons;

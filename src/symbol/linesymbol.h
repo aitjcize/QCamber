@@ -25,7 +25,7 @@
 
 #include "symbol.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "featuresparser.h"
 #include "record.h"

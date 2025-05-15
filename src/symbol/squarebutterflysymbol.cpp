@@ -22,8 +22,7 @@
 
 #include "squarebutterflysymbol.h"
 
-#include <QtGui>
-#include <QRegExp>
+#include <QtWidgets>
 
 #include "macros.h"
 
@@ -32,11 +31,12 @@ SquareButterflySymbol::SquareButterflySymbol(const QString& def, const Polarity&
     const AttribData& attrib):
     Symbol(def, "bfs([0-9.]+)", polarity, attrib), m_def(def)
 {
-  QRegExp rx(m_pattern);
-  if (!rx.exactMatch(def))
+  QRegularExpression rx(m_pattern);
+  QRegularExpressionMatch m = rx.match(def);
+  if (!m.hasMatch())
     throw InvalidSymbolException(def.toLatin1());
 
-  QStringList caps = rx.capturedTexts();
+  QStringList caps = m.capturedTexts();
   m_s = caps[1].toDouble() / 1000.0;
 
   m_bounding = painterPath().boundingRect();

@@ -22,8 +22,7 @@
 
 #include "textsymbol.h"
 
-#include <QtGui>
-#include <QMatrix>
+#include <QtWidgets>
 
 #include "cachedparser.h"
 #include "context.h"
@@ -88,7 +87,7 @@ QPainterPath TextSymbol::painterPath(void)
   if (!ds)
     return path;
 
-  QMatrix mat(m_xsize / ds->xsize(), 0, 0, m_ysize / ds->ysize(), 0, 0);
+  QTransform mat(m_xsize / ds->xsize(), 0, 0, m_ysize / ds->ysize(), 0, 0);
 
   for (int i = 0; i < m_text.length(); ++i) {
     CharRecord* rec = ds->charRecord(m_text[i].toLatin1());
@@ -100,7 +99,7 @@ QPainterPath TextSymbol::painterPath(void)
   }
 
   QRectF b = path.boundingRect();
-  QMatrix mat2;
+  QTransform mat2;
   mat2.translate(-b.x(), -(b.y() + b.height()));
   path = mat2.map(path);
 

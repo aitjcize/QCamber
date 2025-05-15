@@ -23,7 +23,7 @@
 #include "jobmatrix.h"
 #include "ui_jobmatrix.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 #include "structuredtextparser.h"
@@ -158,7 +158,7 @@ void JobMatrix::setMatrix()
           SLOT(selectDrillLine(int)));
   connect(ui->tableWidget,SIGNAL(itemClicked(QTableWidgetItem*)),this,
       SLOT(showLayer(QTableWidgetItem *)));
-  ui->tableWidget->verticalHeader()->setMovable(true);
+  ui->tableWidget->verticalHeader()->setSectionsMovable(true);
   ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
@@ -183,7 +183,7 @@ void JobMatrix::drawDrillLine(QString layer_name,int start,int end)
   for(int i = start;i<end+1;i++)
   {
     QTableWidgetItem *line = new QTableWidgetItem(layer_name);
-    line->setBackgroundColor(QColor("black"));
+    line->setBackground(QColor("black"));
     ui->tableWidget->setItem(i,col-1,line);
   }
 }
@@ -206,11 +206,12 @@ void JobMatrix::selectDrillLine(int index)
   {
     for(int row = 0;row < m_layerNames.size();row++)
     {
-      if (((item = ui->tableWidget->item(row,col)) != 0))
+      if (((item = ui->tableWidget->item(row,col)) != 0)) {
         if(col != target_col)
-          item->setBackgroundColor(QColor("black"));
-        else
-          item->setBackgroundColor(QColor("red"));
+          item->setBackground(QColor("black"));
+          else
+          item->setBackground(QColor("red"));
+      }
     }
   }
 }

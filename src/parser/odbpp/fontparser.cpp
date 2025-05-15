@@ -37,7 +37,7 @@ FontDataStore* FontParser::parse(void)
 {
   FontDataStore* ds = new FontDataStore;
   QFile file(m_fileName);
-  
+
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug("parse: can't open `%s' for reading", qPrintable(m_fileName));
     return NULL;
@@ -53,7 +53,7 @@ FontDataStore* FontParser::parse(void)
       continue;
     }
 
-    QStringList param = line.split(" ", QString::SkipEmptyParts);
+    QStringList param = line.split(" ", Qt::SkipEmptyParts);
 
     if (block) {
       if (line.startsWith("ECHAR")) {
@@ -64,7 +64,7 @@ FontDataStore* FontParser::parse(void)
       }
       continue;
     }
-    
+
     if (line.startsWith("XSIZE")) { // xsize
       ds->putXSize(param[1].toDouble());
     } else if (line.startsWith("YSIZE")) { // ysize

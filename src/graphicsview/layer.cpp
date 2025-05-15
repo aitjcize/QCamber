@@ -22,7 +22,7 @@
 
 #include "layer.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 #include "odbppgraphicsscene.h"

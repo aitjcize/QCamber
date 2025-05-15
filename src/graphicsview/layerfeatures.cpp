@@ -100,7 +100,7 @@ void LayerFeatures::loadStepAndRepeat(void)
     m_activeRect.setY(m_activeRect.y() + top_active);
     m_activeRect.setWidth(m_activeRect.width() - right_active);
     m_activeRect.setHeight(m_activeRect.height() - bottom_active);
-  } catch(StructuredTextDataStore::InvalidKeyException) {
+  } catch(StructuredTextDataStore::InvalidKeyException&) {
   }
 
   if (ip.first == ip.second) {
@@ -310,7 +310,6 @@ QStandardItemModel* LayerFeatures::reportModel(void)
     return m_reportModel;
   }
 
-  const FeaturesDataStore::IDMapType& nameMap = m_ds->symbolNameMap();
   FeaturesDataStore::CountMapType countMap;
   QStandardItem* root = m_reportModel->invisibleRootItem();
   QStandardItem* node = NULL;

@@ -22,7 +22,7 @@
 
 #include "notes.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "context.h"
 #include "notesparser.h"
