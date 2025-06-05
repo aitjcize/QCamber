@@ -36,6 +36,7 @@ class DataStore;
 class FeaturesDataStore;
 class FontDataStore;
 class NotesDataStore;
+class ComponentsDataStore;
 
 struct Record {
   Record(DataStore* _ds, const AttribData& attr): ds(_ds), attrib(attr) {}
@@ -187,6 +188,18 @@ struct NoteRecord: public Record {
   QString user;
   qreal x, y;
   QString text;
+};
+
+struct ComponentRecord: public Record {
+  ComponentRecord(ComponentsDataStore* ds, const QStringList& param);
+  virtual Symbol* createSymbol(void) const;
+
+  int pkg_ref;
+  qreal x, y;
+  qreal rot;
+  bool mirror;
+  QString comp_name;
+  QString part_name;
 };
 
 #endif /* __RECORD_H__ */

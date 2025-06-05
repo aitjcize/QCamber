@@ -73,7 +73,8 @@ void GraphicsLayer::setPen(const QPen& pen)
   m_pen = pen;
   QList<QGraphicsItem*> items = m_layerScene->items();
   for (int i = 0; i < items.size(); ++i) {
-    dynamic_cast<Symbol*>(items[i])->setPen(pen);
+    if (auto symbol = dynamic_cast<Symbol*>(items[i]))
+      symbol->setPen(pen);
   }
 }
 
@@ -88,7 +89,8 @@ void GraphicsLayer::setBrush(const QBrush& brush)
 
   QList<QGraphicsItem*> items = m_layerScene->items();
   for (int i = 0; i < items.size(); ++i) {
-    dynamic_cast<Symbol*>(items[i])->setBrush(tbrush);
+    if (auto symbol = dynamic_cast<Symbol*>(items[i]))
+      symbol->setBrush(tbrush);
   }
 }
 

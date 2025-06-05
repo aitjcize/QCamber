@@ -1,4 +1,5 @@
 TEMPLATE = app
+QT += widgets
 
 MOC_DIR = .build
 UI_DIR = .build
@@ -25,7 +26,7 @@ SOURCES += \
   settings.cpp \
   symbolpool.cpp
 
-INCLUDEPATH += . .build parser parser/record symbol gui graphicsview
+INCLUDEPATH += . .build parser parser/odbpp parser/record symbol gui graphicsview
 
 DESTDIR = ../bin
 TARGET = test

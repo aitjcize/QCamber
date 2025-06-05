@@ -67,6 +67,7 @@ protected:
   virtual void wheelEvent(QWheelEvent* event);
   virtual void keyPressEvent(QKeyEvent* event);
   virtual void resizeEvent(QResizeEvent* event);
+  virtual bool viewportEvent(QEvent* event) override;
 
 private:
   ODBPPGraphicsScene* m_scene;

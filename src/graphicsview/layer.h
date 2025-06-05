@@ -28,6 +28,7 @@
 #include "layerfeatures.h"
 #include "graphicslayer.h"
 #include "graphicslayerscene.h"
+#include "components.h"
 #include "notes.h"
 #include "symbol.h"
 #include <QTextEdit>
@@ -53,7 +54,7 @@ protected:
   virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-  LayerFeatures* m_features;
+  Symbol* m_features;
   QString m_step;
   QString m_layer;
   Notes* m_notes;

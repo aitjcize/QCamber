@@ -81,6 +81,7 @@ public slots:
   void on_actionShowOutline_toggled(bool checked);
   void on_actionShowStepRepeat_toggled(bool checked);
   void on_actionShowNotes_toggled(bool checked);
+  void on_actionExport_triggered(void);
 
 protected:
   QColor nextColor(void);

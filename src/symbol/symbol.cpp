@@ -34,6 +34,8 @@ Symbol::Symbol(QString name, QString pattern, Polarity polarity,
   m_polarity(polarity), m_selected(false), m_attrib(attr)
 {
   setHandlesChildEvents(false);
+  // Enable hover events so tool tips appear for graphics items
+  setAcceptHoverEvents(true);
 
   // Since Layer will redraw all symbol visible everytime, using cache
   // will slow down the performance

@@ -47,7 +47,9 @@ StructuredTextParser::~StructuredTextParser()
 StructuredTextDataStore* StructuredTextParser::parse(void)
 {
 #ifdef Q_OS_WIN
-  if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
+  QString version = QSysInfo::productVersion();
+
+  if (version == "5.1") {
     wchar_t buf[BUFSIZ];
     memset(buf, 0, sizeof(wchar_t) * BUFSIZ);
     m_fileName.toWCharArray(buf);

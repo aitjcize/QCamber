@@ -63,12 +63,15 @@ void TextRecord::setTransform(Symbol* symbol) const
 {
   symbol->setPos(x, -y);
 
+  int rotation = (orient % 4) * 90;
   if (orient >= M_0) {
     QTransform trans;
-    trans.scale(-1, 1);
+    // Flip both axes for bottom side text
+    trans.scale(-1, -1);
     symbol->setTransform(trans);
+    rotation += 180;
   }
-  symbol->setRotation((orient % 4) * 90);
+  symbol->setRotation(rotation % 360);
 }
 
 QString TextRecord::dynamicText(QString text)

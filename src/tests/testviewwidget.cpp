@@ -39,12 +39,12 @@ TestViewWidget::TestViewWidget(QWidget* parent): QGraphicsView(parent)
 
 void TestViewWidget::wheelEvent(QWheelEvent *event)
 {
-    scaleView(pow((double)2, -event->delta() / 240.0));
+    const int delta = event->angleDelta().y();
+    scaleView(std::pow(2.0, -delta / 240.0));
 }
 
 void TestViewWidget::scaleView(qreal scaleFactor)
 {
-    qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-
+    Q_UNUSED(scaleFactor);
     scale(scaleFactor, scaleFactor);
 }

@@ -29,6 +29,8 @@
 #include "datastore.h"
 #include "featuresparser.h"
 #include "fontparser.h"
+#include "packageparser.h"
+#include "packagedatastore.h"
 #include "parser.h"
 #include "structuredtextparser.h"
 
@@ -86,5 +88,6 @@ D* CachedParser<P, D>::realParse(QString filename)
 typedef CachedParser<FeaturesParser, FeaturesDataStore> CachedFeaturesParser;
 typedef CachedParser<FontParser, FontDataStore> CachedFontParser;
 typedef CachedParser<StructuredTextParser, StructuredTextDataStore> CachedStructuredTextParser;
+typedef CachedParser<PackageParser, PackageDataStore> CachedPackageParser;
 
 #endif /* __CACHED_PARSER_H__ */

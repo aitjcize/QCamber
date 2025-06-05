@@ -45,6 +45,7 @@ public:
   ~LayerInfoBox();
 
   QString name(void);
+  QString type(void) const { return m_type; }
   QColor color(void);
   Layer* layer(void);
 

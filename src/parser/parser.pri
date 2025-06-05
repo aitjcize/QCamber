@@ -6,6 +6,8 @@ HEADERS += \
   parser/code39.h \
   parser/featuresdatastore.h \
   parser/fontdatastore.h \
+  parser/packagedatastore.h \
+  parser/componentsdatastore.h \
   parser/datastore.h \
   parser/notesdatastore.h \
   parser/structuredtextdatastore.h
@@ -20,8 +22,11 @@ SOURCES += \
   parser/arcrecord.cpp \
   parser/charrecord.cpp \
   parser/noterecord.cpp \
+  parser/componentrecord.cpp \
   parser/code39.cpp \
   parser/featuresdatastore.cpp \
   parser/fontdatastore.cpp \
+  parser/packagedatastore.cpp \
+  parser/componentsdatastore.cpp \
   parser/notesdatastore.cpp \
   parser/structuredtextdatastore.cpp

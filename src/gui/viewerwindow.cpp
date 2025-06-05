@@ -24,7 +24,16 @@
 #include "ui_viewerwindow.h"
 
 #include <QtWidgets>
+#include <QDir>
+#include <QSet>
+#include <QTextStream>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QRegularExpression>
 #include <QDebug>
+
+#include "packagedatastore.h"
+#include "odbpp/cachedparser.h"
 
 #include "context.h"
 #include "layerinfobox.h"
@@ -207,7 +216,7 @@ QColor ViewerWindow::nextColor(void)
 
 void ViewerWindow::loadColorConfig()
 {
-  ctx.bg_color = QColor(SETTINGS->get("color", "BG").toString());
+  ctx.bg_color = QColor(SETTINGS->get("Color", "BG").toString());
 
   m_colors.clear();
   for(int i = 0; i < 6; ++i) {
@@ -404,4 +413,54 @@ void ViewerWindow::on_actionShowNotes_toggled(bool checked)
     }
   }
   ui->viewWidget->setFocus(Qt::MouseFocusReason);
+}
+
+void ViewerWindow::on_actionExport_triggered(void)
+{
+  QString dir = QFileDialog::getExistingDirectory(this, tr("Select Export Directory"));
+  if (dir.isEmpty())
+    return;
+
+  QSet<QString> pkgs;
+  for (LayerInfoBox* box : m_SelectorMap) {
+    if (box->type() != "COMPONENT")
+      continue;
+
+    QString path = ctx.loader->absPath(QString("steps/%1/layers/%2/components").arg(m_step).arg(box->name()));
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+      continue;
+    while (!file.atEnd()) {
+      QString line = file.readLine().trimmed();
+      if (line.startsWith("CMP")) {
+        QString record = line.section(';', 0, 0).trimmed();
+        QStringList p = record.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
+        if (p.size() >= 8)
+          pkgs.insert(p[7]);
+      }
+    }
+  }
+
+  PackageDataStore* pkgds = CachedPackageParser::parse(ctx.loader->absPath(QString("steps/%1/eda/data").arg(m_step)));
+  QMap<QString, PackageDataStore::PackageInfo> pkgMap;
+  if (pkgds) {
+    for (auto it = pkgds->packages().constBegin(); it != pkgds->packages().constEnd(); ++it)
+      pkgMap[it.value().name] = it.value();
+  }
+
+  for (const QString& n : pkgs) {
+    QFile of(QDir(dir).filePath(n + ".cmp"));
+    if (!of.open(QIODevice::WriteOnly | QIODevice::Text))
+      continue;
+    QTextStream out(&of);
+    out << "<Component><General><ComponentId>" << n << "</ComponentId></General>";
+    if (pkgMap.contains(n)) {
+      const auto& info = pkgMap[n];
+      out << "<Package><PackageLength>" << info.ymax - info.ymin << "</PackageLength>";
+      out << "<PackageWidth>" << info.xmax - info.xmin << "</PackageWidth></Package>";
+    }
+    out << "</Component>";
+  }
+
+  QMessageBox::information(this, tr("Export"), tr("Exported %1 footprints").arg(pkgs.size()));
 }

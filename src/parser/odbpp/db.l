@@ -31,6 +31,15 @@ var         {pletter}{mletter}*{pletter}
 %option yylineno
 
 %{
+
+#ifdef _MSC_VER
+#include <io.h>
+#define YY_NO_UNISTD_H
+#define strdup _strdup
+#define isatty _isatty
+#endif
+
+#include "yyheader.h"
 #include "yyheader.h"
 
 #include <stdio.h>

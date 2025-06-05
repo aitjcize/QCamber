@@ -41,6 +41,7 @@ public:
   QString absPath(QString path);
   QStringList listDir(QString filename);
   QString featuresPath(QString base);
+  QString componentsPath(QString base);
 
 private:
   QDir m_dir;

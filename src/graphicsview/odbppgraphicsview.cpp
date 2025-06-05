@@ -27,6 +27,8 @@
 #include "symbolfactory.h"
 
 #include <QScrollBar>
+#include <QHelpEvent>
+#include <QToolTip>
 
 ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   m_profile(NULL)
@@ -44,6 +46,10 @@ ODBPPGraphicsView::ODBPPGraphicsView(QWidget* parent): QGraphicsView(parent),
   setOptimizationFlags(DontSavePainterState);
   setTransformationAnchor(AnchorUnderMouse);
   setViewportUpdateMode(BoundingRectViewportUpdate);
+  // Enable mouse tracking so hover events (e.g., tooltips) work without
+  // requiring a mouse press.
+  setMouseTracking(true);
+  viewport()->setMouseTracking(true);
   setZoomMode(AreaZoom);
 
   connect(m_scene, SIGNAL(rectSelected(QRectF)), this,
@@ -253,4 +259,23 @@ void ODBPPGraphicsView::resizeEvent(QResizeEvent* event)
 {
   updateLayerViewport();
   QGraphicsView::resizeEvent(event);
+}
+
+bool ODBPPGraphicsView::viewportEvent(QEvent* event)
+{
+  if (event->type() == QEvent::ToolTip) {
+    QHelpEvent* he = static_cast<QHelpEvent*>(event);
+    QPointF scenePos = mapToScene(he->pos());
+    for (GraphicsLayer* layer : m_scene->layers()) {
+      QGraphicsItem* item = layer->layerScene()->itemAt(scenePos, QTransform());
+      if (item && !item->toolTip().isEmpty()) {
+        QToolTip::showText(he->globalPos(), item->toolTip(), this);
+        return true;
+      }
+    }
+    QToolTip::hideText();
+    event->ignore();
+    return true;
+  }
+  return QGraphicsView::viewportEvent(event);
 }

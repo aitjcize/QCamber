@@ -131,7 +131,9 @@ void LayerFeatures::loadStepAndRepeat(void)
 
         QTransform trans;
         if (mirror) {
-          trans.scale(-1, 1);
+          // Mirror steps on both axes when mirroring is requested
+          trans.scale(-1, -1);
+          angle += 180.0;
         }
         trans.rotate(angle);
         trans.translate(-step->x_datum(), step->y_datum());

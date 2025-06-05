@@ -32,6 +32,7 @@ HEADERS += \
   symbol/linesymbol.h \
   symbol/notesymbol.h \
   symbol/surfacesymbol.h \
+  symbol/componentsymbol.h \
   symbol/textsymbol.h \
   symbol/symbolfactory.h
 
@@ -69,4 +70,5 @@ SOURCES += \
   symbol/linesymbol.cpp \
   symbol/notesymbol.cpp \
   symbol/surfacesymbol.cpp \
+  symbol/componentsymbol.cpp \
   symbol/textsymbol.cpp

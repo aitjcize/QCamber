@@ -105,12 +105,14 @@ void JobMatrix::setMatrix()
       text = "(srl,";
     else if(text == "DOCUMENT")
       text = "(doc,";
-    else if(text == "ROUT")
-      text = "(rt ,";
-    else if(text == "SOLDER_PASTE")
-      text = "(sp ,";
-    else
-      text = "( ,";
+  else if(text == "ROUT")
+    text = "(rt ,";
+  else if(text == "SOLDER_PASTE")
+    text = "(sp ,";
+  else if(text == "COMPONENT")
+    text = "(cmp,";
+  else
+    text = "( ,";
     if(it->second->get("POLARITY") == "POSITIVE")
       text += "p)  ";
     else
@@ -132,9 +134,11 @@ void JobMatrix::setMatrix()
       QString pathTmpl = "steps/%1/layers/%2";
       text = pathTmpl.arg(m_stepNames[i]).arg(layerName);
 
-      if (QFile(ctx.loader->featuresPath(text)).size() == 0) {
-        btn->setText("");
-      }
+        QString fpath = ctx.loader->featuresPath(text);
+        QString cpath = ctx.loader->componentsPath(text);
+        if (QFile(fpath).size() == 0 && QFile(cpath).size() == 0) {
+          btn->setText("");
+        }
     }
     layers++;
   }

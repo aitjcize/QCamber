@@ -2,6 +2,7 @@ HEADERS += \
   graphicsview/graphicslayer.h \
   graphicsview/graphicslayerscene.h \
   graphicsview/layerfeatures.h \
+  graphicsview/components.h \
   graphicsview/layer.h \
   graphicsview/measuregraphicsitem.h \
   graphicsview/notes.h \
@@ -15,6 +16,7 @@ SOURCES += \
   graphicsview/graphicslayerscene.cpp \
   graphicsview/layer.cpp \
   graphicsview/layerfeatures.cpp \
+  graphicsview/components.cpp \
   graphicsview/measuregraphicsitem.cpp \
   graphicsview/notes.cpp \
   graphicsview/odbppgraphicsminimapview.cpp \

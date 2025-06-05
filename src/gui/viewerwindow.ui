@@ -103,12 +103,18 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+  <widget class="QMenu" name="menu">
     <property name="title">
      <string>Settings</string>
     </property>
     <addaction name="actionSetColor"/>
-   </widget>
+  </widget>
+  <widget class="QMenu" name="menuExport">
+   <property name="title">
+    <string>Export</string>
+   </property>
+   <addaction name="actionExport"/>
+  </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
@@ -130,12 +136,13 @@
     <addaction name="actionMeasure"/>
     <addaction name="separator"/>
     <addaction name="actionShowOutline"/>
-    <addaction name="actionShowStepRepeat"/>
-    <addaction name="actionShowNotes"/>
-   </widget>
-   <addaction name="menuView"/>
-   <addaction name="menu"/>
+   <addaction name="actionShowStepRepeat"/>
+   <addaction name="actionShowNotes"/>
   </widget>
+  <addaction name="menuView"/>
+  <addaction name="menuExport"/>
+  <addaction name="menu"/>
+ </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -345,6 +352,11 @@
    </property>
    <property name="text">
     <string>Feature Properties</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
    </property>
   </action>
  </widget>

@@ -39,7 +39,7 @@ LayerInfoBox::LayerInfoBox(const QString& name, const QString& step,
     const QString& type):
     QWidget(NULL),
     ui(new Ui::LayerInfoBox),
-    m_name(name), m_step(step), m_layer(NULL), m_checked(false)
+    m_name(name), m_step(step), m_type(type), m_layer(NULL), m_checked(false)
 {
   ui->setupUi(this);
   ui->layerName->setText(name);
